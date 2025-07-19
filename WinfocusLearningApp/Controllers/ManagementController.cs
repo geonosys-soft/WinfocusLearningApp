@@ -1,13 +1,19 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
+using WinfocusLearningApp.DataEntity;
 
 namespace WinfocusLearningApp.Controllers
 {
     public class ManagementController : Controller
     {
+
+        private readonly Winfocus_CS dbEntities = new Winfocus_CS();
         // GET: Admin/Management
         public ActionResult Index()
         {
@@ -17,7 +23,24 @@ namespace WinfocusLearningApp.Controllers
 
         public ActionResult AllUsers() { return View(); }
         public ActionResult CreateUsers() { return View(); }
-        public ActionResult AcademicYear() { return View(); }
+        public ActionResult AcademicYear(int?id) { 
+
+            TblAccademicYear inf = new TblAccademicYear();
+            if (id != null)
+            {
+                inf = dbEntities.TblAccademicYears.Find(id);
+            }
+            else
+            {
+                
+                inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.CreatedDate = DateTime.UtcNow;
+                inf.IsDeleted = 0;
+            }
+            return View(inf); 
+        }
+        
+
         public ActionResult ClassManagement() { return View(); }
         public ActionResult Stream() { return View(); }
         public ActionResult Course() { return View(); }
