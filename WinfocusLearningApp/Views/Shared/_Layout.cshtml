@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title  Winfocus</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <i class='bx bxs-graduation icon'></i>
+            <div class="logo_name">Winfocus</div>
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="@Url.Action("Index", "Dashboard", new { area = "Admin" })">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="link_name">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class='bx bx-collection'></i>
+                        <span class="link_name">Management</span>
+                    </a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                @*<ul class="sub-menu">
+                        <li><a class="link_name" href="#">Management</a></li>
+                        <li><a href="#">All Users</a></li>
+                        <li><a href="#">Create users</a></li>
+                        <li><a href="#">Academic Year</a></li>
+                        <li><a href="#">Class Management</a></li>
+                        <li><a href="#">Stream</a></li>
+                        <li><a href="#">Course</a></li>
+                        <li><a href="#">Subject</a></li>
+                        <li><a href="#">Chapter</a></li>
+                        <li><a href="#">Sub-chapter</a></li>
+                        <li><a href="#">Module</a></li>
+                        <li><a href="#">Note Type</a></li>
+                        <li><a href="#">School State</a></li>
+                        <li><a href="#">District</a></li>
+                        <li><a href="#">School Details</a></li>
+                        <li><a href="#">Create Group</a></li>
+                        <li><a href="#">Manage Group</a></li>
+                        <li><a href="#">Course fee</a></li>
+                        <li><a href="#">Request call back</a></li>
+                        <li><a href="#">Student Reference</a></li>
+                        <li><a href="#">Create Lesson Summery</a></li>
+                        <li><a href="#">Syllabus Creation</a></li>
+                        <li><a href="#">Add meeting</a></li>
+                        <li><a href="#">Time table</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Support Ticket</a></li>
+                        <li><a href="#">Complaints</a></li>
+                    </ul>*@
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Management</a></li>
+                    <li><a href="@Url.Action("AllUsers", "Management", new { area = "Admin" })">All Users</a></li>
+                    <li><a href="@Url.Action("CreateUsers", "Management", new { area = "Admin" })">Create users</a></li>
+                    <li><a href="@Url.Action("AcademicYear", "Management", new { area = "Admin" })">Academic Year</a></li>
+                    <li><a href="@Url.Action("ClassManagement", "Management", new { area = "Admin" })">Class Management</a></li>
+                    <li><a href="@Url.Action("Stream", "Management", new { area = "Admin" })">Stream</a></li>
+                    <li><a href="@Url.Action("Course", "Management", new { area = "Admin" })">Course</a></li>
+                    <li><a href="@Url.Action("Subject", "Management", new { area = "Admin" })">Subject</a></li>
+                    <li><a href="@Url.Action("Chapter", "Management", new { area = "Admin" })">Chapter</a></li>
+                    <li><a href="@Url.Action("SubChapter", "Management", new { area = "Admin" })">Sub-chapter</a></li>
+                    <li><a href="@Url.Action("Module", "Management", new { area = "Admin" })">Module</a></li>
+                    <li><a href="@Url.Action("NoteType", "Management", new { area = "Admin" })">Note Type</a></li>
+                    <li><a href="@Url.Action("SchoolState", "Management", new { area = "Admin" })">School State</a></li>
+                    <li><a href="@Url.Action("District", "Management", new { area = "Admin" })">District</a></li>
+                    <li><a href="@Url.Action("SchoolDetails", "Management", new { area = "Admin" })">School Details</a></li>
+                    <li><a href="@Url.Action("CreateGroup", "Management", new { area = "Admin" })">Create Group</a></li>
+                    <li><a href="@Url.Action("ManageGroup", "Management", new { area = "Admin" })">Manage Group</a></li>
+                    <li><a href="@Url.Action("CourseFee", "Management", new { area = "Admin" })">Course fee</a></li>
+                    <li><a href="@Url.Action("RequestCallBack", "Management", new { area = "Admin" })">Request call back</a></li>
+                    <li><a href="@Url.Action("StudentReference", "Management", new { area = "Admin" })">Student Reference</a></li>
+                    <li><a href="@Url.Action("CreateLessonSummary", "Management", new { area = "Admin" })">Create Lesson Summery</a></li>
+                    <li><a href="@Url.Action("SyllabusCreation", "Management", new { area = "Admin" })">Syllabus Creation</a></li>
+                    <li><a href="@Url.Action("AddMeeting", "Management", new { area = "Admin" })">Add meeting</a></li>
+                    <li><a href="@Url.Action("TimeTable", "Management", new { area = "Admin" })">Time table</a></li>
+                    <li><a href="@Url.Action("Blog", "Management", new { area = "Admin" })">Blog</a></li>
+                    <li><a href="@Url.Action("SupportTicket", "Management", new { area = "Admin" })">Support Ticket</a></li>
+                    <li><a href="@Url.Action("Complaints", "Management", new { area = "Admin" })">Complaints</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class='bx bxs-user-detail'></i>
+                        <span class="link_name">Student</span>
+                    </a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Student</a></li>
+                    <li><a href="#">Registration List</a></li>
+                    <li><a href="#">Create exams</a></li>
+                    <li><a href="#">Upload Study Materials</a></li>
+                    <li><a href="#">Upload Videos</a></li>
+                    <li><a href="#">Attendance management</a></li>
+                    <li><a href="#">Create Assessment</a></li>
+                    <li><a href="#">IP Address Management</a></li>
+                    <li><a href="#">Student List</a></li>
+                    <li><a href="#">Fee payment History</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class='bx bx-user-voice'></i>
+                        <span class="link_name">Teacher</span>
+                    </a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Teacher</a></li>
+                    <li><a href="#">Registration</a></li>
+                    <li><a href="#">Attendance</a></li>
+                    <li><a href="#">All Teachers</a></li>
+                    <li><a href="#">Work Assigned</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class='bx bx-desktop'></i>
+                        <span class="link_name">DTP</span>
+                    </a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">DTP</a></li>
+                    <li><a href="#">Registrations</a></li>
+                    <li><a href="#">Question Answers</a></li>
+                    <li><a href="#">Manage Question</a></li>
+                    <li><a href="#">User Management</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class='bx bx-headphone'></i>
+                        <span class="link_name">CRM</span>
+                    </a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">CRM</a></li>
+                    <li><a href="#">Registrations</a></li>
+                    <li><a href="#">Set Target</a></li>
+                    <li><a href="#">View Groups</a></li>
+                    <li><a href="#">Add new Calls</a></li>
+                    <li><a href="#">Reports</a></li>
+                    <li><a href="#">History</a></li>
+                    <li><a href="#">Payments</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class='bx bxs-award'></i>
+                        <span class="link_name">Scholarship</span>
+                    </a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Scholarship</a></li>
+                    <li><a href="#">Registrations</a></li>
+                    <li><a href="#">Create Exam</a></li>
+                    <li><a href="#">Exam List</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="profile-details">
+                    <a href="@Url.Action("Logout", "Account")">
+                        <i class='bx bx-log-out'></i>
+                        <span class="link_name">Logout</span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <section class="home-section">
+        <div class="home-content">
+            @RenderBody()
+        </div>
+    </section>
+    ...
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script>
+        let arrow = document.querySelectorAll(".arrow");
+        for (var i = 0; i < arrow.length; i++) {
+            arrow[i].addEventListener("click", (e) => {
+                let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
+                arrowParent.classList.toggle("showMenu");
+            });
+        }
+    </script>
+</body>
+</html>

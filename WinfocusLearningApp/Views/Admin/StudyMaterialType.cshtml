@@ -1,0 +1,352 @@
+﻿@model WinfocusLearningApp.DataEntity.TblMaterial
+@{
+    ViewBag.Title = "Material Name";
+}
+
+<section class="pt-5 bg-section-secondary">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <span class="surtitle">Admin account</span>
+                        <h1 class="h2 mb-0">Material Management</h1>
+                    </div>
+                </div>
+                <div class="row align-items-center mt-4">
+                    <div class="col">
+                        <ul class="nav nav-tabs overflow-x">
+                            <li class="nav-item">
+                                <a href="" class="nav-link">xxxx</a>
+                            </li>
+                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="slice slice-sm bg-section-secondary">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="mb-5">
+
+                            @if (ViewBag.StatusMessage != null)
+                            {
+                                <div class="alert alert-outline-success" role="alert">
+                                    <strong>@ViewBag.StatusMessage</strong>
+                                </div>}
+
+                            @if (ViewBag.ErrorMessage != null)
+                            {
+                                <div class="alert alert-outline-danger" role="alert">
+                                    <strong>@ViewBag.ErrorMessage</strong>
+                                </div>}
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="h6 mb-0">Note Type Management</h5>
+                                    <p class="text-sm mb-0">You can add,edit and delete Note type here</p>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+
+                                        <form id="Material" method="post">
+                                            @Html.AntiForgeryToken()
+                                            @Html.HiddenFor(model => Model.Id)
+                                            <div class="row mx-n2">
+                                                <div class="col col-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Class</label>
+                                                        @Html.DropDownList("ACID", null, "Select AccademicYear", htmlAttributes: new { @class = "form-select" })
+                                                        <label id="PgmId-error" class="error" for="PgmId" style="display:none;"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Class</label>
+                                                        @Html.DropDownList("SyllabusID", null, "Select AccademicYear", htmlAttributes: new { @class = "form-select" })
+                                                        <label id="PgmId-error" class="error" for="PgmId" style="display:none;"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Class</label>
+                                                        @Html.DropDownList("GradeID", null, "Select AccademicYear", htmlAttributes: new { @class = "form-select" })
+                                                        <label id="PgmId-error" class="error" for="PgmId" style="display:none;"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Class</label>
+                                                        @Html.DropDownList("StreamID", null, "Select AccademicYear", htmlAttributes: new { @class = "form-select" })
+                                                        <label id="PgmId-error" class="error" for="PgmId" style="display:none;"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Class</label>
+                                                        @Html.DropDownList("CourseID", null, "Select AccademicYear", htmlAttributes: new { @class = "form-select" })
+                                                        <label id="PgmId-error" class="error" for="PgmId" style="display:none;"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Class</label>
+                                                        @Html.DropDownList("SubjectId", null, "Select AccademicYear", htmlAttributes: new { @class = "form-select" })
+                                                        <label id="PgmId-error" class="error" for="PgmId" style="display:none;"></label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col col-6">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Subject</label>
+
+
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="col col-12">
+                                                    <div class="form-group">
+                                                        <label class="form-control-label">Note Type</label>
+
+
+                                                        <label id="NoteTypeId-error" class="error" for="NoteTypeId" style="display:none;"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col col-lg px-2">
+                                                    <div class="form-group">
+
+                                                    </div>
+                                                    <label id="Name-error" class="error" for="NoteType" style="display:none;"></label>
+                                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                                </div>
+                                                <div class="col-auto px-2">
+
+                                                    @if (Model.Id != 0)
+                                                    {
+                                                        <button type="submit" class="btn btn-secondary px-3" data-toggle="tooltip" data-placement="top" title="Update Note Type">
+                                                            <i data-feather="upload"></i>
+                                                        </button>
+
+                                                        <a href="NoteType" class="btn btn-danger px-3" data-toggle="tooltip" data-placement="top" title="Cancel">
+                                                            <i data-feather="x"></i>
+                                                        </a> }
+                                                    else
+                                                    {
+                                                        <button type="submit" class="btn btn-secondary px-3" data-toggle="tooltip" data-placement="top" title="Add Note Type">
+                                                            <i data-feather="plus"></i>
+                                                        </button>}
+
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </li>
+
+
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <link rel="stylesheet" type="text/css" href="~/Theme/assets/libs/datatable/css/tables/datatable/datatables.min.css">
+
+                <div class="table-responsive">
+                    <table class="table table-striped" style="width:100%" id="ChapterRegistration">
+                        <thead>
+                            <tr>
+
+                                <th scope="col" class="text-left">Material Name</th>
+                                <th scope="col" class="text-left">Course Details</th>
+                                <th scope="col" class="text-left">Note Type</th>
+                                <th scope="col" class="text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbAccounts">
+                            
+                          
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal modal-danger fade" id="deleteModel" tabindex="-1" role="dialog" aria-labelledby="modal_5" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title h6" id="modal_title_6">Material Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="py-3 text-center">
+                    <i class="fas fa-exclamation-circle fa-4x"></i>
+                    <h5 class="heading h4 mt-4">Are you sure ?</h5>
+                    <p>
+                        Do you want delete <strong><span id="name"></span></strong> !
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("MaterialDelete", "Admin", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="deleteId" name="deleteId" />
+                    <button type="submit" class="btn btn-sm btn-white">Delete</button>}
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+   
+$(document).ready(function () {
+
+            $('#ChapterRegistration').DataTable({
+                "bLengthChange": true,
+                "bFilter": true,
+                "bInfo": false,
+                "bAutoWidth": false
+            });
+        });
+    <script>
+
+
+
+        $('#Material').validate({
+            rules: {
+                Name: {
+                    required: true
+                },
+                SubjectId: {
+                    required: true
+                },
+                ProgramId: {
+                    required: true
+                },
+                SubProgramId: {
+                    required: true
+                },
+                ClassId: {
+                    required: true
+                },
+                NoteTypeId: {
+                    required :true
+                }
+            },
+            messages: {
+                Name: {
+                    required: 'Please enter Chapter Name'
+                },
+                SubjectId: {
+                    required: 'Please choose subject'
+                },
+                ProgramId: {
+                    required: 'Please choose program'
+                },
+                SubPrgramId: {
+                    required: 'Please choose sub program'
+                },
+                ClassId: {
+                    required: 'Please choose Class'
+                },
+                NoteTypeId: {
+                    required :'Please choose Note'
+                }
+
+            },
+            highlight: function (element, errorClass, validClass) {
+
+                var data = element.id;
+                $("#" + data).addClass("is-invalid");
+                $("." + data).css({ 'border-color': '#f25767' });
+                $(".error" + data + "-error").show();
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                var data = element.id;
+                $("#" + data).removeClass("is-invalid");
+                $("." + data).css({ 'border-color': '' });
+                $("." + data + "-error").hide();
+            },
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+
+
+        function NoteTypeDelete(id, name) {
+            $('#deleteId').val(id);
+            $('#name').append(name);
+            $('#deleteModel').modal('toggle');
+        }
+        $(document).ready(function () {
+             var subProgram = '@Url.Action("GetSubProgram")';
+             var classapi = '@Url.Action("GetClassfromSubProgram")';
+            var subjectapi = '@Url.Action("GetSubjectFromProgram")';
+            var notetypeapi = '@Url.Action("GetNoteType")';
+
+
+            var notetype = $('#NoteTypeId');
+            var SubPgmId = $('#SubProgramId');
+            var classId = $('#ClassId');
+             var subjectid = $('#SubjectId');
+             var PgmId = $('#ProgramId');
+
+             $('#ProgramId').change(function () {
+                subjectid.empty();
+                $.getJSON(subjectapi, { ID: $(this).val() }, function (data) {
+                    if (!data) {
+                        return;
+                    }
+                    subjectid.append($('<option></option>').val('').text('Please select'));
+                    $.each(data, function (index, item) {
+                        subjectid.append($('<option></option>').val(item.Value).text(item.Text));
+                    });
+                });
+
+
+             })
+           
+            $('#SubjectId').change(function () {
+                notetype.empty();
+                $.getJSON(notetypeapi, { ID: $(this).val() }, function (data) {
+                    if (!data) {
+                        return;
+                    }
+                    notetype.append($('<option></option>').val('').text('Please select'));
+                    $.each(data, function (index, item) {
+                        notetype.append($('<option></option>').val(item.Value).text(item.Text));
+                    });
+                });
+
+
+
+
+            })
+
+
+
+
+        });
+
+
+    </script>
+}
