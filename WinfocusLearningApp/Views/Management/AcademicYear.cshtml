@@ -401,7 +401,7 @@
     });
 
     // Submit form function
-    function submitForm(formType) {
+    async function submitForm(formType) {
         let stream, year, message;
         const notification = document.getElementById('notification');
         const notificationIcon = notification.querySelector('.notification-icon');
@@ -416,20 +416,25 @@
                     return;
                 }
                 else {
-                    const myData = {
-                        AccademicYear: { year } 
-                    };
-                    const userAction = async () => {
-                        const response = await fetch('api/ManagementApi/AddYear', {
-                            method: 'POST',
-                            body: myData, // string or object
-                            headers: {
-                                'Content-Type': 'application/json'
-                            }
-                        });
-                        const myJson = await response.json(); //extract JSON from the http response
-                        // do something with myJson
+
+                    //------------------------
+                   
+                    const response = await fetch("/api/ManagementApi/AddYear", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ AccademicYear: year })
+                    });
+
+                    if (!response.ok) {
+                        showNotification('Something went wrong', 'error');
+                        return;
+                        
                     }
+
+
+                    //-------------------
                     showNotification('Please select addcode academic year', 'success');
                     message = `Academic year "${year}" added successfully!`;
                     showNotification(message, 'success');

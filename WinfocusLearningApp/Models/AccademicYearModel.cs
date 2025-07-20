@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WinfocusLearningApp.Models
 {
-    public class TblAccademicYear
+    public class AccademicYearModel
     {
         public int Id { get; set; }
         public string AccademicYear { get; set; }

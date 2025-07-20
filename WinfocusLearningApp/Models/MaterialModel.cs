@@ -6,7 +6,7 @@ using WinfocusLearningApp.DataEntity;
 
 namespace WinfocusLearningApp.Models
 {
-    public class TblMaterialModel
+    public class MaterialModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
