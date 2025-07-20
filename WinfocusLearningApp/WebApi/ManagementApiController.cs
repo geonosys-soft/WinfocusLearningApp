@@ -20,7 +20,6 @@ namespace WinfocusLearningApp.WebApi
         [ResponseType(typeof(TblAccademicYear))]
         public IHttpActionResult AddYear(TblAccademicYear jsonData)
         {
-           
                try
             {
                 if (jsonData == null)
@@ -45,6 +44,67 @@ namespace WinfocusLearningApp.WebApi
             
             
         }
+        [Route("api/ManagementApi/UpdateAcYear")]
+        [ResponseType(typeof(TblAccademicYear))]
+        public IHttpActionResult UpdateAcYear(TblAccademicYear jsonData)
+        {
+
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to add the year to the database
+                TblAccademicYear inf = new TblAccademicYear();
+                inf = winfocus_CS.TblAccademicYears.Find(jsonData.Id);
+                inf.AccademicYear = jsonData.AccademicYear;
+                inf.IsDeleted = 0;
+                inf.ModifiedBy= 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime= DateTime.UtcNow;
+               winfocus_CS.TblAccademicYears.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Year updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+
+
+        }
+
+        [Route("api/ManagementApi/DltAcYear")]
+        [ResponseType(typeof(TblAccademicYear))]
+        public IHttpActionResult DltAcYear(TblAccademicYear jsonData)
+        {
+
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to add the year to the database
+                TblAccademicYear inf = new TblAccademicYear();
+                inf = winfocus_CS.TblAccademicYears.Find(jsonData.Id);
+                inf.IsDeleted = 1;
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblAccademicYears.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Year updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+
+
+
+        }
         [HttpGet]
         [Route("api/ManagementApi/FetchAccademicYear")]
         public IHttpActionResult FetchAccademicYear()
@@ -53,7 +113,7 @@ namespace WinfocusLearningApp.WebApi
 
             try
             {
-               var ayList= winfocus_CS.TblAccademicYears.ToList();
+               var ayList= winfocus_CS.TblAccademicYears.Where(x=>x.IsDeleted==0).ToList();
                 return Ok(ayList);
             }
             catch (Exception ex)
@@ -63,13 +123,7 @@ namespace WinfocusLearningApp.WebApi
 
 
         }
-        [HttpGet]
-        [Route("api/ManagementApi/AccademicYearList")]
-        public IHttpActionResult AccademicYearList()
-        {
-            // Your logic to fetch user data
-            return Ok(new { name = "John", age = 30 });
-        }
+       
         [HttpPost]
         [Route("api/ManagementApi/ListAccademicYear")]
         public IHttpActionResult ListAccademicYear()
