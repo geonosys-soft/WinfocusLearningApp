@@ -21,7 +21,11 @@ namespace WinfocusLearningApp.Controllers
             return RedirectToAction("AllUsers");
         }
 
-        public ActionResult AllUsers() { return View(); }
+        public ActionResult AllUsers() { 
+        //code updated
+            return View();
+        }
+
         public ActionResult CreateUsers() { return View(); }
         public ActionResult AcademicYear(int?id) { 
 
