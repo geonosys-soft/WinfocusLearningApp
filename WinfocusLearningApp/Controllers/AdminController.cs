@@ -37,7 +37,7 @@ namespace WinfocusLearningApp.Controllers
                 ViewBag.ErrorMessage = TempData["ErrorMessage"].ToString();
             }
 
-            TblMaterialModel inf = new TblMaterialModel();
+            MaterialModel inf = new MaterialModel();
 
             if (id == null)
             {

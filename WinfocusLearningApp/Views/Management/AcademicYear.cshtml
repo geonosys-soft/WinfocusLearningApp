@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WinfocusLearningApp.DataEntity.TblAccademicYear
+@{
     ViewBag.Title = "Academic Year Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -305,13 +306,16 @@
     <!-- Insert Form (shown by default) -->
     <div id="insert-form" class="form-container">
         <h3><i class="fas fa-plus-circle"></i> Add Academic Year</h3>
-        <div class="form-group">
-            <label for="insert-year">Academic Year:</label>
-            <input type="text" id="insert-year" class="form-control" placeholder="e.g. 2023-2024" required>
-        </div>
-        <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
-            <i class="fas fa-check"></i> Submit
-        </button>
+      
+            <div class="form-group">
+                <label for="AccademicYear">Academic Year:</label>
+                <input type="text" id="AccademicYear" class="form-control" placeholder="e.g. 2023-2024" required>
+            </div>
+            <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
+                <i class="fas fa-check"></i> Submit
+            </button>
+       
+
     </div>
 
     <!-- Edit Form -->
@@ -322,9 +326,7 @@
             <label for="edit-year-select">Select Year:</label>
             <select id="edit-year-select" class="form-control" required>
                 <option value="">-- Select Year --</option>
-                <option value="2023-2024">2023-2024</option>
-                <option value="2022-2023">2022-2023</option>
-                <option value="2021-2022">2021-2022</option>
+                
             </select>
         </div>
         <div class="form-group">
@@ -344,9 +346,7 @@
             <label for="delete-year">Select Year to Delete:</label>
             <select id="delete-year" class="form-control" required>
                 <option value="">-- Select Year --</option>
-                <option value="2023-2024">2023-2024</option>
-                <option value="2022-2023">2022-2023</option>
-                <option value="2021-2022">2021-2022</option>
+                
             </select>
         </div>
         <div class="form-group">
@@ -380,7 +380,7 @@
         // Show the selected form
         const form = document.getElementById(formType + '-form');
         form.style.display = 'block';
-
+        loadEditdata();
         // Scroll to form
         form.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
@@ -391,13 +391,49 @@
         document.getElementById('insert-form').style.display = 'block';
     }
 
+   
+
+
     // Delete confirmation toggle
     document.getElementById('confirm-delete').addEventListener('change', function () {
         document.querySelector('#delete-form .btn').disabled = !this.checked;
     });
+    //load data to form
+    async function loadEditdata() {
+        
+        fetch('/api/ManagementApi/FetchAccademicYear')  // Adjust path if needed
+            .then(response => response.json())
+            .then(data => {
+               // const dropdown1 = document.getElementById("edit-year-select");
+               // const dropdown2 = document.getElementById("delete-year");
+                const dropdownIds = ["edit-year-select", "delete-year"];
+                dropdownIds.forEach(id => {
+                    const dropdown = document.getElementById(id);
 
+                    // Clear previous options
+                    dropdown.innerHTML = '';
+
+                    // Add default option
+                    const defaultOption = document.createElement("option");
+                    defaultOption.value = '';
+                    defaultOption.textContent = '-- Select Department --';
+                    dropdown.appendChild(defaultOption);
+
+                    // Add options from API
+                    data.forEach(acyr => {
+                        const option = document.createElement("option");
+                        option.value = acyr.Id;
+                        option.textContent = acyr.AccademicYear;
+                        dropdown.appendChild(option);
+                    });
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching departments:', error);
+            });
+    }
     // Submit form function
-    function submitForm(formType) {
+    async function submitForm(formType) {
         let stream, year, message;
         const notification = document.getElementById('notification');
         const notificationIcon = notification.querySelector('.notification-icon');
@@ -405,48 +441,102 @@
 
         switch (formType) {
             case 'insert':
-                stream = document.getElementById('stream').value.trim();
-                year = document.getElementById('insert-year').value.trim();
-                if (!stream || !year) {
+                
+                year = document.getElementById('AccademicYear').value.trim();
+                if (!year) {
                     showNotification('Please select stream and enter academic year', 'error');
                     return;
                 }
-                message = `Academic year "${year}" for ${stream} added successfully!`;
-                showNotification(message, 'success');
-                document.getElementById('stream').value = '';
-                document.getElementById('insert-year').value = '';
+                else {
+                   
+                    const response = await fetch("/api/ManagementApi/AddYear", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ AccademicYear: year })
+                    });
+
+                    if (!response.ok) {
+                        showNotification('Something went wrong', 'error');
+                        return;
+                        
+                    }
+                    showNotification('Please select addcode academic year', 'success');
+                    message = `Academic year "${year}" added successfully!`;
+                    showNotification(message, 'success');
+                }
+                
+                document.getElementById('AccademicYear').value = '';
                 break;
 
             case 'edit':
-                stream = document.getElementById('edit-stream').value.trim();
+               // stream = document.getElementById('edit-stream').value.trim();
                 const selectedYear = document.getElementById('edit-year-select').value;
+               
                 year = document.getElementById('edit-new-year').value.trim();
-                if (!stream || !selectedYear || !year) {
+                if (!selectedYear || !year) {
                     showNotification('Please fill all fields', 'error');
                     return;
                 }
-                message = `Academic year changed from "${selectedYear}" to "${year}" for ${stream}`;
-                showNotification(message, 'success');
-                document.getElementById('edit-stream').value = '';
-                document.getElementById('edit-year-select').value = '';
-                document.getElementById('edit-new-year').value = '';
-                hideForm('edit');
+                else {
+                    const response = await fetch("/api/ManagementApi/UpdateAcYear", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ Id:selectedYear,AccademicYear: year })
+                    });
+
+                    if (!response.ok) {
+                        showNotification('Something went wrong', 'error');
+                        return;
+
+                    }
+                    
+                    const drpYear = document.getElementById("edit-year-select");
+                    const selectYearText = drpYear.options[drpYear.selectedIndex].text;
+                    message = `Academic year changed from "${selectYearText}" to "${year}"`;
+                    showNotification(message, 'success');
+                    document.getElementById('edit-year-select').value = '';
+                    document.getElementById('edit-new-year').value = '';
+                    hideForm('edit');
+                }
+                
                 break;
 
             case 'delete':
-                stream = document.getElementById('delete-stream').value.trim();
                 year = document.getElementById('delete-year').value;
-                if (!stream || !year) {
+                if (!year) {
                     showNotification('Please select stream and year to delete', 'error');
                     return;
                 }
-                message = `Academic year "${year}" for ${stream} deleted successfully!`;
-                showNotification(message, 'success');
-                document.getElementById('delete-stream').value = '';
-                document.getElementById('delete-year').value = '';
-                document.getElementById('confirm-delete').checked = false;
-                document.querySelector('#delete-form .btn').disabled = true;
-                hideForm('delete');
+                else {
+
+                    const response = await fetch("/api/ManagementApi/DltAcYear/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ Id: year })
+                    });
+
+                    if (!response.ok) {
+                        showNotification('Something went wrong', 'error');
+                        return;
+
+                    }
+                    const drpYear = document.getElementById("delete-year");
+                    const selectYearText = drpYear.options[drpYear.selectedIndex].text;
+                    message = `Academic year "${selectYearText}" deleted successfully!`;
+                    showNotification(message, 'success');
+
+                    document.getElementById('delete-year').value = '';
+                    document.getElementById('confirm-delete').checked = false;
+                    document.querySelector('#delete-form .btn').disabled = true;
+                    hideForm('delete');
+                }
+                
                 break;
         }
     }
