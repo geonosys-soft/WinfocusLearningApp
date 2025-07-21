@@ -418,7 +418,14 @@
     document.getElementById('confirm-delete').addEventListener('change', function () {
         document.querySelector('#delete-form .btn').disabled = !this.checked;
     });
+    //edit-academic-year value change listener 
+    document.getElementById('edit-academic-year').addEventListener('change', function () {
+        showNotification('data changed', 'success');
+    });
 
+    document.addEventListener("DOMContentLoaded", function () {
+        loadAcademicYears();
+    });
     // Load academic years from database
     async function loadAcademicYears() {
         try {
@@ -459,7 +466,7 @@
             if (!yearId) return;
 
             try {
-                const response = await fetch(`/api/SyllabusApi/GetSyllabusByYear?yearId=${yearId}`);
+                const response = await fetch(`api/ManagementApi/FetchSyllabus/${yearId}`);
                 if (!response.ok) throw new Error('Failed to fetch syllabus');
 
                 const syllabi = await response.json();
@@ -538,14 +545,14 @@
                         return;
                     }
 
-                    const insertResponse = await fetch('/api/SyllabusApi/AddSyllabus', {
+                    const insertResponse = await fetch('/api/ManagementApi/AddSyllabus', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            AcademicYearId: yearId,
-                            Content: syllabusContent
+                            ACID: yearId,
+                            Name: syllabusContent
                         })
                     });
 

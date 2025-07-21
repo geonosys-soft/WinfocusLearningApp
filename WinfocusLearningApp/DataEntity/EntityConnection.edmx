@@ -338,15 +338,9 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblSubject' does not have a primar
           <Property Name="ModifiedTime" Type="datetime" />
           <Property Name="Description" Type="varchar(max)" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Winfocus_Db.dbo.TblSyllabus' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TblSyllabus">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="CreatedBy" />
-            <PropertyRef Name="IsDeleted" />
-            <PropertyRef Name="ModifiedBy" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
@@ -426,6 +420,7 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblSyllabus' does not have a prima
           <EntitySet Name="TblStudent_Fee_Payment_Details" EntityType="Self.TblStudent_Fee_Payment_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblStudent_Parent_Basic" EntityType="Self.TblStudent_Parent_Basic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblSTudentBasicDetails" EntityType="Self.TblSTudentBasicDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblSyllabus" EntityType="Self.TblSyllabus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblCourse" EntityType="Self.TblCourse" store:Type="Tables" store:Schema="dbo">
@@ -588,20 +583,6 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblSyllabus' does not have a prima
     [TblSubject].[Description] AS [Description]
     FROM [dbo].[TblSubject] AS [TblSubject]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="TblSyllabus" EntityType="Self.TblSyllabus" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TblSyllabus].[Id] AS [Id], 
-    [TblSyllabus].[Name] AS [Name], 
-    [TblSyllabus].[ACID] AS [ACID], 
-    [TblSyllabus].[CreatedBy] AS [CreatedBy], 
-    [TblSyllabus].[CreatedDate] AS [CreatedDate], 
-    [TblSyllabus].[IsDeleted] AS [IsDeleted], 
-    [TblSyllabus].[DeletedDate] AS [DeletedDate], 
-    [TblSyllabus].[ModifiedBy] AS [ModifiedBy], 
-    [TblSyllabus].[ModifiedTime] AS [ModifiedTime], 
-    [TblSyllabus].[Description] AS [Description]
-    FROM [dbo].[TblSyllabus] AS [TblSyllabus]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_dbo_UserRoles_dbo_Roles_RoleId" Association="Self.FK_dbo_UserRoles_dbo_Roles_RoleId">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="UserRoles" EntitySet="UserRoles" />
@@ -631,13 +612,13 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblSyllabus' does not have a prima
           <EntitySet Name="TblStudent_Fee_receipt" EntityType="Winfocus_DbModel.TblStudent_Fee_receipt" />
           <EntitySet Name="TblStudent_Fee_Structure" EntityType="Winfocus_DbModel.TblStudent_Fee_Structure" />
           <EntitySet Name="TblSubjects" EntityType="Winfocus_DbModel.TblSubject" />
-          <EntitySet Name="TblSyllabus" EntityType="Winfocus_DbModel.TblSyllabu" />
           <EntitySet Name="Roles" EntityType="Winfocus_DbModel.Role" />
           <EntitySet Name="Users" EntityType="Winfocus_DbModel.User" />
           <AssociationSet Name="UserRoles" Association="Winfocus_DbModel.UserRoles">
             <End Role="Role" EntitySet="Roles" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="TblSyllabus" EntityType="Winfocus_DbModel.TblSyllabu" />
         </EntityContainer>
         <EntityType Name="TblAccademicYear">
           <Key>
@@ -945,25 +926,6 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblSyllabus' does not have a prima
           <Property Name="ModifiedTime" Type="DateTime" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="TblSyllabu">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="CreatedBy" />
-            <PropertyRef Name="IsDeleted" />
-            <PropertyRef Name="ModifiedBy" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ACID" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
-          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
-          <Property Name="ModifiedTime" Type="DateTime" Precision="3" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleId" />
@@ -1001,6 +963,21 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblSyllabus' does not have a prima
           <End Type="Winfocus_DbModel.Role" Role="Role" Multiplicity="*" />
           <End Type="Winfocus_DbModel.User" Role="User" Multiplicity="*" />
         </Association>
+        <EntityType Name="TblSyllabu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ACID" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedTime" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1288,22 +1265,6 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblSyllabus' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TblSyllabus">
-            <EntityTypeMapping TypeName="Winfocus_DbModel.TblSyllabu">
-              <MappingFragment StoreEntitySet="TblSyllabus">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ModifiedTime" ColumnName="ModifiedTime" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ACID" ColumnName="ACID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="Winfocus_DbModel.Role">
               <MappingFragment StoreEntitySet="Roles">
@@ -1345,6 +1306,22 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblSyllabus' does not have a prima
               <ScalarProperty Name="RoleId" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="TblSyllabus">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblSyllabu">
+              <MappingFragment StoreEntitySet="TblSyllabus">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ModifiedTime" ColumnName="ModifiedTime" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ACID" ColumnName="ACID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
