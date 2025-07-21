@@ -40,8 +40,8 @@ namespace WinfocusLearningApp.DataEntity
         public virtual DbSet<TblStudent_Fee_receipt> TblStudent_Fee_receipt { get; set; }
         public virtual DbSet<TblStudent_Fee_Structure> TblStudent_Fee_Structure { get; set; }
         public virtual DbSet<TblSubject> TblSubjects { get; set; }
-        public virtual DbSet<TblSyllabu> TblSyllabus { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<TblSyllabu> TblSyllabus { get; set; }
     }
 }

@@ -140,6 +140,110 @@ namespace WinfocusLearningApp.WebApi
 
 
         }
+        //Syllabus Management APIs
+        [Route("api/ManagementApi/AddSyllabus")]
+        [ResponseType(typeof(TblSyllabu))]
+        public IHttpActionResult AddSyllabus(TblSyllabu jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to add the syllabus to the database
+                TblSyllabu inf = new TblSyllabu();
+                inf.Name = jsonData.Name;
+                inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
+                inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.CreatedDate = DateTime.UtcNow;
+                inf.IsDeleted = 0;
+                winfocus_CS.TblSyllabus.Add(inf);
+                winfocus_CS.SaveChanges();
+                return Ok("Syllabus added successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/ManagementApi/UpdateSyllabus")]
+        [ResponseType(typeof(TblSyllabu))]
+        public IHttpActionResult UpdateSyllabus(TblSyllabu jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to update the syllabus in the database
+                TblSyllabu inf = winfocus_CS.TblSyllabus.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.Name = jsonData.Name;
+                inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
+                inf.IsDeleted = 0;
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblSyllabus.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Syllabus updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [Route("api/ManagementApi/DltSyllabus")]
+        [ResponseType(typeof(TblSyllabu))]
+        public IHttpActionResult DltSyllabus(TblSyllabu jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to delete the syllabus in the database
+                TblSyllabu inf = winfocus_CS.TblSyllabus.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.IsDeleted = 1;
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblSyllabus.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Syllabus deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [Route("api/ManagementApi/FetchSyllabus/{Id}")]
+        [HttpGet]
+        public IHttpActionResult FetchSyllabus(int Id)
+        {
+            try
+            {
+                var syllabusList = winfocus_CS.TblSyllabus.Where(x => x.IsDeleted == 0 && x.ACID== Id).ToList();
+                return Ok(syllabusList);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+
 
         //Grade Management APIs
         [Route("api/ManagementApi/AddGrade")]

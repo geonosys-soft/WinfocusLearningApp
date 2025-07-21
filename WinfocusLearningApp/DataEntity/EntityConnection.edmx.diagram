@@ -20,10 +20,10 @@
         <EntityTypeShape EntityType="Winfocus_DbModel.TblStudent_Fee_receipt" Width="1.5" PointX="11.75" PointY="5.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblStudent_Fee_Structure" Width="1.5" PointX="11.75" PointY="9.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblSubject" Width="1.5" PointX="13.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Winfocus_DbModel.TblSyllabu" Width="1.5" PointX="13.75" PointY="5.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.Role" Width="1.5" PointX="12.375" PointY="15.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.User" Width="1.5" PointX="14.625" PointY="14.125" />
         <AssociationConnector Association="Winfocus_DbModel.UserRoles" />
+        <EntityTypeShape EntityType="Winfocus_DbModel.TblSyllabu" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
