@@ -400,9 +400,9 @@
         form.style.display = 'block';
         loadAcademicYears();
 
-        if (formType === 'edit' || formType === 'delete') {
+       /* if (formType === 'edit' || formType === 'delete') {
             loadSyllabusData();
-        }
+        }*/
 
         // Scroll to form
         form.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -418,14 +418,63 @@
     document.getElementById('confirm-delete').addEventListener('change', function () {
         document.querySelector('#delete-form .btn').disabled = !this.checked;
     });
-    //edit-academic-year value change listener 
-    document.getElementById('edit-academic-year').addEventListener('change', function () {
-        showNotification('data changed', 'success');
-    });
+   
+
 
     document.addEventListener("DOMContentLoaded", function () {
         loadAcademicYears();
     });
+
+    //edit-academic-year value change listener 
+    document.getElementById('edit-academic-year').addEventListener('change', async function () {
+        const yearId = this.value;
+        if (!yearId) return;
+
+        try {
+            const response = await fetch(`/api/ManagementApi/FetchSyllabus/${yearId}`);
+            if (!response.ok) throw new Error('Failed to fetch syllabus');
+
+            const syllabi = await response.json();
+            const dropdown = document.getElementById('edit-syllabus-select');
+            dropdown.innerHTML = '<option value="">-- Select Syllabus --</option>';
+
+            syllabi.forEach(syllabus => {
+                const option = document.createElement('option');
+                option.value = syllabus.Id;
+                option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                dropdown.appendChild(option);
+            });
+        } catch (error) {
+           // console.error('Error loading syllabus:', error);
+            showNotification('Failed to load syllabus', 'error');
+        }
+    });
+
+    //delete-academic-year value change listener
+    document.getElementById('delete-academic-year').addEventListener('change', async function () {
+        const yearId = this.value;
+        if (!yearId) return;
+
+        try {
+            const response = await fetch(`/api/ManagementApi/FetchSyllabus/${yearId}`);
+            if (!response.ok) throw new Error('Failed to fetch syllabus');
+
+            const syllabi = await response.json();
+            const dropdown = document.getElementById('delete-syllabus-select');
+            dropdown.innerHTML = '<option value="">-- Select Syllabus --</option>';
+
+            syllabi.forEach(syllabus => {
+                const option = document.createElement('option');
+                option.value = syllabus.Id;
+                option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                dropdown.appendChild(option);
+            });
+        } catch (error) {
+            //console.error('Error loading syllabus:', error);
+            showNotification('Failed to load syllabus', 'error');
+        }
+    });
+
     // Load academic years from database
     async function loadAcademicYears() {
         try {
@@ -459,73 +508,7 @@
     }
 
     // Load syllabus data when academic year is selected (for edit/delete)
-    async function loadSyllabusData() {
-        // Add event listeners to academic year dropdowns in edit and delete forms
-        document.getElementById('edit-academic-year').addEventListener('change', async function () {
-            const yearId = this.value;
-            if (!yearId) return;
-
-            try {
-                const response = await fetch(`api/ManagementApi/FetchSyllabus/${yearId}`);
-                if (!response.ok) throw new Error('Failed to fetch syllabus');
-
-                const syllabi = await response.json();
-                const dropdown = document.getElementById('edit-syllabus-select');
-                dropdown.innerHTML = '<option value="">-- Select Syllabus --</option>';
-
-                syllabi.forEach(syllabus => {
-                    const option = document.createElement('option');
-                    option.value = syllabus.Id;
-                    option.textContent = syllabus.Title || syllabus.Content.substring(0, 50) + '...';
-                    dropdown.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Error loading syllabus:', error);
-                showNotification('Failed to load syllabus', 'error');
-            }
-        });
-
-        document.getElementById('delete-academic-year').addEventListener('change', async function () {
-            const yearId = this.value;
-            if (!yearId) return;
-
-            try {
-                const response = await fetch(`/api/SyllabusApi/GetSyllabusByYear?yearId=${yearId}`);
-                if (!response.ok) throw new Error('Failed to fetch syllabus');
-
-                const syllabi = await response.json();
-                const dropdown = document.getElementById('delete-syllabus-select');
-                dropdown.innerHTML = '<option value="">-- Select Syllabus --</option>';
-
-                syllabi.forEach(syllabus => {
-                    const option = document.createElement('option');
-                    option.value = syllabus.Id;
-                    option.textContent = syllabus.Title || syllabus.Content.substring(0, 50) + '...';
-                    dropdown.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Error loading syllabus:', error);
-                showNotification('Failed to load syllabus', 'error');
-            }
-        });
-
-        // Add event listener to edit syllabus dropdown to load content
-        document.getElementById('edit-syllabus-select').addEventListener('change', async function () {
-            const syllabusId = this.value;
-            if (!syllabusId) return;
-
-            try {
-                const response = await fetch(`/api/SyllabusApi/GetSyllabusById?id=${syllabusId}`);
-                if (!response.ok) throw new Error('Failed to fetch syllabus content');
-
-                const syllabus = await response.json();
-                document.getElementById('edit-syllabus-text').value = syllabus.Content;
-            } catch (error) {
-                console.error('Error loading syllabus content:', error);
-                showNotification('Failed to load syllabus content', 'error');
-            }
-        });
-    }
+   
 
     // Submit form function
     async function submitForm(formType) {
@@ -576,15 +559,15 @@
                         return;
                     }
 
-                    const editResponse = await fetch('/api/SyllabusApi/UpdateSyllabus', {
+                    const editResponse = await fetch('/api/ManagementApi/UpdateSyllabus', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
                             Id: syllabusId,
-                            AcademicYearId: editYearId,
-                            Content: newContent
+                            ACID: editYearId,
+                            Name: newContent
                         })
                     });
 
@@ -608,7 +591,7 @@
                         return;
                     }
 
-                    const deleteResponse = await fetch('/api/SyllabusApi/DeleteSyllabus', {
+                    const deleteResponse = await fetch('/api/ManagementApi/DltSyllabus', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

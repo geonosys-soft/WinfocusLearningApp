@@ -230,11 +230,11 @@ namespace WinfocusLearningApp.WebApi
         }
         [Route("api/ManagementApi/FetchSyllabus/{Id}")]
         [HttpGet]
-        public IHttpActionResult FetchSyllabus(int yearId)
+        public IHttpActionResult FetchSyllabus(int Id)
         {
             try
             {
-                var syllabusList = winfocus_CS.TblSyllabus.Where(x => x.IsDeleted == 0 && x.ACID== yearId).ToList();
+                var syllabusList = winfocus_CS.TblSyllabus.Where(x => x.IsDeleted == 0 && x.ACID== Id).ToList();
                 return Ok(syllabusList);
             }
             catch (Exception ex)
