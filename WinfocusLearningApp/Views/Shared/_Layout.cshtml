@@ -6,9 +6,7 @@
     <title>@ViewBag.Title  Winfocus</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-
 </head>
 <body>
     <div class="sidebar">
@@ -31,35 +29,6 @@
                     </a>
                     <i class='bx bxs-chevron-down arrow'></i>
                 </div>
-                @*<ul class="sub-menu">
-                        <li><a class="link_name" href="#">Management</a></li>
-                        <li><a href="#">All Users</a></li>
-                        <li><a href="#">Create users</a></li>
-                        <li><a href="#">Academic Year</a></li>
-                        <li><a href="#">Class Management</a></li>
-                        <li><a href="#">Stream</a></li>
-                        <li><a href="#">Course</a></li>
-                        <li><a href="#">Subject</a></li>
-                        <li><a href="#">Chapter</a></li>
-                        <li><a href="#">Sub-chapter</a></li>
-                        <li><a href="#">Module</a></li>
-                        <li><a href="#">Note Type</a></li>
-                        <li><a href="#">School State</a></li>
-                        <li><a href="#">District</a></li>
-                        <li><a href="#">School Details</a></li>
-                        <li><a href="#">Create Group</a></li>
-                        <li><a href="#">Manage Group</a></li>
-                        <li><a href="#">Course fee</a></li>
-                        <li><a href="#">Request call back</a></li>
-                        <li><a href="#">Student Reference</a></li>
-                        <li><a href="#">Create Lesson Summery</a></li>
-                        <li><a href="#">Syllabus Creation</a></li>
-                        <li><a href="#">Add meeting</a></li>
-                        <li><a href="#">Time table</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Support Ticket</a></li>
-                        <li><a href="#">Complaints</a></li>
-                    </ul>*@
                 <ul class="sub-menu">
                     <li><a class="link_name" href="#">Management</a></li>
                     <li><a href="@Url.Action("AllUsers", "Management", new { area = "Admin" })">All Users</a></li>
@@ -193,7 +162,7 @@
             @RenderBody()
         </div>
     </section>
-    ...
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

@@ -1,8 +1,957 @@
-﻿
+﻿@model WinfocusLearningApp.DataEntity.TblSubject
 @{
-    ViewBag.Title = "Subject";
+    ViewBag.Title = "Subject Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Subject</h2>
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --primary-hover: #3a56d4;
+        --secondary-color: #3f37c9;
+        --danger-color: #f72585;
+        --danger-hover: #e5177b;
+        --success-color: #4cc9f0;
+        --success-hover: #2fb5e0;
+        --text-color: #2b2d42;
+        --light-bg: #f8f9fa;
+    }
 
+    body {
+        background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text-color);
+        min-height: 100vh;
+    }
+
+    .top-bar {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 20px 0;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .top-bar::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4cc9f0, #f72585, #7209b7);
+        }
+
+        .top-bar h1 {
+            margin: 0;
+            padding: 0 30px;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .action-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+    }
+
+    .action-box {
+        background: white;
+        border-radius: 12px;
+        padding: 40px 30px;
+        width: 280px;
+        text-align: center;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        overflow: hidden;
+        border: none;
+    }
+
+        .action-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .action-box.insert {
+            border-top: 4px solid var(--success-color);
+        }
+
+        .action-box.edit {
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .action-box.delete {
+            border-top: 4px solid var(--danger-color);
+        }
+
+    .action-icon {
+        font-size: 56px;
+        margin-bottom: 20px;
+        transition: transform 0.3s;
+    }
+
+    .action-box:hover .action-icon {
+        transform: scale(1.1);
+    }
+
+    .action-title {
+        font-weight: 600;
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .action-desc {
+        color: #6c757d;
+        font-size: 16px;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        animation: fadeIn 0.5s ease-out;
+        border-top: 4px solid var(--primary-color);
+    }
+
+    #insert-form {
+        display: block;
+    }
+
+    #edit-form, #delete-form {
+        display: none;
+    }
+
+    .form-container h3 {
+        margin-top: 0;
+        color: var(--primary-color);
+        font-size: 24px;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+        .form-container h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+    .btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+    .btn-submit {
+        background-color: var(--success-color);
+    }
+
+        .btn-submit:hover {
+            background-color: var(--success-hover);
+        }
+
+    .btn-delete {
+        background-color: var(--danger-color);
+    }
+
+        .btn-delete:hover {
+            background-color: var(--danger-hover);
+        }
+
+    .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #6c757d;
+        transition: color 0.3s;
+    }
+
+        .close-btn:hover {
+            color: var(--danger-color);
+        }
+
+    .floating-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        z-index: 1000;
+        transform: translateX(150%);
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+        .floating-notification.show {
+            transform: translateX(0);
+        }
+
+    .notification-icon {
+        margin-right: 10px;
+        font-size: 24px;
+    }
+
+    .notification-success {
+        border-left: 4px solid var(--success-color);
+    }
+
+    .notification-error {
+        border-left: 4px solid var(--danger-color);
+    }
+</style>
+
+<div class="top-bar">
+    <h1><i class="fas fa-book-open"></i> Subject Management</h1>
+</div>
+
+<div class="container">
+    <div class="action-container">
+        <div class="action-box insert" onclick="showForm('insert')">
+            <div class="action-icon">➕</div>
+            <div class="action-title">Add Subject</div>
+            <div class="action-desc">Create a new subject record</div>
+        </div>
+
+        <div class="action-box edit" onclick="showForm('edit')">
+            <div class="action-icon">✏️</div>
+            <div class="action-title">Edit Subject</div>
+            <div class="action-desc">Modify existing subject</div>
+        </div>
+
+        <div class="action-box delete" onclick="showForm('delete')">
+            <div class="action-icon">🗑️</div>
+            <div class="action-title">Remove Subject</div>
+            <div class="action-desc">Delete subject record</div>
+        </div>
+    </div>
+
+    <!-- Insert Form (shown by default) -->
+    <div id="insert-form" class="form-container">
+        <h3><i class="fas fa-plus-circle"></i> Add Subject</h3>
+        <div class="form-group">
+            <label for="academic-year">Academic Year:</label>
+            <select id="academic-year" class="form-control" required>
+                <option value="">-- Select Academic Year --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="syllabus">Syllabus:</label>
+            <select id="syllabus" class="form-control" required>
+                <option value="">-- Select Syllabus --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="stream">Stream:</label>
+            <select id="stream" class="form-control" required>
+                <option value="">-- Select Stream --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="class">Class:</label>
+            <select id="class" class="form-control" required>
+                <option value="">-- Select Class --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="course">Course:</label>
+            <select id="course" class="form-control" required>
+                <option value="">-- Select Course --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="subject-name">Subject Name:</label>
+            <input type="text" id="subject-name" class="form-control" placeholder="Enter subject name" required>
+        </div>
+        <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
+            <i class="fas fa-check"></i> Save
+        </button>
+    </div>
+
+    <!-- Edit Form -->
+    <div id="edit-form" class="form-container">
+        <button class="close-btn" onclick="hideForm('edit')">×</button>
+        <h3><i class="fas fa-edit"></i> Edit Subject</h3>
+        <div class="form-group">
+            <label for="edit-academic-year">Academic Year:</label>
+            <select id="edit-academic-year" class="form-control" required>
+                <option value="">-- Select Academic Year --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="edit-syllabus">Syllabus:</label>
+            <select id="edit-syllabus" class="form-control" required>
+                <option value="">-- Select Syllabus --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="edit-stream">Stream:</label>
+            <select id="edit-stream" class="form-control" required>
+                <option value="">-- Select Stream --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="edit-class">Class:</label>
+            <select id="edit-class" class="form-control" required>
+                <option value="">-- Select Class --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="edit-course">Course:</label>
+            <select id="edit-course" class="form-control" required>
+                <option value="">-- Select Course --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="edit-subject-select">Subject:</label>
+            <select id="edit-subject-select" class="form-control" required>
+                <option value="">-- Select Subject --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="edit-subject-name">New Subject Name:</label>
+            <input type="text" id="edit-subject-name" class="form-control" placeholder="Enter new subject name" required>
+        </div>
+        <button type="button" class="btn" onclick="submitForm('edit')">
+            <i class="fas fa-save"></i> Update
+        </button>
+    </div>
+
+    <!-- Delete Form -->
+    <div id="delete-form" class="form-container">
+        <button class="close-btn" onclick="hideForm('delete')">×</button>
+        <h3><i class="fas fa-trash-alt"></i> Delete Subject</h3>
+        <div class="form-group">
+            <label for="delete-academic-year">Academic Year:</label>
+            <select id="delete-academic-year" class="form-control" required>
+                <option value="">-- Select Academic Year --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="delete-syllabus">Syllabus:</label>
+            <select id="delete-syllabus" class="form-control" required>
+                <option value="">-- Select Syllabus --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="delete-stream">Stream:</label>
+            <select id="delete-stream" class="form-control" required>
+                <option value="">-- Select Stream --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="delete-class">Class:</label>
+            <select id="delete-class" class="form-control" required>
+                <option value="">-- Select Class --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="delete-course">Course:</label>
+            <select id="delete-course" class="form-control" required>
+                <option value="">-- Select Course --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="delete-subject-select">Subject:</label>
+            <select id="delete-subject-select" class="form-control" required>
+                <option value="">-- Select Subject --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="confirm-delete" required> I confirm I want to delete this subject
+            </label>
+        </div>
+        <button type="button" class="btn btn-delete" onclick="submitForm('delete')" disabled>
+            <i class="fas fa-trash"></i> Delete
+        </button>
+    </div>
+</div>
+
+<!-- Notification -->
+<div id="notification" class="floating-notification">
+    <div class="notification-icon"></div>
+    <div class="notification-message"></div>
+</div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script>
+    // Show form function
+    function showForm(formType) {
+        // Hide all forms first
+        document.querySelectorAll('.form-container').forEach(form => {
+            form.style.display = 'none';
+        });
+
+        // Show the selected form
+        const form = document.getElementById(formType + '-form');
+        form.style.display = 'block';
+
+        // Load initial data
+        loadAcademicYears();
+        loadStreams();
+        loadClasses();
+        loadCourses();
+
+        if (formType === 'edit' || formType === 'delete') {
+            // Additional setup for edit/delete forms
+            setupSubjectDropdowns();
+        }
+
+        // Scroll to form
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Hide form function
+    function hideForm(formType) {
+        document.getElementById(formType + '-form').style.display = 'none';
+        document.getElementById('insert-form').style.display = 'block';
+    }
+
+    // Delete confirmation toggle
+    document.getElementById('confirm-delete').addEventListener('change', function () {
+        document.querySelector('#delete-form .btn').disabled = !this.checked;
+    });
+
+    // Load academic years from database
+    async function loadAcademicYears() {
+        try {
+            const response = await fetch('/api/ManagementApi/FetchAccademicYear');
+            if (!response.ok) throw new Error('Failed to fetch academic years');
+
+            const data = await response.json();
+
+            // Populate academic year dropdowns
+            const yearDropdowns = [
+                'academic-year',
+                'edit-academic-year',
+                'delete-academic-year'
+            ];
+
+            yearDropdowns.forEach(dropdownId => {
+                const dropdown = document.getElementById(dropdownId);
+                dropdown.innerHTML = '<option value="">-- Select Academic Year --</option>';
+
+                data.forEach(year => {
+                    const option = document.createElement('option');
+                    option.value = year.Id;
+                    option.textContent = year.AccademicYear;
+                    dropdown.appendChild(option);
+                });
+            });
+        } catch (error) {
+            console.error('Error loading academic years:', error);
+            showNotification('Failed to load academic years', 'error');
+        }
+    }
+
+    // Load streams from database
+    async function loadStreams() {
+        try {
+            const response = await fetch('/api/ManagementApi/FetchStreams');
+            if (!response.ok) throw new Error('Failed to fetch streams');
+
+            const data = await response.json();
+
+            // Populate stream dropdowns
+            const streamDropdowns = [
+                'stream',
+                'edit-stream',
+                'delete-stream'
+            ];
+
+            streamDropdowns.forEach(dropdownId => {
+                const dropdown = document.getElementById(dropdownId);
+                dropdown.innerHTML = '<option value="">-- Select Stream --</option>';
+
+                data.forEach(stream => {
+                    const option = document.createElement('option');
+                    option.value = stream.Id;
+                    option.textContent = stream.StreamName;
+                    dropdown.appendChild(option);
+                });
+            });
+        } catch (error) {
+            console.error('Error loading streams:', error);
+            showNotification('Failed to load streams', 'error');
+        }
+    }
+
+    // Load classes from database
+    async function loadClasses() {
+        try {
+            const response = await fetch('/api/ManagementApi/FetchClasses');
+            if (!response.ok) throw new Error('Failed to fetch classes');
+
+            const data = await response.json();
+
+            // Populate class dropdowns
+            const classDropdowns = [
+                'class',
+                'edit-class',
+                'delete-class'
+            ];
+
+            classDropdowns.forEach(dropdownId => {
+                const dropdown = document.getElementById(dropdownId);
+                dropdown.innerHTML = '<option value="">-- Select Class --</option>';
+
+                data.forEach(cls => {
+                    const option = document.createElement('option');
+                    option.value = cls.Id;
+                    option.textContent = cls.ClassName;
+                    dropdown.appendChild(option);
+                });
+            });
+        } catch (error) {
+            console.error('Error loading classes:', error);
+            showNotification('Failed to load classes', 'error');
+        }
+    }
+
+    // Load courses from database
+    async function loadCourses() {
+        try {
+            const response = await fetch('/api/ManagementApi/FetchCourses');
+            if (!response.ok) throw new Error('Failed to fetch courses');
+
+            const data = await response.json();
+
+            // Populate course dropdowns
+            const courseDropdowns = [
+                'course',
+                'edit-course',
+                'delete-course'
+            ];
+
+            courseDropdowns.forEach(dropdownId => {
+                const dropdown = document.getElementById(dropdownId);
+                dropdown.innerHTML = '<option value="">-- Select Course --</option>';
+
+                data.forEach(course => {
+                    const option = document.createElement('option');
+                    option.value = course.Id;
+                    option.textContent = course.CourseName;
+                    dropdown.appendChild(option);
+                });
+            });
+        } catch (error) {
+            console.error('Error loading courses:', error);
+            showNotification('Failed to load courses', 'error');
+        }
+    }
+
+    // Load syllabi when academic year is selected
+    function setupSyllabusDropdowns() {
+        // For insert form
+        document.getElementById('academic-year').addEventListener('change', async function() {
+            const yearId = this.value;
+            if (!yearId) return;
+
+            try {
+                const response = await fetch(`/api/SyllabusApi/GetSyllabusByYear?yearId=${yearId}`);
+                if (!response.ok) throw new Error('Failed to fetch syllabi');
+
+                const syllabi = await response.json();
+                const dropdown = document.getElementById('syllabus');
+                dropdown.innerHTML = '<option value="">-- Select Syllabus --</option>';
+
+                syllabi.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Title || syllabus.Content.substring(0, 50) + '...';
+                    dropdown.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading syllabi:', error);
+                showNotification('Failed to load syllabi', 'error');
+            }
+        });
+
+        // For edit form
+        document.getElementById('edit-academic-year').addEventListener('change', async function() {
+            const yearId = this.value;
+            if (!yearId) return;
+
+            try {
+                const response = await fetch(`/api/SyllabusApi/GetSyllabusByYear?yearId=${yearId}`);
+                if (!response.ok) throw new Error('Failed to fetch syllabi');
+
+                const syllabi = await response.json();
+                const dropdown = document.getElementById('edit-syllabus');
+                dropdown.innerHTML = '<option value="">-- Select Syllabus --</option>';
+
+                syllabi.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Title || syllabus.Content.substring(0, 50) + '...';
+                    dropdown.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading syllabi:', error);
+                showNotification('Failed to load syllabi', 'error');
+            }
+        });
+
+        // For delete form
+        document.getElementById('delete-academic-year').addEventListener('change', async function() {
+            const yearId = this.value;
+            if (!yearId) return;
+
+            try {
+                const response = await fetch(`/api/SyllabusApi/GetSyllabusByYear?yearId=${yearId}`);
+                if (!response.ok) throw new Error('Failed to fetch syllabi');
+
+                const syllabi = await response.json();
+                const dropdown = document.getElementById('delete-syllabus');
+                dropdown.innerHTML = '<option value="">-- Select Syllabus --</option>';
+
+                syllabi.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Title || syllabus.Content.substring(0, 50) + '...';
+                    dropdown.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading syllabi:', error);
+                showNotification('Failed to load syllabi', 'error');
+            }
+        });
+    }
+
+    // Setup subject dropdowns for edit and delete forms
+    function setupSubjectDropdowns() {
+        // For edit form
+        document.getElementById('edit-course').addEventListener('change', async function() {
+            const courseId = this.value;
+            if (!courseId) return;
+
+            try {
+                const response = await fetch(`/api/SubjectApi/GetSubjectsByCourse?courseId=${courseId}`);
+                if (!response.ok) throw new Error('Failed to fetch subjects');
+
+                const subjects = await response.json();
+                const dropdown = document.getElementById('edit-subject-select');
+                dropdown.innerHTML = '<option value="">-- Select Subject --</option>';
+
+                subjects.forEach(subject => {
+                    const option = document.createElement('option');
+                    option.value = subject.Id;
+                    option.textContent = subject.SubjectName;
+                    dropdown.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading subjects:', error);
+                showNotification('Failed to load subjects', 'error');
+            }
+        });
+
+        // For delete form
+        document.getElementById('delete-course').addEventListener('change', async function() {
+            const courseId = this.value;
+            if (!courseId) return;
+
+            try {
+                const response = await fetch(`/api/SubjectApi/GetSubjectsByCourse?courseId=${courseId}`);
+                if (!response.ok) throw new Error('Failed to fetch subjects');
+
+                const subjects = await response.json();
+                const dropdown = document.getElementById('delete-subject-select');
+                dropdown.innerHTML = '<option value="">-- Select Subject --</option>';
+
+                subjects.forEach(subject => {
+                    const option = document.createElement('option');
+                    option.value = subject.Id;
+                    option.textContent = subject.SubjectName;
+                    dropdown.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading subjects:', error);
+                showNotification('Failed to load subjects', 'error');
+            }
+        });
+
+        // Load subject details when selected in edit form
+        document.getElementById('edit-subject-select').addEventListener('change', async function() {
+            const subjectId = this.value;
+            if (!subjectId) return;
+
+            try {
+                const response = await fetch(`/api/SubjectApi/GetSubjectById?id=${subjectId}`);
+                if (!response.ok) throw new Error('Failed to fetch subject details');
+
+                const subject = await response.json();
+                document.getElementById('edit-subject-name').value = subject.SubjectName;
+            } catch (error) {
+                console.error('Error loading subject details:', error);
+                showNotification('Failed to load subject details', 'error');
+            }
+        });
+    }
+
+    // Submit form function
+    async function submitForm(formType) {
+        const notification = document.getElementById('notification');
+        const notificationIcon = notification.querySelector('.notification-icon');
+        const notificationMsg = notification.querySelector('.notification-message');
+        let message;
+
+        try {
+            switch (formType) {
+                case 'insert':
+                    const yearId = document.getElementById('academic-year').value;
+                    const syllabusId = document.getElementById('syllabus').value;
+                    const streamId = document.getElementById('stream').value;
+                    const classId = document.getElementById('class').value;
+                    const courseId = document.getElementById('course').value;
+                    const subjectName = document.getElementById('subject-name').value.trim();
+
+                    if (!yearId || !syllabusId || !streamId || !classId || !courseId || !subjectName) {
+                        showNotification('Please fill all fields', 'error');
+                        return;
+                    }
+
+                    const insertResponse = await fetch('/api/SubjectApi/AddSubject', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            AcademicYearId: yearId,
+                            SyllabusId: syllabusId,
+                            StreamId: streamId,
+                            ClassId: classId,
+                            CourseId: courseId,
+                            SubjectName: subjectName
+                        })
+                    });
+
+                    if (!insertResponse.ok) throw new Error('Failed to add subject');
+
+                    message = 'Subject added successfully!';
+                    showNotification(message, 'success');
+
+                    // Clear form
+                    document.getElementById('academic-year').value = '';
+                    document.getElementById('syllabus').value = '';
+                    document.getElementById('stream').value = '';
+                    document.getElementById('class').value = '';
+                    document.getElementById('course').value = '';
+                    document.getElementById('subject-name').value = '';
+                    break;
+
+                case 'edit':
+                    const editYearId = document.getElementById('edit-academic-year').value;
+                    const editSyllabusId = document.getElementById('edit-syllabus').value;
+                    const editStreamId = document.getElementById('edit-stream').value;
+                    const editClassId = document.getElementById('edit-class').value;
+                    const editCourseId = document.getElementById('edit-course').value;
+                    const subjectId = document.getElementById('edit-subject-select').value;
+                    const newSubjectName = document.getElementById('edit-subject-name').value.trim();
+
+                    if (!editYearId || !editSyllabusId || !editStreamId || !editClassId || !editCourseId || !subjectId || !newSubjectName) {
+                        showNotification('Please fill all fields', 'error');
+                        return;
+                    }
+
+                    const editResponse = await fetch('/api/SubjectApi/UpdateSubject', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            Id: subjectId,
+                            AcademicYearId: editYearId,
+                            SyllabusId: editSyllabusId,
+                            StreamId: editStreamId,
+                            ClassId: editClassId,
+                            CourseId: editCourseId,
+                            SubjectName: newSubjectName
+                        })
+                    });
+
+                    if (!editResponse.ok) throw new Error('Failed to update subject');
+
+                    message = 'Subject updated successfully!';
+                    showNotification(message, 'success');
+
+                    // Clear form
+                    document.getElementById('edit-academic-year').value = '';
+                    document.getElementById('edit-syllabus').value = '';
+                    document.getElementById('edit-stream').value = '';
+                    document.getElementById('edit-class').value = '';
+                    document.getElementById('edit-course').value = '';
+                    document.getElementById('edit-subject-select').value = '';
+                    document.getElementById('edit-subject-name').value = '';
+                    hideForm('edit');
+                    break;
+
+                case 'delete':
+                    const deleteSubjectId = document.getElementById('delete-subject-select').value;
+
+                    if (!deleteSubjectId) {
+                        showNotification('Please select a subject to delete', 'error');
+                        return;
+                    }
+
+                    const deleteResponse = await fetch('/api/SubjectApi/DeleteSubject', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            Id: deleteSubjectId
+                        })
+                    });
+
+                    if (!deleteResponse.ok) throw new Error('Failed to delete subject');
+
+                    message = 'Subject deleted successfully!';
+                    showNotification(message, 'success');
+
+                    // Clear form
+                    document.getElementById('delete-academic-year').value = '';
+                    document.getElementById('delete-syllabus').value = '';
+                    document.getElementById('delete-stream').value = '';
+                    document.getElementById('delete-class').value = '';
+                    document.getElementById('delete-course').value = '';
+                    document.getElementById('delete-subject-select').value = '';
+                    document.getElementById('confirm-delete').checked = false;
+                    document.querySelector('#delete-form .btn').disabled = true;
+                    hideForm('delete');
+                    break;
+            }
+        } catch (error) {
+            console.error(`Error in ${formType} operation:`, error);
+            showNotification(`Failed to ${formType} subject`, 'error');
+        }
+    }
+
+    // Show notification function
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        const notificationIcon = notification.querySelector('.notification-icon');
+        const notificationMsg = notification.querySelector('.notification-message');
+
+        // Clear previous classes
+        notification.className = 'floating-notification';
+        notification.classList.add('show', `notification-${type}`);
+
+        // Set icon and message
+        if (type === 'success') {
+            notificationIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            notificationIcon.style.color = '#4cc9f0';
+        } else {
+            notificationIcon.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+            notificationIcon.style.color = '#f72585';
+        }
+
+        notificationMsg.textContent = message;
+
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 5000);
+    }
+
+    // Close notification when clicked
+    document.getElementById('notification').addEventListener('click', function () {
+        this.classList.remove('show');
+    });
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+        setupSyllabusDropdowns();
+    });
+</script>
