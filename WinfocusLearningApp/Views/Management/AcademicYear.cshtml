@@ -429,7 +429,8 @@
                 });
             })
             .catch(error => {
-                console.error('Error fetching departments:', error);
+                showNotification('Something went wrong', 'error');
+                console.error('Error fetching data:', error);
             });
     }
     // Submit form function
