@@ -339,6 +339,9 @@
     <Content Include="Views\Management\SupportTicket.cshtml" />
     <Content Include="Views\Management\SyllabusCreation.cshtml" />
     <Content Include="Views\Management\TimeTable.cshtml" />
+    <Content Include="Views\Management\MaterialType.cshtml" />
+    <Content Include="Views\Management\Batch.cshtml" />
+    <Content Include="Views\Management\PreferredTimeSlot.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
