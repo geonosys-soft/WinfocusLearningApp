@@ -184,6 +184,9 @@
     <Compile Include="DataEntity\TblAccademicYear.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataEntity\TblChapter.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataEntity\TblCourse.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
@@ -194,6 +197,9 @@
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
     <Compile Include="DataEntity\TblMaterial.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataEntity\TblModule.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
     <Compile Include="DataEntity\TblNoteType.cs">
@@ -221,6 +227,9 @@
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
     <Compile Include="DataEntity\TblStudent_Parent_Basic.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataEntity\TblSubChapter.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
     <Compile Include="DataEntity\TblSubject.cs">
