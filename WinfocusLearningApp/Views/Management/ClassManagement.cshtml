@@ -312,7 +312,9 @@
             <label for="syllabus">Syllabus:</label>
             <select id="syllabus" class="form-control" required>
                 <option value="">-- Select Syllabus --</option>
+
                 <!-- Options will be populated from database -->
+
             </select>
         </div>
         <div class="form-group">
@@ -343,7 +345,9 @@
             </select>
         </div>
         <div class="form-group">
+
             <label for="edit-class-select">Select Class:</label>
+
             <select id="edit-class-select" class="form-control" required>
                 <option value="">-- Select Class --</option>
                 <!-- Options will be populated from database -->
@@ -377,8 +381,10 @@
             </select>
         </div>
         <div class="form-group">
+
             <label for="delete-class">Select Class to Delete:</label>
-            <select id="delete-class" class="form-control" required>
+            <select id="delete-class-select" class="form-control" required>
+
                 <option value="">-- Select Class --</option>
                 <!-- Options will be populated from database -->
             </select>
@@ -415,8 +421,12 @@
         const form = document.getElementById(formType + '-form');
         form.style.display = 'block';
 
-        // Load data for the form
-        loadFormData(formType);
+
+        if (formType === 'edit' || formType === 'delete') {
+            // loadClassData();
+            formClear();
+        }
+
 
         // Scroll to form
         form.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -428,8 +438,20 @@
         document.getElementById('insert-form').style.display = 'block';
     }
 
-    // Load data for forms
-    async function loadFormData(formType) {
+
+    // Delete confirmation toggle
+    document.getElementById('confirm-delete').addEventListener('change', function () {
+        document.querySelector('#delete-form .btn').disabled = !this.checked;
+    });
+
+
+    //load accademic year first time
+    document.addEventListener("DOMContentLoaded", function () {
+        loadAcademicYears();
+    });
+    // Load academic years from database
+    async function loadAcademicYears() {
+
         try {
             // Load academic years
             const academicYears = await fetch('/api/ManagementApi/FetchAccademicYear')
@@ -456,67 +478,44 @@
                 });
             });
 
-            // Populate syllabus dropdowns
-            const syllabusDropdowns = [
-                'syllabus', 'edit-syllabus', 'delete-syllabus'
-            ];
-
-            syllabusDropdowns.forEach(id => {
-                const dropdown = document.getElementById(id);
-                dropdown.innerHTML = '<option value="">-- Select Syllabus --</option>';
-
-                syllabuses.forEach(syllabus => {
-                    const option = document.createElement('option');
-                    option.value = syllabus.Id;
-                    option.textContent = syllabus.SyllabusName;
-                    dropdown.appendChild(option);
-                });
-            });
-
-            // If editing or deleting, load classes when academic year or syllabus changes
-            if (formType === 'edit' || formType === 'delete') {
-                const prefix = formType === 'edit' ? 'edit-' : 'delete-';
-                const academicYearDropdown = document.getElementById(prefix + 'academic-year');
-                const syllabusDropdown = document.getElementById(prefix + 'syllabus');
-                const classDropdown = document.getElementById(prefix + (formType === 'edit' ? 'class-select' : 'class'));
-
-                const loadClasses = async () => {
-                    const academicYearId = academicYearDropdown.value;
-                    const syllabusId = syllabusDropdown.value;
-
-                    if (academicYearId && syllabusId) {
-                        const classes = await fetch(`/api/ManagementApi/FetchClasses?academicYearId=${academicYearId}&syllabusId=${syllabusId}`)
-                            .then(response => response.json());
-
-                        classDropdown.innerHTML = '<option value="">-- Select Class --</option>';
-
-                        classes.forEach(cls => {
-                            const option = document.createElement('option');
-                            option.value = cls.Id;
-                            option.textContent = cls.ClassName;
-                            classDropdown.appendChild(option);
-                        });
-                    }
-                };
-
-                academicYearDropdown.addEventListener('change', loadClasses);
-                syllabusDropdown.addEventListener('change', loadClasses);
-
-                // For edit form, load class name when class is selected
-                if (formType === 'edit') {
-                    classDropdown.addEventListener('change', () => {
-                        if (classDropdown.value) {
-                            document.getElementById('edit-class-name').value =
-                                classDropdown.options[classDropdown.selectedIndex].text;
-                        }
-                    });
-                }
-            }
         } catch (error) {
-            showNotification('Error loading data', 'error');
-            console.error('Error loading form data:', error);
+            console.error('Error loading academic years:', error);
+            showNotification('Failed to load academic years', 'error');
         }
     }
+   
+
+    // Load syllabus data when academic year is selected
+    function loadSyllabusOptions(academicYearId, targetSelectId) {
+        if (!academicYearId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchSyllabus/${academicYearId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+
+    function formClear() {
+        document.getElementById('edit-syllabus').innerHTML = '<option value="">-- Select Syllabus --</option>';;
+        document.getElementById('edit-class-select').innerHTML = '<option value="">-- Select class --</option>';;
+        document.getElementById('edit-class-name').innerHTML = '<option value="">-- Select class --</option>';;
+        document.getElementById('syllabus').innerHTML = '<option value="">-- Select Syllabus --</option>';;
+        document.getElementById('delete-syllabus').innerHTML = '<option value="">-- Select Syllabus --</option>';;
+        document.getElementById('delete-class-select').innerHTML = '<option value="">-- Select class --</option>';;
+    }
+
 
     // Delete confirmation toggle
     document.getElementById('confirm-delete').addEventListener('change', function () {
@@ -534,24 +533,30 @@
 
             switch (formType) {
                 case 'insert':
-                    const academicYearId = document.getElementById('academic-year').value;
-                    const syllabusId = document.getElementById('syllabus').value;
-                    const className = document.getElementById('class-name').value.trim();
 
-                    if (!academicYearId || !syllabusId || !className) {
+                    const ACID = document.getElementById('academic-year').value;
+                    const className = document.getElementById('class-name').value.trim();
+                    const SyllabusID = document.getElementById('syllabus').value;
+                    
+                    if (!ACID || !className ||!SyllabusID) {
+                    
+
                         showNotification('Please fill all fields', 'error');
                         return;
                     }
 
-                    response = await fetch('/api/ManagementApi/AddClass', {
+
+                    const insertResponse = await fetch('/api/ManagementApi/AddGrade', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            AcademicYearId: academicYearId,
-                            SyllabusId: syllabusId,
-                            ClassName: className
+
+                            ACID: ACID,
+                            SyllabusID:SyllabusID,
+                            Name: className
+
                         })
                     });
 
@@ -563,6 +568,10 @@
                     showNotification(message, 'success');
 
                     // Clear form
+
+                    document.getElementById('academic-year').value = '';
+                    document.getElementById('syllabus').value = '';
+
                     document.getElementById('class-name').value = '';
                     break;
 
@@ -577,7 +586,9 @@
                         return;
                     }
 
-                    response = await fetch('/api/ManagementApi/UpdateClass', {
+
+                    const editResponse = await fetch('/api/ManagementApi/UpdateGrade', {
+
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -602,6 +613,12 @@
                     showNotification(message, 'success');
 
                     // Clear form
+
+                    document.getElementById('edit-academic-year').value = '';
+                    document.getElementById('edit-syllabus').value = '';
+                    document.getElementById('edit-class-select').value = '';
+
+
                     document.getElementById('edit-class-name').value = '';
                     hideForm('edit');
                     break;
@@ -614,7 +631,10 @@
                         return;
                     }
 
-                    response = await fetch('/api/ManagementApi/DeleteClass', {
+
+                    const deleteResponse = await fetch('/api/ManagementApi/DltGrade', {
+
+
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -624,18 +644,20 @@
                         })
                     });
 
-                    if (!response.ok) {
-                        throw new Error('Failed to delete class');
-                    }
+                    console.log('Status:', deleteResponse.status);
+                    console.log('Response:', await deleteResponse.text());
+                    if (!deleteResponse.ok) throw new Error('Failed to delete class');
 
-                    const deletedClassName = document.getElementById('delete-class').options[
-                        document.getElementById('delete-class').selectedIndex
-                    ].text;
 
                     message = `Class "${deletedClassName}" deleted successfully!`;
                     showNotification(message, 'success');
 
                     // Clear form
+
+                    document.getElementById('delete-academic-year').value = '';
+                    document.getElementById('delete-syllabus').value = '';               
+                    document.getElementById('delete-class-select').value = '';
+
                     document.getElementById('confirm-delete').checked = false;
                     document.querySelector('#delete-form .btn').disabled = true;
                     hideForm('delete');
@@ -678,4 +700,50 @@
     document.getElementById('notification').addEventListener('click', function () {
         this.classList.remove('show');
     });
+
+
+    // Event listeners for insert form
+    document.getElementById('academic-year').addEventListener('change', function() {
+        loadSyllabusOptions(this.value, 'syllabus');
+    });
+
+
+    // Add event listeners to academic year dropdowns
+    document.getElementById('edit-academic-year').addEventListener('change', function () {
+        loadSyllabusOptions(this.value, 'edit-syllabus');
+    });
+
+    document.getElementById('delete-academic-year').addEventListener('change', function () {
+        loadSyllabusOptions(this.value, 'delete-syllabus');
+    });
+
+    function loadClassOptions(SLBID, targetSelectId) {
+        if (!SLBID) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchGrade/${SLBID}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+
+    // Load class details when class is selected in edit form
+    document.getElementById('edit-syllabus').addEventListener('change', async function () {
+        loadClassOptions(this.value,'edit-class-select')
+    });
+    document.getElementById('delete-syllabus').addEventListener('change', async function () {
+        loadClassOptions(this.value, 'delete-class-select')
+    });
+
 </script>

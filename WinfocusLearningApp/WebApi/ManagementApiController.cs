@@ -258,6 +258,7 @@ namespace WinfocusLearningApp.WebApi
                 }
                 // Assuming you have a method to add the grade to the database
                 TblGrade inf = new TblGrade();
+                inf.SyllabusID = jsonData.SyllabusID;
                 inf.Name = jsonData.Name;
                 inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
                 inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
@@ -290,7 +291,6 @@ namespace WinfocusLearningApp.WebApi
                     return NotFound();
                 }
                 inf.Name = jsonData.Name;
-                inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
                 inf.IsDeleted = 0;
                 inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
                 inf.ModifiedTime = DateTime.UtcNow;
@@ -333,13 +333,13 @@ namespace WinfocusLearningApp.WebApi
                 return InternalServerError(ex);
             }
         }
-        [Route("api/ManagementApi/FetchGrade")]
+        [Route("api/ManagementApi/FetchGrade/{Id}")]
         [HttpGet]
-        public IHttpActionResult FetchGrade()
+        public IHttpActionResult FetchGrade(int Id)
         {
             try
             {
-                var gradeList = winfocus_CS.TblGrades.Where(x => x.IsDeleted == 0).ToList();
+                var gradeList = winfocus_CS.TblGrades.Where(x => x.IsDeleted == 0 && x.SyllabusID==Id).ToList();
                 return Ok(gradeList);
             }
             catch (Exception ex)
@@ -395,11 +395,11 @@ namespace WinfocusLearningApp.WebApi
                     return NotFound();
                 }
                 inf.Name = jsonData.Name;
-                inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
-                inf.SyllabusID = jsonData.SyllabusID; // Assuming SyllabusID is the ID of the syllabus
+               /*  inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
+               inf.SyllabusID = jsonData.SyllabusID; // Assuming SyllabusID is the ID of the syllabus
                 inf.GradeID = jsonData.GradeID; // Assuming GradeID is the ID of the grade
                 inf.Description = jsonData.Description;
-                inf.IsDeleted = 0;
+                inf.IsDeleted = 0;*/
                 inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
                 inf.ModifiedTime = DateTime.UtcNow;
                 winfocus_CS.TblStreams.Attach(inf);
@@ -442,13 +442,13 @@ namespace WinfocusLearningApp.WebApi
             }
         }
 
-        [Route("api/ManagementApi/FetchStream")]
+        [Route("api/ManagementApi/FetchStream/{Id}")]
         [HttpGet]
-        public IHttpActionResult FetchStream()
+        public IHttpActionResult FetchStream(int Id)
         {
             try
             {
-                var streamList = winfocus_CS.TblStreams.Where(x => x.IsDeleted == 0).ToList();
+                var streamList = winfocus_CS.TblStreams.Where(x => x.IsDeleted == 0&& x.GradeID==Id).ToList();
                 return Ok(streamList);
             }
             catch (Exception ex)
@@ -476,7 +476,7 @@ namespace WinfocusLearningApp.WebApi
                 inf.SyllabusID = jsonData.SyllabusID; // Assuming SyllabusID is the ID of the syllabus
                 inf.StreamID = jsonData.StreamID; // Assuming StreamID is the ID of the stream
                 inf.GradeID= jsonData.GradeID; // Assuming GradeID is the ID of the grade
-              inf.Description = jsonData.Description;
+                inf.Description = jsonData.Description;
                 inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
                 inf.CreatedDate = DateTime.UtcNow;
                 inf.IsDeleted = 0;
@@ -506,13 +506,13 @@ namespace WinfocusLearningApp.WebApi
                     return NotFound();
                 }
                 inf.Name = jsonData.Name;
-                inf.StreamID = jsonData.StreamID; // Assuming StreamID is the ID of the stream
+              /*  inf.StreamID = jsonData.StreamID; // Assuming StreamID is the ID of the stream
                 inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
                 inf.SyllabusID = jsonData.SyllabusID; // Assuming SyllabusID is the ID of the syllabus
                 inf.StreamID = jsonData.StreamID; // Assuming StreamID is the ID of the stream
                 inf.GradeID = jsonData.GradeID; // Assuming GradeID is the ID of the grade
                 inf.Description = jsonData.Description;
-                inf.IsDeleted = 0;
+                inf.IsDeleted = 0;*/
                 inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
                 inf.ModifiedTime = DateTime.UtcNow;
                 winfocus_CS.TblCourses.Attach(inf);
@@ -554,13 +554,13 @@ namespace WinfocusLearningApp.WebApi
                 return InternalServerError(ex);
             }
         }
-        [Route("api/ManagementApi/FetchCourse")]
+        [Route("api/ManagementApi/FetchCourse/{Id}")]
         [HttpGet]
-        public IHttpActionResult FetchCourse()
+        public IHttpActionResult FetchCourse(int Id)
         {
             try
             {
-                var courseList = winfocus_CS.TblCourses.Where(x => x.IsDeleted == 0).ToList();
+                var courseList = winfocus_CS.TblCourses.Where(x => x.IsDeleted == 0&& x.StreamID==Id).ToList();
                 return Ok(courseList);
             }
             catch (Exception ex)
@@ -572,12 +572,330 @@ namespace WinfocusLearningApp.WebApi
         // Subject Management APIs
         [Route("api/ManagementApi/AddSubject")]
         [ResponseType(typeof(TblSubject))]
-        
+        public IHttpActionResult AddSubject(TblSubject jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to add the subject to the database
+                TblSubject inf = new TblSubject();
+                inf.Name = jsonData.Name;
+                inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
+                inf.SyllabusID = jsonData.SyllabusID; // Assuming SyllabusID is the ID of the syllabus
+                inf.GradeID = jsonData.GradeID; // Assuming GradeID is the ID of the grade
+                inf.StreamID = jsonData.StreamID; // Assuming StreamID is the ID of the stream
+                inf.CourseID = jsonData.CourseID; // Assuming CourseID is the ID of the course
+                inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.CreatedDate = DateTime.UtcNow;
+                inf.IsDeleted = 0;
+                winfocus_CS.TblSubjects.Add(inf);
+                winfocus_CS.SaveChanges();
+                return Ok("Subject added successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/ManagementApi/UpdateSubject")]
+        [ResponseType(typeof(TblSubject))]
+        public IHttpActionResult UpdateSubject(TblSubject jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to update the subject in the database
+                TblSubject inf = winfocus_CS.TblSubjects.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.Name = jsonData.Name;
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblSubjects.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Subject updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/ManagementApi/RemoveSubject")]
+        [ResponseType(typeof(TblSubject))]
+        public IHttpActionResult RemoveSubject(TblSubject jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to delete the subject in the database
+                TblSubject inf = winfocus_CS.TblSubjects.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.IsDeleted = 1;
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblSubjects.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Subject deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/ManagementApi/FetchSubject/{Id}")]
+        [HttpGet]
+        public IHttpActionResult FetchSubject(int Id)
+        {
+            try
+            {
+                var subjectList = winfocus_CS.TblSubjects.Where(x => x.IsDeleted == 0 && x.CourseID==Id).ToList();
+                return Ok(subjectList);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        //Chapter Management APIs
+        [Route("api/ManagementApi/AddChapter")]
+        [ResponseType(typeof(TblChapter))]
+        public IHttpActionResult AddChapter(TblChapter jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to add the chapter to the database
+                TblChapter inf = new TblChapter();
+                inf.ChapterName = jsonData.ChapterName;
+                inf.SubjectID = jsonData.SubjectID; // Assuming SubjectID is the ID of the subject
+                inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
+                inf.SyllabusID = jsonData.SyllabusID; // Assuming SyllabusID is the ID of the syllabus
+                inf.GradeID = jsonData.GradeID; // Assuming GradeID is the ID of the grade
+                inf.StreamID = jsonData.StreamID; // Assuming StreamID is the ID of the stream
+                inf.CourseID = jsonData.CourseID; // Assuming CourseID is the ID of the course
+                inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.CreatedDate = DateTime.UtcNow;
+                inf.IsDeleted = 0;
+                winfocus_CS.TblChapters.Add(inf);
+                winfocus_CS.SaveChanges();
+                return Ok("Chapter added successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [Route("api/ManagementApi/UpdateChapter")]
+        [ResponseType(typeof(TblChapter))]
+        public IHttpActionResult UpdateChapter(TblChapter jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to update the chapter in the database
+                TblChapter inf = winfocus_CS.TblChapters.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.ChapterName = jsonData.ChapterName;            
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblChapters.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Chapter updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [Route("api/ManagementApi/DltChapter")]
+        [ResponseType(typeof(TblChapter))]
+        public IHttpActionResult DltChapter(TblChapter jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to delete the chapter in the database
+                TblChapter inf = winfocus_CS.TblChapters.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.IsDeleted = 1;
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblChapters.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Chapter deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [Route("api/ManagementApi/FetchChapter/{Id}")]
+        [HttpGet]
+        public IHttpActionResult FetchChapter(int Id)
+        {
+            try
+            {
+                var chapterList = winfocus_CS.TblChapters.Where(x => x.IsDeleted == 0 && x.SubjectID==Id).ToList();
+                return Ok(chapterList);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        //SUB CHAPTER Management APIs
+        [Route("api/ManagementApi/AddSubChapter")]
+        [ResponseType(typeof(TblSubChapter))]
+        public IHttpActionResult AddSubChapter(TblSubChapter jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to add the sub-chapter to the database
+                TblSubChapter inf = new TblSubChapter();
+                inf.SubChapterName = jsonData.SubChapterName;
+                inf.ChapterID = jsonData.ChapterID; // Assuming ChapterID is the ID of the chapter
+                inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
+                inf.SyllabusID = jsonData.SyllabusID; // Assuming SyllabusID is the ID of the syllabus
+                inf.GradeID = jsonData.GradeID; // Assuming GradeID is the ID of the grade
+                inf.StreamID = jsonData.StreamID; // Assuming StreamID is the ID of the stream
+                inf.CourseID = jsonData.CourseID; // Assuming CourseID is the ID of the course
+                inf.SubjectID = jsonData.SubjectID; // Assuming SubjectID is the ID of the subject
+                inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.CreatedDate = DateTime.UtcNow;
+                inf.IsDeleted = 0;
+                winfocus_CS.TblSubChapters.Add(inf);
+                winfocus_CS.SaveChanges();
+                return Ok("Sub-Chapter added successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [Route("api/ManagementApi/UpdateSubChapter")]
+        [ResponseType(typeof(TblSubChapter))]
+        public IHttpActionResult UpdateSubChapter(TblSubChapter jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to update the sub-chapter in the database
+                TblSubChapter inf = winfocus_CS.TblSubChapters.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.SubChapterName = jsonData.SubChapterName;            
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblSubChapters.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Sub-Chapter updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/ManagementApi/DltSubChapter")]
+        [ResponseType(typeof(TblSubChapter))]
+        public IHttpActionResult DltSubChapter(TblSubChapter jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to delete the sub-chapter in the database
+                TblSubChapter inf = winfocus_CS.TblSubChapters.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.IsDeleted = 1;
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblSubChapters.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Sub-Chapter deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/ManagementApi/FetchSubChapter/{Id}")]
+        [HttpGet]
+        public IHttpActionResult FetchSubChapter(int Id)
+        {
+            try
+            {
+                var subChapterList = winfocus_CS.TblSubChapters.Where(x => x.IsDeleted == 0 && x.ChapterID==Id).ToList();
+                return Ok(subChapterList);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+
         // GET api/<controller>
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
+
+      
 
         // GET api/<controller>/5
         public string Get(int id)
