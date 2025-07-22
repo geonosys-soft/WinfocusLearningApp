@@ -16,7 +16,7 @@
         </div>
         <ul class="nav-links">
             <li>
-                <a href="@Url.Action("Index", "Dashboard", new { area = "Admin" })">
+                <a href="@Url.Action("Index", "Dashboard")">
                     <i class='bx bx-grid-alt'></i>
                     <span class="link_name">Dashboard</span>
                 </a>
@@ -31,32 +31,37 @@
                 </div>
                 <ul class="sub-menu">
                     <li><a class="link_name" href="#">Management</a></li>
-                    <li><a href="@Url.Action("AllUsers", "Management", new { area = "Admin" })">All Users</a></li>
-                    <li><a href="@Url.Action("CreateUsers", "Management", new { area = "Admin" })">Create users</a></li>
-                    <li><a href="@Url.Action("AcademicYear", "Management", new { area = "Admin" })">Academic Year</a></li>
-                    <li><a href="@Url.Action("ClassManagement", "Management", new { area = "Admin" })">Class Management</a></li>
-                    <li><a href="@Url.Action("Stream", "Management", new { area = "Admin" })">Stream</a></li>
-                    <li><a href="@Url.Action("Course", "Management", new { area = "Admin" })">Course</a></li>
-                    <li><a href="@Url.Action("Subject", "Management", new { area = "Admin" })">Subject</a></li>
-                    <li><a href="@Url.Action("Chapter", "Management", new { area = "Admin" })">Chapter</a></li>
-                    <li><a href="@Url.Action("SubChapter", "Management", new { area = "Admin" })">Sub-chapter</a></li>
-                    <li><a href="@Url.Action("Module", "Management", new { area = "Admin" })">Module</a></li>
-                    <li><a href="@Url.Action("NoteType", "Management", new { area = "Admin" })">Note Type</a></li>
-                    <li><a href="@Url.Action("SchoolState", "Management", new { area = "Admin" })">School State</a></li>
-                    <li><a href="@Url.Action("District", "Management", new { area = "Admin" })">District</a></li>
-                    <li><a href="@Url.Action("SchoolDetails", "Management", new { area = "Admin" })">School Details</a></li>
-                    <li><a href="@Url.Action("CreateGroup", "Management", new { area = "Admin" })">Create Group</a></li>
-                    <li><a href="@Url.Action("ManageGroup", "Management", new { area = "Admin" })">Manage Group</a></li>
-                    <li><a href="@Url.Action("CourseFee", "Management", new { area = "Admin" })">Course fee</a></li>
-                    <li><a href="@Url.Action("RequestCallBack", "Management", new { area = "Admin" })">Request call back</a></li>
-                    <li><a href="@Url.Action("StudentReference", "Management", new { area = "Admin" })">Student Reference</a></li>
-                    <li><a href="@Url.Action("CreateLessonSummary", "Management", new { area = "Admin" })">Create Lesson Summery</a></li>
-                    <li><a href="@Url.Action("SyllabusCreation", "Management", new { area = "Admin" })">Syllabus Creation</a></li>
-                    <li><a href="@Url.Action("AddMeeting", "Management", new { area = "Admin" })">Add meeting</a></li>
-                    <li><a href="@Url.Action("TimeTable", "Management", new { area = "Admin" })">Time table</a></li>
-                    <li><a href="@Url.Action("Blog", "Management", new { area = "Admin" })">Blog</a></li>
-                    <li><a href="@Url.Action("SupportTicket", "Management", new { area = "Admin" })">Support Ticket</a></li>
-                    <li><a href="@Url.Action("Complaints", "Management", new { area = "Admin" })">Complaints</a></li>
+                    <li><a href="@Url.Action("AllUsers", "Management")">All Users</a></li>
+                    <li><a href="@Url.Action("CreateUsers", "Management")">Create users</a></li>
+                    <li><a href="@Url.Action("AcademicYear", "Management")">Academic Year</a></li>
+                    <li><a href="@Url.Action("SyllabusCreation", "Management")">Syllabus Creation</a></li>
+                    <li><a href="@Url.Action("ClassManagement", "Management")">Class Management</a></li>
+                    <li><a href="@Url.Action("Stream", "Management")">Stream</a></li>
+                    <li><a href="@Url.Action("Course", "Management")">Course</a></li>
+                    <li><a href="@Url.Action("Subject", "Management")">Subject</a></li>
+                    <li><a href="@Url.Action("Chapter", "Management")">Chapter</a></li>
+                    <li><a href="@Url.Action("SubChapter", "Management")">Sub-chapter</a></li>
+                    <li><a href="@Url.Action("Module", "Management")">Module</a></li>
+                    <li><a href="@Url.Action("MaterialType", "Management")">Material Type</a></li>
+                    <li><a href="@Url.Action("NoteType", "Management")">Note Type</a></li>
+                    <li><a href="@Url.Action("Batch", "Management")">Batch</a></li>
+                    <li><a href="@Url.Action("PreferredTimeSlot", "Management")">Preferred Time Slot</a></li>
+
+
+                    @*<li><a href="@Url.Action("SchoolState", "Management")">School State</a></li>
+                    <li><a href="@Url.Action("District", "Management")">District</a></li>
+                    <li><a href="@Url.Action("SchoolDetails", "Management")">School Details</a></li>
+                    <li><a href="@Url.Action("CreateGroup", "Management")">Create Group</a></li>
+                    <li><a href="@Url.Action("ManageGroup", "Management")">Manage Group</a></li>
+                    <li><a href="@Url.Action("CourseFee", "Management")">Course fee</a></li>
+                    <li><a href="@Url.Action("RequestCallBack", "Management")">Request call back</a></li>
+                    <li><a href="@Url.Action("StudentReference", "Management")">Student Reference</a></li>
+                    <li><a href="@Url.Action("CreateLessonSummary", "Management")">Create Lesson Summery</a></li>
+                    <li><a href="@Url.Action("AddMeeting", "Management")">Add meeting</a></li>
+                    <li><a href="@Url.Action("TimeTable", "Management")">Time table</a></li>
+                    <li><a href="@Url.Action("Blog", "Management")">Blog</a></li>
+                    <li><a href="@Url.Action("SupportTicket", "Management")">Support Ticket</a></li>
+                    <li><a href="@Url.Action("Complaints", "Management")">Complaints</a></li>*@
                 </ul>
             </li>
             <li>
