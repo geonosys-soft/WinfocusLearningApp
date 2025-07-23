@@ -9,12 +9,10 @@
         <EntityTypeShape EntityType="Winfocus_DbModel.TblMaterial" Width="1.5" PointX="5.75" PointY="3.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblStudent_Parent_Basic" Width="1.5" PointX="7.75" PointY="5.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblSTudentBasicDetail" Width="1.5" PointX="3.75" PointY="8.75" />
-        <EntityTypeShape EntityType="Winfocus_DbModel.TblCourse" Width="1.5" PointX="9.75" PointY="0.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.Role" Width="1.5" PointX="12.375" PointY="15.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.User" Width="1.5" PointX="14.625" PointY="14.125" />
         <AssociationConnector Association="Winfocus_DbModel.UserRoles" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblSyllabu" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Winfocus_DbModel.TblChapter" Width="1.5" PointX="0.75" PointY="4.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblFeeDetail" Width="1.5" PointX="0.75" PointY="9.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblGrade" Width="1.5" PointX="10.75" PointY="5.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblModule" Width="1.5" PointX="6.75" PointY="10.75" />
@@ -27,6 +25,8 @@
         <EntityTypeShape EntityType="Winfocus_DbModel.TblStudent_Fee_Structure" Width="1.5" PointX="0.75" PointY="14.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblSubChapter" Width="1.5" PointX="2.75" PointY="14.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblSubject" Width="1.5" PointX="14.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Winfocus_DbModel.TblCourse" Width="1.5" PointX="8.375" PointY="0.75" />
+        <EntityTypeShape EntityType="Winfocus_DbModel.TblChapter" Width="1.5" PointX="0.75" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
