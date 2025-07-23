@@ -1,8 +1,790 @@
-﻿
+﻿@model WinfocusLearningApp.DataEntity.TblNoteType
 @{
-    ViewBag.Title = "NoteType";
+    ViewBag.Title = "Note Type Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>NoteType</h2>
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --primary-hover: #3a56d4;
+        --secondary-color: #3f37c9;
+        --danger-color: #f72585;
+        --danger-hover: #e5177b;
+        --success-color: #4cc9f0;
+        --success-hover: #2fb5e0;
+        --text-color: #2b2d42;
+        --light-bg: #f8f9fa;
+    }
 
+    body {
+        background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text-color);
+        min-height: 100vh;
+    }
+
+    .top-bar {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 20px 0;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .top-bar::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4cc9f0, #f72585, #7209b7);
+        }
+
+        .top-bar h1 {
+            margin: 0;
+            padding: 0 30px;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .action-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+    }
+
+    .action-box {
+        background: white;
+        border-radius: 12px;
+        padding: 40px 30px;
+        width: 280px;
+        text-align: center;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        overflow: hidden;
+        border: none;
+    }
+
+        .action-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .action-box.insert {
+            border-top: 4px solid var(--success-color);
+        }
+
+        .action-box.edit {
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .action-box.delete {
+            border-top: 4px solid var(--danger-color);
+        }
+
+    .action-icon {
+        font-size: 56px;
+        margin-bottom: 20px;
+        transition: transform 0.3s;
+    }
+
+    .action-box:hover .action-icon {
+        transform: scale(1.1);
+    }
+
+    .action-title {
+        font-weight: 600;
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .action-desc {
+        color: #6c757d;
+        font-size: 16px;
+    }
+
+    .form-container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        animation: fadeIn 0.5s ease-out;
+        border-top: 4px solid var(--primary-color);
+    }
+
+    #insert-form {
+        display: block;
+    }
+
+    #edit-form, #delete-form {
+        display: none;
+    }
+
+    .form-container h3 {
+        margin-top: 0;
+        color: var(--primary-color);
+        font-size: 24px;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+        .form-container h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+    .btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+    .btn-submit {
+        background-color: var(--success-color);
+    }
+
+        .btn-submit:hover {
+            background-color: var(--success-hover);
+        }
+
+    .btn-delete {
+        background-color: var(--danger-color);
+    }
+
+        .btn-delete:hover {
+            background-color: var(--danger-hover);
+        }
+
+    .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #6c757d;
+        transition: color 0.3s;
+    }
+
+        .close-btn:hover {
+            color: var(--danger-color);
+        }
+
+    .floating-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        z-index: 1000;
+        transform: translateX(150%);
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+        .floating-notification.show {
+            transform: translateX(0);
+        }
+
+    .notification-icon {
+        margin-right: 10px;
+        font-size: 24px;
+    }
+
+    .notification-success {
+        border-left: 4px solid var(--success-color);
+    }
+
+    .notification-error {
+        border-left: 4px solid var(--danger-color);
+    }
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .form-col {
+        flex: 1;
+        min-width: 250px;
+    }
+</style>
+
+<div class="top-bar">
+    <h1><i class="fas fa-sticky-note"></i> Note Type Management</h1>
+</div>
+
+<div class="container">
+    <div class="action-container">
+        <div class="action-box insert" onclick="showForm('insert')">
+            <div class="action-icon">➕</div>
+            <div class="action-title">Add Note Type</div>
+            <div class="action-desc">Create a new note type record</div>
+        </div>
+
+        <div class="action-box edit" onclick="showForm('edit')">
+            <div class="action-icon">✏️</div>
+            <div class="action-title">Edit Note Type</div>
+            <div class="action-desc">Modify existing note type</div>
+        </div>
+
+        <div class="action-box delete" onclick="showForm('delete')">
+            <div class="action-icon">🗑️</div>
+            <div class="action-title">Remove Note Type</div>
+            <div class="action-desc">Delete note type record</div>
+        </div>
+    </div>
+
+    <!-- Insert Form (shown by default) -->
+    <div id="insert-form" class="form-container">
+        <h3><i class="fas fa-plus-circle"></i> Add Note Type</h3>
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="insert-academic-year">Academic Year:</label>
+                    <select id="insert-academic-year" class="form-control" required>
+                        <option value="">-- Select Academic Year --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="insert-syllabus">Syllabus:</label>
+                    <select id="insert-syllabus" class="form-control" required>
+                        <option value="">-- Select Syllabus --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="insert-class">Class:</label>
+                    <select id="insert-class" class="form-control" required>
+                        <option value="">-- Select Class --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+            </div>
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="insert-stream">Stream:</label>
+                    <select id="insert-stream" class="form-control" required>
+                        <option value="">-- Select Stream --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="insert-course">Course:</label>
+                    <select id="insert-course" class="form-control" required>
+                        <option value="">-- Select Course --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="insert-subject">Subject:</label>
+                    <select id="insert-subject" class="form-control" required>
+                        <option value="">-- Select Subject --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="insert-note-type">Note Type:</label>
+            <input type="text" id="insert-note-type" class="form-control" placeholder="Enter note type" required>
+        </div>
+        <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
+            <i class="fas fa-check"></i> Save
+        </button>
+    </div>
+
+    <!-- Edit Form -->
+    <div id="edit-form" class="form-container">
+        <button class="close-btn" onclick="hideForm('edit')">×</button>
+        <h3><i class="fas fa-edit"></i> Edit Note Type</h3>
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="edit-academic-year">Academic Year:</label>
+                    <select id="edit-academic-year" class="form-control" required>
+                        <option value="">-- Select Academic Year --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-syllabus">Syllabus:</label>
+                    <select id="edit-syllabus" class="form-control" required>
+                        <option value="">-- Select Syllabus --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-class">Class:</label>
+                    <select id="edit-class" class="form-control" required>
+                        <option value="">-- Select Class --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+            </div>
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="edit-stream">Stream:</label>
+                    <select id="edit-stream" class="form-control" required>
+                        <option value="">-- Select Stream --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-course">Course:</label>
+                    <select id="edit-course" class="form-control" required>
+                        <option value="">-- Select Course --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-subject">Subject:</label>
+                    <select id="edit-subject" class="form-control" required>
+                        <option value="">-- Select Subject --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="edit-note-type-select">Select Note Type:</label>
+            <select id="edit-note-type-select" class="form-control" required>
+                <option value="">-- Select Note Type --</option>
+                <!-- Filled from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="edit-new-note-type">New Note Type:</label>
+            <input type="text" id="edit-new-note-type" class="form-control" placeholder="Enter new note type" required>
+        </div>
+        <button type="button" class="btn" onclick="submitForm('edit')">
+            <i class="fas fa-save"></i> Update
+        </button>
+    </div>
+
+    <!-- Delete Form -->
+    <div id="delete-form" class="form-container">
+        <button class="close-btn" onclick="hideForm('delete')">×</button>
+        <h3><i class="fas fa-trash-alt"></i> Delete Note Type</h3>
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="delete-academic-year">Academic Year:</label>
+                    <select id="delete-academic-year" class="form-control" required>
+                        <option value="">-- Select Academic Year --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="delete-syllabus">Syllabus:</label>
+                    <select id="delete-syllabus" class="form-control" required>
+                        <option value="">-- Select Syllabus --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="delete-class">Class:</label>
+                    <select id="delete-class" class="form-control" required>
+                        <option value="">-- Select Class --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+            </div>
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="delete-stream">Stream:</label>
+                    <select id="delete-stream" class="form-control" required>
+                        <option value="">-- Select Stream --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="delete-course">Course:</label>
+                    <select id="delete-course" class="form-control" required>
+                        <option value="">-- Select Course --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="delete-subject">Subject:</label>
+                    <select id="delete-subject" class="form-control" required>
+                        <option value="">-- Select Subject --</option>
+                        <!-- Filled from database -->
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="delete-note-type">Select Note Type to Delete:</label>
+            <select id="delete-note-type" class="form-control" required>
+                <option value="">-- Select Note Type --</option>
+                <!-- Filled from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="confirm-delete" required> I confirm I want to delete this note type
+            </label>
+        </div>
+        <button type="button" class="btn btn-delete" onclick="submitForm('delete')" disabled>
+            <i class="fas fa-trash"></i> Delete
+        </button>
+    </div>
+</div>
+
+<!-- Notification -->
+<div id="notification" class="floating-notification">
+    <div class="notification-icon"></div>
+    <div class="notification-message"></div>
+</div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script>
+    // Show form function
+    function showForm(formType) {
+        // Hide all forms first
+        document.querySelectorAll('.form-container').forEach(form => {
+            form.style.display = 'none';
+        });
+
+        // Show the selected form
+        const form = document.getElementById(formType + '-form');
+        form.style.display = 'block';
+
+        // Load data for the form
+        loadFormData(formType);
+
+        // Scroll to form
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Hide form function
+    function hideForm(formType) {
+        document.getElementById(formType + '-form').style.display = 'none';
+        document.getElementById('insert-form').style.display = 'block';
+    }
+
+    // Load data for forms
+    async function loadFormData(formType) {
+        try {
+            // Load academic years
+            const academicYears = await fetchDropdownData('/api/ManagementApi/FetchAccademicYear');
+            populateDropdown('insert-academic-year', academicYears);
+            populateDropdown('edit-academic-year', academicYears);
+            populateDropdown('delete-academic-year', academicYears);
+
+            // Load other dropdowns as needed (syllabus, class, stream, course, subject)
+            // You'll need to implement these API endpoints
+            const syllabuses = await fetchDropdownData('/api/ManagementApi/FetchSyllabus');
+            populateDropdown('insert-syllabus', syllabuses);
+            populateDropdown('edit-syllabus', syllabuses);
+            populateDropdown('delete-syllabus', syllabuses);
+
+            const classes = await fetchDropdownData('/api/ManagementApi/FetchClass');
+            populateDropdown('insert-class', classes);
+            populateDropdown('edit-class', classes);
+            populateDropdown('delete-class', classes);
+
+            const streams = await fetchDropdownData('/api/ManagementApi/FetchStream');
+            populateDropdown('insert-stream', streams);
+            populateDropdown('edit-stream', streams);
+            populateDropdown('delete-stream', streams);
+
+            const courses = await fetchDropdownData('/api/ManagementApi/FetchCourse');
+            populateDropdown('insert-course', courses);
+            populateDropdown('edit-course', courses);
+            populateDropdown('delete-course', courses);
+
+            const subjects = await fetchDropdownData('/api/ManagementApi/FetchSubject');
+            populateDropdown('insert-subject', subjects);
+            populateDropdown('edit-subject', subjects);
+            populateDropdown('delete-subject', subjects);
+
+            // For edit and delete forms, load note types
+            if (formType === 'edit' || formType === 'delete') {
+                const noteTypes = await fetchDropdownData('/api/ManagementApi/FetchNoteTypes');
+                populateDropdown(formType + '-note-type' + (formType === 'edit' ? '-select' : ''), noteTypes);
+            }
+
+        } catch (error) {
+            showNotification('Error loading form data', 'error');
+            console.error('Error loading form data:', error);
+        }
+    }
+
+    // Helper function to fetch dropdown data
+    async function fetchDropdownData(url) {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Failed to fetch data');
+        return await response.json();
+    }
+
+    // Helper function to populate dropdown
+    function populateDropdown(dropdownId, data) {
+        const dropdown = document.getElementById(dropdownId);
+        if (!dropdown) return;
+
+        // Clear previous options except the first one
+        while (dropdown.options.length > 1) {
+            dropdown.remove(1);
+        }
+
+        // Add new options
+        data.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.Id;
+            option.textContent = item.Name || item.AccademicYear || item.Title; // Adjust based on your data structure
+            dropdown.appendChild(option);
+        });
+    }
+
+    // Delete confirmation toggle
+    document.getElementById('confirm-delete').addEventListener('change', function() {
+        document.querySelector('#delete-form .btn').disabled = !this.checked;
+    });
+
+    // Submit form function
+    async function submitForm(formType) {
+        const notification = document.getElementById('notification');
+        let message;
+
+        try {
+            switch (formType) {
+                case 'insert':
+                    // Get all form values
+                    const academicYearId = document.getElementById('insert-academic-year').value;
+                    const syllabusId = document.getElementById('insert-syllabus').value;
+                    const classId = document.getElementById('insert-class').value;
+                    const streamId = document.getElementById('insert-stream').value;
+                    const courseId = document.getElementById('insert-course').value;
+                    const subjectId = document.getElementById('insert-subject').value;
+                    const noteType = document.getElementById('insert-note-type').value.trim();
+
+                    // Validate
+                    if (!academicYearId || !syllabusId || !classId || !streamId || !courseId || !subjectId || !noteType) {
+                        showNotification('Please fill all fields', 'error');
+                        return;
+                    }
+
+                    // Submit data
+                    const response = await fetch('/api/ManagementApi/AddNoteType', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            AcademicYearId: academicYearId,
+                            SyllabusId: syllabusId,
+                            ClassId: classId,
+                            StreamId: streamId,
+                            CourseId: courseId,
+                            SubjectId: subjectId,
+                            NoteType: noteType
+                        })
+                    });
+
+                    if (!response.ok) throw new Error('Failed to add note type');
+
+                    message = 'Note type added successfully!';
+                    showNotification(message, 'success');
+
+                    // Clear form
+                    document.getElementById('insert-note-type').value = '';
+                    break;
+
+                case 'edit':
+                    const editAcademicYearId = document.getElementById('edit-academic-year').value;
+                    const editSyllabusId = document.getElementById('edit-syllabus').value;
+                    const editClassId = document.getElementById('edit-class').value;
+                    const editStreamId = document.getElementById('edit-stream').value;
+                    const editCourseId = document.getElementById('edit-course').value;
+                    const editSubjectId = document.getElementById('edit-subject').value;
+                    const noteTypeId = document.getElementById('edit-note-type-select').value;
+                    const newNoteType = document.getElementById('edit-new-note-type').value.trim();
+
+                    if (!editAcademicYearId || !editSyllabusId || !editClassId || !editStreamId ||
+                        !editCourseId || !editSubjectId || !noteTypeId || !newNoteType) {
+                        showNotification('Please fill all fields', 'error');
+                        return;
+                    }
+
+                    const editResponse = await fetch('/api/ManagementApi/UpdateNoteType', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            Id: noteTypeId,
+                            AcademicYearId: editAcademicYearId,
+                            SyllabusId: editSyllabusId,
+                            ClassId: editClassId,
+                            StreamId: editStreamId,
+                            CourseId: editCourseId,
+                            SubjectId: editSubjectId,
+                            NoteType: newNoteType
+                        })
+                    });
+
+                    if (!editResponse.ok) throw new Error('Failed to update note type');
+
+                    message = 'Note type updated successfully!';
+                    showNotification(message, 'success');
+
+                    // Clear form
+                    document.getElementById('edit-new-note-type').value = '';
+                    hideForm('edit');
+                    break;
+
+                case 'delete':
+                    const deleteNoteTypeId = document.getElementById('delete-note-type').value;
+
+                    if (!deleteNoteTypeId) {
+                        showNotification('Please select a note type to delete', 'error');
+                        return;
+                    }
+
+                    const deleteResponse = await fetch('/api/ManagementApi/DeleteNoteType', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ Id: deleteNoteTypeId })
+                    });
+
+                    if (!deleteResponse.ok) throw new Error('Failed to delete note type');
+
+                    message = 'Note type deleted successfully!';
+                    showNotification(message, 'success');
+
+                    // Clear form
+                    document.getElementById('delete-note-type').value = '';
+                    document.getElementById('confirm-delete').checked = false;
+                    document.querySelector('#delete-form .btn').disabled = true;
+                    hideForm('delete');
+                    break;
+            }
+        } catch (error) {
+            showNotification(error.message || 'Something went wrong', 'error');
+            console.error('Error submitting form:', error);
+        }
+    }
+
+    // Show notification function
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        const notificationIcon = notification.querySelector('.notification-icon');
+        const notificationMsg = notification.querySelector('.notification-message');
+
+        // Clear previous classes
+        notification.className = 'floating-notification';
+        notification.classList.add('show', `notification-${type}`);
+
+        // Set icon and message
+        if (type === 'success') {
+            notificationIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            notificationIcon.style.color = '#4cc9f0';
+        } else {
+            notificationIcon.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+            notificationIcon.style.color = '#f72585';
+        }
+
+        notificationMsg.textContent = message;
+
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 5000);
+    }
+
+    // Close notification when clicked
+    document.getElementById('notification').addEventListener('click', function() {
+        this.classList.remove('show');
+    });
+
+    // Cascade dropdown changes (example for academic year -> syllabus -> class, etc.)
+    // You'll need to implement these based on your actual API endpoints
+    document.getElementById('insert-academic-year').addEventListener('change', async function() {
+        const academicYearId = this.value;
+        if (!academicYearId) return;
+
+        // Fetch syllabuses for this academic year and populate the syllabus dropdown
+        // Implement similar for other cascading dropdowns
+    });
+</script>
