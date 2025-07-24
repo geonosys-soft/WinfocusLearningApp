@@ -879,7 +879,7 @@ namespace WinfocusLearningApp.WebApi
         {
             try
             {
-                var subChapterList = winfocus_CS.TblSubChapters.Where(x => x.IsDeleted == 0 && x.ChapterID==Id).ToList();
+                var subChapterList = winfocus_CS.TblSubChapters.Where(x => x.IsDeleted == 0 && x.ChapterID == Id).ToList();
                 return Ok(subChapterList);
             }
             catch (Exception ex)
@@ -887,6 +887,113 @@ namespace WinfocusLearningApp.WebApi
                 return InternalServerError(ex);
             }
         }
+
+        [Route("api/ManagementApi/AddModule")]
+        [ResponseType(typeof(TblModule))]
+        public IHttpActionResult AddModule(TblModule jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to add the module to the database
+                TblModule inf = new TblModule();
+                inf.ModuleName = jsonData.ModuleName;
+                inf.SubChapterID = jsonData.SubChapterID; // Assuming SubChapterID is the ID of the sub-chapter
+                inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
+                inf.SyllabusID = jsonData.SyllabusID; // Assuming SyllabusID is the ID of the syllabus
+                inf.GradeID = jsonData.GradeID; // Assuming GradeID is the ID of the grade
+                inf.StreamID = jsonData.StreamID; // Assuming StreamID is the ID of the stream
+                inf.CourseID = jsonData.CourseID; // Assuming CourseID is the ID of the course
+                inf.SubjectID = jsonData.SubjectID; // Assuming SubjectID is the ID of the subject
+                inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.CreatedDate = DateTime.UtcNow;
+                inf.IsDeleted = 0;
+                winfocus_CS.TblModules.Add(inf);
+                winfocus_CS.SaveChanges();
+                return Ok("Module added successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [Route("api/ManagementApi/UpdateModule")]
+        [ResponseType(typeof(TblModule))]
+        public IHttpActionResult UpdateModule(TblModule jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to update the module in the database
+                TblModule inf = winfocus_CS.TblModules.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.ModuleName = jsonData.ModuleName;            
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblModules.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Module updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/ManagementApi/RemoveModule")]
+        [ResponseType(typeof(TblModule))]
+        public IHttpActionResult RemoveModule(TblModule jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to delete the module in the database
+                TblModule inf = winfocus_CS.TblModules.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.IsDeleted = 1;
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblModules.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Module deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [Route("api/ManagementApi/FetchModule/{Id}")]
+        [HttpGet]
+        public IHttpActionResult FetchModule(int Id)
+        {
+            try
+            {
+                var moduleList = winfocus_CS.TblModules.Where(x => x.IsDeleted == 0 && x.SubChapterID == Id).ToList();
+                return Ok(moduleList);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
 
 
         // GET api/<controller>
