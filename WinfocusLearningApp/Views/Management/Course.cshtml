@@ -545,11 +545,7 @@
                         },
                         body: JSON.stringify({
                             Id: editCourseId,
-                            AcademicYearId: editAcademicYearId,
-                            SyllabusId: editSyllabusId,
-                            ClassId: editClassId,
-                            StreamId: editStreamId,
-                            CourseName: editCourseName
+                            Name: editCourseName
                         })
                     });
 
@@ -576,7 +572,7 @@
                         return;
                     }
 
-                    response = await fetch('/api/ManagementApi/DeleteCourse', {
+                    response = await fetch('/api/ManagementApi/DltCourse', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -734,6 +730,27 @@
                 showNotification('Failed to load syllabus', 'error');
             });
     }
+     // Load Stream data when grade is selected
+ function loadCourseOptions(streamId, targetSelectId) {
+     if (!streamId) return;
+     //showNotification('Failed to load academic years'+academicYearId, 'error');
+     fetch(`/api/ManagementApi/FetchCourse//${streamId}`)
+         .then(response => response.json())
+         .then(data => {
+             const select = document.getElementById(targetSelectId);
+             select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+             data.forEach(syllabus => {
+                 const option = document.createElement('option');
+                 option.value = syllabus.Id;
+                 option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                 select.appendChild(option);
+             });
+         })
+         .catch(error => {
+             console.error('Error loading syllabus:', error);
+             showNotification('Failed to load syllabus', 'error');
+         });
+ }
 
     function formClear() {
         document.getElementById('academicYear').value = '';
@@ -795,5 +812,13 @@
     document.getElementById('delete-class').addEventListener('change', function () {
         loadStreamOptions(this.value, 'delete-stream');
     });
+    document.getElementById('edit-stream').addEventListener('change', function () {
+    loadCourseOptions(this.value, 'edit-course');
+});
+
+document.getElementById('delete-stream').addEventListener('change', function () {
+    loadCourseOptions(this.value, 'delete-course');
+});
+
 
 </script>

@@ -38,21 +38,15 @@
           <Property Name="CourseID" Type="int" />
           <Property Name="SubjectID" Type="int" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
           <Property Name="IsDeleted" Type="int" Nullable="false" />
-          <Property Name="DeletedDate" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="int" Nullable="false" />
-          <Property Name="ModifiedTime" Type="datetime" Nullable="false" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedTime" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Winfocus_Db.dbo.TblCourse' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TblCourse">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="CreatedBy" />
-            <PropertyRef Name="IsDeleted" />
-            <PropertyRef Name="ModifiedBy" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
@@ -423,6 +417,7 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblCourse' does not have a primary
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblAccademicYear" EntityType="Self.TblAccademicYear" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblChapter" EntityType="Self.TblChapter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblCourse" EntityType="Self.TblCourse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblFeeDetails" EntityType="Self.TblFeeDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblGrade" EntityType="Self.TblGrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblMaterial" EntityType="Self.TblMaterial" Schema="dbo" store:Type="Tables" />
@@ -441,23 +436,6 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblCourse' does not have a primary
           <EntitySet Name="TblSyllabus" EntityType="Self.TblSyllabus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TblCourse" EntityType="Self.TblCourse" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [TblCourse].[Id] AS [Id], 
-    [TblCourse].[Name] AS [Name], 
-    [TblCourse].[ACID] AS [ACID], 
-    [TblCourse].[SyllabusID] AS [SyllabusID], 
-    [TblCourse].[GradeID] AS [GradeID], 
-    [TblCourse].[StreamID] AS [StreamID], 
-    [TblCourse].[CreatedBy] AS [CreatedBy], 
-    [TblCourse].[CreatedDate] AS [CreatedDate], 
-    [TblCourse].[IsDeleted] AS [IsDeleted], 
-    [TblCourse].[DeletedDate] AS [DeletedDate], 
-    [TblCourse].[ModifiedBy] AS [ModifiedBy], 
-    [TblCourse].[ModifiedTime] AS [ModifiedTime], 
-    [TblCourse].[Description] AS [Description]
-    FROM [dbo].[TblCourse] AS [TblCourse]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_dbo_UserRoles_dbo_Roles_RoleId" Association="Self.FK_dbo_UserRoles_dbo_Roles_RoleId">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="UserRoles" EntitySet="UserRoles" />
@@ -476,7 +454,6 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblCourse' does not have a primary
           <EntitySet Name="TblMaterials" EntityType="Winfocus_DbModel.TblMaterial" />
           <EntitySet Name="TblStudent_Parent_Basic" EntityType="Winfocus_DbModel.TblStudent_Parent_Basic" />
           <EntitySet Name="TblSTudentBasicDetails" EntityType="Winfocus_DbModel.TblSTudentBasicDetail" />
-          <EntitySet Name="TblCourses" EntityType="Winfocus_DbModel.TblCourse" />
           <EntitySet Name="Roles" EntityType="Winfocus_DbModel.Role" />
           <EntitySet Name="Users" EntityType="Winfocus_DbModel.User" />
           <AssociationSet Name="UserRoles" Association="Winfocus_DbModel.UserRoles">
@@ -484,7 +461,6 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblCourse' does not have a primary
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
           <EntitySet Name="TblSyllabus" EntityType="Winfocus_DbModel.TblSyllabu" />
-          <EntitySet Name="TblChapters" EntityType="Winfocus_DbModel.TblChapter" />
           <EntitySet Name="TblFeeDetails" EntityType="Winfocus_DbModel.TblFeeDetail" />
           <EntitySet Name="TblGrades" EntityType="Winfocus_DbModel.TblGrade" />
           <EntitySet Name="TblModules" EntityType="Winfocus_DbModel.TblModule" />
@@ -497,6 +473,8 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblCourse' does not have a primary
           <EntitySet Name="TblStudent_Fee_Structure" EntityType="Winfocus_DbModel.TblStudent_Fee_Structure" />
           <EntitySet Name="TblSubChapters" EntityType="Winfocus_DbModel.TblSubChapter" />
           <EntitySet Name="TblSubjects" EntityType="Winfocus_DbModel.TblSubject" />
+          <EntitySet Name="TblCourses" EntityType="Winfocus_DbModel.TblCourse" />
+          <EntitySet Name="TblChapters" EntityType="Winfocus_DbModel.TblChapter" />
         </EntityContainer>
         <EntityType Name="TblAccademicYear">
           <Key>
@@ -573,28 +551,6 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblCourse' does not have a primary
           <Property Name="Gender" Type="Int32" />
           <Property Name="DOB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="TblCourse">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="Name" />
-            <PropertyRef Name="CreatedBy" />
-            <PropertyRef Name="IsDeleted" />
-            <PropertyRef Name="ModifiedBy" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ACID" Type="Int32" />
-          <Property Name="SyllabusID" Type="Int32" />
-          <Property Name="GradeID" Type="Int32" />
-          <Property Name="StreamID" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
-          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
-          <Property Name="ModifiedTime" Type="DateTime" Precision="3" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleId" />
@@ -646,25 +602,6 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblCourse' does not have a primary
           <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
           <Property Name="ModifiedTime" Type="DateTime" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="TblChapter">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ChapterName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ACID" Type="Int32" Nullable="false" />
-          <Property Name="SyllabusID" Type="Int32" />
-          <Property Name="GradeID" Type="Int32" />
-          <Property Name="StreamID" Type="Int32" />
-          <Property Name="CourseID" Type="Int32" />
-          <Property Name="SubjectID" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
-          <Property Name="DeletedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
-          <Property Name="ModifiedTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="TblFeeDetail">
           <Key>
@@ -880,6 +817,43 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblCourse' does not have a primary
           <Property Name="ModifiedTime" Type="DateTime" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="TblCourse">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ACID" Type="Int32" />
+          <Property Name="SyllabusID" Type="Int32" />
+          <Property Name="GradeID" Type="Int32" />
+          <Property Name="StreamID" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedTime" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TblChapter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChapterName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ACID" Type="Int32" Nullable="false" />
+          <Property Name="SyllabusID" Type="Int32" />
+          <Property Name="GradeID" Type="Int32" />
+          <Property Name="StreamID" Type="Int32" />
+          <Property Name="CourseID" Type="Int32" />
+          <Property Name="SubjectID" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedTime" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -965,25 +939,6 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblCourse' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TblCourses">
-            <EntityTypeMapping TypeName="Winfocus_DbModel.TblCourse">
-              <MappingFragment StoreEntitySet="TblCourse">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ModifiedTime" ColumnName="ModifiedTime" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="StreamID" ColumnName="StreamID" />
-                <ScalarProperty Name="GradeID" ColumnName="GradeID" />
-                <ScalarProperty Name="SyllabusID" ColumnName="SyllabusID" />
-                <ScalarProperty Name="ACID" ColumnName="ACID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="Winfocus_DbModel.Role">
               <MappingFragment StoreEntitySet="Roles">
@@ -1037,26 +992,6 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblCourse' does not have a primary
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="ACID" ColumnName="ACID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TblChapters">
-            <EntityTypeMapping TypeName="Winfocus_DbModel.TblChapter">
-              <MappingFragment StoreEntitySet="TblChapter">
-                <ScalarProperty Name="ModifiedTime" ColumnName="ModifiedTime" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
-                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
-                <ScalarProperty Name="StreamID" ColumnName="StreamID" />
-                <ScalarProperty Name="GradeID" ColumnName="GradeID" />
-                <ScalarProperty Name="SyllabusID" ColumnName="SyllabusID" />
-                <ScalarProperty Name="ACID" ColumnName="ACID" />
-                <ScalarProperty Name="ChapterName" ColumnName="ChapterName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1283,6 +1218,45 @@ warning 6002: The table/view 'Winfocus_Db.dbo.TblCourse' does not have a primary
                 <ScalarProperty Name="SyllabusID" ColumnName="SyllabusID" />
                 <ScalarProperty Name="ACID" ColumnName="ACID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblCourses">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblCourse">
+              <MappingFragment StoreEntitySet="TblCourse">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ModifiedTime" ColumnName="ModifiedTime" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="StreamID" ColumnName="StreamID" />
+                <ScalarProperty Name="GradeID" ColumnName="GradeID" />
+                <ScalarProperty Name="SyllabusID" ColumnName="SyllabusID" />
+                <ScalarProperty Name="ACID" ColumnName="ACID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblChapters">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblChapter">
+              <MappingFragment StoreEntitySet="TblChapter">
+                <ScalarProperty Name="ModifiedTime" ColumnName="ModifiedTime" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="StreamID" ColumnName="StreamID" />
+                <ScalarProperty Name="GradeID" ColumnName="GradeID" />
+                <ScalarProperty Name="SyllabusID" ColumnName="SyllabusID" />
+                <ScalarProperty Name="ACID" ColumnName="ACID" />
+                <ScalarProperty Name="ChapterName" ColumnName="ChapterName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
