@@ -370,6 +370,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
+
+
     // Show form function
     function showForm(formType) {
         // Hide all forms first
@@ -398,6 +400,8 @@
     document.getElementById('confirm-delete').addEventListener('change', function () {
         document.querySelector('#delete-form .btn').disabled = !this.checked;
     });
+
+  
     //load data to form
     async function loadEditdata() {
         
@@ -429,7 +433,8 @@
                 });
             })
             .catch(error => {
-                console.error('Error fetching departments:', error);
+                showNotification('Something went wrong', 'error');
+                console.error('Error fetching data:', error);
             });
     }
     // Submit form function

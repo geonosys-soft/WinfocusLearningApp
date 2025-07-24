@@ -1,6 +1,6 @@
-﻿@model WinfocusLearningApp.DataEntity.TblNoteType
+﻿@*@model WinfocusLearningApp.DataEntity.TblMaterialManagement*@
 @{
-    ViewBag.Title = "Note Type Management";
+    ViewBag.Title = "Material Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -285,54 +285,54 @@
 </style>
 
 <div class="top-bar">
-    <h1><i class="fas fa-sticky-note"></i> Note Type Management</h1>
+    <h1><i class="fas fa-book"></i> Material Management</h1>
 </div>
 
 <div class="container">
     <div class="action-container">
         <div class="action-box insert" onclick="showForm('insert')">
             <div class="action-icon">➕</div>
-            <div class="action-title">Add Note Type</div>
-            <div class="action-desc">Create a new note type record</div>
+            <div class="action-title">Add Material</div>
+            <div class="action-desc">Create a new material record</div>
         </div>
 
         <div class="action-box edit" onclick="showForm('edit')">
             <div class="action-icon">✏️</div>
-            <div class="action-title">Edit Note Type</div>
-            <div class="action-desc">Modify existing note type</div>
+            <div class="action-title">Edit Material</div>
+            <div class="action-desc">Modify existing material</div>
         </div>
 
         <div class="action-box delete" onclick="showForm('delete')">
             <div class="action-icon">🗑️</div>
-            <div class="action-title">Remove Note Type</div>
-            <div class="action-desc">Delete note type record</div>
+            <div class="action-title">Remove Material</div>
+            <div class="action-desc">Delete material record</div>
         </div>
     </div>
 
     <!-- Insert Form (shown by default) -->
     <div id="insert-form" class="form-container">
-        <h3><i class="fas fa-plus-circle"></i> Add Note Type</h3>
+        <h3><i class="fas fa-plus-circle"></i> Add Material</h3>
         <div class="form-row">
             <div class="form-col">
                 <div class="form-group">
                     <label for="insert-academic-year">Academic Year:</label>
                     <select id="insert-academic-year" class="form-control" required>
                         <option value="">-- Select Academic Year --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="insert-syllabus">Syllabus:</label>
                     <select id="insert-syllabus" class="form-control" required>
                         <option value="">-- Select Syllabus --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="insert-class">Class:</label>
                     <select id="insert-class" class="form-control" required>
                         <option value="">-- Select Class --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
             </div>
@@ -341,28 +341,35 @@
                     <label for="insert-stream">Stream:</label>
                     <select id="insert-stream" class="form-control" required>
                         <option value="">-- Select Stream --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="insert-course">Course:</label>
                     <select id="insert-course" class="form-control" required>
                         <option value="">-- Select Course --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="insert-subject">Subject:</label>
                     <select id="insert-subject" class="form-control" required>
                         <option value="">-- Select Subject --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <label for="insert-note-type">Note Type:</label>
-            <input type="text" id="insert-note-type" class="form-control" placeholder="Enter note type" required>
+            <select id="insert-note-type" class="form-control" required>
+                <option value="">-- Select Note Type --</option>
+                <!-- Fetched from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="insert-material-type">Material Type:</label>
+            <input type="text" id="insert-material-type" class="form-control" placeholder="Enter material type" required>
         </div>
         <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
             <i class="fas fa-check"></i> Save
@@ -372,28 +379,28 @@
     <!-- Edit Form -->
     <div id="edit-form" class="form-container">
         <button class="close-btn" onclick="hideForm('edit')">×</button>
-        <h3><i class="fas fa-edit"></i> Edit Note Type</h3>
+        <h3><i class="fas fa-edit"></i> Edit Material</h3>
         <div class="form-row">
             <div class="form-col">
                 <div class="form-group">
                     <label for="edit-academic-year">Academic Year:</label>
                     <select id="edit-academic-year" class="form-control" required>
                         <option value="">-- Select Academic Year --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="edit-syllabus">Syllabus:</label>
                     <select id="edit-syllabus" class="form-control" required>
                         <option value="">-- Select Syllabus --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="edit-class">Class:</label>
                     <select id="edit-class" class="form-control" required>
                         <option value="">-- Select Class --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
             </div>
@@ -402,35 +409,42 @@
                     <label for="edit-stream">Stream:</label>
                     <select id="edit-stream" class="form-control" required>
                         <option value="">-- Select Stream --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="edit-course">Course:</label>
                     <select id="edit-course" class="form-control" required>
                         <option value="">-- Select Course --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="edit-subject">Subject:</label>
                     <select id="edit-subject" class="form-control" required>
                         <option value="">-- Select Subject --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <label for="edit-note-type-select">Select Note Type:</label>
-            <select id="edit-note-type-select" class="form-control" required>
+            <label for="edit-note-type">Note Type:</label>
+            <select id="edit-note-type" class="form-control" required>
                 <option value="">-- Select Note Type --</option>
-                <!-- Filled from database -->
+                <!-- Fetched from database -->
             </select>
         </div>
         <div class="form-group">
-            <label for="edit-new-note-type">New Note Type:</label>
-            <input type="text" id="edit-new-note-type" class="form-control" placeholder="Enter new note type" required>
+            <label for="edit-material-type">Material Type:</label>
+            <select id="edit-material-type" class="form-control" required>
+                <option value="">-- Select Material Type --</option>
+                <!-- Fetched from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="edit-new-material-type">New Material Type:</label>
+            <input type="text" id="edit-new-material-type" class="form-control" placeholder="Enter new material type" required>
         </div>
         <button type="button" class="btn" onclick="submitForm('edit')">
             <i class="fas fa-save"></i> Update
@@ -440,28 +454,28 @@
     <!-- Delete Form -->
     <div id="delete-form" class="form-container">
         <button class="close-btn" onclick="hideForm('delete')">×</button>
-        <h3><i class="fas fa-trash-alt"></i> Delete Note Type</h3>
+        <h3><i class="fas fa-trash-alt"></i> Delete Material</h3>
         <div class="form-row">
             <div class="form-col">
                 <div class="form-group">
                     <label for="delete-academic-year">Academic Year:</label>
                     <select id="delete-academic-year" class="form-control" required>
                         <option value="">-- Select Academic Year --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="delete-syllabus">Syllabus:</label>
                     <select id="delete-syllabus" class="form-control" required>
                         <option value="">-- Select Syllabus --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="delete-class">Class:</label>
                     <select id="delete-class" class="form-control" required>
                         <option value="">-- Select Class --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
             </div>
@@ -470,35 +484,42 @@
                     <label for="delete-stream">Stream:</label>
                     <select id="delete-stream" class="form-control" required>
                         <option value="">-- Select Stream --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="delete-course">Course:</label>
                     <select id="delete-course" class="form-control" required>
                         <option value="">-- Select Course --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="delete-subject">Subject:</label>
                     <select id="delete-subject" class="form-control" required>
                         <option value="">-- Select Subject --</option>
-                        <!-- Filled from database -->
+                        <!-- Fetched from database -->
                     </select>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <label for="delete-note-type">Select Note Type to Delete:</label>
+            <label for="delete-note-type">Note Type:</label>
             <select id="delete-note-type" class="form-control" required>
                 <option value="">-- Select Note Type --</option>
-                <!-- Filled from database -->
+                <!-- Fetched from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="delete-material-type">Material Type:</label>
+            <select id="delete-material-type" class="form-control" required>
+                <option value="">-- Select Material Type --</option>
+                <!-- Fetched from database -->
             </select>
         </div>
         <div class="form-group">
             <label>
-                <input type="checkbox" id="confirm-delete" required> I confirm I want to delete this note type
+                <input type="checkbox" id="confirm-delete" required> I confirm I want to delete this material
             </label>
         </div>
         <button type="button" class="btn btn-delete" onclick="submitForm('delete')" disabled>
@@ -527,9 +548,7 @@
         // Show the selected form
         const form = document.getElementById(formType + '-form');
         form.style.display = 'block';
-
-        // Load data for the form
-        loadFormData(formType);
+        loadDropdownData();
 
         // Scroll to form
         form.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -541,88 +560,82 @@
         document.getElementById('insert-form').style.display = 'block';
     }
 
-    // Load data for forms
-    async function loadFormData(formType) {
-        try {
-            // Load academic years
-            const academicYears = await fetchDropdownData('/api/ManagementApi/FetchAccademicYear');
-            populateDropdown('insert-academic-year', academicYears);
-            populateDropdown('edit-academic-year', academicYears);
-            populateDropdown('delete-academic-year', academicYears);
-
-            // Load other dropdowns as needed (syllabus, class, stream, course, subject)
-            // You'll need to implement these API endpoints
-            const syllabuses = await fetchDropdownData('/api/ManagementApi/FetchSyllabus');
-            populateDropdown('insert-syllabus', syllabuses);
-            populateDropdown('edit-syllabus', syllabuses);
-            populateDropdown('delete-syllabus', syllabuses);
-
-            const classes = await fetchDropdownData('/api/ManagementApi/FetchClass');
-            populateDropdown('insert-class', classes);
-            populateDropdown('edit-class', classes);
-            populateDropdown('delete-class', classes);
-
-            const streams = await fetchDropdownData('/api/ManagementApi/FetchStream');
-            populateDropdown('insert-stream', streams);
-            populateDropdown('edit-stream', streams);
-            populateDropdown('delete-stream', streams);
-
-            const courses = await fetchDropdownData('/api/ManagementApi/FetchCourse');
-            populateDropdown('insert-course', courses);
-            populateDropdown('edit-course', courses);
-            populateDropdown('delete-course', courses);
-
-            const subjects = await fetchDropdownData('/api/ManagementApi/FetchSubject');
-            populateDropdown('insert-subject', subjects);
-            populateDropdown('edit-subject', subjects);
-            populateDropdown('delete-subject', subjects);
-
-            // For edit and delete forms, load note types
-            if (formType === 'edit' || formType === 'delete') {
-                const noteTypes = await fetchDropdownData('/api/ManagementApi/FetchNoteTypes');
-                populateDropdown(formType + '-note-type' + (formType === 'edit' ? '-select' : ''), noteTypes);
-            }
-
-        } catch (error) {
-            showNotification('Error loading form data', 'error');
-            console.error('Error loading form data:', error);
-        }
-    }
-
-    // Helper function to fetch dropdown data
-    async function fetchDropdownData(url) {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Failed to fetch data');
-        return await response.json();
-    }
-
-    // Helper function to populate dropdown
-    function populateDropdown(dropdownId, data) {
-        const dropdown = document.getElementById(dropdownId);
-        if (!dropdown) return;
-
-        // Clear previous options except the first one
-        while (dropdown.options.length > 1) {
-            dropdown.remove(1);
-        }
-
-        // Add new options
-        data.forEach(item => {
-            const option = document.createElement('option');
-            option.value = item.Id;
-            option.textContent = item.Name || item.AccademicYear || item.Title; // Adjust based on your data structure
-            dropdown.appendChild(option);
-        });
-    }
-
     // Delete confirmation toggle
     document.getElementById('confirm-delete').addEventListener('change', function() {
         document.querySelector('#delete-form .btn').disabled = !this.checked;
     });
 
+    // Load dropdown data from database
+    async function loadDropdownData() {
+        try {
+            // Fetch all dropdown data
+            const responses = await Promise.all([
+                fetch('/api/ManagementApi/FetchAccademicYear'),
+                fetch('/api/ManagementApi/FetchSyllabus'),
+                fetch('/api/ManagementApi/FetchClasses'),
+                fetch('/api/ManagementApi/FetchStreams'),
+                fetch('/api/ManagementApi/FetchCourses'),
+                fetch('/api/ManagementApi/FetchSubjects'),
+                fetch('/api/ManagementApi/FetchNoteTypes'),
+                fetch('/api/ManagementApi/FetchMaterialTypes')
+            ]);
+
+            // Check if all responses are OK
+            if (responses.some(response => !response.ok)) {
+                throw new Error('Failed to fetch dropdown data');
+            }
+
+            // Parse all responses
+            const data = await Promise.all(responses.map(response => response.json()));
+
+            // Define dropdown IDs for each form
+            const dropdowns = [
+                { idPrefix: 'insert', types: ['academic-year', 'syllabus', 'class', 'stream', 'course', 'subject', 'note-type'] },
+                { idPrefix: 'edit', types: ['academic-year', 'syllabus', 'class', 'stream', 'course', 'subject', 'note-type', 'material-type'] },
+                { idPrefix: 'delete', types: ['academic-year', 'syllabus', 'class', 'stream', 'course', 'subject', 'note-type', 'material-type'] }
+            ];
+
+            // Populate all dropdowns
+            dropdowns.forEach(form => {
+                form.types.forEach((type, index) => {
+                    const dropdownId = `${form.idPrefix}-${type}`;
+                    const dropdown = document.getElementById(dropdownId);
+
+                    if (dropdown) {
+                        // Clear previous options
+                        dropdown.innerHTML = '';
+
+                        // Add default option
+                        const defaultOption = document.createElement('option');
+                        defaultOption.value = '';
+                        defaultOption.textContent = `-- Select ${type.replace('-', ' ')} --`;
+                        dropdown.appendChild(defaultOption);
+
+                        // Add options from API
+                        data[index].forEach(item => {
+                            const option = document.createElement('option');
+                            option.value = item.Id;
+                            option.textContent = item[Object.keys(item)[1]]; // Get the name property dynamically
+                            dropdown.appendChild(option);
+                        });
+                    }
+                });
+            });
+
+            // Special case for material type text input in insert form
+            // No population needed as it's a text input
+
+        } catch (error) {
+            showNotification('Failed to load dropdown data', 'error');
+            console.error('Error loading dropdown data:', error);
+        }
+    }
+
     // Submit form function
     async function submitForm(formType) {
         const notification = document.getElementById('notification');
+        const notificationIcon = notification.querySelector('.notification-icon');
+        const notificationMsg = notification.querySelector('.notification-message');
         let message;
 
         try {
@@ -635,113 +648,146 @@
                     const streamId = document.getElementById('insert-stream').value;
                     const courseId = document.getElementById('insert-course').value;
                     const subjectId = document.getElementById('insert-subject').value;
-                    const noteType = document.getElementById('insert-note-type').value.trim();
+                    const noteTypeId = document.getElementById('insert-note-type').value;
+                    const materialType = document.getElementById('insert-material-type').value.trim();
 
-                    // Validate
-                    if (!academicYearId || !syllabusId || !classId || !streamId || !courseId || !subjectId || !noteType) {
+                    // Validate all fields
+                    if (!academicYearId || !syllabusId || !classId || !streamId || !courseId || !subjectId || !noteTypeId || !materialType) {
                         showNotification('Please fill all fields', 'error');
                         return;
                     }
 
-                    // Submit data
-                    const response = await fetch('/api/ManagementApi/AddNoteType', {
+                    // Prepare data for API
+                    const materialData = {
+                        AcademicYearId: academicYearId,
+                        SyllabusId: syllabusId,
+                        ClassId: classId,
+                        StreamId: streamId,
+                        CourseId: courseId,
+                        SubjectId: subjectId,
+                        NoteTypeId: noteTypeId,
+                        MaterialType: materialType
+                    };
+
+                    // Call API to save material
+                    const response = await fetch('/api/ManagementApi/AddMaterial', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({
-                            AcademicYearId: academicYearId,
-                            SyllabusId: syllabusId,
-                            ClassId: classId,
-                            StreamId: streamId,
-                            CourseId: courseId,
-                            SubjectId: subjectId,
-                            NoteType: noteType
-                        })
+                        body: JSON.stringify(materialData)
                     });
 
-                    if (!response.ok) throw new Error('Failed to add note type');
+                    if (!response.ok) {
+                        throw new Error('Failed to save material');
+                    }
 
-                    message = 'Note type added successfully!';
+                    // Show success message
+                    message = 'Material added successfully!';
                     showNotification(message, 'success');
 
                     // Clear form
-                    document.getElementById('insert-note-type').value = '';
+                    document.getElementById('insert-material-type').value = '';
                     break;
 
                 case 'edit':
+                    // Get all form values
                     const editAcademicYearId = document.getElementById('edit-academic-year').value;
                     const editSyllabusId = document.getElementById('edit-syllabus').value;
                     const editClassId = document.getElementById('edit-class').value;
                     const editStreamId = document.getElementById('edit-stream').value;
                     const editCourseId = document.getElementById('edit-course').value;
                     const editSubjectId = document.getElementById('edit-subject').value;
-                    const noteTypeId = document.getElementById('edit-note-type-select').value;
-                    const newNoteType = document.getElementById('edit-new-note-type').value.trim();
+                    const editNoteTypeId = document.getElementById('edit-note-type').value;
+                    const editMaterialTypeId = document.getElementById('edit-material-type').value;
+                    const newMaterialType = document.getElementById('edit-new-material-type').value.trim();
 
+                    // Validate all fields
                     if (!editAcademicYearId || !editSyllabusId || !editClassId || !editStreamId ||
-                        !editCourseId || !editSubjectId || !noteTypeId || !newNoteType) {
+                        !editCourseId || !editSubjectId || !editNoteTypeId || !editMaterialTypeId || !newMaterialType) {
                         showNotification('Please fill all fields', 'error');
                         return;
                     }
 
-                    const editResponse = await fetch('/api/ManagementApi/UpdateNoteType', {
+                    // Prepare data for API
+                    const editData = {
+                        Id: editMaterialTypeId,
+                        AcademicYearId: editAcademicYearId,
+                        SyllabusId: editSyllabusId,
+                        ClassId: editClassId,
+                        StreamId: editStreamId,
+                        CourseId: editCourseId,
+                        SubjectId: editSubjectId,
+                        NoteTypeId: editNoteTypeId,
+                        MaterialType: newMaterialType
+                    };
+
+                    // Call API to update material
+                    const editResponse = await fetch('/api/ManagementApi/UpdateMaterial', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({
-                            Id: noteTypeId,
-                            AcademicYearId: editAcademicYearId,
-                            SyllabusId: editSyllabusId,
-                            ClassId: editClassId,
-                            StreamId: editStreamId,
-                            CourseId: editCourseId,
-                            SubjectId: editSubjectId,
-                            NoteType: newNoteType
-                        })
+                        body: JSON.stringify(editData)
                     });
 
-                    if (!editResponse.ok) throw new Error('Failed to update note type');
+                    if (!editResponse.ok) {
+                        throw new Error('Failed to update material');
+                    }
 
-                    message = 'Note type updated successfully!';
+                    // Show success message
+                    message = 'Material updated successfully!';
                     showNotification(message, 'success');
 
                     // Clear form
-                    document.getElementById('edit-new-note-type').value = '';
+                    document.getElementById('edit-new-material-type').value = '';
                     hideForm('edit');
                     break;
 
                 case 'delete':
+                    // Get all form values
+                    const deleteAcademicYearId = document.getElementById('delete-academic-year').value;
+                    const deleteSyllabusId = document.getElementById('delete-syllabus').value;
+                    const deleteClassId = document.getElementById('delete-class').value;
+                    const deleteStreamId = document.getElementById('delete-stream').value;
+                    const deleteCourseId = document.getElementById('delete-course').value;
+                    const deleteSubjectId = document.getElementById('delete-subject').value;
                     const deleteNoteTypeId = document.getElementById('delete-note-type').value;
+                    const deleteMaterialTypeId = document.getElementById('delete-material-type').value;
 
-                    if (!deleteNoteTypeId) {
-                        showNotification('Please select a note type to delete', 'error');
+                    // Validate all fields
+                    if (!deleteAcademicYearId || !deleteSyllabusId || !deleteClassId || !deleteStreamId ||
+                        !deleteCourseId || !deleteSubjectId || !deleteNoteTypeId || !deleteMaterialTypeId) {
+                        showNotification('Please fill all fields', 'error');
                         return;
                     }
 
-                    const deleteResponse = await fetch('/api/ManagementApi/DeleteNoteType', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ Id: deleteNoteTypeId })
+                    // Confirm deletion
+                    if (!confirm('Are you sure you want to delete this material?')) {
+                        return;
+                    }
+
+                    // Call API to delete material
+                    const deleteResponse = await fetch(`/api/ManagementApi/DeleteMaterial/${deleteMaterialTypeId}`, {
+                        method: 'DELETE'
                     });
 
-                    if (!deleteResponse.ok) throw new Error('Failed to delete note type');
+                    if (!deleteResponse.ok) {
+                        throw new Error('Failed to delete material');
+                    }
 
-                    message = 'Note type deleted successfully!';
+                    // Show success message
+                    message = 'Material deleted successfully!';
                     showNotification(message, 'success');
 
                     // Clear form
-                    document.getElementById('delete-note-type').value = '';
                     document.getElementById('confirm-delete').checked = false;
                     document.querySelector('#delete-form .btn').disabled = true;
                     hideForm('delete');
                     break;
             }
         } catch (error) {
-            showNotification(error.message || 'Something went wrong', 'error');
+            showNotification('Something went wrong', 'error');
             console.error('Error submitting form:', error);
         }
     }
@@ -778,13 +824,8 @@
         this.classList.remove('show');
     });
 
-    // Cascade dropdown changes (example for academic year -> syllabus -> class, etc.)
-    // You'll need to implement these based on your actual API endpoints
-    document.getElementById('insert-academic-year').addEventListener('change', async function() {
-        const academicYearId = this.value;
-        if (!academicYearId) return;
-
-        // Fetch syllabuses for this academic year and populate the syllabus dropdown
-        // Implement similar for other cascading dropdowns
+    // Initialize form on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadDropdownData();
     });
 </script>

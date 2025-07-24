@@ -21,7 +21,11 @@ namespace WinfocusLearningApp.Controllers
             return RedirectToAction("AllUsers");
         }
 
-        public ActionResult AllUsers() { return View(); }
+        public ActionResult AllUsers() { 
+        //code updated
+            return View();
+        }
+
         public ActionResult CreateUsers() { return View(); }
         public ActionResult AcademicYear(int?id) { 
 
@@ -64,5 +68,8 @@ namespace WinfocusLearningApp.Controllers
         public ActionResult Blog() { return View(); }
         public ActionResult SupportTicket() { return View(); }
         public ActionResult Complaints() { return View(); }
+        public ActionResult MaterialType() { return View(); }
+        public ActionResult Batch() { return View(); }
+        public ActionResult PreferredTimeSlot() { return View(); }
     }
 }

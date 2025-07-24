@@ -1,6 +1,6 @@
-﻿@model WinfocusLearningApp.DataEntity.TblSyllabu
+﻿@*@model WinfocusLearningApp.DataEntity.TblTimePreference*@
 @{
-    ViewBag.Title = "Syllabus Management";
+    ViewBag.Title = "Time Preference Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -271,51 +271,46 @@
     .notification-error {
         border-left: 4px solid var(--danger-color);
     }
-
-    textarea.form-control {
-        min-height: 20px;
-        resize: vertical;
-    }
 </style>
 
 <div class="top-bar">
-    <h1><i class="fas fa-book"></i> Syllabus Management</h1>
+    <h1><i class="fas fa-clock"></i> Time Preference Management</h1>
 </div>
 
 <div class="container">
     <div class="action-container">
         <div class="action-box insert" onclick="showForm('insert')">
-            <div class="action-icon">➕</div>
-            <div class="action-title">Add Syllabus</div>
-            <div class="action-desc">Create a new syllabus record</div>
+            <div class="action-icon">⏱️</div>
+            <div class="action-title">Add Time Preference</div>
+            <div class="action-desc">Create a new time preference</div>
         </div>
 
         <div class="action-box edit" onclick="showForm('edit')">
             <div class="action-icon">✏️</div>
-            <div class="action-title">Edit Syllabus</div>
-            <div class="action-desc">Modify existing syllabus</div>
+            <div class="action-title">Edit Time Preference</div>
+            <div class="action-desc">Modify existing time preference</div>
         </div>
 
         <div class="action-box delete" onclick="showForm('delete')">
             <div class="action-icon">🗑️</div>
-            <div class="action-title">Remove Syllabus</div>
-            <div class="action-desc">Delete syllabus record</div>
+            <div class="action-title">Remove Time Preference</div>
+            <div class="action-desc">Delete time preference</div>
         </div>
     </div>
 
     <!-- Insert Form (shown by default) -->
     <div id="insert-form" class="form-container">
-        <h3><i class="fas fa-plus-circle"></i> Add Syllabus</h3>
+        <h3><i class="fas fa-plus-circle"></i> Add Time Preference</h3>
         <div class="form-group">
-            <label for="academic-year">Academic Year:</label>
-            <select id="academic-year" class="form-control" required>
+            <label for="AcademicYear">Academic Year:</label>
+            <select id="AcademicYear" class="form-control" required>
                 <option value="">-- Select Academic Year --</option>
                 <!-- Options will be populated from database -->
             </select>
         </div>
         <div class="form-group">
-            <label for="syllabus-text">Syllabus:</label>
-            <textarea id="syllabus-text" class="form-control" placeholder="Enter syllabus content" required></textarea>
+            <label for="TimePreference">Time Preference:</label>
+            <input type="text" id="TimePreference" class="form-control" placeholder="e.g. Morning, Afternoon, Evening" required>
         </div>
         <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
             <i class="fas fa-check"></i> Save
@@ -325,7 +320,7 @@
     <!-- Edit Form -->
     <div id="edit-form" class="form-container">
         <button class="close-btn" onclick="hideForm('edit')">×</button>
-        <h3><i class="fas fa-edit"></i> Edit Syllabus</h3>
+        <h3><i class="fas fa-edit"></i> Edit Time Preference</h3>
         <div class="form-group">
             <label for="edit-academic-year">Academic Year:</label>
             <select id="edit-academic-year" class="form-control" required>
@@ -334,15 +329,15 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="edit-syllabus-select">Syllabus:</label>
-            <select id="edit-syllabus-select" class="form-control" required>
-                <option value="">-- Select Syllabus --</option>
-                <!-- Options will be populated from database -->
+            <label for="edit-time-preference">Time Preference:</label>
+            <select id="edit-time-preference" class="form-control" required>
+                <option value="">-- Select Time Preference --</option>
+                <!-- Options will be populated based on selected academic year -->
             </select>
         </div>
         <div class="form-group">
-            <label for="edit-syllabus-text">New Syllabus Content:</label>
-            <textarea id="edit-syllabus-text" class="form-control" placeholder="Enter new syllabus content" required></textarea>
+            <label for="edit-new-time-preference">New Time Preference:</label>
+            <input type="text" id="edit-new-time-preference" class="form-control" placeholder="Enter new time preference" required>
         </div>
         <button type="button" class="btn" onclick="submitForm('edit')">
             <i class="fas fa-save"></i> Update
@@ -352,7 +347,7 @@
     <!-- Delete Form -->
     <div id="delete-form" class="form-container">
         <button class="close-btn" onclick="hideForm('delete')">×</button>
-        <h3><i class="fas fa-trash-alt"></i> Delete Syllabus</h3>
+        <h3><i class="fas fa-trash-alt"></i> Delete Time Preference</h3>
         <div class="form-group">
             <label for="delete-academic-year">Academic Year:</label>
             <select id="delete-academic-year" class="form-control" required>
@@ -361,15 +356,15 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="delete-syllabus-select">Syllabus:</label>
-            <select id="delete-syllabus-select" class="form-control" required>
-                <option value="">-- Select Syllabus --</option>
-                <!-- Options will be populated from database -->
+            <label for="delete-time-preference">Time Preference:</label>
+            <select id="delete-time-preference" class="form-control" required>
+                <option value="">-- Select Time Preference --</option>
+                <!-- Options will be populated based on selected academic year -->
             </select>
         </div>
         <div class="form-group">
             <label>
-                <input type="checkbox" id="confirm-delete" required> I confirm I want to delete this syllabus
+                <input type="checkbox" id="confirm-delete" required> I confirm I want to delete this time preference
             </label>
         </div>
         <button type="button" class="btn btn-delete" onclick="submitForm('delete')" disabled>
@@ -388,108 +383,42 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
-    // Show form function
-    function showForm(formType) {
-        // Hide all forms first
-        document.querySelectorAll('.form-container').forEach(form => {
-            form.style.display = 'none';
+    // Document ready function
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load academic years for all dropdowns
+        loadAcademicYears();
+
+        // Set up event listeners for dependent dropdowns
+        document.getElementById('edit-academic-year').addEventListener('change', function() {
+            loadTimePreferences('edit-time-preference', this.value);
         });
 
-        // Show the selected form
-        const form = document.getElementById(formType + '-form');
-        form.style.display = 'block';
-        loadAcademicYears();
+        document.getElementById('delete-academic-year').addEventListener('change', function() {
+            loadTimePreferences('delete-time-preference', this.value);
+        });
 
-       /* if (formType === 'edit' || formType === 'delete') {
-            loadSyllabusData();
-        }*/
-
-        // Scroll to form
-        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-
-    // Hide form function
-    function hideForm(formType) {
-        document.getElementById(formType + '-form').style.display = 'none';
-        document.getElementById('insert-form').style.display = 'block';
-    }
-
-    // Delete confirmation toggle
-    document.getElementById('confirm-delete').addEventListener('change', function () {
-        document.querySelector('#delete-form .btn').disabled = !this.checked;
-    });
-   
-
-
-    document.addEventListener("DOMContentLoaded", function () {
-        loadAcademicYears();
-    });
-
-    //edit-academic-year value change listener 
-    document.getElementById('edit-academic-year').addEventListener('change', async function () {
-        const yearId = this.value;
-        if (!yearId) return;
-
-        try {
-            const response = await fetch(`/api/ManagementApi/FetchSyllabus/${yearId}`);
-            if (!response.ok) throw new Error('Failed to fetch syllabus');
-
-            const syllabi = await response.json();
-            const dropdown = document.getElementById('edit-syllabus-select');
-            dropdown.innerHTML = '<option value="">-- Select Syllabus --</option>';
-
-            syllabi.forEach(syllabus => {
-                const option = document.createElement('option');
-                option.value = syllabus.Id;
-                option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
-                dropdown.appendChild(option);
-            });
-        } catch (error) {
-           // console.error('Error loading syllabus:', error);
-            showNotification('Failed to load syllabus', 'error');
-        }
-    });
-
-    //delete-academic-year value change listener
-    document.getElementById('delete-academic-year').addEventListener('change', async function () {
-        const yearId = this.value;
-        if (!yearId) return;
-
-        try {
-            const response = await fetch(`/api/ManagementApi/FetchSyllabus/${yearId}`);
-            if (!response.ok) throw new Error('Failed to fetch syllabus');
-
-            const syllabi = await response.json();
-            const dropdown = document.getElementById('delete-syllabus-select');
-            dropdown.innerHTML = '<option value="">-- Select Syllabus --</option>';
-
-            syllabi.forEach(syllabus => {
-                const option = document.createElement('option');
-                option.value = syllabus.Id;
-                option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
-                dropdown.appendChild(option);
-            });
-        } catch (error) {
-            //console.error('Error loading syllabus:', error);
-            showNotification('Failed to load syllabus', 'error');
-        }
+        // Delete confirmation toggle
+        document.getElementById('confirm-delete').addEventListener('change', function() {
+            document.querySelector('#delete-form .btn').disabled = !this.checked;
+        });
     });
 
     // Load academic years from database
     async function loadAcademicYears() {
         try {
             const response = await fetch('/api/ManagementApi/FetchAccademicYear');
-            if (!response.ok) throw new Error('Failed to fetch academic years');
-
             const data = await response.json();
 
-            // Populate academic year dropdowns
+            if (!response.ok) throw new Error('Failed to load academic years');
+
+            // Get all academic year dropdowns
             const yearDropdowns = [
-                'academic-year',
+                'AcademicYear',
                 'edit-academic-year',
                 'delete-academic-year'
             ];
 
+            // Populate each dropdown
             yearDropdowns.forEach(dropdownId => {
                 const dropdown = document.getElementById(dropdownId);
                 dropdown.innerHTML = '<option value="">-- Select Academic Year --</option>';
@@ -507,108 +436,154 @@
         }
     }
 
-    // Load syllabus data when academic year is selected (for edit/delete)
-   
+    // Load time preferences based on selected academic year
+    async function loadTimePreferences(targetDropdownId, academicYearId) {
+        if (!academicYearId) return;
+
+        try {
+            const response = await fetch(`/api/TimePreferenceApi/GetTimePreferences?academicYearId=${academicYearId}`);
+            const data = await response.json();
+
+            if (!response.ok) throw new Error('Failed to load time preferences');
+
+            const dropdown = document.getElementById(targetDropdownId);
+            dropdown.innerHTML = '<option value="">-- Select Time Preference --</option>';
+
+            data.forEach(pref => {
+                const option = document.createElement('option');
+                option.value = pref.Id;
+                option.textContent = pref.PreferenceName;
+                dropdown.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Error loading time preferences:', error);
+            showNotification('Failed to load time preferences', 'error');
+        }
+    }
+
+    // Show form function
+    function showForm(formType) {
+        // Hide all forms first
+        document.querySelectorAll('.form-container').forEach(form => {
+            form.style.display = 'none';
+        });
+
+        // Show the selected form
+        const form = document.getElementById(formType + '-form');
+        form.style.display = 'block';
+
+        // Scroll to form
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Hide form function
+    function hideForm(formType) {
+        document.getElementById(formType + '-form').style.display = 'none';
+        document.getElementById('insert-form').style.display = 'block';
+    }
 
     // Submit form function
     async function submitForm(formType) {
-        const notification = document.getElementById('notification');
-        const notificationIcon = notification.querySelector('.notification-icon');
-        const notificationMsg = notification.querySelector('.notification-message');
-        let message;
+        let academicYearId, timePreference, newTimePreference, message;
 
         try {
             switch (formType) {
                 case 'insert':
-                    const yearId = document.getElementById('academic-year').value;
-                    const syllabusContent = document.getElementById('syllabus-text').value.trim();
+                    academicYearId = document.getElementById('AcademicYear').value;
+                    timePreference = document.getElementById('TimePreference').value.trim();
 
-                    if (!yearId || !syllabusContent) {
-                        showNotification('Please select academic year and enter syllabus content', 'error');
+                    if (!academicYearId || !timePreference) {
+                        showNotification('Please select academic year and enter time preference', 'error');
                         return;
                     }
 
-                    const insertResponse = await fetch('/api/ManagementApi/AddSyllabus', {
+                    const insertResponse = await fetch('/api/TimePreferenceApi/AddTimePreference', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            ACID: yearId,
-                            Name: syllabusContent
+                            AcademicYearId: academicYearId,
+                            PreferenceName: timePreference
                         })
                     });
 
-                    if (!insertResponse.ok) throw new Error('Failed to add syllabus');
+                    if (!insertResponse.ok) throw new Error('Failed to add time preference');
 
-                    message = 'Syllabus added successfully!';
+                    message = `Time preference "${timePreference}" added successfully!`;
                     showNotification(message, 'success');
 
                     // Clear form
-                    document.getElementById('academic-year').value = '';
-                    document.getElementById('syllabus-text').value = '';
+                    document.getElementById('AcademicYear').value = '';
+                    document.getElementById('TimePreference').value = '';
                     break;
 
                 case 'edit':
-                    const editYearId = document.getElementById('edit-academic-year').value;
-                    const syllabusId = document.getElementById('edit-syllabus-select').value;
-                    const newContent = document.getElementById('edit-syllabus-text').value.trim();
+                    academicYearId = document.getElementById('edit-academic-year').value;
+                    const timePreferenceId = document.getElementById('edit-time-preference').value;
+                    newTimePreference = document.getElementById('edit-new-time-preference').value.trim();
 
-                    if (!editYearId || !syllabusId || !newContent) {
+                    if (!academicYearId || !timePreferenceId || !newTimePreference) {
                         showNotification('Please fill all fields', 'error');
                         return;
                     }
 
-                    const editResponse = await fetch('/api/ManagementApi/UpdateSyllabus', {
+                    const editResponse = await fetch('/api/TimePreferenceApi/UpdateTimePreference', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            Id: syllabusId,
-                            ACID: editYearId,
-                            Name: newContent
+                            Id: timePreferenceId,
+                            AcademicYearId: academicYearId,
+                            PreferenceName: newTimePreference
                         })
                     });
 
-                    if (!editResponse.ok) throw new Error('Failed to update syllabus');
+                    if (!editResponse.ok) throw new Error('Failed to update time preference');
 
-                    message = 'Syllabus updated successfully!';
+                    const oldPrefName = document.getElementById('edit-time-preference').options[
+                        document.getElementById('edit-time-preference').selectedIndex
+                    ].text;
+
+                    message = `Time preference changed from "${oldPrefName}" to "${newTimePreference}"`;
                     showNotification(message, 'success');
 
                     // Clear form
                     document.getElementById('edit-academic-year').value = '';
-                    document.getElementById('edit-syllabus-select').value = '';
-                    document.getElementById('edit-syllabus-text').value = '';
+                    document.getElementById('edit-time-preference').innerHTML = '<option value="">-- Select Time Preference --</option>';
+                    document.getElementById('edit-new-time-preference').value = '';
                     hideForm('edit');
                     break;
 
                 case 'delete':
-                    const deleteSyllabusId = document.getElementById('delete-syllabus-select').value;
+                    const timePrefId = document.getElementById('delete-time-preference').value;
 
-                    if (!deleteSyllabusId) {
-                        showNotification('Please select a syllabus to delete', 'error');
+                    if (!timePrefId) {
+                        showNotification('Please select time preference to delete', 'error');
                         return;
                     }
 
-                    const deleteResponse = await fetch('/api/ManagementApi/DltSyllabus', {
+                    const deleteResponse = await fetch('/api/TimePreferenceApi/DeleteTimePreference', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({
-                            Id: deleteSyllabusId
-                        })
+                        body: JSON.stringify({ Id: timePrefId })
                     });
 
-                    if (!deleteResponse.ok) throw new Error('Failed to delete syllabus');
+                    if (!deleteResponse.ok) throw new Error('Failed to delete time preference');
 
-                    message = 'Syllabus deleted successfully!';
+                    const prefName = document.getElementById('delete-time-preference').options[
+                        document.getElementById('delete-time-preference').selectedIndex
+                    ].text;
+
+                    message = `Time preference "${prefName}" deleted successfully!`;
                     showNotification(message, 'success');
 
                     // Clear form
                     document.getElementById('delete-academic-year').value = '';
-                    document.getElementById('delete-syllabus-select').value = '';
+                    document.getElementById('delete-time-preference').innerHTML = '<option value="">-- Select Time Preference --</option>';
                     document.getElementById('confirm-delete').checked = false;
                     document.querySelector('#delete-form .btn').disabled = true;
                     hideForm('delete');
@@ -616,7 +591,7 @@
             }
         } catch (error) {
             console.error(`Error in ${formType} operation:`, error);
-            showNotification(`Failed to ${formType} syllabus`, 'error');
+            showNotification('Something went wrong', 'error');
         }
     }
 
@@ -648,7 +623,7 @@
     }
 
     // Close notification when clicked
-    document.getElementById('notification').addEventListener('click', function () {
+    document.getElementById('notification').addEventListener('click', function() {
         this.classList.remove('show');
     });
 </script>
