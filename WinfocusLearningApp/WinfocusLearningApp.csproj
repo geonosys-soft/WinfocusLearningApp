@@ -163,6 +163,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagementController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="DataEntity\EntityConnection.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -351,6 +352,8 @@
     <Content Include="Views\Management\MaterialType.cshtml" />
     <Content Include="Views\Management\Batch.cshtml" />
     <Content Include="Views\Management\PreferredTimeSlot.cshtml" />
+    <Content Include="Views\Shared\_loginLayout.cshtml" />
+    <Content Include="Views\Registration\Student.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
