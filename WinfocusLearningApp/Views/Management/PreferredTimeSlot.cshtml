@@ -1,8 +1,629 @@
-﻿
+﻿@*@model WinfocusLearningApp.DataEntity.TblTimePreference*@
 @{
-    ViewBag.Title = "PreferredTimeSlot";
+    ViewBag.Title = "Time Preference Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>PreferredTimeSlot</h2>
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --primary-hover: #3a56d4;
+        --secondary-color: #3f37c9;
+        --danger-color: #f72585;
+        --danger-hover: #e5177b;
+        --success-color: #4cc9f0;
+        --success-hover: #2fb5e0;
+        --text-color: #2b2d42;
+        --light-bg: #f8f9fa;
+    }
 
+    body {
+        background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text-color);
+        min-height: 100vh;
+    }
+
+    .top-bar {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 20px 0;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .top-bar::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4cc9f0, #f72585, #7209b7);
+        }
+
+        .top-bar h1 {
+            margin: 0;
+            padding: 0 30px;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .action-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+    }
+
+    .action-box {
+        background: white;
+        border-radius: 12px;
+        padding: 40px 30px;
+        width: 280px;
+        text-align: center;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        overflow: hidden;
+        border: none;
+    }
+
+        .action-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .action-box.insert {
+            border-top: 4px solid var(--success-color);
+        }
+
+        .action-box.edit {
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .action-box.delete {
+            border-top: 4px solid var(--danger-color);
+        }
+
+    .action-icon {
+        font-size: 56px;
+        margin-bottom: 20px;
+        transition: transform 0.3s;
+    }
+
+    .action-box:hover .action-icon {
+        transform: scale(1.1);
+    }
+
+    .action-title {
+        font-weight: 600;
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .action-desc {
+        color: #6c757d;
+        font-size: 16px;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        animation: fadeIn 0.5s ease-out;
+        border-top: 4px solid var(--primary-color);
+    }
+
+    #insert-form {
+        display: block;
+    }
+
+    #edit-form, #delete-form {
+        display: none;
+    }
+
+    .form-container h3 {
+        margin-top: 0;
+        color: var(--primary-color);
+        font-size: 24px;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+        .form-container h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+    .btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+    .btn-submit {
+        background-color: var(--success-color);
+    }
+
+        .btn-submit:hover {
+            background-color: var(--success-hover);
+        }
+
+    .btn-delete {
+        background-color: var(--danger-color);
+    }
+
+        .btn-delete:hover {
+            background-color: var(--danger-hover);
+        }
+
+    .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #6c757d;
+        transition: color 0.3s;
+    }
+
+        .close-btn:hover {
+            color: var(--danger-color);
+        }
+
+    .floating-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        z-index: 1000;
+        transform: translateX(150%);
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+        .floating-notification.show {
+            transform: translateX(0);
+        }
+
+    .notification-icon {
+        margin-right: 10px;
+        font-size: 24px;
+    }
+
+    .notification-success {
+        border-left: 4px solid var(--success-color);
+    }
+
+    .notification-error {
+        border-left: 4px solid var(--danger-color);
+    }
+</style>
+
+<div class="top-bar">
+    <h1><i class="fas fa-clock"></i> Time Preference Management</h1>
+</div>
+
+<div class="container">
+    <div class="action-container">
+        <div class="action-box insert" onclick="showForm('insert')">
+            <div class="action-icon">⏱️</div>
+            <div class="action-title">Add Time Preference</div>
+            <div class="action-desc">Create a new time preference</div>
+        </div>
+
+        <div class="action-box edit" onclick="showForm('edit')">
+            <div class="action-icon">✏️</div>
+            <div class="action-title">Edit Time Preference</div>
+            <div class="action-desc">Modify existing time preference</div>
+        </div>
+
+        <div class="action-box delete" onclick="showForm('delete')">
+            <div class="action-icon">🗑️</div>
+            <div class="action-title">Remove Time Preference</div>
+            <div class="action-desc">Delete time preference</div>
+        </div>
+    </div>
+
+    <!-- Insert Form (shown by default) -->
+    <div id="insert-form" class="form-container">
+        <h3><i class="fas fa-plus-circle"></i> Add Time Preference</h3>
+        <div class="form-group">
+            <label for="AcademicYear">Academic Year:</label>
+            <select id="AcademicYear" class="form-control" required>
+                <option value="">-- Select Academic Year --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="TimePreference">Time Preference:</label>
+            <input type="text" id="TimePreference" class="form-control" placeholder="e.g. Morning, Afternoon, Evening" required>
+        </div>
+        <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
+            <i class="fas fa-check"></i> Save
+        </button>
+    </div>
+
+    <!-- Edit Form -->
+    <div id="edit-form" class="form-container">
+        <button class="close-btn" onclick="hideForm('edit')">×</button>
+        <h3><i class="fas fa-edit"></i> Edit Time Preference</h3>
+        <div class="form-group">
+            <label for="edit-academic-year">Academic Year:</label>
+            <select id="edit-academic-year" class="form-control" required>
+                <option value="">-- Select Academic Year --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="edit-time-preference">Time Preference:</label>
+            <select id="edit-time-preference" class="form-control" required>
+                <option value="">-- Select Time Preference --</option>
+                <!-- Options will be populated based on selected academic year -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="edit-new-time-preference">New Time Preference:</label>
+            <input type="text" id="edit-new-time-preference" class="form-control" placeholder="Enter new time preference" required>
+        </div>
+        <button type="button" class="btn" onclick="submitForm('edit')">
+            <i class="fas fa-save"></i> Update
+        </button>
+    </div>
+
+    <!-- Delete Form -->
+    <div id="delete-form" class="form-container">
+        <button class="close-btn" onclick="hideForm('delete')">×</button>
+        <h3><i class="fas fa-trash-alt"></i> Delete Time Preference</h3>
+        <div class="form-group">
+            <label for="delete-academic-year">Academic Year:</label>
+            <select id="delete-academic-year" class="form-control" required>
+                <option value="">-- Select Academic Year --</option>
+                <!-- Options will be populated from database -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="delete-time-preference">Time Preference:</label>
+            <select id="delete-time-preference" class="form-control" required>
+                <option value="">-- Select Time Preference --</option>
+                <!-- Options will be populated based on selected academic year -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="confirm-delete" required> I confirm I want to delete this time preference
+            </label>
+        </div>
+        <button type="button" class="btn btn-delete" onclick="submitForm('delete')" disabled>
+            <i class="fas fa-trash"></i> Delete
+        </button>
+    </div>
+</div>
+
+<!-- Notification -->
+<div id="notification" class="floating-notification">
+    <div class="notification-icon"></div>
+    <div class="notification-message"></div>
+</div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script>
+    // Document ready function
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load academic years for all dropdowns
+        loadAcademicYears();
+
+        // Set up event listeners for dependent dropdowns
+        document.getElementById('edit-academic-year').addEventListener('change', function() {
+            loadTimePreferences('edit-time-preference', this.value);
+        });
+
+        document.getElementById('delete-academic-year').addEventListener('change', function() {
+            loadTimePreferences('delete-time-preference', this.value);
+        });
+
+        // Delete confirmation toggle
+        document.getElementById('confirm-delete').addEventListener('change', function() {
+            document.querySelector('#delete-form .btn').disabled = !this.checked;
+        });
+    });
+
+    // Load academic years from database
+    async function loadAcademicYears() {
+        try {
+            const response = await fetch('/api/ManagementApi/FetchAccademicYear');
+            const data = await response.json();
+
+            if (!response.ok) throw new Error('Failed to load academic years');
+
+            // Get all academic year dropdowns
+            const yearDropdowns = [
+                'AcademicYear',
+                'edit-academic-year',
+                'delete-academic-year'
+            ];
+
+            // Populate each dropdown
+            yearDropdowns.forEach(dropdownId => {
+                const dropdown = document.getElementById(dropdownId);
+                dropdown.innerHTML = '<option value="">-- Select Academic Year --</option>';
+
+                data.forEach(year => {
+                    const option = document.createElement('option');
+                    option.value = year.Id;
+                    option.textContent = year.AccademicYear;
+                    dropdown.appendChild(option);
+                });
+            });
+        } catch (error) {
+            console.error('Error loading academic years:', error);
+            showNotification('Failed to load academic years', 'error');
+        }
+    }
+
+    // Load time preferences based on selected academic year
+    async function loadTimePreferences(targetDropdownId, academicYearId) {
+        if (!academicYearId) return;
+
+        try {
+            const response = await fetch(`/api/TimePreferenceApi/GetTimePreferences?academicYearId=${academicYearId}`);
+            const data = await response.json();
+
+            if (!response.ok) throw new Error('Failed to load time preferences');
+
+            const dropdown = document.getElementById(targetDropdownId);
+            dropdown.innerHTML = '<option value="">-- Select Time Preference --</option>';
+
+            data.forEach(pref => {
+                const option = document.createElement('option');
+                option.value = pref.Id;
+                option.textContent = pref.PreferenceName;
+                dropdown.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Error loading time preferences:', error);
+            showNotification('Failed to load time preferences', 'error');
+        }
+    }
+
+    // Show form function
+    function showForm(formType) {
+        // Hide all forms first
+        document.querySelectorAll('.form-container').forEach(form => {
+            form.style.display = 'none';
+        });
+
+        // Show the selected form
+        const form = document.getElementById(formType + '-form');
+        form.style.display = 'block';
+
+        // Scroll to form
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Hide form function
+    function hideForm(formType) {
+        document.getElementById(formType + '-form').style.display = 'none';
+        document.getElementById('insert-form').style.display = 'block';
+    }
+
+    // Submit form function
+    async function submitForm(formType) {
+        let academicYearId, timePreference, newTimePreference, message;
+
+        try {
+            switch (formType) {
+                case 'insert':
+                    academicYearId = document.getElementById('AcademicYear').value;
+                    timePreference = document.getElementById('TimePreference').value.trim();
+
+                    if (!academicYearId || !timePreference) {
+                        showNotification('Please select academic year and enter time preference', 'error');
+                        return;
+                    }
+
+                    const insertResponse = await fetch('/api/TimePreferenceApi/AddTimePreference', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            AcademicYearId: academicYearId,
+                            PreferenceName: timePreference
+                        })
+                    });
+
+                    if (!insertResponse.ok) throw new Error('Failed to add time preference');
+
+                    message = `Time preference "${timePreference}" added successfully!`;
+                    showNotification(message, 'success');
+
+                    // Clear form
+                    document.getElementById('AcademicYear').value = '';
+                    document.getElementById('TimePreference').value = '';
+                    break;
+
+                case 'edit':
+                    academicYearId = document.getElementById('edit-academic-year').value;
+                    const timePreferenceId = document.getElementById('edit-time-preference').value;
+                    newTimePreference = document.getElementById('edit-new-time-preference').value.trim();
+
+                    if (!academicYearId || !timePreferenceId || !newTimePreference) {
+                        showNotification('Please fill all fields', 'error');
+                        return;
+                    }
+
+                    const editResponse = await fetch('/api/TimePreferenceApi/UpdateTimePreference', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            Id: timePreferenceId,
+                            AcademicYearId: academicYearId,
+                            PreferenceName: newTimePreference
+                        })
+                    });
+
+                    if (!editResponse.ok) throw new Error('Failed to update time preference');
+
+                    const oldPrefName = document.getElementById('edit-time-preference').options[
+                        document.getElementById('edit-time-preference').selectedIndex
+                    ].text;
+
+                    message = `Time preference changed from "${oldPrefName}" to "${newTimePreference}"`;
+                    showNotification(message, 'success');
+
+                    // Clear form
+                    document.getElementById('edit-academic-year').value = '';
+                    document.getElementById('edit-time-preference').innerHTML = '<option value="">-- Select Time Preference --</option>';
+                    document.getElementById('edit-new-time-preference').value = '';
+                    hideForm('edit');
+                    break;
+
+                case 'delete':
+                    const timePrefId = document.getElementById('delete-time-preference').value;
+
+                    if (!timePrefId) {
+                        showNotification('Please select time preference to delete', 'error');
+                        return;
+                    }
+
+                    const deleteResponse = await fetch('/api/TimePreferenceApi/DeleteTimePreference', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ Id: timePrefId })
+                    });
+
+                    if (!deleteResponse.ok) throw new Error('Failed to delete time preference');
+
+                    const prefName = document.getElementById('delete-time-preference').options[
+                        document.getElementById('delete-time-preference').selectedIndex
+                    ].text;
+
+                    message = `Time preference "${prefName}" deleted successfully!`;
+                    showNotification(message, 'success');
+
+                    // Clear form
+                    document.getElementById('delete-academic-year').value = '';
+                    document.getElementById('delete-time-preference').innerHTML = '<option value="">-- Select Time Preference --</option>';
+                    document.getElementById('confirm-delete').checked = false;
+                    document.querySelector('#delete-form .btn').disabled = true;
+                    hideForm('delete');
+                    break;
+            }
+        } catch (error) {
+            console.error(`Error in ${formType} operation:`, error);
+            showNotification('Something went wrong', 'error');
+        }
+    }
+
+    // Show notification function
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        const notificationIcon = notification.querySelector('.notification-icon');
+        const notificationMsg = notification.querySelector('.notification-message');
+
+        // Clear previous classes
+        notification.className = 'floating-notification';
+        notification.classList.add('show', `notification-${type}`);
+
+        // Set icon and message
+        if (type === 'success') {
+            notificationIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            notificationIcon.style.color = '#4cc9f0';
+        } else {
+            notificationIcon.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+            notificationIcon.style.color = '#f72585';
+        }
+
+        notificationMsg.textContent = message;
+
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 5000);
+    }
+
+    // Close notification when clicked
+    document.getElementById('notification').addEventListener('click', function() {
+        this.classList.remove('show');
+    });
+</script>
