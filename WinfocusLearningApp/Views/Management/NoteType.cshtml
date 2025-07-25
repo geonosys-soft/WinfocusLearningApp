@@ -529,7 +529,10 @@
         form.style.display = 'block';
 
         // Load data for the form
-        
+        // Load data if needed
+        if (formType === 'edit' || formType === 'delete') {
+            formClear();
+        }
 
         // Scroll to form
         form.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -580,13 +583,13 @@
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            AcademicYearId: academicYearId,
-                            SyllabusId: syllabusId,
-                            ClassId: classId,
-                            StreamId: streamId,
-                            CourseId: courseId,
-                            SubjectId: subjectId,
-                            NoteType: noteType
+                            ACID: academicYearId,
+                            SyllabusID: syllabusId,
+                            GradeID: classId,
+                            StreamID: streamId,
+                            CourseID: courseId,
+                            SubjectID: subjectId,
+                            Name: noteType
                         })
                     });
 
@@ -622,13 +625,7 @@
                         },
                         body: JSON.stringify({
                             Id: noteTypeId,
-                            AcademicYearId: editAcademicYearId,
-                            SyllabusId: editSyllabusId,
-                            ClassId: editClassId,
-                            StreamId: editStreamId,
-                            CourseId: editCourseId,
-                            SubjectId: editSubjectId,
-                            NoteType: newNoteType
+                            Name: newNoteType
                         })
                     });
 
@@ -650,7 +647,7 @@
                         return;
                     }
 
-                    const deleteResponse = await fetch('/api/ManagementApi/DeleteNoteType', {
+                    const deleteResponse = await fetch('/api/ManagementApi/RemoveNoteType', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -777,8 +774,8 @@
                 });
             })
             .catch(error => {
-                console.error('Error loading syllabus:', error);
-                showNotification('Failed to load syllabus', 'error');
+                console.error('Error loading class:', error);
+                showNotification('Failed to load class', 'error');
             });
     }
 
@@ -799,8 +796,8 @@
                 });
             })
             .catch(error => {
-                console.error('Error loading syllabus:', error);
-                showNotification('Failed to load syllabus', 'error');
+                console.error('Error loading Stream:', error);
+                showNotification('Failed to load Stream', 'error');
             });
     }
     // Load Stream data when grade is selected
@@ -820,8 +817,8 @@
                 });
             })
             .catch(error => {
-                console.error('Error loading syllabus:', error);
-                showNotification('Failed to load syllabus', 'error');
+                console.error('Error loading Course:', error);
+                showNotification('Failed to load Course', 'error');
             });
     }
     //LOAD SUBJECTS
@@ -841,8 +838,29 @@
                 });
             })
             .catch(error => {
-                console.error('Error loading syllabus:', error);
-                showNotification('Failed to load syllabus', 'error');
+                console.error('Error loading Subject:', error);
+                showNotification('Failed to load Subject', 'error');
+            });
+    }
+    //LOAD SUBJECTS
+    function loadNoteTypeOptions(SubjectID, targetSelectId) {
+        if (!SubjectID) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchNoteType/${SubjectID}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading Note type:', error);
+                showNotification('Failed to load Note type', 'error');
             });
     }
     function formClear() {
@@ -869,6 +887,9 @@
         document.getElementById('insert-subject').innerHTML = '<option value="">-- Select class --</option>';
         document.getElementById('edit-subject').innerHTML = '<option value="">-- Select class --</option>';
         document.getElementById('delete-subject').innerHTML = '<option value="">-- Select class --</option>';
+
+        document.getElementById('edit-note-type-select').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('delete-note-type').innerHTML = '<option value="">-- Select class --</option>';
 
     }
     // Event listeners for accademic year dropdowns form
@@ -930,5 +951,13 @@
     document.getElementById('delete-course').addEventListener('change', function () {
         loadSubjectOptions(this.value, 'delete-subject');
     });
+
+    document.getElementById('edit-subject').addEventListener('change', function () {
+        loadNoteTypeOptions(this.value, 'edit-note-type-select');
+    });
+    document.getElementById('delete-subject').addEventListener('change', function () {
+        loadNoteTypeOptions(this.value, 'delete-note-type');
+    });
+
 
 </script>

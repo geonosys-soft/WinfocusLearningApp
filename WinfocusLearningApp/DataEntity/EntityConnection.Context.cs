@@ -26,7 +26,6 @@ namespace WinfocusLearningApp.DataEntity
         }
     
         public virtual DbSet<TblAccademicYear> TblAccademicYears { get; set; }
-        public virtual DbSet<TblMaterial> TblMaterials { get; set; }
         public virtual DbSet<TblStudent_Parent_Basic> TblStudent_Parent_Basic { get; set; }
         public virtual DbSet<TblSTudentBasicDetail> TblSTudentBasicDetails { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
@@ -34,7 +33,6 @@ namespace WinfocusLearningApp.DataEntity
         public virtual DbSet<TblSyllabu> TblSyllabus { get; set; }
         public virtual DbSet<TblFeeDetail> TblFeeDetails { get; set; }
         public virtual DbSet<TblGrade> TblGrades { get; set; }
-        public virtual DbSet<TblNoteType> TblNoteTypes { get; set; }
         public virtual DbSet<TblRegistrationBatch> TblRegistrationBatches { get; set; }
         public virtual DbSet<TblRegistrationBatchTime> TblRegistrationBatchTimes { get; set; }
         public virtual DbSet<TblStream> TblStreams { get; set; }
@@ -46,5 +44,7 @@ namespace WinfocusLearningApp.DataEntity
         public virtual DbSet<TblChapter> TblChapters { get; set; }
         public virtual DbSet<TblSubChapter> TblSubChapters { get; set; }
         public virtual DbSet<TblModule> TblModules { get; set; }
+        public virtual DbSet<TblMaterial> TblMaterials { get; set; }
+        public virtual DbSet<TblNoteType> TblNoteTypes { get; set; }
     }
 }

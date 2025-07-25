@@ -994,8 +994,221 @@ namespace WinfocusLearningApp.WebApi
             }
         }
 
+        [Route("api/ManagementApi/AddNoteType")]
+        [ResponseType(typeof(TblNoteType))]
+        public IHttpActionResult AddNoteType(TblNoteType jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to add the note type to the database
+                TblNoteType inf = new TblNoteType();
+                inf.Name = jsonData.Name;
+                inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
+                inf.SyllabusID = jsonData.SyllabusID; // Assuming SyllabusID is the ID of the syllabus
+                inf.GradeID = jsonData.GradeID; // Assuming GradeID is the ID of the grade
+                inf.StreamID = jsonData.StreamID; // Assuming StreamID is the ID of the stream
+                inf.CourseID = jsonData.CourseID; // Assuming CourseID is the ID of the course
+                inf.SubjectID = jsonData.SubjectID; // Assuming SubjectID is the ID of the subject
+              
+                inf.Description = jsonData.Description; // Assuming Description is a field in TblNoteType
+                inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.CreatedDate = DateTime.UtcNow;
+                inf.IsDeleted = 0;
+                winfocus_CS.TblNoteTypes.Add(inf);
+                winfocus_CS.SaveChanges();
+                return Ok("Note Type added successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
 
+        [Route("api/ManagementApi/UpdateNoteType")]
+        [ResponseType(typeof(TblNoteType))]
+        public IHttpActionResult UpdateNoteType(TblNoteType jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to update the note type in the database
+                TblNoteType inf = winfocus_CS.TblNoteTypes.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.Name = jsonData.Name;            
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblNoteTypes.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Note Type updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
 
+        [Route("api/ManagementApi/RemoveNoteType")]
+        [ResponseType(typeof(TblNoteType))]
+        public IHttpActionResult RemoveNoteType(TblNoteType jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to delete the note type in the database
+                TblNoteType inf = winfocus_CS.TblNoteTypes.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.IsDeleted = 1;
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblNoteTypes.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Note Type deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/ManagementApi/FetchNoteType/{Id}")]
+        [HttpGet]
+        public IHttpActionResult FetchNoteType(int Id)
+        {
+            try
+            {
+                var noteTypeList = winfocus_CS.TblNoteTypes.Where(x => x.IsDeleted == 0 && x.SubjectID== Id).ToList();
+                return Ok(noteTypeList);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/ManagementApi/AddMaterial")]
+        [ResponseType(typeof(TblMaterial))]
+        public IHttpActionResult AddMaterial(TblMaterial jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to add the material to the database
+                TblMaterial inf = new TblMaterial();
+                inf.Name = jsonData.Name;
+                inf.CourseID = jsonData.CourseID;
+                inf.SubjectId = jsonData.SubjectId;
+                inf.ACID = jsonData.ACID;
+                inf.GradeID = jsonData.GradeID;
+                inf.StreamID = jsonData.StreamID;// Assuming FilePath is the path to the material file
+                inf.SubjectId = jsonData.SubjectId;
+                inf.SyllabusID = inf.SyllabusID;// Assuming SubjectID is the ID of the subject
+                inf.NoteTypeID = jsonData.NoteTypeID;
+                inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.CreatedDate = DateTime.UtcNow;
+                inf.IsDeleted = 0;
+                winfocus_CS.TblMaterials.Add(inf);
+                winfocus_CS.SaveChanges();
+                return Ok("Material added successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [Route("api/ManagementApi/UpdateMaterial")]
+        [ResponseType(typeof(TblMaterial))]
+        public IHttpActionResult UpdateMaterial(TblMaterial jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to update the material in the database
+                TblMaterial inf = winfocus_CS.TblMaterials.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.Name = jsonData.Name;
+               
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblMaterials.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Material updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [Route("api/ManagementApi/RemoveMaterial")]
+        [ResponseType(typeof(TblMaterial))]
+        public IHttpActionResult RemoveMaterial(TblMaterial jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to delete the material in the database
+                TblMaterial inf = winfocus_CS.TblMaterials.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.IsDeleted = 1;
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblMaterials.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Material deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [Route("api/ManagementApi/FetchMaterial/{Id}")]
+        [HttpGet]
+        public IHttpActionResult FetchMaterial(int Id)
+        {
+            try
+            {
+                var materialList = winfocus_CS.TblMaterials.Where(x => x.IsDeleted == 0 && x.NoteTypeID == Id).ToList();
+                return Ok(materialList);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
         // GET api/<controller>
         public IEnumerable<string> Get()
         {
