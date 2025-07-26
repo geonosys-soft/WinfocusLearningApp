@@ -13,7 +13,7 @@
     top: 0;
     left: 0;
     height: 100%;
-    width: 260px;
+    width: 280px;
     background: #2795EF; /* Dark Blue from your image */
     z-index: 100;
     transition: all 0.5s ease;
@@ -134,8 +134,8 @@
             .sidebar .nav-links li .profile-details {
                 position: fixed;
                 bottom: 0;
-                width: 260px;
-                background: #09214e;
+                width: 280px;
+                background: #2795EF;
             }
 
                 .sidebar .nav-links li .profile-details a {
