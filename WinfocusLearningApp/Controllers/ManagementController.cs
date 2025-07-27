@@ -71,5 +71,9 @@ namespace WinfocusLearningApp.Controllers
         public ActionResult MaterialType() { return View(); }
         public ActionResult Batch() { return View(); }
         public ActionResult PreferredTimeSlot() { return View(); }
+        public ActionResult St_Registration() { return View(); }
+        public ActionResult BDE_Registration() { return View(); }
+        public ActionResult FeesDetails() { return View(); }
+        public ActionResult Dashboard() { return View(); }
     }
 }
