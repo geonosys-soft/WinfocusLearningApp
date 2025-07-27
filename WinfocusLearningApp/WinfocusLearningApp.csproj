@@ -206,10 +206,16 @@
     <Compile Include="DataEntity\TblNoteType.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataEntity\TblPaymentMode.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataEntity\TblRegistrationBatch.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
     <Compile Include="DataEntity\TblRegistrationBatchTime.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataEntity\TblRelationship.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
     <Compile Include="DataEntity\TblStream.cs">
@@ -225,6 +231,9 @@
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
     <Compile Include="DataEntity\TblStudent_Fee_Structure.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataEntity\TblStudent_Mark_Scored.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
     <Compile Include="DataEntity\TblStudent_Parent_Basic.cs">

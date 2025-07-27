@@ -16,11 +16,14 @@ namespace WinfocusLearningApp.DataEntity
     {
         public int Id { get; set; }
         public string ParentName { get; set; }
-        public string CompanyName { get; set; }
-        public string Designation { get; set; }
+        public Nullable<int> RelationShip { get; set; }
         public string MobileNumber { get; set; }
         public string WhatsAppNumber { get; set; }
-        public string BottimNumber { get; set; }
+        public string Email { get; set; }
+        public string Location { get; set; }
+        public string Emirates { get; set; }
+        public string Occupation { get; set; }
+        public string CompanyName { get; set; }
         public string HouseName { get; set; }
         public string State { get; set; }
         public string Dstrict { get; set; }

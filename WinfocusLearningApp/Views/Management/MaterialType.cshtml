@@ -604,7 +604,7 @@
                         CourseId: courseId,
                         SubjectId: subjectId,
                         NoteTypeId: noteTypeId,
-                        MaterialType: materialType
+                        Name: materialType
                     };
 
                     // Call API to save material
@@ -650,14 +650,7 @@
                     // Prepare data for API
                     const editData = {
                         Id: editMaterialTypeId,
-                        AcademicYearId: editAcademicYearId,
-                        SyllabusId: editSyllabusId,
-                        ClassId: editClassId,
-                        StreamId: editStreamId,
-                        CourseId: editCourseId,
-                        SubjectId: editSubjectId,
-                        NoteTypeId: editNoteTypeId,
-                        MaterialType: newMaterialType
+                        Name: newMaterialType
                     };
 
                     // Call API to update material
@@ -699,20 +692,24 @@
                         showNotification('Please fill all fields', 'error');
                         return;
                     }
+                    // Prepare data for API
+                    const deleteData = {
+                        Id: deleteMaterialTypeId
+                    };
 
-                    // Confirm deletion
-                    if (!confirm('Are you sure you want to delete this material?')) {
-                        return;
-                    }
-
-                    // Call API to delete material
-                    const deleteResponse = await fetch(`/api/ManagementApi/DeleteMaterial/${deleteMaterialTypeId}`, {
-                        method: 'DELETE'
+                    // Call API to update material
+                    const deleteResponse = await fetch('/api/ManagementApi/RemoveMaterial', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(deleteData)
                     });
 
                     if (!deleteResponse.ok) {
-                        throw new Error('Failed to delete material');
+                        throw new Error('Failed to update material');
                     }
+                    
 
                     // Show success message
                     message = 'Material deleted successfully!';
@@ -893,11 +890,32 @@
                 showNotification('Failed to load Subject', 'error');
             });
     }
-    //LOAD SUBJECTS
+    //LOAD Notetype
     function loadNoteTypeOptions(SubjectID, targetSelectId) {
         if (!SubjectID) return;
         //showNotification('Failed to load academic years'+academicYearId, 'error');
         fetch(`/api/ManagementApi/FetchNoteType/${SubjectID}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading Note type:', error);
+                showNotification('Failed to load Note type', 'error');
+            });
+    }
+    //load material type
+    function loadMaterialTypeOptions(NoteID, targetSelectId) {
+        if (!NoteID) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchMaterial/${NoteID}`)
             .then(response => response.json())
             .then(data => {
                 const select = document.getElementById(targetSelectId);
@@ -1012,6 +1030,12 @@
     });
     document.getElementById('insert-subject').addEventListener('change', function () {
         loadNoteTypeOptions(this.value, 'insert-note-type');
+    });
+    document.getElementById('edit-note-type').addEventListener('change', function () {
+        loadMaterialTypeOptions(this.value, 'edit-material-type');
+    });
+    document.getElementById('delete-note-type').addEventListener('change', function () {
+        loadMaterialTypeOptions(this.value, 'delete-material-type');
     });
 
 </script>
