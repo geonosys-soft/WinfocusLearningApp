@@ -26,25 +26,28 @@ namespace WinfocusLearningApp.DataEntity
         }
     
         public virtual DbSet<TblAccademicYear> TblAccademicYears { get; set; }
-        public virtual DbSet<TblMaterial> TblMaterials { get; set; }
-        public virtual DbSet<TblStudent_Parent_Basic> TblStudent_Parent_Basic { get; set; }
-        public virtual DbSet<TblSTudentBasicDetail> TblSTudentBasicDetails { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<TblSyllabu> TblSyllabus { get; set; }
-        public virtual DbSet<TblFeeDetail> TblFeeDetails { get; set; }
         public virtual DbSet<TblGrade> TblGrades { get; set; }
-        public virtual DbSet<TblModule> TblModules { get; set; }
-        public virtual DbSet<TblNoteType> TblNoteTypes { get; set; }
         public virtual DbSet<TblRegistrationBatch> TblRegistrationBatches { get; set; }
         public virtual DbSet<TblRegistrationBatchTime> TblRegistrationBatchTimes { get; set; }
         public virtual DbSet<TblStream> TblStreams { get; set; }
         public virtual DbSet<TblStudent_Fee_Payment_Details> TblStudent_Fee_Payment_Details { get; set; }
         public virtual DbSet<TblStudent_Fee_receipt> TblStudent_Fee_receipt { get; set; }
         public virtual DbSet<TblStudent_Fee_Structure> TblStudent_Fee_Structure { get; set; }
-        public virtual DbSet<TblSubChapter> TblSubChapters { get; set; }
         public virtual DbSet<TblSubject> TblSubjects { get; set; }
         public virtual DbSet<TblCourse> TblCourses { get; set; }
         public virtual DbSet<TblChapter> TblChapters { get; set; }
+        public virtual DbSet<TblSubChapter> TblSubChapters { get; set; }
+        public virtual DbSet<TblModule> TblModules { get; set; }
+        public virtual DbSet<TblNoteType> TblNoteTypes { get; set; }
+        public virtual DbSet<TblFeeDetail> TblFeeDetails { get; set; }
+        public virtual DbSet<TblPaymentMode> TblPaymentModes { get; set; }
+        public virtual DbSet<TblRelationship> TblRelationships { get; set; }
+        public virtual DbSet<TblStudent_Mark_Scored> TblStudent_Mark_Scored { get; set; }
+        public virtual DbSet<TblStudent_Parent_Basic> TblStudent_Parent_Basic { get; set; }
+        public virtual DbSet<TblSTudentBasicDetail> TblSTudentBasicDetails { get; set; }
+        public virtual DbSet<TblMaterial> TblMaterials { get; set; }
     }
 }
