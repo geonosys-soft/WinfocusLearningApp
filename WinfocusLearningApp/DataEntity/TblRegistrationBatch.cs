@@ -15,6 +15,7 @@ namespace WinfocusLearningApp.DataEntity
     public partial class TblRegistrationBatch
     {
         public int Id { get; set; }
+        public Nullable<int> ACID { get; set; }
         public string Batch { get; set; }
         public int CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

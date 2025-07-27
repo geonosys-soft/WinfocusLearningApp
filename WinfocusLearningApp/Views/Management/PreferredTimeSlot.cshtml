@@ -388,19 +388,6 @@
         // Load academic years for all dropdowns
         loadAcademicYears();
 
-        // Set up event listeners for dependent dropdowns
-        document.getElementById('edit-academic-year').addEventListener('change', function() {
-            loadTimePreferences('edit-time-preference', this.value);
-        });
-
-        document.getElementById('delete-academic-year').addEventListener('change', function() {
-            loadTimePreferences('delete-time-preference', this.value);
-        });
-
-        // Delete confirmation toggle
-        document.getElementById('confirm-delete').addEventListener('change', function() {
-            document.querySelector('#delete-form .btn').disabled = !this.checked;
-        });
     });
 
     // Load academic years from database
@@ -435,31 +422,40 @@
             showNotification('Failed to load academic years', 'error');
         }
     }
-
-    // Load time preferences based on selected academic year
-    async function loadTimePreferences(targetDropdownId, academicYearId) {
-        if (!academicYearId) return;
-
-        try {
-            const response = await fetch(`/api/TimePreferenceApi/GetTimePreferences?academicYearId=${academicYearId}`);
-            const data = await response.json();
-
-            if (!response.ok) throw new Error('Failed to load time preferences');
-
-            const dropdown = document.getElementById(targetDropdownId);
-            dropdown.innerHTML = '<option value="">-- Select Time Preference --</option>';
-
-            data.forEach(pref => {
-                const option = document.createElement('option');
-                option.value = pref.Id;
-                option.textContent = pref.PreferenceName;
-                dropdown.appendChild(option);
+    //LOAD Time Preference
+    function loadTimePreferences(targetSelectId, YearID) {
+        if (!YearID) return;
+       
+        fetch(`/api/ManagementApi/FetchBatchTime/${YearID}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Time Preference --</option>';
+                data.forEach(timePreference => {
+                    const option = document.createElement('option');
+                    option.value = timePreference.Id;
+                    option.textContent = timePreference.BatchTime || timePreference.BatchTime.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading Batch Time:', error);
+                showNotification('Failed to load Batch Time', 'error');
             });
-        } catch (error) {
-            console.error('Error loading time preferences:', error);
-            showNotification('Failed to load time preferences', 'error');
-        }
     }
+    // Set up event listeners for dependent dropdowns
+    document.getElementById('edit-academic-year').addEventListener('change', function () {
+        loadTimePreferences('edit-time-preference', this.value);
+    });
+
+    document.getElementById('delete-academic-year').addEventListener('change', function () {
+        loadTimePreferences('delete-time-preference', this.value);
+    });
+
+    // Delete confirmation toggle
+    document.getElementById('confirm-delete').addEventListener('change', function () {
+        document.querySelector('#delete-form .btn').disabled = !this.checked;
+    });
 
     // Show form function
     function showForm(formType) {
@@ -497,14 +493,14 @@
                         return;
                     }
 
-                    const insertResponse = await fetch('/api/TimePreferenceApi/AddTimePreference', {
+                    const insertResponse = await fetch('/api/ManagementApi/AddBatchTime', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            AcademicYearId: academicYearId,
-                            PreferenceName: timePreference
+                            ACID: academicYearId,
+                            BatchTime: timePreference
                         })
                     });
 
@@ -528,15 +524,14 @@
                         return;
                     }
 
-                    const editResponse = await fetch('/api/TimePreferenceApi/UpdateTimePreference', {
+                    const editResponse = await fetch('/api/ManagementApi/UpdateBatchTime', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
                             Id: timePreferenceId,
-                            AcademicYearId: academicYearId,
-                            PreferenceName: newTimePreference
+                            BatchTime: newTimePreference
                         })
                     });
 
@@ -564,7 +559,7 @@
                         return;
                     }
 
-                    const deleteResponse = await fetch('/api/TimePreferenceApi/DeleteTimePreference', {
+                    const deleteResponse = await fetch('/api/managementApi/RemoveBatchTime', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -626,4 +621,8 @@
     document.getElementById('notification').addEventListener('click', function() {
         this.classList.remove('show');
     });
+
+   
+
+
 </script>

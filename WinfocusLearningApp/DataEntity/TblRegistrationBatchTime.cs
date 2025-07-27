@@ -16,6 +16,7 @@ namespace WinfocusLearningApp.DataEntity
     {
         public int Id { get; set; }
         public string BatchTime { get; set; }
+        public Nullable<int> ACID { get; set; }
         public int CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public int IsDeleted { get; set; }
