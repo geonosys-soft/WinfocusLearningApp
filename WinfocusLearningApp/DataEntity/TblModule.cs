@@ -27,8 +27,8 @@ namespace WinfocusLearningApp.DataEntity
         public int CreatedBy { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public int IsDeleted { get; set; }
-        public System.DateTime DeletedDate { get; set; }
+        public Nullable<System.DateTime> DeletedDate { get; set; }
         public int ModifiedBy { get; set; }
-        public System.DateTime ModifiedTime { get; set; }
+        public Nullable<System.DateTime> ModifiedTime { get; set; }
     }
 }

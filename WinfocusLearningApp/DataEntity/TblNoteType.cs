@@ -22,7 +22,6 @@ namespace WinfocusLearningApp.DataEntity
         public Nullable<int> StreamID { get; set; }
         public Nullable<int> CourseID { get; set; }
         public Nullable<int> SubjectID { get; set; }
-        public Nullable<int> MaterialID { get; set; }
         public int CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public int IsDeleted { get; set; }

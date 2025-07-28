@@ -103,7 +103,14 @@ namespace WinfocusLearningApp.Authentication
 
         public override string GetUserNameByEmail(string email)
         {
-            throw new NotImplementedException();
+            using (Winfocus_CS dbContext = new Winfocus_CS())
+            {
+                string username = (from u in dbContext.Users
+                                   where string.Compare(email, u.Email) == 0
+                                   select u.UserName).FirstOrDefault();
+
+                return !string.IsNullOrEmpty(username) ? username : string.Empty;
+            }
         }
 
         public override string ResetPassword(string username, string answer)
@@ -123,7 +130,33 @@ namespace WinfocusLearningApp.Authentication
 
         public override bool ValidateUser(string username, string password)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                return false;
+            }
+
+            using (Winfocus_CS dbContext = new Winfocus_CS())
+            {
+
+                 var user = (from us in dbContext.Users
+                              where string.Compare(username, us.UserName, StringComparison.OrdinalIgnoreCase) == 0
+                              && string.Compare(password, us.Password, StringComparison.OrdinalIgnoreCase) == 0
+                              && us.IsActive == 1 && us.IsDeleted == 0
+                              select us).FirstOrDefault();
+                //var user = dbContext.Users.Where(d => d.UserName == username && d.Password == password).FirstOrDefault();
+                if (user != null)
+                {
+                    if (user.Password == password && user.UserName == username)
+                    {
+                        return (user != null);
+                    }
+                    else
+                    {
+                        user = null;
+                    }
+                }
+                return (user != null);
+            }
         }
     }
 }
