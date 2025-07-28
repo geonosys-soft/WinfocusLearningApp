@@ -6,16 +6,19 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using WinfocusLearningApp.Authentication;
 using WinfocusLearningApp.DataEntity;
 
 namespace WinfocusLearningApp.WebApi
 {
+    
     public class ManagementApiController : ApiController
     {
 
         Winfocus_CS winfocus_CS = new Winfocus_CS();
         // GET: api/ManagementApi
         //Accademic Year Management APIs
+
         [Route("api/ManagementApi/AddYear")]
         [ResponseType(typeof(TblAccademicYear))]
         public IHttpActionResult AddYear(TblAccademicYear jsonData)
@@ -29,7 +32,8 @@ namespace WinfocusLearningApp.WebApi
                 // Assuming you have a method to add the year to the database
                 TblAccademicYear inf = new TblAccademicYear();
                 inf.AccademicYear = jsonData.AccademicYear;
-                inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
+                var userId=winfocus_CS.Users.FirstOrDefault(x => x.UserName ==User.Identity.Name).Id;
+                inf.CreatedBy = userId; // Assuming 1 is the ID of the admin user
                 inf.CreatedDate = DateTime.UtcNow;
                 inf.IsDeleted = 0;
 
@@ -103,6 +107,7 @@ namespace WinfocusLearningApp.WebApi
 
 
         }
+      //  [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/ManagementApi/FetchAccademicYear")]
         public IHttpActionResult FetchAccademicYear()

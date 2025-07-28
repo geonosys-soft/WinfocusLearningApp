@@ -35,5 +35,10 @@ namespace WinfocusLearningApp.Authentication
                 return false;
             }
         }
+        public CustomPrincipal(string username)
+        {
+            Identity = new GenericIdentity(username);
+
+        }
     }
 }

@@ -318,7 +318,7 @@
     </div>
 
     <!-- Insert Form (shown by default) -->
-    <div id="insert-form" class="form-container">
+    <form id="insert-form" class="form-container">
         <h3><i class="fas fa-plus-circle"></i> Add Fees Details</h3>
         <div class="form-row">
             <div class="form-col">
@@ -382,22 +382,38 @@
                     <input type="number" id="insert-course-fee" class="form-control" placeholder="Enter course fee" required>
                 </div>
                 <div class="form-group">
-                    <label for="insert-discount-percent">Discount %:</label>
-                    <input type="number" id="insert-discount-percent" class="form-control" placeholder="Enter discount percentage">
+                    <label for="insert-total-amount">Total Amount:</label>
+                    <input type="text" id="insert-total-amount" class="form-control" readonly>
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="insert-total-amount">Total Amount:</label>
-            <input type="text" id="insert-total-amount" class="form-control" readonly>
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="insert-term2-amount">Term 1 Amount:</label>
+                    <input type="text" id="insert-term1-amount" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="insert-term3-amount">Term 3 Amount:</label>
+                    <input type="text" id="insert-term3-amount" class="form-control">
+                </div>
+                
+            </div>
+            <div class="form-col">
+             
+                <div class="form-group">
+                    <label for="insert-term1-amount">Term 2 Amount:</label>
+                    <input type="text" id="insert-term2-amount" class="form-control">
+                </div>
+            </div>
         </div>
         <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
             <i class="fas fa-check"></i> Save
         </button>
-    </div>
+    </form>
 
     <!-- Edit Form -->
-    <div id="edit-form" class="form-container">
+    <form id="edit-form" class="form-container">
         <button class="close-btn" onclick="hideForm('edit')">×</button>
         <h3><i class="fas fa-edit"></i> Edit Fees Details</h3>
         <div class="form-row">
@@ -462,22 +478,38 @@
                     <input type="number" id="edit-course-fee" class="form-control" placeholder="Enter course fee" required>
                 </div>
                 <div class="form-group">
-                    <label for="edit-discount-percent">Discount %:</label>
-                    <input type="number" id="edit-discount-percent" class="form-control" placeholder="Enter discount percentage">
+                    <label for="edit-total-amount">Total Amount:</label>
+                    <input type="text" id="edit-total-amount" class="form-control" readonly>
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="edit-total-amount">Total Amount:</label>
-            <input type="text" id="edit-total-amount" class="form-control" readonly>
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="insert-term2-amount">Term 1 Amount:</label>
+                    <input type="text" id="edit-term1-amount" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="insert-term3-amount">Term 3 Amount:</label>
+                    <input type="text" id="edit-term3-amount" class="form-control">
+                </div>
+                
+            </div>
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="insert-term1-amount">Term 2 Amount:</label>
+                    <input type="text" id="edit-term2-amount" class="form-control">
+                </div>
+             
+            </div>
         </div>
         <button type="button" class="btn" onclick="submitForm('edit')">
             <i class="fas fa-save"></i> Update
         </button>
-    </div>
+    </form>
 
     <!-- Delete Form -->
-    <div id="delete-form" class="form-container">
+    <form id="delete-form" class="form-container">
         <button class="close-btn" onclick="hideForm('delete')">×</button>
         <h3><i class="fas fa-trash-alt"></i> Delete Fees Details</h3>
         <div class="form-group">
@@ -547,7 +579,7 @@
         <button type="button" class="btn btn-delete" onclick="submitForm('delete')" disabled>
             <i class="fas fa-trash"></i> Delete
         </button>
-    </div>
+    </form>
 </div>
 
 <!-- Notification -->
@@ -573,7 +605,7 @@
 
         // Load data for the form if needed
         if (formType === 'edit' || formType === 'delete') {
-            loadFeesData(formType);
+            formClear();
         }
 
         // Scroll to form
@@ -586,115 +618,24 @@
         document.getElementById('insert-form').style.display = 'block';
     }
 
-    // Load fees data for edit/delete forms
-    async function loadFeesData(formType) {
-        try {
-            // Fetch data from your API endpoints
-            // Example: const response = await fetch('/api/FeesApi/GetFeesDetails');
-            // const data = await response.json();
 
-            // For now, we'll just populate dropdowns with sample data
-            // Replace this with actual API calls
 
-            const academicYears = [
-                { Id: 1, Name: "2023-2024" },
-                { Id: 2, Name: "2024-2025" }
-            ];
-
-            const syllabuses = [
-                { Id: 1, Name: "CBSE" },
-                { Id: 2, Name: "ICSE" }
-            ];
-
-            const classes = [
-                { Id: 1, Name: "Class 1" },
-                { Id: 2, Name: "Class 2" }
-            ];
-
-            const streams = [
-                { Id: 1, Name: "Science" },
-                { Id: 2, Name: "Commerce" }
-            ];
-
-            const programs = [
-                { Id: 1, Name: "Regular" },
-                { Id: 2, Name: "Weekend" }
-            ];
-
-            // Populate dropdowns based on form type
-            populateDropdown(`${formType}-academic-year`, academicYears);
-            populateDropdown(`${formType}-syllabus`, syllabuses);
-            populateDropdown(`${formType}-class`, classes);
-            populateDropdown(`${formType}-stream`, streams);
-            populateDropdown(`${formType}-program`, programs);
-
-            // If this is the delete form, also load the selected fee details
-            if (formType === 'delete') {
-                // Add event listeners to load details when a fee is selected
-                document.getElementById('delete-academic-year').addEventListener('change', loadSelectedFeeDetails);
-            }
-
-        } catch (error) {
-            showNotification('Error loading fees data', 'error');
-            console.error('Error loading fees data:', error);
-        }
-    }
-
-    function populateDropdown(elementId, data) {
-        const dropdown = document.getElementById(elementId);
-        dropdown.innerHTML = '<option value="">-- Select --</option>';
-
-        data.forEach(item => {
-            const option = document.createElement('option');
-            option.value = item.Id;
-            option.textContent = item.Name;
-            dropdown.appendChild(option);
-        });
-    }
-
-    async function loadSelectedFeeDetails() {
-        // This would fetch the selected fee details from your API
-        // For now, we'll just populate with sample data
-        const selectedYear = document.getElementById('delete-academic-year').value;
-
-        if (selectedYear) {
-            // Simulate API call
-            // const response = await fetch(`/api/FeesApi/GetFeeDetails/${selectedYear}`);
-            // const feeDetails = await response.json();
-
-            const sampleFeeDetails = {
-                className: "Class 1",
-                discount: "500",
-                registrationFee: "1000",
-                courseFee: "5000",
-                discountPercent: "10",
-                totalAmount: "5500"
-            };
-
-            document.getElementById('delete-class-name').value = sampleFeeDetails.className;
-            document.getElementById('delete-discount').value = sampleFeeDetails.discount;
-            document.getElementById('delete-registration-fee').value = sampleFeeDetails.registrationFee;
-            document.getElementById('delete-course-fee').value = sampleFeeDetails.courseFee;
-            document.getElementById('delete-discount-percent').value = sampleFeeDetails.discountPercent;
-            document.getElementById('delete-total-amount').value = sampleFeeDetails.totalAmount;
-        }
-    }
-
+  
     // Calculate total amount when fees change
     document.getElementById('insert-registration-fee').addEventListener('change', calculateTotal);
     document.getElementById('insert-course-fee').addEventListener('change', calculateTotal);
-    document.getElementById('insert-discount-percent').addEventListener('change', calculateTotal);
+    document.getElementById('insert-discount').addEventListener('change', calculateTotal);
 
     document.getElementById('edit-registration-fee').addEventListener('change', calculateTotal);
     document.getElementById('edit-course-fee').addEventListener('change', calculateTotal);
-    document.getElementById('edit-discount-percent').addEventListener('change', calculateTotal);
+    document.getElementById('edit-discount').addEventListener('change', calculateTotal);
 
     function calculateTotal(event) {
         const formPrefix = event.target.id.split('-')[0]; // 'insert' or 'edit'
 
         const registrationFee = parseFloat(document.getElementById(`${formPrefix}-registration-fee`).value) || 0;
         const courseFee = parseFloat(document.getElementById(`${formPrefix}-course-fee`).value) || 0;
-        const discountPercent = parseFloat(document.getElementById(`${formPrefix}-discount-percent`).value) || 0;
+        const discountPercent = parseFloat(document.getElementById(`${formPrefix}-discount`).value) || 0;
 
         const discountAmount = courseFee * (discountPercent / 100);
         const totalAmount = registrationFee + courseFee - discountAmount;
@@ -706,6 +647,45 @@
     document.getElementById('confirm-delete').addEventListener('change', function() {
         document.querySelector('#delete-form .btn').disabled = !this.checked;
     });
+
+    function formClear() {
+        document.getElementById('insert-academic-year').value = '';
+        document.getElementById('edit-academic-year').value = '';
+        document.getElementById('delete-academic-year').value = '';
+
+        document.getElementById('edit-syllabus').innerHTML = '<option value="">-- Select Syllabus --</option>';
+        document.getElementById('insert-syllabus').innerHTML = '<option value="">-- Select Syllabus --</option>';
+        document.getElementById('delete-syllabus').innerHTML = '<option value="">-- Select Syllabus --</option>';
+
+        document.getElementById('insert-class').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('edit-class').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('delete-class').innerHTML = '<option value="">-- Select class --</option>';
+
+        document.getElementById('insert-stream').innerHTML = '<option value="">-- Select stream --</option>';
+        document.getElementById('edit-stream').innerHTML = '<option value="">-- Select stream --</option>';
+        document.getElementById('delete-stream').innerHTML = '<option value="">-- Select stream --</option>';
+
+        document.getElementById('edit-program').innerHTML = '<option value="">-- Select course --</option>';
+        document.getElementById('delete-program').innerHTML = '<option value="">-- Select course --</option>';
+        document.getElementById('insert-program').innerHTML = '<option value="">-- Select course --</option>';
+
+
+        document.getElementById('insert-class-name').innerHTML = '';
+        document.getElementById('insert-registration-fee').innerHTML = '';
+        document.getElementById('insert-course-fee').innerHTML = '';
+        document.getElementById('insert-term1-amount').innerHTML = '';
+        document.getElementById('insert-term2-amount').vainnerHTML = '';
+        document.getElementById('insert-term3-amount').innerHTML = '';
+
+        document.getElementById('edit-class-name').innerHTML = '';
+        document.getElementById('edit-registration-fee').innerHTML = '';
+        document.getElementById('edit-course-fee').innerHTML = '';
+        document.getElementById('edit-term1-amount').innerHTML = '';
+        document.getElementById('edit-term2-amount').vainnerHTML = '';
+        document.getElementById('edit-term3-amount').innerHTML = '';
+
+    }
+
 
     // Submit form function
     async function submitForm(formType) {
@@ -726,61 +706,73 @@
                     const classNameText = document.getElementById('insert-class-name').value;
                     const registrationFee = document.getElementById('insert-registration-fee').value;
                     const courseFee = document.getElementById('insert-course-fee').value;
-
-                    if (!academicYear || !syllabus || !className || !stream || !program || !classNameText || !registrationFee || !courseFee) {
+                    const term1 = document.getElementById('insert-term1-amount').value;
+                    const term2 = document.getElementById('insert-term2-amount').value;
+                    const term3 = document.getElementById('insert-term3-amount').value;
+                    if (!academicYear || !syllabus || !className || !stream || !program || !classNameText || !registrationFee || !courseFee || !term1 || !term2 || !term3) {
                         showNotification('Please fill all required fields', 'error');
                         return;
                     }
 
                     // Prepare data object
                     const feeData = {
-                        AcademicYearId: academicYear,
-                        SyllabusId: syllabus,
-                        ClassId: className,
-                        StreamId: stream,
-                        ProgramId: program,
-                        ClassName: classNameText,
-                        Discount: document.getElementById('insert-discount').value,
+                        ACID: academicYear,
+                        SyllabusID: syllabus,
+                        GradeId: className,
+                        StreamID: stream,
+                        CourseID: program,
+                        Description: classNameText,
+                        DiscountPers: document.getElementById('insert-discount').value,
                         RegistrationFee: registrationFee,
-                        CourseFee: courseFee,
-                        DiscountPercent: document.getElementById('insert-discount-percent').value,
-                        TotalAmount: document.getElementById('insert-total-amount').value
+                        FeeAmount: courseFee,
+                        TotalFee: document.getElementById('insert-total-amount').value,
+                        Term1: term1,
+                        Term2: term2,
+                        Term3:term3
                     };
 
-                    // Call API to save data
-                    // const response = await fetch('/api/FeesApi/SaveFeeDetails', {
-                    //     method: 'POST',
-                    //     headers: {
-                    //         'Content-Type': 'application/json'
-                    //     },
-                    //     body: JSON.stringify(feeData)
-                    // });
 
-                    // if (!response.ok) {
-                    //     throw new Error('Failed to save fee details');
-                    // }
+                    try {
+                        const response = await fetch("/api/fee/AddFeeDetails", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(feeData)
+                        });
 
-                    // For demo purposes, we'll just show a success message
-                    message = 'Fee details saved successfully!';
-                    showNotification(message, 'success');
+                        if (!response.ok) {
+                            const errorText = await response.text(); // Or use .json() if server returns JSON
+                            throw new Error(`Error: ${errorText}`);
+                           // throw new Error('Failed to add subject');
+                        }
+                      
+                        message = `Fee added successfully!`;
+                        showNotification(message, 'success');
+                        
 
+                    } catch (error) {
+                        showNotification(error.message, 'error');
+                        console.error('Error adding subject:', error.message);
+                    }
+                    
                     // Reset form
                     document.getElementById('insert-form').reset();
-                    document.getElementById('insert-total-amount').value = '';
+                    //document.getElementById('insert-total-amount').value = '';
+                   // document.getElementById('insert-total-amount').value = '';
                     break;
 
                 case 'edit':
                     // Similar validation as insert
-                    const editAcademicYear = document.getElementById('edit-academic-year').value;
-                    const editSyllabus = document.getElementById('edit-syllabus').value;
-                    const editClassName = document.getElementById('edit-class').value;
-                    const editStream = document.getElementById('edit-stream').value;
-                    const editProgram = document.getElementById('edit-program').value;
+                    
                     const editClassNameText = document.getElementById('edit-class-name').value;
                     const editRegistrationFee = document.getElementById('edit-registration-fee').value;
                     const editCourseFee = document.getElementById('edit-course-fee').value;
+                    const editterm1 = document.getElementById('edit-term1-amount').value;
+                    const editterm2 = document.getElementById('edit-term2-amount').value;
+                    const editterm3 = document.getElementById('edit-term3-amount').value;
 
-                    if (!editAcademicYear || !editSyllabus || !editClassName || !editStream || !editProgram || !editClassNameText || !editRegistrationFee || !editCourseFee) {
+                    if (!editAcademicYear || !editSyllabus || !editClassName || !editStream || !editProgram || !editClassNameText || !editRegistrationFee || !editCourseFee||!editterm1||!editterm2||!editterm3) {
                         showNotification('Please fill all required fields', 'error');
                         return;
                     }
@@ -788,37 +780,44 @@
                     // Prepare data object
                     const editFeeData = {
                         Id: editAcademicYear, // Assuming we're using academic year ID as key
-                        AcademicYearId: editAcademicYear,
-                        SyllabusId: editSyllabus,
-                        ClassId: editClassName,
-                        StreamId: editStream,
-                        ProgramId: editProgram,
-                        ClassName: editClassNameText,
-                        Discount: document.getElementById('edit-discount').value,
+                        Description: editClassNameText,
+                        DiscountPers: document.getElementById('edit-discount').value,
                         RegistrationFee: editRegistrationFee,
-                        CourseFee: editCourseFee,
-                        DiscountPercent: document.getElementById('edit-discount-percent').value,
-                        TotalAmount: document.getElementById('edit-total-amount').value
+                        FeeAmount: editCourseFee,
+                        TotalFee: document.getElementById('edit-total-amount').value,
+                        Term1: editterm1,
+                        Term2: editterm2,
+                        Term3: editterm3
                     };
 
-                    // Call API to update data
-                    // const editResponse = await fetch('/api/FeesApi/UpdateFeeDetails', {
-                    //     method: 'PUT',
-                    //     headers: {
-                    //         'Content-Type': 'application/json'
-                    //     },
-                    //     body: JSON.stringify(editFeeData)
-                    // });
+                 
 
-                    // if (!editResponse.ok) {
-                    //     throw new Error('Failed to update fee details');
-                    // }
+                    try {
+                        const response = await fetch("/api/fee/UpdateFeeDetails", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(feeData)
+                        });
 
-                    message = 'Fee details updated successfully!';
-                    showNotification(message, 'success');
+                        if (!response.ok) {
+                            const errorText = await response.text(); // Or use .json() if server returns JSON
+                            throw new Error(`Error: ${errorText}`);
+                            // throw new Error('Failed to add subject');
+                        }
+
+                        message = `Fee Updated successfully!`;
+                        showNotification(message, 'success');
+
+
+                    } catch (error) {
+                        showNotification(error.message, 'error');
+                        console.error('Error update subject:', error.message);
+                    }
 
                     // Reset form
-                    hideForm('edit');
+                    document.getElementById('edit-form').reset();
                     break;
 
                 case 'delete':
@@ -890,5 +889,199 @@
     // Close notification when clicked
     document.getElementById('notification').addEventListener('click', function() {
         this.classList.remove('show');
+    });
+
+    // Load academic years from database
+    async function loadAcademicYears() {
+        try {
+            const response = await fetch('/api/ManagementApi/FetchAccademicYear');
+            const data = await response.json();
+
+            const dropdownIds = ['insert-academic-year', 'edit-academic-year', 'delete-academic-year'];
+
+            dropdownIds.forEach(id => {
+                const dropdown = document.getElementById(id);
+                dropdown.innerHTML = '<option value="">-- Select Academic Year --</option>';
+
+                data.forEach(year => {
+                    const option = document.createElement('option');
+                    option.value = year.Id;
+                    option.textContent = year.AccademicYear;
+                    dropdown.appendChild(option);
+                });
+            });
+        } catch (error) {
+            showNotification('Failed to load academic years', 'error');
+            console.error('Error loading academic years:', error);
+        }
+    }
+
+    function loadSyllabusOptions(academicYearId, targetSelectId) {
+        if (!academicYearId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchSyllabus/${academicYearId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+
+    // Load class data when syllabus is selected
+    function loadClassOptions(SLBID, targetSelectId) {
+        if (!SLBID) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchGrade/${SLBID}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(fetchedData => {
+                    const option = document.createElement('option');
+                    option.value = fetchedData.Id;
+                    option.textContent = fetchedData.Name || fetchedData.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+
+    // Load Stream data when grade is selected
+    function loadStreamOptions(classId, targetSelectId) {
+        if (!classId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchStream/${classId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(fetchedData => {
+                    const option = document.createElement('option');
+                    option.value = fetchedData.Id;
+                    option.textContent = fetchedData.Name || fetchedData.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    // Load Stream data when grade is selected
+    function loadCourseOptions(streamId, targetSelectId) {
+        if (!streamId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchCourse//${streamId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(fetchedData => {
+                    const option = document.createElement('option');
+                    option.value = fetchedData.Id;
+                    option.textContent = fetchedData.Name || fetchedData.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    // Load fee data when grade is selected
+    function loadFee(CourseID) {
+        if (!CourseID) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/fee/GetFeeDetails/${CourseID}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                document.getElementById('edit-class-name').value = data.Description;
+                document.getElementById('edit-registration-fee').value = data.RegistrationFee;
+                document.getElementById('edit-course-fee').value = data.FeeAmount;
+                document.getElementById('edit-total-amount').value = data.TotalFee;
+                document.getElementById('edit-term1-amount').value = data.Term1;
+                document.getElementById('edit-term2-amount').value = data.Term2;
+                document.getElementById('edit-term3-amount').value = data.Term3;
+                document.getElementById('edit-discount').value = data.DiscountPers;
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    // Event listeners for accademic year dropdowns form
+    document.getElementById('insert-academic-year').addEventListener('change', function () {
+        loadSyllabusOptions(this.value, 'insert-syllabus');
+    });
+
+    document.getElementById('edit-academic-year').addEventListener('change', function () {
+        loadSyllabusOptions(this.value, 'edit-syllabus');
+    });
+
+    document.getElementById('delete-academic-year').addEventListener('change', function () {
+        loadSyllabusOptions(this.value, 'delete-syllabus');
+    });
+
+    // Event listeners for accademic year dropdowns form
+    document.getElementById('insert-syllabus').addEventListener('change', function () {
+        loadClassOptions(this.value, 'insert-class');
+    });
+
+    document.getElementById('edit-syllabus').addEventListener('change', function () {
+        loadClassOptions(this.value, 'edit-class');
+    });
+
+    document.getElementById('delete-syllabus').addEventListener('change', function () {
+        loadClassOptions(this.value, 'delete-class');
+    });
+
+    // Event listeners for grade dropdowns form
+    document.getElementById('insert-class').addEventListener('change', function () {
+        loadStreamOptions(this.value, 'insert-stream');
+    });
+
+    document.getElementById('edit-class').addEventListener('change', function () {
+        loadStreamOptions(this.value, 'edit-stream');
+    });
+
+    document.getElementById('delete-class').addEventListener('change', function () {
+        loadStreamOptions(this.value, 'delete-stream');
+    });
+
+    document.getElementById('insert-stream').addEventListener('change', function () {
+        loadCourseOptions(this.value, 'insert-program');
+    });
+
+    document.getElementById('edit-stream').addEventListener('change', function () {
+        loadCourseOptions(this.value, 'edit-program');
+    });
+
+    document.getElementById('delete-stream').addEventListener('change', function () {
+        loadCourseOptions(this.value, 'delete-program');
+    });
+    document.getElementById('edit-program').addEventListener('change', function () {
+        loadFee(this.value);
+    });
+    document.getElementById('delete-program').addEventListener('change', function () {
+        
+    });
+
+    // Initialize dropdowns for insert form on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        loadAcademicYears();
     });
 </script>
