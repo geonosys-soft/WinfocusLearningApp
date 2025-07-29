@@ -11,12 +11,15 @@
 <body>
     <div class="sidebar">
         <div class="logo-details">
-            <i class='bx bxs-graduation icon'></i>
-            <div class="logo_name">Winfocus</div>
+            <i class='bx bxs-graduation icon' style="font-size: 50px; margin-left: 10px; margin-top: 20px;"></i>
+            <div class="logo_name" style="margin-top: 25px;">
+                <h2><b>Winfocus</b></h2>
+            </div>
+
         </div>
         <ul class="nav-links">
             <li>
-                <a href="@Url.Action("Index", "Dashboard")">
+                <a href="@Url.Action("Dashboard", "Management")">
                     <i class='bx bx-grid-alt'></i>
                     <span class="link_name">Dashboard</span>
                 </a>
@@ -46,22 +49,24 @@
                     <li><a href="@Url.Action("NoteType", "Management")">Note Type</a></li>
                     <li><a href="@Url.Action("Batch", "Management")">Batch</a></li>
                     <li><a href="@Url.Action("PreferredTimeSlot", "Management")">Preferred Time Slot</a></li>
+                    <li><a href="@Url.Action("St_Registration", "Management")">St_Registration</a></li>
+                    <li><a href="@Url.Action("FeesDetails", "Management")">Fee Details</a></li>
 
 
-                    @*<li><a href="@Url.Action("SchoolState", "Management")">School State</a></li>
-                    <li><a href="@Url.Action("District", "Management")">District</a></li>
-                    <li><a href="@Url.Action("SchoolDetails", "Management")">School Details</a></li>
-                    <li><a href="@Url.Action("CreateGroup", "Management")">Create Group</a></li>
-                    <li><a href="@Url.Action("ManageGroup", "Management")">Manage Group</a></li>
-                    <li><a href="@Url.Action("CourseFee", "Management")">Course fee</a></li>
-                    <li><a href="@Url.Action("RequestCallBack", "Management")">Request call back</a></li>
-                    <li><a href="@Url.Action("StudentReference", "Management")">Student Reference</a></li>
-                    <li><a href="@Url.Action("CreateLessonSummary", "Management")">Create Lesson Summery</a></li>
-                    <li><a href="@Url.Action("AddMeeting", "Management")">Add meeting</a></li>
-                    <li><a href="@Url.Action("TimeTable", "Management")">Time table</a></li>
-                    <li><a href="@Url.Action("Blog", "Management")">Blog</a></li>
-                    <li><a href="@Url.Action("SupportTicket", "Management")">Support Ticket</a></li>
-                    <li><a href="@Url.Action("Complaints", "Management")">Complaints</a></li>*@
+              @*<li><a href="@Url.Action("SchoolState", "Management")">School State</a></li>
+                <li><a href="@Url.Action("District", "Management")">District</a></li>
+                <li><a href="@Url.Action("SchoolDetails", "Management")">School Details</a></li>
+                <li><a href="@Url.Action("CreateGroup", "Management")">Create Group</a></li>
+                <li><a href="@Url.Action("ManageGroup", "Management")">Manage Group</a></li>
+                <li><a href="@Url.Action("CourseFee", "Management")">Course fee</a></li>
+                <li><a href="@Url.Action("RequestCallBack", "Management")">Request call back</a></li>
+                <li><a href="@Url.Action("StudentReference", "Management")">Student Reference</a></li>
+                <li><a href="@Url.Action("CreateLessonSummary", "Management")">Create Lesson Summery</a></li>
+                <li><a href="@Url.Action("AddMeeting", "Management")">Add meeting</a></li>
+                <li><a href="@Url.Action("TimeTable", "Management")">Time table</a></li>
+                <li><a href="@Url.Action("Blog", "Management")">Blog</a></li>
+                <li><a href="@Url.Action("SupportTicket", "Management")">Support Ticket</a></li>
+                <li><a href="@Url.Action("Complaints", "Management")">Complaints</a></li>*@
                 </ul>
             </li>
             <li>
@@ -151,9 +156,24 @@
                     <li><a href="#">Exam List</a></li>
                 </ul>
             </li>
+
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class='bx bx-collection'></i>
+                        <span class="link_name">BDE</span>
+                    </a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">BDE</a></li>
+                    <li><a href="@Url.Action("BDE_Registration", "Management")">Registration</a></li>
+                </ul>
+            </li>
+
             <li>
                 <div class="profile-details">
-                    <a href="@Url.Action("Logout", "Account")">
+                    <a href="@Url.Action("Login", "Account")">
                         <i class='bx bx-log-out'></i>
                         <span class="link_name">Logout</span>
                     </a>

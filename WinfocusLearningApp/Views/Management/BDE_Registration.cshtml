@@ -1,0 +1,401 @@
+﻿@{
+    ViewBag.Title = "BDE Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .registration-container {
+        max-width: 1200px; /* 50% increase from 800px */
+        margin: 45px auto; /* 50% increase from 30px */
+        background: #ffffff;
+        border-radius: 12px; /* 50% increase from 8px */
+        box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+        overflow: hidden;
+    }
+
+    .registration-header {
+        background: linear-gradient(135deg, #4361ee, #3a0ca3);
+        color: white;
+        padding: 30px 45px; /* 50% increase from 20px 30px */
+        text-align: center;
+    }
+
+        .registration-header h1 {
+            margin: 0;
+            font-size: 36px; /* 50% increase from 24px */
+            font-weight: 600;
+            letter-spacing: 0.75px; /* Slightly more spacing */
+        }
+
+    .registration-body {
+        padding: 45px 60px; /* 50% increase from 30px 40px */
+        background: #f9fafb;
+    }
+
+    .form-section {
+        background: white;
+        border-radius: 12px; /* 50% increase from 8px */
+        padding: 30px; /* 50% increase from 20px */
+        margin-bottom: 30px; /* 50% increase from 20px */
+        box-shadow: 0 3px 12px rgba(0,0,0,0.08); /* More pronounced shadow */
+    }
+
+    .section-title {
+        color: #3a0ca3;
+        font-size: 24px; /* 50% increase from 16px */
+        margin-top: 0;
+        margin-bottom: 22px; /* 50% increase from 15px */
+        padding-bottom: 12px; /* 50% increase from 8px */
+        border-bottom: 2px solid #f0f2f5; /* Thicker border */
+    }
+
+    .form-row {
+        display: flex;
+        gap: 30px; /* 50% increase from 20px */
+        margin-bottom: 22px; /* 50% increase from 15px */
+    }
+
+    .form-group {
+        flex: 1;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 12px; /* 50% increase from 8px */
+            font-weight: 500;
+            color: #2b2d42;
+            font-size: 18px; /* 50% increase from 12px */
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 15px 20px; /* 50% increase from 10px 15px */
+        border: 2px solid #e0e3e7; /* Thicker border */
+        border-radius: 9px; /* 50% increase from 6px */
+        font-size: 18px; /* 50% increase from 12px */
+        transition: all 0.3s ease;
+    }
+
+        .form-control:focus {
+            border-color: #4361ee;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.2); /* Larger shadow */
+        }
+
+    textarea.form-control {
+        min-height: 150px; /* 50% increase from 100px */
+        resize: vertical;
+    }
+
+    .file-upload {
+        border: 3px dashed #d1d5db; /* Thicker border */
+        padding: 30px; /* 50% increase from 20px */
+        text-align: center;
+        border-radius: 9px; /* 50% increase from 6px */
+        cursor: pointer;
+        margin-top: 18px; /* 50% increase from 12px */
+        transition: all 0.3s ease;
+    }
+
+        .file-upload:hover {
+            border-color: #4361ee;
+            background-color: #f8f9ff;
+        }
+
+        .file-upload input {
+            display: none;
+        }
+
+        .file-upload label {
+            color: #4361ee;
+            font-weight: 500;
+            font-size: 18px; /* 50% increase from 12px */
+            cursor: pointer;
+            display: block;
+            margin-bottom: 12px; /* 50% increase from 8px */
+        }
+
+    .file-info {
+        font-size: 15px; /* 50% increase from 10px */
+        color: #6b7280;
+    }
+
+    .submit-btn {
+        background: #4361ee;
+        color: white;
+        border: none;
+        padding: 18px 45px; /* 50% increase from 12px 30px */
+        border-radius: 9px; /* 50% increase from 6px */
+        font-size: 21px; /* 50% increase from 14px */
+        font-weight: 500;
+        cursor: pointer;
+        display: block;
+        margin: 45px auto 0; /* 50% increase from 30px */
+        width: 300px; /* 50% increase from 200px */
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+        .submit-btn:hover {
+            background: #3a0ca3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(58, 12, 163, 0.3); /* More pronounced shadow */
+        }
+
+    .validation-message {
+        color: #ef4444;
+        font-size: 15px; /* 50% increase from 10px */
+        margin-top: 9px; /* 50% increase from 6px */
+        display: none;
+    }
+
+    @@media (max-width: 1400px) {
+        .registration-container {
+            max-width: 90%;
+        }
+
+        .registration-body {
+            padding: 40px 50px;
+        }
+    }
+
+    @@media (max-width: 1200px) {
+        .form-row {
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .form-section {
+            padding: 25px;
+        }
+
+        .registration-header h1 {
+            font-size: 30px;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .registration-header {
+            padding: 25px;
+        }
+
+        .registration-body {
+            padding: 25px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            max-width: 250px;
+            font-size: 18px;
+            padding: 15px;
+        }
+    }
+</style>
+
+<div class="registration-container">
+    <div class="registration-header">
+        <h1>Business Development Executive Registration</h1>
+    </div>
+
+    <div class="registration-body">
+        <form method="post" enctype="multipart/form-data">
+            <!-- Personal Information Section -->
+            <div class="form-section">
+                <h2 class="section-title">Personal Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="Name">Full Name</label>
+                        <input type="text" class="form-control" id="Name" name="Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="DateOfBirth">Date of Birth</label>
+                        <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ID Proof Document</label>
+                    <div class="file-upload">
+                        <input type="file" id="IdProof" name="IdProof" required>
+                        <label for="IdProof">Upload Government Issued ID Proof</label>
+                        <div class="file-info" id="idProofFileName">Supported formats: PDF, JPG, PNG (Max 5MB)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information Section -->
+            <div class="form-section">
+                <h2 class="section-title">Contact Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="MobileNumber">Mobile Number</label>
+                        <input type="tel" class="form-control" id="MobileNumber" name="MobileNumber"
+                               pattern="[0-9]{10}" required>
+                        <div class="validation-message">Please enter a valid 10-digit mobile number</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="WhatsAppNumber">WhatsApp Number</label>
+                        <input type="tel" class="form-control" id="WhatsAppNumber" name="WhatsAppNumber"
+                               pattern="[0-9]{10}" required>
+                        <div class="validation-message">Please enter a valid 10-digit WhatsApp number</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Email">Email Address</label>
+                    <input type="email" class="form-control" id="Email" name="Email" required>
+                    <div class="validation-message" id="emailValidation">Please enter a valid Gmail address (e.g., example@gmail.com)</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Address">Complete Address</label>
+                    <textarea class="form-control" id="Address" name="Address" rows="4" required></textarea>
+                </div>
+            </div>
+
+            <!-- Professional Information Section -->
+            <div class="form-section">
+                <h2 class="section-title">Professional Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="Qualification">Highest Qualification</label>
+                        <input type="text" class="form-control" id="Qualification" name="Qualification" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="DateOfJoining">Expected Date of Joining</label>
+                        <input type="date" class="form-control" id="DateOfJoining" name="DateOfJoining" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Details Section -->
+            <div class="form-section">
+                <h2 class="section-title">Account Details</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="Username">Preferred Username</label>
+                        <input type="text" class="form-control" id="Username" name="Username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Password">Create Password</label>
+                        <input type="password" class="form-control" id="Password" name="Password" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Document Uploads Section -->
+            <div class="form-section">
+                <h2 class="section-title">Document Uploads</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Profile Photograph</label>
+                        <div class="file-upload">
+                            <input type="file" id="ProfilePicture" name="ProfilePicture" accept="image/*" required>
+                            <label for="ProfilePicture">Upload Recent Photograph</label>
+                            <div class="file-info" id="profilePictureFileName">Formats: JPG, PNG (Max 2MB, 300x300px minimum)</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Signature</label>
+                        <div class="file-upload">
+                            <input type="file" id="Signature" name="Signature" accept="image/*" required>
+                            <label for="Signature">Upload Your Signature</label>
+                            <div class="file-info" id="signatureFileName">Formats: JPG, PNG (Max 2MB)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Information Section -->
+            <div class="form-section">
+                <h2 class="section-title">Additional Information</h2>
+                <div class="form-group">
+                    <label for="Description">Tell us about yourself and why you want to be a BDE</label>
+                    <textarea class="form-control" id="Description" name="Description" rows="6"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Complete Registration</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Enhanced file upload display
+    document.querySelectorAll('input[type="file"]').forEach(input => {
+        input.addEventListener('change', function() {
+            const fileInfo = this.parentElement.querySelector('.file-info');
+            if (this.files && this.files[0]) {
+                const fileName = this.files[0].name;
+                const fileSize = (this.files[0].size / (1024 * 1024)).toFixed(2);
+                fileInfo.textContent = `${fileName} (${fileSize} MB)`;
+                fileInfo.style.color = '#3a0ca3';
+                fileInfo.style.fontWeight = '500';
+            } else {
+                fileInfo.textContent = this.parentElement.querySelector('.file-info').getAttribute('data-default');
+                fileInfo.style.color = '#6b7280';
+                fileInfo.style.fontWeight = 'normal';
+            }
+        });
+    });
+
+    // Comprehensive form validation
+    document.querySelector('form').addEventListener('submit', function(e) {
+        let isValid = true;
+
+        // Validate phone numbers
+        const phoneInputs = document.querySelectorAll('input[type="tel"]');
+        phoneInputs.forEach(input => {
+            const validationMsg = input.nextElementSibling;
+            if (!/^\d{10}$/.test(input.value)) {
+                isValid = false;
+                validationMsg.style.display = 'block';
+                input.style.borderColor = '#ef4444';
+            } else {
+                validationMsg.style.display = 'none';
+                input.style.borderColor = '#e0e3e7';
+            }
+        });
+
+        // Validate email (Gmail only)
+        const email = document.getElementById('Email');
+        const emailValidation = document.getElementById('emailValidation');
+
+
+        // Validate required fields
+        document.querySelectorAll('[required]').forEach(field => {
+            if (!field.value.trim()) {
+                isValid = false;
+                field.style.borderColor = '#ef4444';
+                if (field.nextElementSibling && field.nextElementSibling.classList.contains('validation-message')) {
+                    field.nextElementSibling.style.display = 'block';
+                    field.nextElementSibling.textContent = 'This field is required';
+                }
+            }
+        });
+
+        if (!isValid) {
+            e.preventDefault();
+            // Scroll to first error
+            const firstError = document.querySelector('.validation-message[style="display: block;"]');
+            if (firstError) {
+                firstError.closest('.form-group').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+        }
+    });
+
+    // Real-time validation for better UX
+    document.querySelectorAll('input, textarea').forEach(field => {
+        field.addEventListener('input', function() {
+            if (this.value.trim()) {
+                this.style.borderColor = '#e0e3e7';
+                if (this.nextElementSibling && this.nextElementSibling.classList.contains('validation-message')) {
+                    this.nextElementSibling.style.display = 'none';
+                }
+            }
+        });
+    });
+</script>

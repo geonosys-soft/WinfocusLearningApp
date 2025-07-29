@@ -6,33 +6,37 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using WinfocusLearningApp.Authentication;
 using WinfocusLearningApp.DataEntity;
 
 namespace WinfocusLearningApp.WebApi
 {
+    
     public class ManagementApiController : ApiController
     {
-        
+
         Winfocus_CS winfocus_CS = new Winfocus_CS();
         // GET: api/ManagementApi
         //Accademic Year Management APIs
+
         [Route("api/ManagementApi/AddYear")]
         [ResponseType(typeof(TblAccademicYear))]
         public IHttpActionResult AddYear(TblAccademicYear jsonData)
         {
-               try
+            try
             {
                 if (jsonData == null)
                 {
                     return BadRequest("Invalid data format.");
                 }
                 // Assuming you have a method to add the year to the database
-                TblAccademicYear inf=new TblAccademicYear();
+                TblAccademicYear inf = new TblAccademicYear();
                 inf.AccademicYear = jsonData.AccademicYear;
-                inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
+                var userId=winfocus_CS.Users.FirstOrDefault(x => x.UserName ==User.Identity.Name).Id;
+                inf.CreatedBy = userId; // Assuming 1 is the ID of the admin user
                 inf.CreatedDate = DateTime.UtcNow;
                 inf.IsDeleted = 0;
-               
+
                 winfocus_CS.TblAccademicYears.Add(inf);
                 winfocus_CS.SaveChanges();
                 return Ok("Year added successfully.");
@@ -58,9 +62,9 @@ namespace WinfocusLearningApp.WebApi
                 inf = winfocus_CS.TblAccademicYears.Find(jsonData.Id);
                 inf.AccademicYear = jsonData.AccademicYear;
                 inf.IsDeleted = 0;
-                inf.ModifiedBy= 1; // Assuming 1 is the ID of the admin user
-                inf.ModifiedTime= DateTime.UtcNow;
-               winfocus_CS.TblAccademicYears.Attach(inf);
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblAccademicYears.Attach(inf);
                 winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
                 winfocus_CS.SaveChanges();
                 return Ok("Year updated successfully.");
@@ -103,6 +107,7 @@ namespace WinfocusLearningApp.WebApi
 
 
         }
+      //  [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/ManagementApi/FetchAccademicYear")]
         public IHttpActionResult FetchAccademicYear()
@@ -111,7 +116,7 @@ namespace WinfocusLearningApp.WebApi
 
             try
             {
-               var ayList= winfocus_CS.TblAccademicYears.Where(x=>x.IsDeleted==0).ToList();
+                var ayList = winfocus_CS.TblAccademicYears.Where(x => x.IsDeleted == 0).ToList();
                 return Ok(ayList);
             }
             catch (Exception ex)
@@ -121,7 +126,7 @@ namespace WinfocusLearningApp.WebApi
 
 
         }
-       
+
         [HttpPost]
         [Route("api/ManagementApi/ListAccademicYear")]
         public IHttpActionResult ListAccademicYear()
@@ -234,7 +239,7 @@ namespace WinfocusLearningApp.WebApi
         {
             try
             {
-                var syllabusList = winfocus_CS.TblSyllabus.Where(x => x.IsDeleted == 0 && x.ACID== Id).ToList();
+                var syllabusList = winfocus_CS.TblSyllabus.Where(x => x.IsDeleted == 0 && x.ACID == Id).ToList();
                 return Ok(syllabusList);
             }
             catch (Exception ex)
@@ -339,7 +344,7 @@ namespace WinfocusLearningApp.WebApi
         {
             try
             {
-                var gradeList = winfocus_CS.TblGrades.Where(x => x.IsDeleted == 0 && x.SyllabusID==Id).ToList();
+                var gradeList = winfocus_CS.TblGrades.Where(x => x.IsDeleted == 0 && x.SyllabusID == Id).ToList();
                 return Ok(gradeList);
             }
             catch (Exception ex)
@@ -395,11 +400,11 @@ namespace WinfocusLearningApp.WebApi
                     return NotFound();
                 }
                 inf.Name = jsonData.Name;
-               /*  inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
-               inf.SyllabusID = jsonData.SyllabusID; // Assuming SyllabusID is the ID of the syllabus
-                inf.GradeID = jsonData.GradeID; // Assuming GradeID is the ID of the grade
-                inf.Description = jsonData.Description;
-                inf.IsDeleted = 0;*/
+                /*  inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
+                inf.SyllabusID = jsonData.SyllabusID; // Assuming SyllabusID is the ID of the syllabus
+                 inf.GradeID = jsonData.GradeID; // Assuming GradeID is the ID of the grade
+                 inf.Description = jsonData.Description;
+                 inf.IsDeleted = 0;*/
                 inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
                 inf.ModifiedTime = DateTime.UtcNow;
                 winfocus_CS.TblStreams.Attach(inf);
@@ -448,7 +453,7 @@ namespace WinfocusLearningApp.WebApi
         {
             try
             {
-                var streamList = winfocus_CS.TblStreams.Where(x => x.IsDeleted == 0&& x.GradeID==Id).ToList();
+                var streamList = winfocus_CS.TblStreams.Where(x => x.IsDeleted == 0 && x.GradeID == Id).ToList();
                 return Ok(streamList);
             }
             catch (Exception ex)
@@ -475,7 +480,7 @@ namespace WinfocusLearningApp.WebApi
                 inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
                 inf.SyllabusID = jsonData.SyllabusID; // Assuming SyllabusID is the ID of the syllabus
                 inf.StreamID = jsonData.StreamID; // Assuming StreamID is the ID of the stream
-                inf.GradeID= jsonData.GradeID; // Assuming GradeID is the ID of the grade
+                inf.GradeID = jsonData.GradeID; // Assuming GradeID is the ID of the grade
                 inf.Description = jsonData.Description;
                 inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
                 inf.CreatedDate = DateTime.UtcNow;
@@ -506,13 +511,13 @@ namespace WinfocusLearningApp.WebApi
                     return NotFound();
                 }
                 inf.Name = jsonData.Name;
-              /*  inf.StreamID = jsonData.StreamID; // Assuming StreamID is the ID of the stream
-                inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
-                inf.SyllabusID = jsonData.SyllabusID; // Assuming SyllabusID is the ID of the syllabus
-                inf.StreamID = jsonData.StreamID; // Assuming StreamID is the ID of the stream
-                inf.GradeID = jsonData.GradeID; // Assuming GradeID is the ID of the grade
-                inf.Description = jsonData.Description;
-                inf.IsDeleted = 0;*/
+                /*  inf.StreamID = jsonData.StreamID; // Assuming StreamID is the ID of the stream
+                  inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
+                  inf.SyllabusID = jsonData.SyllabusID; // Assuming SyllabusID is the ID of the syllabus
+                  inf.StreamID = jsonData.StreamID; // Assuming StreamID is the ID of the stream
+                  inf.GradeID = jsonData.GradeID; // Assuming GradeID is the ID of the grade
+                  inf.Description = jsonData.Description;
+                  inf.IsDeleted = 0;*/
                 inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
                 inf.ModifiedTime = DateTime.UtcNow;
                 winfocus_CS.TblCourses.Attach(inf);
@@ -560,7 +565,7 @@ namespace WinfocusLearningApp.WebApi
         {
             try
             {
-                var courseList = winfocus_CS.TblCourses.Where(x => x.IsDeleted == 0&& x.StreamID==Id).ToList();
+                var courseList = winfocus_CS.TblCourses.Where(x => x.IsDeleted == 0 && x.StreamID == Id).ToList();
                 return Ok(courseList);
             }
             catch (Exception ex)
@@ -667,7 +672,7 @@ namespace WinfocusLearningApp.WebApi
         {
             try
             {
-                var subjectList = winfocus_CS.TblSubjects.Where(x => x.IsDeleted == 0 && x.CourseID==Id).ToList();
+                var subjectList = winfocus_CS.TblSubjects.Where(x => x.IsDeleted == 0 && x.CourseID == Id).ToList();
                 return Ok(subjectList);
             }
             catch (Exception ex)
@@ -723,7 +728,7 @@ namespace WinfocusLearningApp.WebApi
                 {
                     return NotFound();
                 }
-                inf.ChapterName = jsonData.ChapterName;            
+                inf.ChapterName = jsonData.ChapterName;
                 inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
                 inf.ModifiedTime = DateTime.UtcNow;
                 winfocus_CS.TblChapters.Attach(inf);
@@ -771,7 +776,7 @@ namespace WinfocusLearningApp.WebApi
         {
             try
             {
-                var chapterList = winfocus_CS.TblChapters.Where(x => x.IsDeleted == 0 && x.SubjectID==Id).ToList();
+                var chapterList = winfocus_CS.TblChapters.Where(x => x.IsDeleted == 0 && x.SubjectID == Id).ToList();
                 return Ok(chapterList);
             }
             catch (Exception ex)
@@ -829,7 +834,7 @@ namespace WinfocusLearningApp.WebApi
                 {
                     return NotFound();
                 }
-                inf.SubChapterName = jsonData.SubChapterName;            
+                inf.SubChapterName = jsonData.SubChapterName;
                 inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
                 inf.ModifiedTime = DateTime.UtcNow;
                 winfocus_CS.TblSubChapters.Attach(inf);
@@ -936,7 +941,7 @@ namespace WinfocusLearningApp.WebApi
                 {
                     return NotFound();
                 }
-                inf.ModuleName = jsonData.ModuleName;            
+                inf.ModuleName = jsonData.ModuleName;
                 inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
                 inf.ModifiedTime = DateTime.UtcNow;
                 winfocus_CS.TblModules.Attach(inf);
@@ -1013,7 +1018,7 @@ namespace WinfocusLearningApp.WebApi
                 inf.StreamID = jsonData.StreamID; // Assuming StreamID is the ID of the stream
                 inf.CourseID = jsonData.CourseID; // Assuming CourseID is the ID of the course
                 inf.SubjectID = jsonData.SubjectID; // Assuming SubjectID is the ID of the subject
-              
+
                 inf.Description = jsonData.Description; // Assuming Description is a field in TblNoteType
                 inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
                 inf.CreatedDate = DateTime.UtcNow;
@@ -1044,7 +1049,7 @@ namespace WinfocusLearningApp.WebApi
                 {
                     return NotFound();
                 }
-                inf.Name = jsonData.Name;            
+                inf.Name = jsonData.Name;
                 inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
                 inf.ModifiedTime = DateTime.UtcNow;
                 winfocus_CS.TblNoteTypes.Attach(inf);
@@ -1094,7 +1099,7 @@ namespace WinfocusLearningApp.WebApi
         {
             try
             {
-                var noteTypeList = winfocus_CS.TblNoteTypes.Where(x => x.IsDeleted == 0 && x.SubjectID== Id).ToList();
+                var noteTypeList = winfocus_CS.TblNoteTypes.Where(x => x.IsDeleted == 0 && x.SubjectID == Id).ToList();
                 return Ok(noteTypeList);
             }
             catch (Exception ex)
@@ -1153,9 +1158,9 @@ namespace WinfocusLearningApp.WebApi
                     return NotFound();
                 }
                 inf.Name = jsonData.Name;
-               
+
                 inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
-                inf.ModifiedTime = DateTime.UtcNow;
+                inf.DeletedDate = DateTime.UtcNow;
                 winfocus_CS.TblMaterials.Attach(inf);
                 winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
                 winfocus_CS.SaveChanges();
@@ -1209,34 +1214,208 @@ namespace WinfocusLearningApp.WebApi
                 return InternalServerError(ex);
             }
         }
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+
+        [Route("api/ManagementApi/AddBatchTime")]
+        [ResponseType(typeof(TblRegistrationBatchTime))]
+        public IHttpActionResult AddBatchTime(TblRegistrationBatchTime jsonData)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to add the batch time to the database
+                TblRegistrationBatchTime inf = new TblRegistrationBatchTime();
+                inf.BatchTime = jsonData.BatchTime;
+                inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
+                inf.Description = jsonData.Description;
+                inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.CreatedDate = DateTime.UtcNow;
+                inf.IsDeleted = 0;
+                winfocus_CS.TblRegistrationBatchTimes.Add(inf);
+                winfocus_CS.SaveChanges();
+                return Ok("Batch time added successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
-      
-
-        // GET api/<controller>/5
-        public string Get(int id)
+        [Route("api/ManagementApi/UpdateBatchTime")]
+        [ResponseType(typeof(TblRegistrationBatchTime))]
+        public IHttpActionResult UpdateBatchTime(TblRegistrationBatchTime jsonData)
         {
-            return "value";
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to update the batch time in the database
+                TblRegistrationBatchTime inf = winfocus_CS.TblRegistrationBatchTimes.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.BatchTime = jsonData.BatchTime;
+                inf.Description = jsonData.Description;
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblRegistrationBatchTimes.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Batch time updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [Route("api/ManagementApi/RemoveBatchTime")]
+        [ResponseType(typeof(TblRegistrationBatchTime))]
+        public IHttpActionResult RemoveBatchTime(TblRegistrationBatchTime jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to delete the batch time in the database
+                TblRegistrationBatchTime inf = winfocus_CS.TblRegistrationBatchTimes.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.IsDeleted = 1;
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.DeletedDate = DateTime.UtcNow;
+                winfocus_CS.TblRegistrationBatchTimes.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Batch time deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [Route("api/ManagementApi/FetchBatchTime/{Id}")]
+        [HttpGet]
+        public IHttpActionResult FetchBatchTime(int Id)
+        {
+            try
+            {
+                var batchTimeList = winfocus_CS.TblRegistrationBatchTimes.Where(x => x.IsDeleted == 0 && x.ACID == Id).ToList();
+                return Ok(batchTimeList);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
-        // POST api/<controller>
-        public void Post([FromBody] string value)
+        [Route("api/ManagementApi/AddBatch")]
+        [ResponseType(typeof(TblRegistrationBatch))]
+        public IHttpActionResult AddBatch(TblRegistrationBatch jsonData)
         {
-
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to add the batch to the database
+                TblRegistrationBatch inf = new TblRegistrationBatch();
+                inf.Batch = jsonData.Batch;
+                inf.ACID = jsonData.ACID; // Assuming ACID is the ID of the academic year
+                inf.Description = jsonData.Description;
+                inf.CreatedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.CreatedDate = DateTime.UtcNow;
+                inf.IsDeleted = 0;
+                winfocus_CS.TblRegistrationBatches.Add(inf);
+                winfocus_CS.SaveChanges();
+                return Ok("Batch added successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
-
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody] string value)
+        [Route("api/ManagementApi/UpdateBatch")]
+        [ResponseType(typeof(TblRegistrationBatch))]
+        public IHttpActionResult UpdateBatch(TblRegistrationBatch jsonData)
         {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to update the batch in the database
+                TblRegistrationBatch inf = winfocus_CS.TblRegistrationBatches.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.Batch = jsonData.Batch;
+                inf.Description = jsonData.Description;
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.ModifiedTime = DateTime.UtcNow;
+                winfocus_CS.TblRegistrationBatches.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Batch updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
+        [Route("api/ManagementApi/RemoveBatch")]
+        [ResponseType(typeof(TblRegistrationBatch))]
+        public IHttpActionResult RemoveBatch(TblRegistrationBatch jsonData)
         {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Assuming you have a method to delete the batch in the database
+                TblRegistrationBatch inf = winfocus_CS.TblRegistrationBatches.Find(jsonData.Id);
+                if (inf == null)
+                {
+                    return NotFound();
+                }
+                inf.IsDeleted = 1;
+                inf.ModifiedBy = 1; // Assuming 1 is the ID of the admin user
+                inf.DeletedDate = DateTime.UtcNow;
+                winfocus_CS.TblRegistrationBatches.Attach(inf);
+                winfocus_CS.Entry(inf).State = System.Data.Entity.EntityState.Modified;
+                winfocus_CS.SaveChanges();
+                return Ok("Batch deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        [Route("api/ManagementApi/FetchBatch/{Id}")]
+        [HttpGet]
+        public IHttpActionResult FetchBatch(int Id)
+        {
+            try
+            {
+                var batchList = winfocus_CS.TblRegistrationBatches.Where(x => x.IsDeleted == 0 && x.ACID == Id).ToList();
+                return Ok(batchList);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

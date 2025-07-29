@@ -11,8 +11,6 @@
         <AssociationConnector Association="Winfocus_DbModel.UserRoles" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblSyllabu" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblGrade" Width="1.5" PointX="10.75" PointY="5.75" />
-        <EntityTypeShape EntityType="Winfocus_DbModel.TblRegistrationBatch" Width="1.5" PointX="10.75" PointY="9.75" />
-        <EntityTypeShape EntityType="Winfocus_DbModel.TblRegistrationBatchTime" Width="1.5" PointX="12.75" PointY="0.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblStream" Width="1.5" PointX="12.75" PointY="4.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblStudent_Fee_Payment_Details" Width="1.5" PointX="14.75" PointY="0.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblStudent_Fee_receipt" Width="1.5" PointX="12.75" PointY="9.75" />
@@ -30,6 +28,8 @@
         <EntityTypeShape EntityType="Winfocus_DbModel.TblStudent_Parent_Basic" Width="1.5" PointX="17.375" PointY="0.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblSTudentBasicDetail" Width="1.5" PointX="17.375" PointY="6.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblMaterial" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Winfocus_DbModel.TblRegistrationBatch" Width="1.5" PointX="5.375" PointY="9.75" />
+        <EntityTypeShape EntityType="Winfocus_DbModel.TblRegistrationBatchTime" Width="1.5" PointX="7.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
