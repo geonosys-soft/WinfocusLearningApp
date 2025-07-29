@@ -368,6 +368,7 @@
     <Content Include="Views\Management\BDE_Registration.cshtml" />
     <Content Include="Views\Management\FeesDetails.cshtml" />
     <Content Include="Views\Management\Dashboard.cshtml" />
+    <Content Include="Views\Registration\Student_payment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

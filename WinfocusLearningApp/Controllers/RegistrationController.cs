@@ -16,5 +16,9 @@ namespace WinfocusLearningApp.Controllers
         public ActionResult Student() { 
         return View();
         }
+        public ActionResult Student_payment()
+        {
+            return View();
+        }
     }
 }
