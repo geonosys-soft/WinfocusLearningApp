@@ -15,19 +15,25 @@ namespace WinfocusLearningApp.DataEntity
     public partial class TblFeeDetail
     {
         public int Id { get; set; }
-        public int FeeAmount { get; set; }
-        public int Priority { get; set; }
-        public int PaymentMode { get; set; }
-        public int ACID { get; set; }
-        public int SyllabusID { get; set; }
-        public int GradeId { get; set; }
-        public int StreamID { get; set; }
-        public int CourseID { get; set; }
-        public int CreatedBy { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public int IsDeleted { get; set; }
+        public Nullable<decimal> FeeAmount { get; set; }
+        public Nullable<decimal> RegistrationFee { get; set; }
+        public Nullable<decimal> TotalFee { get; set; }
+        public Nullable<decimal> DiscountPers { get; set; }
+        public Nullable<int> ACID { get; set; }
+        public Nullable<int> SyllabusID { get; set; }
+        public Nullable<int> GradeId { get; set; }
+        public Nullable<int> StreamID { get; set; }
+        public Nullable<int> CourseID { get; set; }
+        public Nullable<decimal> Term1 { get; set; }
+        public Nullable<decimal> Term2 { get; set; }
+        public Nullable<decimal> Term3 { get; set; }
+        public Nullable<decimal> Term4 { get; set; }
+        public Nullable<decimal> Term5 { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> IsDeleted { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
-        public int ModifiedBy { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedTime { get; set; }
         public string Description { get; set; }
     }

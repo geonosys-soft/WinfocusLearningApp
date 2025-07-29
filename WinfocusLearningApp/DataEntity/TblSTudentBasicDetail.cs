@@ -16,20 +16,31 @@ namespace WinfocusLearningApp.DataEntity
     {
         public int SID { get; set; }
         public string RegId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string FullName { get; set; }
+        public string Gender { get; set; }
+        public string DOB { get; set; }
         public string MobileNumber { get; set; }
         public string WhatsApp { get; set; }
         public string EmailID { get; set; }
         public string MteamID { get; set; }
-        public byte[] Profile { get; set; }
+        public string AccademicBoard { get; set; }
+        public string CurrentStudyClass { get; set; }
+        public string LastPassClass { get; set; }
+        public string CLSchoolName { get; set; }
+        public string CLSLocation { get; set; }
+        public string Emirate { get; set; }
+        public string TargetExam { get; set; }
+        public string TargetYearExam { get; set; }
+        public Nullable<int> ACID { get; set; }
+        public Nullable<int> SyllabusID { get; set; }
+        public Nullable<int> GradeID { get; set; }
+        public Nullable<int> StreamID { get; set; }
+        public Nullable<int> CousreID { get; set; }
+        public string Dream { get; set; }
         public Nullable<System.DateTime> CreatedDt { get; set; }
         public Nullable<int> IsActive { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> ProcessStage { get; set; }
-        public string BOTIM { get; set; }
-        public string VISA { get; set; }
-        public Nullable<int> Gender { get; set; }
-        public string DOB { get; set; }
+        public byte[] Profile { get; set; }
     }
 }

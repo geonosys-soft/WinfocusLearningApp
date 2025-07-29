@@ -1,18 +1,21 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.EnterpriseServices;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using WinfocusLearningApp.Authentication;
 using WinfocusLearningApp.DataEntity;
 
 namespace WinfocusLearningApp.Controllers
-{
+{ 
+    //[CustomAuthorize(Roles = "Admin")]
     public class ManagementController : Controller
     {
-
+       
         private readonly Winfocus_CS dbEntities = new Winfocus_CS();
         // GET: Admin/Management
         public ActionResult Index()
@@ -71,5 +74,11 @@ namespace WinfocusLearningApp.Controllers
         public ActionResult MaterialType() { return View(); }
         public ActionResult Batch() { return View(); }
         public ActionResult PreferredTimeSlot() { return View(); }
+        public ActionResult St_Registration() { return View(); }
+        public ActionResult BDE_Registration() { return View(); }
+        public ActionResult FeesDetails() { return View(); }
+        public ActionResult Dashboard() {
+            return View();
+        }
     }
 }

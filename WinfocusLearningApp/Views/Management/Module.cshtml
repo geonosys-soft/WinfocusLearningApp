@@ -541,9 +541,10 @@
         // Show the selected form
         const form = document.getElementById(formType + '-form');
         form.style.display = 'block';
-
-        // Load data for the form
-        loadDropdownData(formType);
+        // Load data if needed
+        if (formType === 'edit' || formType === 'delete') {
+            formClear();
+        }
 
         // Scroll to form
         form.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -560,68 +561,7 @@
         document.querySelector('#delete-form .btn').disabled = !this.checked;
     });
 
-    // Load dropdown data from database
-    async function loadDropdownData(formType) {
-        try {
-            // Fetch academic years
-            const academicYears = await fetch('/api/ManagementApi/FetchAccademicYear').then(res => res.json());
-            populateDropdown(`${formType}-academic-year`, academicYears);
-
-            // Fetch syllabuses
-            const syllabuses = await fetch('/api/ManagementApi/FetchSyllabus').then(res => res.json());
-            populateDropdown(`${formType}-syllabus`, syllabuses);
-
-            // Fetch classes
-            const classes = await fetch('/api/ManagementApi/FetchClass').then(res => res.json());
-            populateDropdown(`${formType}-class`, classes);
-
-            // Fetch streams
-            const streams = await fetch('/api/ManagementApi/FetchStream').then(res => res.json());
-            populateDropdown(`${formType}-stream`, streams);
-
-            // Fetch courses
-            const courses = await fetch('/api/ManagementApi/FetchCourse').then(res => res.json());
-            populateDropdown(`${formType}-course`, courses);
-
-            // Fetch subjects
-            const subjects = await fetch('/api/ManagementApi/FetchSubject').then(res => res.json());
-            populateDropdown(`${formType}-subject`, subjects);
-
-            // Fetch chapters
-            const chapters = await fetch('/api/ManagementApi/FetchChapter').then(res => res.json());
-            populateDropdown(`${formType}-chapter`, chapters);
-
-            // Fetch subchapters
-            const subchapters = await fetch('/api/ManagementApi/FetchSubChapter').then(res => res.json());
-            populateDropdown(`${formType}-subchapter`, subchapters);
-
-            // For edit and delete forms, also load modules
-            if (formType === 'edit' || formType === 'delete') {
-                const modules = await fetch('/api/ManagementApi/FetchModule').then(res => res.json());
-                populateDropdown(`${formType}-module`, modules);
-            }
-        } catch (error) {
-            showNotification('Error loading dropdown data', 'error');
-            console.error('Error loading dropdown data:', error);
-        }
-    }
-
-    // Helper function to populate dropdown
-    function populateDropdown(dropdownId, data) {
-        const dropdown = document.getElementById(dropdownId);
-        if (!dropdown) return;
-
-        // Clear previous options
-        dropdown.innerHTML = '<option value="">-- Select --</option>';
-
-        // Add new options
-        data.forEach(item => {
-            const option = document.createElement('option');
-            option.value = item.Id;
-            option.textContent = item.Name || item.AccademicYear || item.ModuleName; // Adjust based on your data structure
-            dropdown.appendChild(option);
-        });
-    }
+    
 
     // Submit form function
     async function submitForm(formType) {
@@ -656,14 +596,14 @@
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify({
-                            AcademicYearId: academicYearId,
-                            SyllabusId: syllabusId,
-                            ClassId: classId,
-                            StreamId: streamId,
-                            CourseId: courseId,
-                            SubjectId: subjectId,
-                            ChapterId: chapterId,
-                            SubChapterId: subchapterId,
+                            ACID: academicYearId,
+                            SyllabusID: syllabusId,
+                            ClassID: classId,
+                            StreamID: streamId,
+                            CourseID: courseId,
+                            SubjectID: subjectId,
+                            ChapterID: chapterId,
+                            SubChapterID: subchapterId,
                             ModuleName: moduleName
                         })
                     });
@@ -732,7 +672,7 @@
                 }
 
                 try {
-                    const response = await fetch("/api/ManagementApi/DeleteModule", {
+                    const response = await fetch("/api/ManagementApi/RemoveModule", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -798,8 +738,330 @@
 
     // Add cascading dropdown functionality
     document.addEventListener('DOMContentLoaded', function() {
-        // You would add event listeners here for cascading dropdowns
-        // For example, when academic year changes, filter syllabuses, etc.
-        // This would depend on your specific API endpoints and data structure
+        loadAcademicYears();
+    });
+
+    // Load academic years from database
+    async function loadAcademicYears() {
+        try {
+            const response = await fetch('/api/ManagementApi/FetchAccademicYear');
+            const data = await response.json();
+
+            const dropdownIds = ['insert-academic-year', 'edit-academic-year', 'delete-academic-year'];
+
+            dropdownIds.forEach(id => {
+                const dropdown = document.getElementById(id);
+                dropdown.innerHTML = '<option value="">-- Select Academic Year --</option>';
+
+                data.forEach(year => {
+                    const option = document.createElement('option');
+                    option.value = year.Id;
+                    option.textContent = year.AccademicYear;
+                    dropdown.appendChild(option);
+                });
+            });
+        } catch (error) {
+            showNotification('Failed to load academic years', 'error');
+            console.error('Error loading academic years:', error);
+        }
+    }
+
+    function loadSyllabusOptions(academicYearId, targetSelectId) {
+        if (!academicYearId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchSyllabus/${academicYearId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+
+    // Load class data when syllabus is selected
+    function loadClassOptions(SLBID, targetSelectId) {
+        if (!SLBID) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchGrade/${SLBID}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+
+    // Load Stream data when grade is selected
+    function loadStreamOptions(classId, targetSelectId) {
+        if (!classId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchStream/${classId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    // Load Stream data when grade is selected
+    function loadCourseOptions(streamId, targetSelectId) {
+        if (!streamId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchCourse//${streamId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    //LOAD SUBJECTS
+    function loadSubjectOptions(CourseId, targetSelectId) {
+        if (!CourseId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchSubject/${CourseId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    //LOAD Chapter
+    function loadChapterOptions(SubjectId, targetSelectId) {
+        if (!SubjectId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchChapter/${SubjectId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.ChapterName || syllabus.ChapterName.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    //LOAD Chapter
+    function loadSubChapterOptions(ChapterId, targetSelectId) {
+        if (!ChapterId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchSubChapter/${ChapterId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.SubChapterName || syllabus.SubChapterName.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    //LOAD Chapter
+    function loadModuleOptions(SubChapterId, targetSelectId) {
+        if (!SubChapterId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchModule/${SubChapterId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.ModuleName || syllabus.ModuleName.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    // Close notification when clicked
+    document.getElementById('notification').addEventListener('click', function () {
+        this.classList.remove('show');
+    });
+
+    // Load dropdown data when page loads
+    document.addEventListener('DOMContentLoaded', function () {
+        loadAcademicYears();
+    });
+    function formClear() {
+        document.getElementById('insert-academic-year').value = '';
+        document.getElementById('edit-academic-year').value = '';
+        document.getElementById('delete-academic-year').value = '';
+
+        document.getElementById('edit-syllabus').innerHTML = '<option value="">-- Select Syllabus --</option>';
+        document.getElementById('insert-syllabus').innerHTML = '<option value="">-- Select Syllabus --</option>';
+        document.getElementById('delete-syllabus').innerHTML = '<option value="">-- Select Syllabus --</option>';
+
+        document.getElementById('insert-class').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('edit-class').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('delete-class').innerHTML = '<option value="">-- Select class --</option>';
+
+        document.getElementById('insert-stream').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('edit-stream').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('delete-stream').innerHTML = '<option value="">-- Select class --</option>';
+
+        document.getElementById('edit-course').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('delete-course').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('insert-course').innerHTML = '<option value="">-- Select class --</option>';
+
+        document.getElementById('edit-subject').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('delete-subject').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('insert-subject').innerHTML = '<option value="">-- Select class --</option>';
+
+        document.getElementById('edit-chapter').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('delete-chapter').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('insert-chapter').innerHTML = '<option value="">-- Select class --</option>';
+
+        document.getElementById('edit-subchapter').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('delete-subchapter').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('insert-subchapter').innerHTML = '<option value="">-- Select class --</option>';
+
+        document.getElementById('edit-module-select').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('delete-module').innerHTML = '<option value="">-- Select class --</option>';
+        
+    }
+    // Event listeners for accademic year dropdowns form
+    document.getElementById('insert-academic-year').addEventListener('change', function () {
+        loadSyllabusOptions(this.value, 'insert-syllabus');
+    });
+
+    document.getElementById('edit-academic-year').addEventListener('change', function () {
+        loadSyllabusOptions(this.value, 'edit-syllabus');
+    });
+
+    document.getElementById('delete-academic-year').addEventListener('change', function () {
+        loadSyllabusOptions(this.value, 'delete-syllabus');
+    });
+
+    // Event listeners for accademic year dropdowns form
+    document.getElementById('insert-syllabus').addEventListener('change', function () {
+        loadClassOptions(this.value, 'insert-class');
+    });
+
+    document.getElementById('edit-syllabus').addEventListener('change', function () {
+        loadClassOptions(this.value, 'edit-class');
+    });
+
+    document.getElementById('delete-syllabus').addEventListener('change', function () {
+        loadClassOptions(this.value, 'delete-class');
+    });
+
+    // Event listeners for grade dropdowns form
+    document.getElementById('insert-class').addEventListener('change', function () {
+        loadStreamOptions(this.value, 'insert-stream');
+    });
+
+    document.getElementById('edit-class').addEventListener('change', function () {
+        loadStreamOptions(this.value, 'edit-stream');
+    });
+
+    document.getElementById('delete-class').addEventListener('change', function () {
+        loadStreamOptions(this.value, 'delete-stream');
+    });
+
+    document.getElementById('insert-stream').addEventListener('change', function () {
+        loadCourseOptions(this.value, 'insert-course');
+    });
+
+    document.getElementById('edit-stream').addEventListener('change', function () {
+        loadCourseOptions(this.value, 'edit-course');
+    });
+
+    document.getElementById('delete-stream').addEventListener('change', function () {
+        loadCourseOptions(this.value, 'delete-course');
+    });
+    document.getElementById('insert-course').addEventListener('change', function () {
+        loadSubjectOptions(this.value, 'insert-subject');
+    });
+    document.getElementById('edit-course').addEventListener('change', function () {
+        loadSubjectOptions(this.value, 'edit-subject');
+    });
+    document.getElementById('delete-course').addEventListener('change', function () {
+        loadSubjectOptions(this.value, 'delete-subject');
+    });
+    document.getElementById('insert-subject').addEventListener('change', function () {
+        loadChapterOptions(this.value, 'insert-chapter');
+    });
+    document.getElementById('edit-subject').addEventListener('change', function () {
+        loadChapterOptions(this.value, 'edit-chapter');
+    });
+    document.getElementById('delete-subject').addEventListener('change', function () {
+        loadChapterOptions(this.value, 'delete-chapter');
+    });
+    document.getElementById('insert-chapter').addEventListener('change', function () {
+        loadSubChapterOptions(this.value, 'insert-subchapter');
+    });
+    document.getElementById('edit-chapter').addEventListener('change', function () {
+        loadSubChapterOptions(this.value, 'edit-subchapter');
+    });
+    document.getElementById('delete-chapter').addEventListener('change', function () {
+        loadSubChapterOptions(this.value, 'delete-subchapter');
+    });
+    document.getElementById('edit-subchapter').addEventListener('change', function () {
+        loadModuleOptions(this.value, 'edit-module-select');
+    });
+    document.getElementById('delete-subchapter').addEventListener('change', function () {
+        loadModuleOptions(this.value, 'delete-module');
     });
 </script>

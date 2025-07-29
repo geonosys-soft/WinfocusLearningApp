@@ -19,6 +19,16 @@ namespace WinfocusLearningApp.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Login()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return LogOut();
+            }            
+            return View(new LoginModel());
+        }
         public ActionResult Login(LoginModel loginView, string ReturnUrl = "")
         {
             if (Membership.ValidateUser(loginView.Username, loginView.Password))
@@ -54,20 +64,34 @@ namespace WinfocusLearningApp.Controllers
                     }
                     if (user.Roles.FirstOrDefault().RoleName.Equals("Admin"))
                     {
-                        ReturnUrl = "";
+                       return RedirectToAction("Dashboard","Management");
                     }
-                        if (Url.IsLocalUrl(ReturnUrl))
-                    {
-                        return Redirect(ReturnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                       
                 }
             }
             return View(loginView);
               
+        }
+        public ActionResult LogOut()
+        {
+            DateTime dateTime = DateTime.UtcNow;
+
+            HttpCookie cookie = new HttpCookie("Cookie1", "")
+            {
+                Expires = dateTime.AddYears(-1)
+            };
+            Response.Cookies.Add(cookie);
+
+            HttpCookie httpCookie = Request.Cookies["StudentBasicInfo"];
+            if (httpCookie != null)
+            {
+                httpCookie.Expires = dateTime.AddYears(-1);
+                Response.Cookies.Add(httpCookie);
+            }
+
+
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "Account", null);
         }
     }
 }
