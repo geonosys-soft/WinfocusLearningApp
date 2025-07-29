@@ -17,15 +17,15 @@ namespace WinfocusLearningApp.DataEntity
         public int SID { get; set; }
         public string RegId { get; set; }
         public string FullName { get; set; }
-        public Nullable<int> Gender { get; set; }
+        public string Gender { get; set; }
         public string DOB { get; set; }
         public string MobileNumber { get; set; }
         public string WhatsApp { get; set; }
         public string EmailID { get; set; }
         public string MteamID { get; set; }
         public string AccademicBoard { get; set; }
-        public Nullable<int> CurrentStudyClass { get; set; }
-        public Nullable<int> LastPassClass { get; set; }
+        public string CurrentStudyClass { get; set; }
+        public string LastPassClass { get; set; }
         public string CLSchoolName { get; set; }
         public string CLSLocation { get; set; }
         public string Emirate { get; set; }

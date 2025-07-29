@@ -305,8 +305,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ParentName" Type="varchar" MaxLength="50" />
-          <Property Name="RelationShip" Type="int" />
+          <Property Name="ParentName" Type="varchar(max)" />
+          <Property Name="RelationShip" Type="varchar(max)" />
           <Property Name="MobileNumber" Type="varchar" MaxLength="50" />
           <Property Name="WhatsAppNumber" Type="varchar" MaxLength="50" />
           <Property Name="Email" Type="varchar" MaxLength="50" />
@@ -331,15 +331,15 @@
           <Property Name="SID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RegId" Type="varchar" MaxLength="50" />
           <Property Name="FullName" Type="varchar" MaxLength="50" />
-          <Property Name="Gender" Type="int" />
+          <Property Name="Gender" Type="varchar" MaxLength="50" />
           <Property Name="DOB" Type="varchar" MaxLength="50" />
           <Property Name="MobileNumber" Type="varchar" MaxLength="50" />
           <Property Name="WhatsApp" Type="varchar" MaxLength="50" />
           <Property Name="EmailID" Type="varchar" MaxLength="50" />
           <Property Name="MteamID" Type="varchar" MaxLength="50" />
           <Property Name="AccademicBoard" Type="varchar" MaxLength="50" />
-          <Property Name="CurrentStudyClass" Type="int" />
-          <Property Name="LastPassClass" Type="int" />
+          <Property Name="CurrentStudyClass" Type="varchar" MaxLength="50" />
+          <Property Name="LastPassClass" Type="varchar" MaxLength="50" />
           <Property Name="CLSchoolName" Type="varchar" MaxLength="50" />
           <Property Name="CLSLocation" Type="varchar" MaxLength="50" />
           <Property Name="Emirate" Type="varchar" MaxLength="50" />
@@ -534,11 +534,11 @@
           <EntitySet Name="TblPaymentModes" EntityType="Winfocus_DbModel.TblPaymentMode" />
           <EntitySet Name="TblRelationships" EntityType="Winfocus_DbModel.TblRelationship" />
           <EntitySet Name="TblStudent_Mark_Scored" EntityType="Winfocus_DbModel.TblStudent_Mark_Scored" />
-          <EntitySet Name="TblStudent_Parent_Basic" EntityType="Winfocus_DbModel.TblStudent_Parent_Basic" />
-          <EntitySet Name="TblSTudentBasicDetails" EntityType="Winfocus_DbModel.TblSTudentBasicDetail" />
           <EntitySet Name="TblMaterials" EntityType="Winfocus_DbModel.TblMaterial" />
           <EntitySet Name="TblRegistrationBatches" EntityType="Winfocus_DbModel.TblRegistrationBatch" />
           <EntitySet Name="TblRegistrationBatchTimes" EntityType="Winfocus_DbModel.TblRegistrationBatchTime" />
+          <EntitySet Name="TblSTudentBasicDetails" EntityType="Winfocus_DbModel.TblSTudentBasicDetail" />
+          <EntitySet Name="TblStudent_Parent_Basic" EntityType="Winfocus_DbModel.TblStudent_Parent_Basic" />
         </EntityContainer>
         <EntityType Name="TblAccademicYear">
           <Key>
@@ -869,63 +869,6 @@
           <Property Name="DeletedDt" Type="DateTime" Precision="0" />
           <Property Name="CreatedDt" Type="DateTime" Precision="0" />
         </EntityType>
-        <EntityType Name="TblStudent_Parent_Basic">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ParentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="RelationShip" Type="Int32" />
-          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="WhatsAppNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Emirates" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Occupation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="HouseName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Dstrict" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Place" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PIN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="RegId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FatherSignature" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="StudentSignature" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="TblSTudentBasicDetail">
-          <Key>
-            <PropertyRef Name="SID" />
-          </Key>
-          <Property Name="SID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RegId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Gender" Type="Int32" />
-          <Property Name="DOB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="WhatsApp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EmailID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MteamID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="AccademicBoard" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CurrentStudyClass" Type="Int32" />
-          <Property Name="LastPassClass" Type="Int32" />
-          <Property Name="CLSchoolName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CLSLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Emirate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TargetExam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TargetYearExam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ACID" Type="Int32" />
-          <Property Name="SyllabusID" Type="Int32" />
-          <Property Name="GradeID" Type="Int32" />
-          <Property Name="StreamID" Type="Int32" />
-          <Property Name="CousreID" Type="Int32" />
-          <Property Name="Dream" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreatedDt" Type="DateTime" Precision="0" />
-          <Property Name="IsActive" Type="Int32" />
-          <Property Name="IsDeleted" Type="Int32" />
-          <Property Name="ProcessStage" Type="Int32" />
-          <Property Name="Profile" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="TblMaterial">
           <Key>
             <PropertyRef Name="Id" />
@@ -975,6 +918,63 @@
           <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
           <Property Name="ModifiedTime" Type="DateTime" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TblSTudentBasicDetail">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WhatsApp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmailID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MteamID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AccademicBoard" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CurrentStudyClass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastPassClass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CLSchoolName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CLSLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Emirate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TargetExam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TargetYearExam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ACID" Type="Int32" />
+          <Property Name="SyllabusID" Type="Int32" />
+          <Property Name="GradeID" Type="Int32" />
+          <Property Name="StreamID" Type="Int32" />
+          <Property Name="CousreID" Type="Int32" />
+          <Property Name="Dream" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Int32" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="ProcessStage" Type="Int32" />
+          <Property Name="Profile" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TblStudent_Parent_Basic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RelationShip" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WhatsAppNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Emirates" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Occupation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HouseName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Dstrict" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Place" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PIN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FatherSignature" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="StudentSignature" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1332,65 +1332,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TblStudent_Parent_Basic">
-            <EntityTypeMapping TypeName="Winfocus_DbModel.TblStudent_Parent_Basic">
-              <MappingFragment StoreEntitySet="TblStudent_Parent_Basic">
-                <ScalarProperty Name="StudentSignature" ColumnName="StudentSignature" />
-                <ScalarProperty Name="FatherSignature" ColumnName="FatherSignature" />
-                <ScalarProperty Name="RegId" ColumnName="RegId" />
-                <ScalarProperty Name="PIN" ColumnName="PIN" />
-                <ScalarProperty Name="PO" ColumnName="PO" />
-                <ScalarProperty Name="Place" ColumnName="Place" />
-                <ScalarProperty Name="Dstrict" ColumnName="Dstrict" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="HouseName" ColumnName="HouseName" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
-                <ScalarProperty Name="Emirates" ColumnName="Emirates" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="WhatsAppNumber" ColumnName="WhatsAppNumber" />
-                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
-                <ScalarProperty Name="RelationShip" ColumnName="RelationShip" />
-                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TblSTudentBasicDetails">
-            <EntityTypeMapping TypeName="Winfocus_DbModel.TblSTudentBasicDetail">
-              <MappingFragment StoreEntitySet="TblSTudentBasicDetails">
-                <ScalarProperty Name="Profile" ColumnName="Profile" />
-                <ScalarProperty Name="ProcessStage" ColumnName="ProcessStage" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
-                <ScalarProperty Name="Dream" ColumnName="Dream" />
-                <ScalarProperty Name="CousreID" ColumnName="CousreID" />
-                <ScalarProperty Name="StreamID" ColumnName="StreamID" />
-                <ScalarProperty Name="GradeID" ColumnName="GradeID" />
-                <ScalarProperty Name="SyllabusID" ColumnName="SyllabusID" />
-                <ScalarProperty Name="ACID" ColumnName="ACID" />
-                <ScalarProperty Name="TargetYearExam" ColumnName="TargetYearExam" />
-                <ScalarProperty Name="TargetExam" ColumnName="TargetExam" />
-                <ScalarProperty Name="Emirate" ColumnName="Emirate" />
-                <ScalarProperty Name="CLSLocation" ColumnName="CLSLocation" />
-                <ScalarProperty Name="CLSchoolName" ColumnName="CLSchoolName" />
-                <ScalarProperty Name="LastPassClass" ColumnName="LastPassClass" />
-                <ScalarProperty Name="CurrentStudyClass" ColumnName="CurrentStudyClass" />
-                <ScalarProperty Name="AccademicBoard" ColumnName="AccademicBoard" />
-                <ScalarProperty Name="MteamID" ColumnName="MteamID" />
-                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
-                <ScalarProperty Name="WhatsApp" ColumnName="WhatsApp" />
-                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
-                <ScalarProperty Name="DOB" ColumnName="DOB" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="RegId" ColumnName="RegId" />
-                <ScalarProperty Name="SID" ColumnName="SID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TblMaterials">
             <EntityTypeMapping TypeName="Winfocus_DbModel.TblMaterial">
               <MappingFragment StoreEntitySet="TblMaterial">
@@ -1440,6 +1381,65 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="ACID" ColumnName="ACID" />
                 <ScalarProperty Name="BatchTime" ColumnName="BatchTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblSTudentBasicDetails">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblSTudentBasicDetail">
+              <MappingFragment StoreEntitySet="TblSTudentBasicDetails">
+                <ScalarProperty Name="Profile" ColumnName="Profile" />
+                <ScalarProperty Name="ProcessStage" ColumnName="ProcessStage" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="Dream" ColumnName="Dream" />
+                <ScalarProperty Name="CousreID" ColumnName="CousreID" />
+                <ScalarProperty Name="StreamID" ColumnName="StreamID" />
+                <ScalarProperty Name="GradeID" ColumnName="GradeID" />
+                <ScalarProperty Name="SyllabusID" ColumnName="SyllabusID" />
+                <ScalarProperty Name="ACID" ColumnName="ACID" />
+                <ScalarProperty Name="TargetYearExam" ColumnName="TargetYearExam" />
+                <ScalarProperty Name="TargetExam" ColumnName="TargetExam" />
+                <ScalarProperty Name="Emirate" ColumnName="Emirate" />
+                <ScalarProperty Name="CLSLocation" ColumnName="CLSLocation" />
+                <ScalarProperty Name="CLSchoolName" ColumnName="CLSchoolName" />
+                <ScalarProperty Name="LastPassClass" ColumnName="LastPassClass" />
+                <ScalarProperty Name="CurrentStudyClass" ColumnName="CurrentStudyClass" />
+                <ScalarProperty Name="AccademicBoard" ColumnName="AccademicBoard" />
+                <ScalarProperty Name="MteamID" ColumnName="MteamID" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+                <ScalarProperty Name="WhatsApp" ColumnName="WhatsApp" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="RegId" ColumnName="RegId" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblStudent_Parent_Basic">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblStudent_Parent_Basic">
+              <MappingFragment StoreEntitySet="TblStudent_Parent_Basic">
+                <ScalarProperty Name="StudentSignature" ColumnName="StudentSignature" />
+                <ScalarProperty Name="FatherSignature" ColumnName="FatherSignature" />
+                <ScalarProperty Name="RegId" ColumnName="RegId" />
+                <ScalarProperty Name="PIN" ColumnName="PIN" />
+                <ScalarProperty Name="PO" ColumnName="PO" />
+                <ScalarProperty Name="Place" ColumnName="Place" />
+                <ScalarProperty Name="Dstrict" ColumnName="Dstrict" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="HouseName" ColumnName="HouseName" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Occupation" ColumnName="Occupation" />
+                <ScalarProperty Name="Emirates" ColumnName="Emirates" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WhatsAppNumber" ColumnName="WhatsAppNumber" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="RelationShip" ColumnName="RelationShip" />
+                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

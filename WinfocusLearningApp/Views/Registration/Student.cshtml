@@ -1,4 +1,5 @@
-﻿@{ ViewBag.Title = "Student Registration - Winfocus Learning Centre"; Layout = "~/Views/Shared/_loginLayout.cshtml"; }
+﻿@model WinfocusLearningApp.ViewModels.StudentRegistrationModel
+@{ ViewBag.Title = "Student Registration - Winfocus Learning Centre"; Layout = "~/Views/Shared/_loginLayout.cshtml"; }
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +24,7 @@
             --bg-white: #ffffff;
         }
         /* --- Basic & Body --- */
-        
+
         * {
             margin: 0;
             padding: 0;
@@ -847,29 +848,193 @@
             </div>
 
             <div class="form-container">
-                <form id="registrationForm" novalidate>
-                                       <!-- PART 1: Student Details -->
+                <form id="registrationForm" method="post" enctype="multipart/form-data" novalidate>
+                    <!-- PART 1: Student Details -->
+
                     <div class="section">
                         <h2 class="section-title">✨ Part 1: Student Details & Academic Information</h2>
-                        <div class="form-row"><div class="form-group"><label class="form-label required">Full Name of Student</label><input type="text" class="form-input" id="fullName" required><span class="error-message" id="fullNameError"></span></div><div class="form-group"><label class="form-label required">Gender</label><div class="radio-group"><div class="radio-option"><input type="radio" id="male" name="gender" value="Male" required><label for="male" class="radio-label"><span>Male</span></label></div><div class="radio-option"><input type="radio" id="female" name="gender" value="Female"><label for="female" class="radio-label"><span>Female</span></label></div><div class="radio-option"><input type="radio" id="other" name="gender" value="Other"><label for="other" class="radio-label"><span>Other</span></label></div></div><span class="error-message" id="genderError"></span></div></div>
-                        <div class="form-row"><div class="form-group"><label class="form-label required">Date of Birth</label><input type="date" class="form-input" id="dob" required><span class="error-message" id="dobError"></span></div><div class="form-group"><label class="form-label required">Student Mobile Number</label><input type="tel" class="form-input" id="studentMobile" required><span class="error-message" id="studentMobileError"></span></div></div>
-                        <div class="form-row"><div class="form-group"><label class="form-label required">Student Email ID</label><input type="email" class="form-input" id="studentEmail" required><span class="error-message" id="studentEmailError"></span></div><div class="form-group"><label class="form-label">WhatsApp Number</label><input type="tel" class="form-input" id="whatsappNumber"></div></div>
-                        <div class="form-row"><div class="form-group"><label class="form-label required">Academic Board</label><div class="radio-group"><div class="radio-option"><input type="radio" id="cbse" name="board" value="CBSE" required><label for="cbse" class="radio-label"><span>CBSE</span></label></div><div class="radio-option"><input type="radio" id="igcse" name="board" value="IGCSE"><label for="igcse" class="radio-label"><span>IGCSE</span></label></div><div class="radio-option"><input type="radio" id="stateBoard" name="board" value="State Board"><label for="stateBoard" class="radio-label"><span>State Board</span></label></div></div><span class="error-message" id="boardError"></span></div><div class="form-group"><label class="form-label required">Class Currently Studying</label><div class="radio-group"><div class="radio-option"><input type="radio" id="class8" name="currentClass" value="VIII" required><label for="class8" class="radio-label"><span>VIII</span></label></div><div class="radio-option"><input type="radio" id="class9" name="currentClass" value="IX"><label for="class9" class="radio-label"><span>IX</span></label></div><div class="radio-option"><input type="radio" id="class10" name="currentClass" value="X"><label for="class10" class="radio-label"><span>X</span></label></div><div class="radio-option"><input type="radio" id="class11" name="currentClass" value="XI"><label for="class11" class="radio-label"><span>XI</span></label></div><div class="radio-option"><input type="radio" id="class12" name="currentClass" value="XII"><label for="class12" class="radio-label"><span>XII</span></label></div></div><span class="error-message" id="currentClassError"></span></div></div>
-                        <div class="form-group"><label class="form-label">Subject Marks (Previous Exam)</label><div class="subjects-grid"><div class="subject-card"><h4>📐 Mathematics</h4><div class="subject-inputs"><input type="number" class="form-input" placeholder="Obtained" id="mathObtained"><input type="number" class="form-input" placeholder="Total" id="mathTotal"></div></div><div class="subject-card"><h4>🧬 Biology</h4><div class="subject-inputs"><input type="number" class="form-input" placeholder="Obtained" id="bioObtained"><input type="number" class="form-input" placeholder="Total" id="bioTotal"></div></div><div class="subject-card"><h4>⚗️ Chemistry</h4><div class="subject-inputs"><input type="number" class="form-input" placeholder="Obtained" id="chemObtained"><input type="number" class="form-input" placeholder="Total" id="chemTotal"></div></div><div class="subject-card"><h4>⚡ Physics</h4><div class="subject-inputs"><input type="number" class="form-input" placeholder="Obtained" id="phyObtained"><input type="number" class="form-input" placeholder="Total" id="phyTotal"></div></div></div></div>
-                        <div class="form-row"><div class="form-group"><label class="form-label required">Name of Current/Last School</label><input type="text" class="form-input" id="schoolName" required><span class="error-message" id="schoolNameError"></span></div><div class="form-group"><label class="form-label">School Location</label><input type="text" class="form-input" id="schoolLocation"></div></div>
-                        <div class="form-row"><div class="form-group"><label class="form-label required">Target Exam</label><div class="radio-group"><div class="radio-option"><input type="radio" id="neet" name="targetExam" value="NEET" required><label for="neet" class="radio-label"><span>🩺 NEET</span></label></div><div class="radio-option"><input type="radio" id="jee" name="targetExam" value="JEE"><label for="jee" class="radio-label"><span>⚙️ JEE</span></label></div><div class="radio-option"><input type="radio" id="cbseSupport" name="targetExam" value="CBSE Support"><label for="cbseSupport" class="radio-label"><span>📚 CBSE Support</span></label></div></div><span class="error-message" id="targetExamError"></span></div><div class="form-group"><label class="form-label required">Target Year of Exam</label><select class="form-input" id="targetYear" required><option value="">Select Year</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option></select><span class="error-message" id="targetYearError"></span></div></div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                @Html.HiddenFor(model => model.RegistrationId)
+
+                                <label class="form-label required">Full Name of Student</label>
+                                <input type="text" class="form-input" id="fullName" name="fullName" required>
+                                <span class="error-message" id="fullNameError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Gender</label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" id="male" name="gender" value="Male" required>
+                                        <label for="male" class="radio-label"><span>Male</span></label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="female" name="gender" value="Female">
+                                        <label for="female" class="radio-label"><span>Female</span></label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="other" name="gender" value="Other">
+                                        <label for="other" class="radio-label"><span>Other</span></label>
+                                    </div>
+                                </div>
+                                <span class="error-message" id="genderError"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Date of Birth</label>
+                                <input type="date" class="form-input" id="dob" name="dob" required>
+                                <span class="error-message" id="dobError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Student Mobile Number</label>
+                                <input type="tel" class="form-input" id="studentMobile" name="studentMobile" required>
+                                <span class="error-message" id="studentMobileError"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Student Email ID</label>
+                                <input type="email" class="form-input" id="studentEmail" name="studentEmail" required>
+                                <span class="error-message" id="studentEmailError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">WhatsApp Number</label>
+                                <input type="tel" class="form-input" id="whatsappNumber" name="whatsappNumber">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Academic Board</label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" id="cbse" name="board" value="CBSE" required>
+                                        <label for="cbse" class="radio-label"><span>CBSE</span></label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="igcse" name="board" value="IGCSE">
+                                        <label for="igcse" class="radio-label"><span>IGCSE</span></label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="stateBoard" name="board" value="State Board">
+                                        <label for="stateBoard" class="radio-label"><span>State Board</span></label>
+                                    </div>
+                                </div>
+                                <span class="error-message" id="boardError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Class Currently Studying</label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" id="class8" name="currentClass" value="VIII" required>
+                                        <label for="class8" class="radio-label"><span>VIII</span></label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="class9" name="currentClass" value="IX">
+                                        <label for="class9" class="radio-label"><span>IX</span></label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="class10" name="currentClass" value="X"><label for="class10" class="radio-label">
+                                            <span>X</span>
+                                        </label>
+                                    </div><div class="radio-option">
+                                        <input type="radio" id="class11" name="currentClass" value="XI">
+                                        <label for="class11" class="radio-label"><span>XI</span></label>
+                                    </div><div class="radio-option">
+                                        <input type="radio" id="class12" name="currentClass" value="XII">
+                                        <label for="class12" class="radio-label"><span>XII</span></label>
+                                    </div>
+                                </div><span class="error-message" id="currentClassError"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Subject Marks (Previous Exam)</label>
+                            <div class="subjects-grid">
+                                <div class="subject-card">
+                                    <h4>📐 Mathematics</h4>
+                                    <div class="subject-inputs">
+                                        <input type="number" class="form-input" placeholder="Obtained" id="mathObtained" name="mathObtained">
+                                        <input type="number" class="form-input" placeholder="Total" id="mathTotal" name="mathTotal">
+                                    </div>
+                                </div>
+                                <div class="subject-card">
+                                    <h4>🧬 Biology</h4>
+                                    <div class="subject-inputs">
+                                        <input type="number" class="form-input" placeholder="Obtained" id="bioObtained" name="bioObtained">
+                                        <input type="number" class="form-input" placeholder="Total" id="bioTotal" name="bioTotal">
+                                    </div>
+                                </div>
+                                <div class="subject-card">
+                                    <h4>⚗️ Chemistry</h4>
+                                    <div class="subject-inputs">
+                                        <input type="number" class="form-input" placeholder="Obtained" id="chemObtained" name="chemObtained">
+                                        <input type="number" class="form-input" placeholder="Total" id="chemTotal" name="chemTotal">
+                                    </div>
+                                </div>
+                                <div class="subject-card">
+                                    <h4>⚡ Physics</h4>
+                                    <div class="subject-inputs">
+                                        <input type="number" class="form-input" placeholder="Obtained" id="phyObtained" name="phyObtained">
+                                        <input type="number" class="form-input" placeholder="Total" id="phyTotal" name="phyTotal">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Name of Current/Last School</label>
+                                <input type="text" class="form-input" id="schoolName" name="schoolName" required>
+                                <span class="error-message" id="schoolNameError" name="schoolNameError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">School Location</label>
+                                <input type="text" class="form-input" id="schoolLocation" name="schoolLocation">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Target Exam</label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" id="neet" name="targetExam" value="NEET" required>
+                                        <label for="neet" class="radio-label"><span>🩺 NEET</span></label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="jee" name="targetExam" value="JEE">
+                                        <label for="jee" class="radio-label"><span>⚙️ JEE</span></label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="cbseSupport" name="targetExam" value="CBSE Support">
+                                        <label for="cbseSupport" class="radio-label"><span>📚 CBSE Support</span></label>
+                                    </div>
+                                </div>
+                                <span class="error-message" id="targetExamError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Target Year of Exam</label>
+                                <select class="form-input" id="targetYear" name="targetYear" required>
+                                    <option value="">Select Year</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                    <option value="2027">2027</option>
+                                    <option value="2028">2028</option>
+                                </select>
+                                <span class="error-message" id="targetYearError"></span>
+                            </div>
+                        </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label required">Registration Academic Year</label>
-                                <select class="form-input" id="academic-year" required>
+                                <select class="form-input" id="academic_year" name="academic_year" required>
                                     <option value="">Select Year</option>
                                 </select>
                                 <span class="error-message" id="academic-year-Error"></span>
                             </div>
                             <div class="form-group">
                                 <label class="form-label required">Choose syllabus</label>
-                                <select class="form-input" id="syllabus" required>
+                                <select class="form-input" id="syllabus" name="syllabus" required>
                                     <option value="">Select Syllabus</option>
                                 </select>
                                 <span class="error-message" id="syllabus-Error"></span>
@@ -878,14 +1043,14 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label required">Choose Grade</label>
-                                <select class="form-input" id="grade" required>
+                                <select class="form-input" id="grade" name="grade" required>
                                     <option value="">Select grade</option>
                                 </select>
                                 <span class="error-message" id="grade-Error"></span>
                             </div>
                             <div class="form-group">
                                 <label class="form-label required">Choose Program</label>
-                                <select class="form-input" id="program" required>
+                                <select class="form-input" id="program" name="program" required>
                                     <option value="">Select program</option>
                                 </select>
                                 <span class="error-message" id="program-Error"></span>
@@ -893,25 +1058,118 @@
                         </div>
 
 
-                        <div class="form-group"><label class="form-label">Enter Your Dream Career</label><input type="text" class="form-input" id="dreamCareer" placeholder="e.g., Doctor, Engineer, Scientist"></div>
+                        <div class="form-group">
+                            <label class="form-label">Enter Your Dream Career</label>
+                            <input type="text" class="form-input" id="dreamCareer" name="dreamCareer" placeholder="e.g., Doctor, Engineer, Scientist">
+                        </div>
                     </div>
                     <!-- PART 2: Parent Details -->
                     <div class="section">
                         <h2 class="section-title">👨‍👩‍👧‍👦 Part 2: Parent / Guardian Details</h2>
-                        <div class="form-row"><div class="form-group"><label class="form-label required">Name of Parent / Guardian</label><input type="text" class="form-input" id="parentName" required><span class="error-message" id="parentNameError"></span></div><div class="form-group"><label class="form-label required">Relationship to Student</label><div class="radio-group"><div class="radio-option"><input type="radio" id="father" name="relationship" value="Father" required><label for="father" class="radio-label"><span>Father</span></label></div><div class="radio-option"><input type="radio" id="mother" name="relationship" value="Mother"><label for="mother" class="radio-label"><span>Mother</span></label></div><div class="radio-option"><input type="radio" id="otherRelation" name="relationship" value="Other"><label for="otherRelation" class="radio-label"><span>Other</span></label></div></div><span class="error-message" id="relationshipError"></span></div></div>
-                        <div class="form-row"><div class="form-group"><label class="form-label required">Parent's Mobile Number</label><input type="tel" class="form-input" id="parentMobile" required><span class="error-message" id="parentMobileError"></span></div><div class="form-group"><label class="form-label">Parent's WhatsApp Number</label><input type="tel" class="form-input" id="parentWhatsapp"></div></div>
-                        <div class="form-row"><div class="form-group"><label class="form-label">Parent's Email ID</label><input type="email" class="form-input" id="parentEmail"></div><div class="form-group"><label class="form-label">Occupation</label><input type="text" class="form-input" id="parentOccupation"></div></div>
-                        <div class="form-row"><div class="form-group"><label class="form-label">Company Name</label><input type="text" class="form-input" id="companyName"></div><div class="form-group"><label class="form-label">Work Location</label><input type="text" class="form-input" id="parentLocation"></div></div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Name of Parent / Guardian</label>
+                                <input type="text" class="form-input" id="parentName" name="parentName" required><span class="error-message" id="parentNameError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Relationship to Student</label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        <input type="radio" id="father" name="relationship" value="Father" required>
+                                        <label for="father" class="radio-label"><span>Father</span> </label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="mother" name="relationship" value="Mother">
+                                        <label for="mother" class="radio-label"><span>Mother</span></label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="otherRelation" name="relationship" value="Other">
+                                        <label for="otherRelation" class="radio-label"><span>Other</span></label>
+                                    </div>
+                                </div><span class="error-message" id="relationshipError"></span>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Parent's Mobile Number</label>
+                                <input type="tel" class="form-input" id="parentMobile" name="parentMobile" required><span class="error-message" id="parentMobileError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Parent's WhatsApp Number</label>
+                                <input type="tel" class="form-input" id="parentWhatsapp" name="parentWhatsapp">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Parent's Email ID</label>
+                                <input type="email" class="form-input" id="parentEmail" name="parentEmail">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Occupation</label>
+                                <input type="text" class="form-input" id="parentOccupation" name="parentOccupation">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Company Name</label>
+                                <input type="text" class="form-input" id="companyName" name="companyName">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Work Location</label>
+                                <input type="text" class="form-input" id="parentLocation" name="parentLocation">
+                            </div>
+                        </div>
                         <h3 style="color: var(--primary-color); margin: 30px 0 20px 0; font-weight: 600;">🏠 Permanent Address (India)</h3>
-                        <div class="form-row"><div class="form-group"><label class="form-label">Home Address</label><input type="text" class="form-input" id="homeAddress"></div><div class="form-group"><label class="form-label">Location</label><input type="text" class="form-input" id="permanentLocation"></div></div>
-                        <div class="form-row"><div class="form-group"><label class="form-label">Post Office</label><input type="text" class="form-input" id="postOffice"></div><div class="form-group"><label class="form-label">District</label><input type="text" class="form-input" id="district"></div></div>
-                        <div class="form-group"><label class="form-label">State</label><input type="text" class="form-input" id="state"></div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Home Address</label>
+                                <input type="text" class="form-input" id="homeAddress" name="homeAddress">
+                            </div><div class="form-group">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-input" id="permanentLocation" name="permanentLocation">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Post Office</label>
+                                <input type="text" class="form-input" id="postOffice" name="postOffice">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">District</label>
+                                <input type="text" class="form-input" id="district" name="district">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">State</label>
+                            <input type="text" class="form-input" id="state" name="state">
+                        </div>
                     </div>
                     <!-- Document Upload Section -->
                     <div class="section">
                         <h2 class="section-title">📄 Document Upload Section</h2>
-                        <div class="form-row"><div class="form-group"><label class="form-label">Student Photo</label><div class="file-upload"><input type="file" id="studentPhoto" accept="image/jpeg,image/png"><label for="studentPhoto" class="file-upload-label">📷 Upload Photo (JPEG/PNG)</label></div></div><div class="form-group"><label class="form-label">ID Proof</label><div class="file-upload"><input type="file" id="idProof" accept=".jpg,.jpeg,.png,.pdf"><label for="idProof" class="file-upload-label">🆔 Upload Aadhar/Passport</label></div></div></div>
-                        <div class="form-group"><label class="form-label">Previous School Report Card</label><div class="file-upload"><input type="file" id="reportCard" accept=".jpg,.jpeg,.png,.pdf"><label for="reportCard" class="file-upload-label">📊 Upload Report Card</label></div></div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Student Photo</label>
+                                <div class="file-upload">
+                                    <input type="file" id="studentPhoto" name="studentPhoto" accept="image/jpeg,image/png">
+                                    <label for="studentPhoto" class="file-upload-label">📷 Upload Photo (JPEG/PNG)</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">ID Proof</label>
+                                <div class="file-upload">
+                                    <input type="file" id="idProof" name="idProof" accept=".jpg,.jpeg,.png,.pdf">
+                                    <label for="idProof" class="file-upload-label">🆔 Upload Aadhar/Passport</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Previous School Report Card</label>
+                            <div class="file-upload">
+                                <input type="file" id="reportCard" name="reportCard" accept=".jpg,.jpeg,.png,.pdf">
+                                <label for="reportCard" class="file-upload-label">📊 Upload Report Card</label>
+                            </div>
+                        </div>
                     </div>
                     <!-- Declaration -->
                     <div class="section">
@@ -936,7 +1194,36 @@
     </div>
 
     <script>
+
+        // Load academic years from database
+        async function loadAcademicYears() {
+            try {
+                const response = await fetch('/api/ManagementApi/FetchAccademicYear');
+                const data = await response.json();
+
+                const dropdownIds = ['academic_year'];
+
+                dropdownIds.forEach(id => {
+                    const dropdown = document.getElementById(id);
+                    dropdown.innerHTML = '<option value="">-- Select Academic Year --</option>';
+
+                    data.forEach(year => {
+                        const option = document.createElement('option');
+                        option.value = year.Id;
+                        option.textContent = year.AccademicYear;
+                        dropdown.appendChild(option);
+                    });
+                });
+            } catch (error) {
+                showNotification('Failed to load academic years', 'error');
+                console.error('Error loading academic years:', error);
+            }
+        }
+
+
         document.addEventListener('DOMContentLoaded', function () {
+
+            loadAcademicYears();
             // --- DOM Elements ---
             const form = document.getElementById('registrationForm');
             const previewBtn = document.getElementById('previewBtn');
@@ -999,6 +1286,9 @@
                 const start = nameWithoutExt.substring(0, startChars);
                 const end = nameWithoutExt.substring(nameWithoutExt.length - endChars);
                 return `${start}...${end}${extension}`;
+
+
+
             };
 
             // --- Form Validation ---
@@ -1032,13 +1322,13 @@
                 const fullName = escapeHTML(file.name);
 
                 return `
-                    <div class="document-tile">
-                        <div class="document-icon">${icon}</div>
-                        <div class="document-info">
-                            <div class="document-name" title="${fullName}">${escapeHTML(shortName)}</div>
-                            <div class="document-size">${(file.size / 1024).toFixed(1)} KB</div>
-                        </div>
-                    </div>`;
+                            <div class="document-tile">
+                                <div class="document-icon">${icon}</div>
+                                <div class="document-info">
+                                    <div class="document-name" title="${fullName}">${escapeHTML(shortName)}</div>
+                                    <div class="document-size">${(file.size / 1024).toFixed(1)} KB</div>
+                                </div>
+                            </div>`;
             };
 
             const showPreview = () => {
@@ -1072,70 +1362,70 @@
                 }).join('');
 
                 previewDataContainer.innerHTML = `
-                    <div class="preview-header">
-                        <h2>Application Summary</h2>
-                        <p>Please review your details carefully before final submission.</p>
-                    </div>
+                            <div class="preview-header">
+                                <h2>Application Summary</h2>
+                                <p>Please review your details carefully before final submission.</p>
+                            </div>
 
-                    <div class="preview-body-container">
-                        <aside class="preview-sidebar">
-                            <div class="preview-profile">
-                                <div class="preview-photo-container">${photoHTML}</div>
-                                <h3>${escapeHTML(getValue('fullName')) || 'Student Name'}</h3>
-                                <p>${escapeHTML(getValue('studentEmail')) || 'No Email Provided'}</p>
-                            </div>
-                            <div class="detail-block">
-                                <div class="detail-block__title">📄 Uploaded Documents</div>
-                                <div class="document-list">
-                                    ${documentsHTML}
-                                </div>
-                            </div>
-                        </aside>
+                            <div class="preview-body-container">
+                                <aside class="preview-sidebar">
+                                    <div class="preview-profile">
+                                        <div class="preview-photo-container">${photoHTML}</div>
+                                        <h3>${escapeHTML(getValue('fullName')) || 'Student Name'}</h3>
+                                        <p>${escapeHTML(getValue('studentEmail')) || 'No Email Provided'}</p>
+                                    </div>
+                                    <div class="detail-block">
+                                        <div class="detail-block__title">📄 Uploaded Documents</div>
+                                        <div class="document-list">
+                                            ${documentsHTML}
+                                        </div>
+                                    </div>
+                                </aside>
 
-                        <main class="preview-main">
-                            <div class="detail-block">
-                                <div class="detail-block__title">👤 Personal & Contact</div>
-                                <div class="detail-block__content">
-                                    ${createDetailItem('Gender', getRadioValue('gender'), true)}
-                                    ${createDetailItem('Date of Birth', getValue('dob'))}
-                                    ${createDetailItem('Mobile Number', getValue('studentMobile'))}
-                                    ${createDetailItem('WhatsApp Number', getValue('whatsappNumber'))}
-                                </div>
+                                <main class="preview-main">
+                                    <div class="detail-block">
+                                        <div class="detail-block__title">👤 Personal & Contact</div>
+                                        <div class="detail-block__content">
+                                            ${createDetailItem('Gender', getRadioValue('gender'), true)}
+                                            ${createDetailItem('Date of Birth', getValue('dob'))}
+                                            ${createDetailItem('Mobile Number', getValue('studentMobile'))}
+                                            ${createDetailItem('WhatsApp Number', getValue('whatsappNumber'))}
+                                        </div>
+                                    </div>
+                                    <div class="detail-block">
+                                        <div class="detail-block__title">🎓 Academic Information</div>
+                                        <div class="detail-block__content">
+                                            ${createDetailItem('Current School', getValue('schoolName'))}
+                                            ${createDetailItem('School Location', getValue('schoolLocation'))}
+                                            ${createDetailItem('Board', getRadioValue('board'), true)}
+                                            ${createDetailItem('Current Class', getRadioValue('currentClass'), true)}
+                                            ${createDetailItem('Target Exam', getRadioValue('targetExam'), true)}
+                                            ${createDetailItem('Target Year', getValue('targetYear'))}
+                                            ${createDetailItem('Dream Career', getValue('dreamCareer'))}
+                                        </div>
+                                    </div>
+                                    <div class="detail-block">
+                                        <div class="detail-block__title">👨‍👩‍👧‍👦 Parent / Guardian</div>
+                                        <div class="detail-block__content">
+                                            ${createDetailItem('Name', getValue('parentName'))}
+                                            ${createDetailItem('Relationship', getRadioValue('relationship'), true)}
+                                            ${createDetailItem('Mobile', getValue('parentMobile'))}
+                                            ${createDetailItem('Email', getValue('parentEmail'))}
+                                            ${createDetailItem('Occupation', getValue('parentOccupation'))}
+                                        </div>
+                                    </div>
+                                    <div class="detail-block">
+                                        <div class="detail-block__title">📊 Subject Marks</div>
+                                        <div class="detail-block__content">
+                                            ${marksHTML || '<div class="detail-item"><span class="not-provided">No subject marks were provided.</span></div>'}
+                                        </div>
+                                    </div>
+                                </main>
                             </div>
-                            <div class="detail-block">
-                                <div class="detail-block__title">🎓 Academic Information</div>
-                                <div class="detail-block__content">
-                                    ${createDetailItem('Current School', getValue('schoolName'))}
-                                    ${createDetailItem('School Location', getValue('schoolLocation'))}
-                                    ${createDetailItem('Board', getRadioValue('board'), true)}
-                                    ${createDetailItem('Current Class', getRadioValue('currentClass'), true)}
-                                    ${createDetailItem('Target Exam', getRadioValue('targetExam'), true)}
-                                    ${createDetailItem('Target Year', getValue('targetYear'))}
-                                    ${createDetailItem('Dream Career', getValue('dreamCareer'))}
-                                </div>
+                            <div class="modal-actions">
+                                <button type="button" class="edit-btn" id="editDetailsBtn">✏️ Edit Details</button>
                             </div>
-                            <div class="detail-block">
-                                <div class="detail-block__title">👨‍👩‍👧‍👦 Parent / Guardian</div>
-                                <div class="detail-block__content">
-                                    ${createDetailItem('Name', getValue('parentName'))}
-                                    ${createDetailItem('Relationship', getRadioValue('relationship'), true)}
-                                    ${createDetailItem('Mobile', getValue('parentMobile'))}
-                                    ${createDetailItem('Email', getValue('parentEmail'))}
-                                    ${createDetailItem('Occupation', getValue('parentOccupation'))}
-                                </div>
-                            </div>
-                            <div class="detail-block">
-                                <div class="detail-block__title">📊 Subject Marks</div>
-                                <div class="detail-block__content">
-                                    ${marksHTML || '<div class="detail-item"><span class="not-provided">No subject marks were provided.</span></div>'}
-                                </div>
-                            </div>
-                        </main>
-                    </div>
-                    <div class="modal-actions">
-                        <button type="button" class="edit-btn" id="editDetailsBtn">✏️ Edit Details</button>
-                    </div>
-                `;
+                        `;
 
                 document.getElementById('editDetailsBtn').addEventListener('click', hidePreview);
                 previewModal.classList.remove('hidden');
@@ -1162,6 +1452,9 @@
                 const submitText = document.getElementById('submitText');
                 const loadingSpinner = document.getElementById('loadingSpinner');
 
+                const form = document.getElementById("registrationForm");
+                form.submit(); // Submits the form
+
                 submitText.classList.add('hidden');
                 loadingSpinner.classList.remove('hidden');
                 submitBtn.disabled = true;
@@ -1171,7 +1464,7 @@
                     submitText.textContent = '✅ Submitted Successfully!';
                     submitText.classList.remove('hidden');
                     loadingSpinner.classList.add('hidden');
-                    alert('🎉 Registration submitted successfully! You will receive a confirmation email shortly.');
+                  //  alert('🎉 Registration submitted successfully! You will receive a confirmation email shortly.');
                 }, 2000);
             });
             document.querySelectorAll('input[type="file"]').forEach(input => {
@@ -1189,6 +1482,90 @@
                 });
             });
         });
+
+
+
+        function loadSyllabusOptions(academicYearId, targetSelectId) {
+            if (!academicYearId) return;
+            //showNotification('Failed to load academic years'+academicYearId, 'error');
+            fetch(`/api/ManagementApi/FetchSyllabus/${academicYearId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById(targetSelectId);
+                    select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                    data.forEach(syllabus => {
+                        const option = document.createElement('option');
+                        option.value = syllabus.Id;
+                        option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading syllabus:', error);
+                    showNotification('Failed to load syllabus', 'error');
+                });
+        }
+
+        // Load class data when syllabus is selected
+        function loadClassOptions(SLBID, targetSelectId) {
+            if (!SLBID) return;
+            //showNotification('Failed to load academic years'+academicYearId, 'error');
+            fetch(`/api/ManagementApi/FetchGrade/${SLBID}`)
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById(targetSelectId);
+                    select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                    data.forEach(fetchedData => {
+                        const option = document.createElement('option');
+                        option.value = fetchedData.Id;
+                        option.textContent = fetchedData.Name || fetchedData.Name.substring(0, 50) + '...';
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading syllabus:', error);
+                    showNotification('Failed to load syllabus', 'error');
+                });
+        }
+
+        // Load Stream data when grade is selected
+        function loadStreamOptions(classId, targetSelectId) {
+            if (!classId) return;
+            //showNotification('Failed to load academic years'+academicYearId, 'error');
+            fetch(`/api/ManagementApi/FetchStream/${classId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById(targetSelectId);
+                    select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                    data.forEach(fetchedData => {
+                        const option = document.createElement('option');
+                        option.value = fetchedData.Id;
+                        option.textContent = fetchedData.Name || fetchedData.Name.substring(0, 50) + '...';
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading syllabus:', error);
+                    showNotification('Failed to load syllabus', 'error');
+                });
+        }
+
+        // Event listeners for accademic year dropdowns form
+        document.getElementById('academic_year').addEventListener('change', function () {
+            loadSyllabusOptions(this.value, 'syllabus');
+        });
+
+        // Event listeners for accademic year dropdowns form
+        document.getElementById('syllabus').addEventListener('change', function () {
+            loadClassOptions(this.value, 'grade');
+        });
+
+        // Event listeners for grade dropdowns form
+        document.getElementById('grade').addEventListener('change', function () {
+            loadStreamOptions(this.value, 'program');
+        });
+
+
     </script>
 </body>
 </html>
