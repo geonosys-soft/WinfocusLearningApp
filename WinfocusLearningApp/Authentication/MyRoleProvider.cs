@@ -39,6 +39,10 @@ namespace WinfocusLearningApp.Authentication
 
         public override string[] GetRolesForUser(string username)
         {
+            if (!HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                return null;
+            }
             var userRoles = new string[] { };
 
             using (Winfocus_CS dbContext = new Winfocus_CS())
@@ -55,7 +59,6 @@ namespace WinfocusLearningApp.Authentication
 
                 return userRoles.ToArray();
             }
-            throw new NotImplementedException();
         }
 
         public override string[] GetUsersInRole(string roleName)
@@ -65,7 +68,8 @@ namespace WinfocusLearningApp.Authentication
 
         public override bool IsUserInRole(string username, string roleName)
         {
-            throw new NotImplementedException();
+            var userRoles = GetRolesForUser(username);
+            return userRoles.Contains(roleName);
         }
 
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
