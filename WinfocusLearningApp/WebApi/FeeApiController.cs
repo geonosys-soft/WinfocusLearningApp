@@ -131,7 +131,7 @@ namespace WinfocusLearningApp.WebApi
         {
             try
             {
-                var feeDetail = winfocus_CS.TblFeeDetails.FirstOrDefault(x => x.Id == Id && x.IsDeleted == 0);
+                var feeDetail = winfocus_CS.TblFeeDetails.FirstOrDefault(x => x.CourseID == Id && x.IsDeleted == 0);
                 if (feeDetail == null)
                 {
                     return NotFound();
