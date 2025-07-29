@@ -836,21 +836,13 @@
                         return;
                     }
                     const deleteFeeData = {
-                    Id: editID, // Assuming we're using academic year ID as key
-                    Description: editClassNameText,
-                    DiscountPers: document.getElementById('edit-discount').value,
-                    RegistrationFee: editRegistrationFee,
-                    FeeAmount: editCourseFee,
-                    TotalFee: document.getElementById('edit-total-amount').value,
-                    Term1: editterm1,
-                    Term2: editterm2,
-                    Term3: editterm3
+                        Id: deleteProgram
                     };
 
 
 
                     try {
-                        const response = await fetch("/api/fee/UpdateFeeDetails", {
+                        const response = await fetch("/api/fee/RemoveFeeDetails", {
                         method: "POST",
                         headers: {
                           "Content-Type": "application/json"
