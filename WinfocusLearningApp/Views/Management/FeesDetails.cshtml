@@ -397,10 +397,10 @@
                     <label for="insert-term3-amount">Term 3 Amount:</label>
                     <input type="text" id="insert-term3-amount" class="form-control">
                 </div>
-                
+
             </div>
             <div class="form-col">
-             
+
                 <div class="form-group">
                     <label for="insert-term1-amount">Term 2 Amount:</label>
                     <input type="text" id="insert-term2-amount" class="form-control">
@@ -457,6 +457,7 @@
                 </div>
                 <div class="form-group">
                     <label for="edit-class-name">Class Name:</label>
+                    <input type="hidden" id="editId" />
                     <input type="text" id="edit-class-name" class="form-control" placeholder="Enter class name" required>
                 </div>
             </div>
@@ -493,14 +494,14 @@
                     <label for="insert-term3-amount">Term 3 Amount:</label>
                     <input type="text" id="edit-term3-amount" class="form-control">
                 </div>
-                
+
             </div>
             <div class="form-col">
                 <div class="form-group">
                     <label for="insert-term1-amount">Term 2 Amount:</label>
                     <input type="text" id="edit-term2-amount" class="form-control">
                 </div>
-             
+
             </div>
         </div>
         <button type="button" class="btn" onclick="submitForm('edit')">
@@ -549,6 +550,7 @@
         </div>
         <div class="form-group">
             <label for="delete-class-name">Class Name:</label>
+            <input type="hidden" id="deleteId" />
             <input type="text" id="delete-class-name" class="form-control" readonly>
         </div>
         <div class="form-group">
@@ -562,10 +564,6 @@
         <div class="form-group">
             <label for="delete-course-fee">Course Fee:</label>
             <input type="text" id="delete-course-fee" class="form-control" readonly>
-        </div>
-        <div class="form-group">
-            <label for="delete-discount-percent">Discount %:</label>
-            <input type="text" id="delete-discount-percent" class="form-control" readonly>
         </div>
         <div class="form-group">
             <label for="delete-total-amount">Total Amount:</label>
@@ -620,7 +618,7 @@
 
 
 
-  
+
     // Calculate total amount when fees change
     document.getElementById('insert-registration-fee').addEventListener('change', calculateTotal);
     document.getElementById('insert-course-fee').addEventListener('change', calculateTotal);
@@ -746,16 +744,16 @@
                             throw new Error(`Error: ${errorText}`);
                            // throw new Error('Failed to add subject');
                         }
-                      
+
                         message = `Fee added successfully!`;
                         showNotification(message, 'success');
-                        
+
 
                     } catch (error) {
                         showNotification(error.message, 'error');
                         console.error('Error adding subject:', error.message);
                     }
-                    
+
                     // Reset form
                     document.getElementById('insert-form').reset();
                     //document.getElementById('insert-total-amount').value = '';
@@ -764,7 +762,12 @@
 
                 case 'edit':
                     // Similar validation as insert
-                    
+                    const editID = document.getElementById('editId').value;
+                    const editAcademicYear = document.getElementById('edit-academic-year').value;
+                    const editSyllabus = document.getElementById('edit-syllabus').value;
+                    const editClassName = document.getElementById('edit-class').value;
+                    const editStream = document.getElementById('edit-stream').value;
+                    const editProgram = document.getElementById('edit-program').value;
                     const editClassNameText = document.getElementById('edit-class-name').value;
                     const editRegistrationFee = document.getElementById('edit-registration-fee').value;
                     const editCourseFee = document.getElementById('edit-course-fee').value;
@@ -779,7 +782,7 @@
 
                     // Prepare data object
                     const editFeeData = {
-                        Id: editAcademicYear, // Assuming we're using academic year ID as key
+                        Id: editID, // Assuming we're using academic year ID as key
                         Description: editClassNameText,
                         DiscountPers: document.getElementById('edit-discount').value,
                         RegistrationFee: editRegistrationFee,
@@ -790,7 +793,7 @@
                         Term3: editterm3
                     };
 
-                 
+
 
                     try {
                         const response = await fetch("/api/fee/UpdateFeeDetails", {
@@ -798,7 +801,7 @@
                             headers: {
                                 "Content-Type": "application/json"
                             },
-                            body: JSON.stringify(feeData)
+                            body: JSON.stringify(editFeeData)
                         });
 
                         if (!response.ok) {
@@ -813,7 +816,7 @@
 
                     } catch (error) {
                         showNotification(error.message, 'error');
-                        console.error('Error update subject:', error.message);
+                        console.error('Error update fee:', error.message);
                     }
 
                     // Reset form
@@ -821,9 +824,9 @@
                     break;
 
                 case 'delete':
-                    const deleteAcademicYear = document.getElementById('delete-academic-year').value;
+                    const deleteProgram = document.getElementById('deleteId').value;
 
-                    if (!deleteAcademicYear) {
+                    if (!deleteProgram) {
                         showNotification('Please select an academic year to delete', 'error');
                         return;
                     }
@@ -832,15 +835,43 @@
                         showNotification('Please confirm deletion', 'error');
                         return;
                     }
+                    const deleteFeeData = {
+                    Id: editID, // Assuming we're using academic year ID as key
+                    Description: editClassNameText,
+                    DiscountPers: document.getElementById('edit-discount').value,
+                    RegistrationFee: editRegistrationFee,
+                    FeeAmount: editCourseFee,
+                    TotalFee: document.getElementById('edit-total-amount').value,
+                    Term1: editterm1,
+                    Term2: editterm2,
+                    Term3: editterm3
+                    };
 
-                    // Call API to delete data
-                    // const deleteResponse = await fetch(`/api/FeesApi/DeleteFeeDetails/${deleteAcademicYear}`, {
-                    //     method: 'DELETE'
-                    // });
 
-                    // if (!deleteResponse.ok) {
-                    //     throw new Error('Failed to delete fee details');
-                    // }
+
+                    try {
+                        const response = await fetch("/api/fee/UpdateFeeDetails", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json"
+                         },
+                        body: JSON.stringify(deleteFeeData)
+                        });
+
+                        if (!response.ok) {
+                            const errorText = await response.text(); // Or use .json() if server returns JSON
+                             throw new Error(`Error: ${errorText}`);
+                             // throw new Error('Failed to add subject');
+                         }
+
+                         message = `Fee Updated successfully!`;
+                         showNotification(message, 'success');
+
+
+                        } catch (error) {
+                         showNotification(error.message, 'error');
+                         console.error('Error update fee:', error.message);
+                        }
 
                     const selectedYearText = document.getElementById('delete-academic-year').options[document.getElementById('delete-academic-year').selectedIndex].text;
                     message = `Fee details for ${selectedYearText} deleted successfully!`;
@@ -852,11 +883,11 @@
                     document.querySelector('#delete-form .btn').disabled = true;
                     hideForm('delete');
                     break;
-            }
-        } catch (error) {
-            showNotification('Error processing request: ' + error.message, 'error');
-            console.error('Error:', error);
-        }
+                    }
+                   } catch (error) {
+                    showNotification('Error processing request: ' + error.message, 'error');
+                     console.error('Error:', error);
+                   }
     }
 
     // Show notification function
@@ -1009,6 +1040,7 @@
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                document.getElementById('editId').value = data.Id;
                 document.getElementById('edit-class-name').value = data.Description;
                 document.getElementById('edit-registration-fee').value = data.RegistrationFee;
                 document.getElementById('edit-course-fee').value = data.FeeAmount;
@@ -1023,6 +1055,25 @@
                 showNotification('Failed to load syllabus', 'error');
             });
     }
+    function loadDeleteFee(CourseID) {
+    if (!CourseID) return;
+    //showNotification('Failed to load academic years'+academicYearId, 'error');
+    fetch(`/api/fee/GetFeeDetails/${CourseID}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+              document.getElementById('deleteId').value = data.Id;
+            document.getElementById('delete-class-name').value = data.Description;
+            document.getElementById('delete-registration-fee').value = data.RegistrationFee;
+            document.getElementById('delete-course-fee').value = data.FeeAmount;
+            document.getElementById('delete-total-amount').value = data.TotalFee;
+            document.getElementById('delete-discount').value = data.DiscountPers;
+        })
+        .catch(error => {
+            console.error('Error loading syllabus:', error);
+            showNotification('Failed to load syllabus', 'error');
+        });
+}
     // Event listeners for accademic year dropdowns form
     document.getElementById('insert-academic-year').addEventListener('change', function () {
         loadSyllabusOptions(this.value, 'insert-syllabus');
@@ -1077,7 +1128,7 @@
         loadFee(this.value);
     });
     document.getElementById('delete-program').addEventListener('change', function () {
-        
+        loadDeleteFee(this.value);
     });
 
     // Initialize dropdowns for insert form on page load
