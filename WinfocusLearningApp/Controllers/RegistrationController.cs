@@ -26,7 +26,7 @@ namespace WinfocusLearningApp.Controllers
             int unique = random.Next(10000, 99999);
             int y = DateTime.Now.Year;
             int m = DateTime.Now.Month;
-            var uniqueID = alpha + y + m + unique;
+            var uniqueID = alpha +"-"+ y + m+"-"+ unique;
             StudentRegistrationModel info=new StudentRegistrationModel();
             info.RegistrationId = uniqueID;
             return View(info);
@@ -77,7 +77,7 @@ namespace WinfocusLearningApp.Controllers
                 Location = info.parentLocation,
                 MobileNumber = info.parentMobile,
                 Occupation = info.parentOccupation,
-                FatherSignature = studentPhoto != null ? convertFile(studentPhoto) : null,
+                FatherSignature = idProof != null ? convertFile(idProof) : null,
                 PIN = info.postOffice,
                 PO= info.permanentLocation,
                 RelationShip = info.relationship != null ? info.relationship : null,
@@ -146,6 +146,7 @@ namespace WinfocusLearningApp.Controllers
             file.InputStream.Read(fileContent, 0, file.ContentLength);
              return fileContent;
         }
+        
         public void SendMail(TblSTudentBasicDetail programmes)
         {
             var url = string.Format("/Account/login");
