@@ -184,5 +184,9 @@ namespace WinfocusLearningApp.Controllers
             })
                 smtp.Send(message);
         }
+        public ActionResult Student_payment()
+        {
+            return View();
+        }
     }
 }

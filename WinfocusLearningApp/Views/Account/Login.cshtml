@@ -32,7 +32,7 @@
         align-items: center;
         width: 100%;
         padding: 20px;
-        margin-top: 170px; /* -----margin top-------- */
+        margin-top: 50px; /* -----margin top-------- */
     }
 
     .login-card {
@@ -216,7 +216,7 @@
         padding: 15px 20px;
         border: 2px solid #e9ecef;
         border-radius: 10px;
-        font-size: 16px;
+        font-size: 18px;
         transition: all 0.3s ease;
         background-color: var(--light-gray);
     }
@@ -276,8 +276,8 @@
             margin: 12px 0;
             color: var(--primary-color);
             text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
+            font-size: 18px;
+            font-weight: 55 0;
             transition: all 0.2s ease;
             position: relative;
         }
@@ -320,7 +320,7 @@
             }
 
     h1 {
-        font-size: 36px; 
+        font-size: 46px; 
         margin-bottom: 30px;
         font-weight: 700;
         position: relative;
@@ -357,7 +357,7 @@
         margin-bottom: 10px;
         font-weight: 500;
         color: #495057;
-        font-size: 17px; 
+        font-size: 20px; 
     }
 
     .divider {
@@ -418,30 +418,23 @@
                             <label for="password">Password</label>
                             <div class="password-container">
                                 <input type="password" id="Password" name="Password" class="form-control" placeholder="Enter your password">
-                                <span class="toggle-password">👁️</span>
+                                @*<span class="toggle-password">👁️</span>*@
                             </div>
                         </div>
 
                         <button type="submit" class="btn-login">Sign In</button>
 
                         <div class="divider">or</div>
-
-                        <div class="links">
-                            <a href="#">Forgot Password?</a>
-                            <a href="#">Register as Student</a>
-                            <a href="#">Register as Teacher</a>
-                        </div>
                     
                 }
 
 
                     <div class="links">
                         <a href="#">Forgot Password?</a>
-                        @*<a href="#">Register as Student</a>*@
                         <a href="@Url.Action("Student", "Registration")">Register as Student</a>
                         <a href="#">Register as Teacher</a>
                     </div>
-                </form>
+                @*</form>*@
 
             </div>
 
