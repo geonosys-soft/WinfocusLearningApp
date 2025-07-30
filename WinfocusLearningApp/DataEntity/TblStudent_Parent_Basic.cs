@@ -16,7 +16,7 @@ namespace WinfocusLearningApp.DataEntity
     {
         public int Id { get; set; }
         public string ParentName { get; set; }
-        public Nullable<int> RelationShip { get; set; }
+        public string RelationShip { get; set; }
         public string MobileNumber { get; set; }
         public string WhatsAppNumber { get; set; }
         public string Email { get; set; }
