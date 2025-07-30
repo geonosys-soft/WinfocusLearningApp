@@ -897,6 +897,7 @@
                                 <label class="form-label required">Student Email ID</label>
                                 <input type="email" class="form-input" id="studentEmail" name="studentEmail" required>
                                 <span class="error-message" id="studentEmailError"></span>
+                                <span id="email-status"></span>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">WhatsApp Number</label>
@@ -1565,7 +1566,39 @@
             loadStreamOptions(this.value, 'program');
         });
 
+        document.getElementById('studentEmail').addEventListener('blur', async function () {
+            const email = this.value.trim();
+            const statusSpan = document.getElementById('email-status');
 
+            if (!email) return;
+
+            try {
+                const response = await fetch(`/api/ManagementApi/FindMailId?email=${encodeURIComponent(email)}`, {
+                    method: 'GET'
+                });
+
+                if (response.status === 200) {
+                    // Email not found in database - valid to use
+                   // alert('✅ Email is available');
+                    statusSpan.textContent = '✅ Email is available';
+                    statusSpan.style.color = 'green';
+                } else if (response.status === 404) {
+                    // Email already exists
+                    this.value = '';
+                  //  alert('❌ Email already exists');
+                    statusSpan.textContent = '❌ Email already registered';
+                    statusSpan.style.color = 'red';
+                } else {
+                    // Any other error
+                    statusSpan.textContent = '⚠️ Unexpected response';
+                    statusSpan.style.color = 'orange';
+                }
+            } catch (err) {
+                console.error('Error:', err);
+                statusSpan.textContent = '⚠️ Server error';
+                statusSpan.style.color = 'orange';
+            }
+        });
     </script>
 </body>
 </html>
