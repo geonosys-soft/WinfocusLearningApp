@@ -536,24 +536,26 @@
                         <span class="search-icon">🔍</span>
                         <input type="text" class="search-input" id="searchInput" placeholder="Search by name, phone, or registration ID...">
                     </div>
+                    <!-- Courses -->
+                    <!-- ID :- courseFilter -->
                     <select class="filter-select" id="courseFilter">
                         <option value="">All Courses</option>
                         <option value="NEET">NEET Preparation</option>
                         <option value="JEE">JEE Preparation</option>
                         <option value="CBSE Support">CBSE Support</option>
                     </select>
+                    <!-- filter -->
+                    <!-- ID :- statusFilter -->
                     <select class="filter-select" id="statusFilter">
                         <option value="">All Status</option>
                         <option value="Active">Active</option>
                         <option value="Pending">Pending</option>
                         <option value="Inactive">Inactive</option>
                     </select>
-                    <a href="@Url.Action("Student", "Registration")" class="add-btn">
-                        ➕ Add New Registration
-                    </a>
+                    <a href="@Url.Action("Student", "Registration")" class="add-btn">➕ Add New Registration</a>
                 </div>
-
                 <!-- Registration Table -->
+                <!-- Table ID :- registrationTable -->
                 <div class="table-container">
                     <table class="registration-table" id="registrationTable">
                         <thead>
@@ -570,8 +572,9 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
+                        <!-- Table body  ID :- registrationTableBody -->
                         <tbody id="registrationTableBody">
-                            <!-- Sample Data Rows -->
+                            <!-- Data Rows -->
                             <tr>
                                 <td><span class="reg-id">REG001</span></td>
                                 <td>Aarav Kumar</td>
@@ -582,11 +585,12 @@
                                 <td>12th</td>
                                 <td>Science</td>
                                 <td><span class="status-badge status-active">Active</span></td>
-                                <td><a href="@Url.Action("RegistrationListview", "Admin_Student")" class="view-btn">👁️ View</a>
+                                <td>
+                                    <a href="@Url.Action("RegistrationListview", "Admin_Student")" class="view-btn">👁️ View</a>
                                 </td>
                             </tr>
-                            
-                          
+
+
                         </tbody>
                     </table>
                 </div>
@@ -649,7 +653,7 @@
             });
         });
 
-        // Enhanced table interactions
+        //  table interactions
         document.querySelectorAll('.registration-table tbody tr').forEach(row => {
             row.addEventListener('mouseenter', function() {
                 this.style.transform = 'translateY(-2px)';
@@ -674,15 +678,6 @@
             });
         });
 
-        // Add sorting functionality (basic example)
-        document.querySelectorAll('.registration-table th').forEach(header => {
-            header.style.cursor = 'pointer';
-            header.addEventListener('click', function() {
-                // Add sorting logic here
-                console.log('Sorting by:', this.textContent);
-                // You can implement actual sorting functionality here
-            });
-        });
     </script>
 </body>
 </html>
