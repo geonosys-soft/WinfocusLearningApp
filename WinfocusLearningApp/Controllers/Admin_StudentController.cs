@@ -140,6 +140,7 @@ namespace WinfocusLearningApp.Controllers
         }
         public ActionResult Accept_Student_Regitration(int Id)
         {
+            
             var student = db.TblSTudentBasicDetails.Where(x => x.SID == Id).FirstOrDefault();
             if (student != null)
             {
@@ -157,7 +158,8 @@ namespace WinfocusLearningApp.Controllers
             {
                 student.IsActive = 0;
                 student.ProcessStage = 3; // Process Stage 3 for Rejected
-                db.SaveChanges();
+              //  db.SaveChanges();
+              SendRejectionMail(student);
             }
             return RedirectToAction("RegistrationList");
         }
@@ -174,7 +176,28 @@ namespace WinfocusLearningApp.Controllers
             string imageSrc = $"data:application/pdf;base64,{base64Image}";
             return imageSrc;
         }
+        public string getStudentCourseDetails(int Id)
+        {
+            var student = (from s in db.TblSTudentBasicDetails where s.SID == Id
+                           join c in db.TblStreams on s.StreamID equals c.Id
+                           join g in db.TblGrades on s.GradeID equals g.Id
+                           where s.IsDeleted == 0 && s.SID==Id
+                           select new StudentReglistModel
+                           {
+                               StreamName=c.Name,
+                                 GradeName=g.Name
 
+                           }).FirstOrDefault();
+            if (student != null)
+            {
+               return student.GradeName + " - " + student.StreamName;
+            }
+            else
+            {
+               return "Not Found";
+            }
+
+        }
         public void SendPaymentMail(TblSTudentBasicDetail info)
         {
             var url = string.Format("/Registration/Student_Payment?RegId="+info.RegId);
@@ -190,7 +213,7 @@ namespace WinfocusLearningApp.Controllers
             //  var fromEmailPassword = "DXB1234567890";mwesxhtcabdgzvhs
             //  var fromEmailPassword = "Enq@1234!!!";
             var fromEmailPassword = "dmzpwtbqmsnscbuc";
-            string subject = "Registration Approved – Complete Payment to Activate Your Account";
+            string subject = "Registration Reje – Complete Payment to Activate Your Account";
 
             /*  string body = "Dear " + info.FullName + "<br/>" + "We are pleased to inform you that your registration for " +
                   "[Course/Program Name] has been approved by the administration.<br/>To proceed further, please complete the " +
@@ -199,7 +222,7 @@ namespace WinfocusLearningApp.Controllers
                   "registered email address.</li></ul> <br/>If you have any questions or face any issues during the payment process, please don’t hesitate to " +
                   "contact us at [Support Email/Phone Number].<br/>Welcome aboard, and we look forward to having you with us!<br/>Warm regards,<br/>[Your Full Name]" +
                   "<br/>Admin Office<br/>[Institution Name]<br/>[Contact Info]<br/>[Website URL]";*/
-            string body = "<p>Dear <strong>"+info.FullName+"</strong>,</p><p>We are pleased to inform you that your registration for the <strong>[Course/Program Name]</strong> has been approved." +
+            string body = "<p>Dear <strong>"+info.FullName+"</strong>,</p><p>We are pleased to inform you that your registration for the <strong>"+ getStudentCourseDetails(info.SID)+"</strong> has been approved." +
                 "</p><p>To proceed, please complete the payment using the link below:</p><p style=\"text-align: left; margin: 30px 0;\">" +
                 " <a href=\""+link+"\" target=\"_blank\" style=\"background-color: #1abc9c; color: white; padding: 12px " +
                 "24px; text-decoration: none; border-radius: 4px; font-weight: bold;\"> Complete Payment </a></p><p><strong>Note:</strong> " +
@@ -207,6 +230,60 @@ namespace WinfocusLearningApp.Controllers
                 "<p>If you have any questions, feel free to contact us at <a href=\"mailto:[Support Email]\">[Support Email]</a>.</p>" +
                 "<p>Welcome aboard!</p><p>Best regards,<br /><strong>[Your Name]</strong><br />" +
                 " Admin Office<br />[Institution Name]<br /> [Contact Info] | <a href=\"[Website URL]\" target=\"_blank\">[Website URL]</a></p>";
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = true,
+                Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+            };
+
+            using (var message = new MailMessage(fromEmail, toEmail)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
+
+            })
+                smtp.Send(message);
+        }
+
+        public void SendRejectionMail(TblSTudentBasicDetail info)
+        {
+            
+            //var fromEmail = new MailAddress("entrancecoachme@gmail.com", "Activation Account - winwintutor.com");
+            var fromEmail = new MailAddress("entrancecoachme@gmail.com", "Account Registration - WINFOCUS");
+
+            var toEmail = new MailAddress(info.EmailID);
+
+            //  var fromEmailPassword = "DXB1234567890";mwesxhtcabdgzvhs
+            //  var fromEmailPassword = "Enq@1234!!!";
+            var fromEmailPassword = "dmzpwtbqmsnscbuc";
+            string subject = "Application Status – Winfocus";
+
+            /*  string body = "Dear " + info.FullName + "<br/>" + "We are pleased to inform you that your registration for " +
+                  "[Course/Program Name] has been approved by the administration.<br/>To proceed further, please complete the " +
+                  "payment using the link provided below:<br/>🔗 Payment Link:" + link + "<br/><b>Important Notes:</b><br/><ul><li>Kindly ensure payment is completed " +
+                  "within 4 days to secure your enrollment.</li><li>After successful payment, your login credentials will be sent to your " +
+                  "registered email address.</li></ul> <br/>If you have any questions or face any issues during the payment process, please don’t hesitate to " +
+                  "contact us at [Support Email/Phone Number].<br/>Welcome aboard, and we look forward to having you with us!<br/>Warm regards,<br/>[Your Full Name]" +
+                  "<br/>Admin Office<br/>[Institution Name]<br/>[Contact Info]<br/>[Website URL]";*/
+            string body = "<p>Dear <strong>"+info.FullName+"</strong>,</p>" +
+                "<p>Thank you for your interest in registering with <strong>[Portal/Institution Name]</strong>." +
+                "</p><p>We appreciate the time and effort you invested in completing " +
+                "your registration. After careful review of your application, " +
+                "we regret to inform you that your registration has not been approved " +
+                "at this time.</p><p>This decision was made based on <em>" +
+                "[brief reason if applicable, e.g., eligibility criteria not met]</em>." +
+                " We encourage you to review the registration guidelines and consider applying " +
+                "again in the future if your circumstances change.</p>" +
+                " <p>If you have any questions or would like more details, " +
+                "feel free to contact us at <a href=\"mailto:support@example.com\">support@example.com</a>." +
+                "</p><p>We wish you all the best in your academic journey.</p>" +
+                " <p>Kind regards,<br>[Your Name]<br>" +
+                " [Your Position]<br> [Portal/Institution Name]</p>";
             var smtp = new SmtpClient
             {
                 Host = "smtp.gmail.com",
