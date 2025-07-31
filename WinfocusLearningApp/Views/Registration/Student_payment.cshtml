@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WinfocusLearningApp.ViewModels.StudentPaymentModel
+@{
     ViewBag.Title = "Student Registration - Winfocus Learning Centre";
     Layout = "~/Views/Shared/_loginLayout.cshtml";
 }
@@ -569,12 +570,25 @@
                                 <input type="text" class="form-input" id="refferenceode" placeholder="Enter Refference Code">
                             </div>
                             <div class="form-group">
-                                <label class="form-label required">Course Selected</label>
+                                <label class="form-label required">Target Exam</label>
                                 <select class="form-input" id="courseSelected" required>
                                     <option value="">Select Course</option>
-                                    <option value="NEET">🩺 NEET Preparation</option>
-                                    <option value="JEE">⚙️ JEE Preparation</option>
-                                    <option value="CBSE Support">📚 CBSE Support</option>
+                                  
+                                    @if (Model.CourseSelected.Equals("NEET"))
+                                    {
+                                        <option value="NEET">🩺 NEET Preparation</option>
+                                    }
+                                    else if (Model.CourseSelected.Equals("JEE"))
+                                    {
+                                        <option value="JEE">⚙️ JEE Preparation</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="CBSE Support">📚 CBSE Support</option>
+                                    }
+
+
+
                                 </select>
                                 <span class="error-message" id="courseSelectedError"></span>
                             </div>
@@ -584,7 +598,7 @@
                             <label class="form-label required">Fee Payment Mode</label>
                             <div class="radio-group">
                                 <div class="radio-option">
-                                    <input type="radio" id="fullPayment" name="paymentMode" value="Full Payment" required onclick="toggleFeeTables('full')">
+                                    <input type="radio" id="fullPayment" name="paymentMode" value="Full Payment" required onclick="toggleFeeTables('full')" checked>
                                     <label for="fullPayment" class="radio-label"><span>💰 Full Payment</span></label>
                                 </div>
                                 <div class="radio-option">
@@ -601,9 +615,10 @@
                                     <tr>
                                         <th></th>
                                         <th>Class</th>
-                                        <th>Duration</th>
+                                        <th>Program</th>
                                         <th>Registration</th>
                                         <th>Course Fee</th>
+                                        <th>Dis %</th>
                                         <th>Total Payable</th>
                                         <th>Day 1</th>
                                         <th>Day 2</th>
@@ -611,39 +626,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="table-radio"><input type="radio" name="fullPaymentOption" value="IX" required></td>
-                                        <td><strong>IX</strong></td>
-                                        <td>1 Year</td>
-                                        <td>₹500</td>
-                                        <td>₹35,000</td>
-                                        <td><strong>₹35,500</strong></td>
-                                        <td>✅</td>
-                                        <td>✅</td>
-                                        <td>✅</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table-radio"><input type="radio" name="fullPaymentOption" value="X"></td>
-                                        <td><strong>X</strong></td>
-                                        <td>2 Years</td>
-                                        <td>₹500</td>
-                                        <td>₹32,000/year</td>
-                                        <td><strong>₹64,500</strong></td>
-                                        <td>✅</td>
-                                        <td>✅</td>
-                                        <td>✅</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table-radio"><input type="radio" name="fullPaymentOption" value="XI"></td>
-                                        <td><strong>XI</strong></td>
-                                        <td>3 Years</td>
-                                        <td>₹500</td>
-                                        <td>₹30,000/year</td>
-                                        <td><strong>₹90,500</strong></td>
-                                        <td>✅</td>
-                                        <td>✅</td>
-                                        <td>✅</td>
-                                    </tr>
+                                    @foreach (var data in Model.FeeTermDiscounts)
+                                    {
+                                        <tr>
+                                            <td class="table-radio"><input type="radio" name="installmentOption" value="@data.Id" required></td>
+                                            <td><strong>@data.Description</strong></td>
+                                            <td>@data.CourseName</td>
+                                            <td>₹@data.RegistrationFee</td>
+                                            <td>₹@data.FeeAmount</td>
+                                            <td>₹@data.DiscountPers %</td>
+                                            <td><strong>₹@data.TotalFee</strong></td>
+                                            <td>₹</td>
+                                            <td>₹</td>
+                                            <td>₹</td>
+                                        </tr>
+                                    }
+
                                 </tbody>
                             </table>
                         </div>
@@ -654,9 +652,10 @@
                                     <tr>
                                         <th></th>
                                         <th>Class</th>
-                                        <th>Duration</th>
+                                        <th>Program</th>
                                         <th>Registration</th>
                                         <th>Course Fee</th>
+                                        <th>Dis %</th>
                                         <th>Total Payable</th>
                                         <th>Term 1</th>
                                         <th>Term 2</th>
@@ -664,39 +663,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="table-radio"><input type="radio" name="installmentOption" value="IX" required></td>
-                                        <td><strong>IX</strong></td>
-                                        <td>1 Year</td>
-                                        <td>₹500</td>
-                                        <td>₹35,000</td>
-                                        <td><strong>₹35,500</strong></td>
-                                        <td>₹18,000</td>
-                                        <td>₹17,500</td>
-                                        <td>-</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table-radio"><input type="radio" name="installmentOption" value="X"></td>
-                                        <td><strong>X</strong></td>
-                                        <td>2 Years</td>
-                                        <td>₹500</td>
-                                        <td>₹32,000/year</td>
-                                        <td><strong>₹64,500</strong></td>
-                                        <td>₹22,000</td>
-                                        <td>₹21,000</td>
-                                        <td>₹21,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table-radio"><input type="radio" name="installmentOption" value="XI"></td>
-                                        <td><strong>XI</strong></td>
-                                        <td>3 Years</td>
-                                        <td>₹500</td>
-                                        <td>₹30,000/year</td>
-                                        <td><strong>₹90,500</strong></td>
-                                        <td>₹31,000</td>
-                                        <td>₹30,000</td>
-                                        <td>₹29,500</td>
-                                    </tr>
+                                    @foreach (var data in Model.FeeTermDiscounts)
+                                    {
+                                        <tr>
+                                            <td class="table-radio"><input type="radio" name="installmentOption" value="@data.Id" required></td>
+                                            <td><strong>@data.Description</strong></td>
+                                            <td>@data.CourseName</td>
+                                            <td>₹@data.RegistrationFee</td>
+                                            <td>₹@data.FeeAmount</td>
+                                            <td>₹@data.DiscountPers %</td>
+                                            <td><strong>₹@data.TotalFee</strong></td>
+                                            <td>₹@data.Term1</td>
+                                            <td>₹@data.Term2</td>
+                                            <td>₹@data.Term3</td>
+                                        </tr>
+                                    }
+
                                 </tbody>
                             </table>
                         </div>

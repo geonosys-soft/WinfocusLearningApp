@@ -324,6 +324,24 @@
           <Property Name="FatherSignature" Type="image" />
           <Property Name="StudentSignature" Type="image" />
         </EntityType>
+        <EntityType Name="TblStudent_Payment_Terms">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReferenceCode" Type="varchar" MaxLength="50" />
+          <Property Name="RegID" Type="varchar" MaxLength="50" />
+          <Property Name="CourseSelected" Type="varchar" MaxLength="50" />
+          <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
+          <Property Name="CourseID" Type="int" />
+          <Property Name="PaymentType" Type="varchar" MaxLength="50" />
+          <Property Name="TransactionID" Type="varchar" MaxLength="50" />
+          <Property Name="UploadSlip" Type="image" />
+          <Property Name="PaymentStatus" Type="int" />
+          <Property Name="CreatedDt" Type="date" />
+          <Property Name="IsDeleted" Type="int" />
+          <Property Name="DeletedDt" Type="int" />
+        </EntityType>
         <EntityType Name="TblSTudentBasicDetails">
           <Key>
             <PropertyRef Name="SID" />
@@ -491,6 +509,7 @@
           <EntitySet Name="TblStudent_Fee_Structure" EntityType="Self.TblStudent_Fee_Structure" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblStudent_Mark_Scored" EntityType="Self.TblStudent_Mark_Scored" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblStudent_Parent_Basic" EntityType="Self.TblStudent_Parent_Basic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblStudent_Payment_Terms" EntityType="Self.TblStudent_Payment_Terms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblSTudentBasicDetails" EntityType="Self.TblSTudentBasicDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblSubChapter" EntityType="Self.TblSubChapter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblSubject" EntityType="Self.TblSubject" Schema="dbo" store:Type="Tables" />
@@ -539,6 +558,7 @@
           <EntitySet Name="TblRegistrationBatchTimes" EntityType="Winfocus_DbModel.TblRegistrationBatchTime" />
           <EntitySet Name="TblSTudentBasicDetails" EntityType="Winfocus_DbModel.TblSTudentBasicDetail" />
           <EntitySet Name="TblStudent_Parent_Basic" EntityType="Winfocus_DbModel.TblStudent_Parent_Basic" />
+          <EntitySet Name="TblStudent_Payment_Terms" EntityType="Winfocus_DbModel.TblStudent_Payment_Terms" />
         </EntityContainer>
         <EntityType Name="TblAccademicYear">
           <Key>
@@ -975,6 +995,24 @@
           <Property Name="RegId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FatherSignature" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="StudentSignature" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TblStudent_Payment_Terms">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReferenceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CourseSelected" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CourseID" Type="Int32" />
+          <Property Name="PaymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UploadSlip" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="PaymentStatus" Type="Int32" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="0" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="DeletedDt" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1441,6 +1479,25 @@
                 <ScalarProperty Name="RelationShip" ColumnName="RelationShip" />
                 <ScalarProperty Name="ParentName" ColumnName="ParentName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblStudent_Payment_Terms">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblStudent_Payment_Terms">
+              <MappingFragment StoreEntitySet="TblStudent_Payment_Terms">
+                <ScalarProperty Name="DeletedDt" ColumnName="DeletedDt" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="UploadSlip" ColumnName="UploadSlip" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="CourseSelected" ColumnName="CourseSelected" />
+                <ScalarProperty Name="RegID" ColumnName="RegID" />
+                <ScalarProperty Name="ReferenceCode" ColumnName="ReferenceCode" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

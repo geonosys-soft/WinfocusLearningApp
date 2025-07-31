@@ -240,6 +240,9 @@
     <Compile Include="DataEntity\TblStudent_Parent_Basic.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataEntity\TblStudent_Payment_Terms.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataEntity\TblSubChapter.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
@@ -260,6 +263,8 @@
     <Compile Include="Models\AccademicYearModel.cs" />
     <Compile Include="Models\MaterialModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\FeeTermDiscountModel.cs" />
+    <Compile Include="ViewModels\StudentPaymentModel.cs" />
     <Compile Include="ViewModels\StudentRegistrationCompleteModel.cs" />
     <Compile Include="ViewModels\StudentRegistrationModel.cs" />
     <Compile Include="ViewModels\StudentReglistModel.cs" />

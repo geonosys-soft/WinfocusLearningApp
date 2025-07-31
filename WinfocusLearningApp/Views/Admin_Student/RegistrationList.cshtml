@@ -594,15 +594,19 @@
                                         }
                                         else if (data.ProcessStage == 2)
                                         {
-                                            <span class="status-badge status-active">Active</span>
+                                            <span class="status-badge status-pending">Payment Link Shared</span>
                                         }
                                         else if (data.ProcessStage == 3)
                                         {
-                                            <span class="status-badge status-inactive">Inactive</span>
+                                            <span class="status-badge bg-danger text-white">Rejected</span>
+                                        }
+                                        else if (data.ProcessStage == 4)
+                                        {
+                                            <span class="status-badge status-Active">Active</span>
                                         }
                                         else
                                         {
-                                            <span class="status-badge bg-danger">Inactive</span>
+                                            <span class="status-badge status-inactive">Inactive</span>
                                         }
 
                                     </td>

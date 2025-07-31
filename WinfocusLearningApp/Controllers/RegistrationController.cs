@@ -185,9 +185,48 @@ namespace WinfocusLearningApp.Controllers
             })
                 smtp.Send(message);
         }
-        public ActionResult Student_payment()
+        public ActionResult Student_payment(string RegId,string ReferenceCode)
         {
-            return View();
+            TblSTudentBasicDetail studentBasicDetail = db.TblSTudentBasicDetails.FirstOrDefault(s => s.RegId == RegId && s.IsDeleted == 0);
+            if (studentBasicDetail == null)
+            {
+                return HttpNotFound("Student not found.");
+            }
+            StudentPaymentModel studentPaymentModel = new StudentPaymentModel();
+            var feeDetails = (from fee in db.TblFeeDetails
+                              join academicYear in db.TblAccademicYears on fee.ACID equals academicYear.Id
+                              join syllabus in db.TblSyllabus on fee.SyllabusID equals syllabus.Id
+                             join grade in db.TblGrades on fee.GradeId equals grade.Id
+                             join stream in db.TblStreams on fee.StreamID equals stream.Id
+                             join course in db.TblCourses on fee.CourseID equals course.Id
+                             where fee.StreamID == studentBasicDetail.StreamID && fee.IsDeleted == 0
+                             select new FeeTermDiscountModel
+                             {
+                                 Id = fee.Id,
+                                 FeeAmount = fee.FeeAmount,
+                                 RegistrationFee = fee.RegistrationFee,
+                                 TotalFee = fee.TotalFee,
+                                 DiscountPers = fee.DiscountPers,
+                                 ACID = fee.ACID,
+                                 SyllabusID = fee.SyllabusID,
+                                 SyllabusName = syllabus.Name,
+                                 GradeId = fee.GradeId,
+                                 GradeName = grade.Name,
+                                 StreamID = fee.StreamID,
+                                 StreamName = stream.Name,
+                                 CourseID = fee.CourseID,
+                                 CourseName = course.Name,
+                                 Term1 = fee.Term1,
+                                 Term2 = fee.Term2,
+                                 Term3 = fee.Term3,
+                                 Term4 = fee.Term4,
+                                 Term5 = fee.Term5,
+                                 Description= fee.Description
+                             }).ToList();
+
+            studentPaymentModel.FeeTermDiscounts = feeDetails;
+            studentPaymentModel.CourseSelected=studentBasicDetail.TargetExam;
+            return View(studentPaymentModel);
         }
     }
 }

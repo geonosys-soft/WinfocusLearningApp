@@ -574,14 +574,18 @@
                                 <div class="marks-grid">
                                     <div class="mark-item">
                                         <span class="mark-label">Obtained</span>
-                                        <span class="mark-value">85</span>
+                                        <span class="mark-value">
+                                        @(Model.studentList.FirstOrDefault(x=>x.Subject=="Maths")?.MarkObtained??0)
+                                        </span>
                                     </div>
                                     <div class="mark-item">
                                         <span class="mark-label">Total</span>
-                                        <span class="mark-value">100</span>
+                                        <span class="mark-value">
+                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Maths")?.MaxMark??0)
+                                        </span>
                                     </div>
                                     <div class="percentage-display">
-                                        Percentage: 85% 
+                                        Percentage: @(((Model.studentList.FirstOrDefault(x => x.Subject == "Maths")?.MarkObtained ?? 0)/ (Model.studentList.FirstOrDefault(x => x.Subject == "Maths")?.MaxMark ?? 0))*100)%
                                     </div>
                                 </div>
                             </div>
@@ -595,14 +599,18 @@
                                 <div class="marks-grid">
                                     <div class="mark-item">
                                         <span class="mark-label">Obtained</span>
-                                        <span class="mark-value">90</span>
+                                        <span class="mark-value">
+                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Biology")?.MarkObtained??0)
+                                        </span>
                                     </div>
                                     <div class="mark-item">
                                         <span class="mark-label">Total</span>
-                                        <span class="mark-value">100</span>
+                                        <span class="mark-value">
+                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Biology")?.MaxMark??0)
+                                        </span>
                                     </div>
                                     <div class="percentage-display">
-                                        Percentage: 90% 
+                                        Percentage: @(((Model.studentList.FirstOrDefault(x => x.Subject == "Biology")?.MarkObtained ?? 0)/ (Model.studentList.FirstOrDefault(x => x.Subject == "Biology")?.MaxMark ?? 0))*100)% 
                                     </div>
                                 </div>
                             </div>
@@ -616,14 +624,18 @@
                                 <div class="marks-grid">
                                     <div class="mark-item">
                                         <span class="mark-label">Obtained</span>
-                                        <span class="mark-value">82</span>
+                                        <span class="mark-value">
+                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Chemistry")?.MarkObtained??0)
+                                        </span>
                                     </div>
                                     <div class="mark-item">
                                         <span class="mark-label">Total</span>
-                                        <span class="mark-value">100</span>
+                                        <span class="mark-value">
+                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Chemistry")?.MaxMark??0)
+                                        </span>
                                     </div>
                                     <div class="percentage-display">
-                                        Percentage: 82% 
+                                        Percentage: @(((Model.studentList.FirstOrDefault(x => x.Subject == "Chemistry")?.MarkObtained ?? 0)/ (Model.studentList.FirstOrDefault(x => x.Subject == "Chemistry")?.MaxMark ?? 0))*100)%
                                     </div>
                                 </div>
                             </div>
@@ -637,14 +649,18 @@
                                 <div class="marks-grid">
                                     <div class="mark-item">
                                         <span class="mark-label">Obtained</span>
-                                        <span class="mark-value">78</span>
+                                        <span class="mark-value">
+                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Physics")?.MarkObtained ?? 0)
+                                        </span>
                                     </div>
                                     <div class="mark-item">
                                         <span class="mark-label">Total</span>
-                                        <span class="mark-value">100</span>
+                                        <span class="mark-value">
+                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Physics")?.MaxMark??0)
+                                        </span>
                                     </div>
                                     <div class="percentage-display">
-                                        Percentage: 78% 
+                                        Percentage: @(((Model.studentList.FirstOrDefault(x => x.Subject == "Physics")?.MarkObtained ?? 0)/ (Model.studentList.FirstOrDefault(x => x.Subject == "Physics")?.MaxMark ?? 0))*100)%
                                     </div>
                                 </div>
                             </div>

@@ -49,5 +49,6 @@ namespace WinfocusLearningApp.DataEntity
         public virtual DbSet<TblRegistrationBatchTime> TblRegistrationBatchTimes { get; set; }
         public virtual DbSet<TblSTudentBasicDetail> TblSTudentBasicDetails { get; set; }
         public virtual DbSet<TblStudent_Parent_Basic> TblStudent_Parent_Basic { get; set; }
+        public virtual DbSet<TblStudent_Payment_Terms> TblStudent_Payment_Terms { get; set; }
     }
 }

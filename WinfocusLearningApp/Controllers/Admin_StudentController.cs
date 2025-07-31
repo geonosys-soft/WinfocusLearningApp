@@ -128,14 +128,12 @@ namespace WinfocusLearningApp.Controllers
                                                                
                             }).FirstOrDefault();
             StudentRegistrationCompleteModel studentRegistrationCompleteModel = new StudentRegistrationCompleteModel();
-            
             studentRegistrationCompleteModel = StudeReg;
-           
-            
-             studentRegistrationCompleteModel.ProfilePath = ConvertImage(StudeReg.Profile);
+            studentRegistrationCompleteModel.ProfilePath = ConvertImage(StudeReg.Profile);
             studentRegistrationCompleteModel.FatherSignaturePath=ConvertPdf(StudeReg.FatherSignature);
             studentRegistrationCompleteModel.StudentSignaturePath=ConvertPdf(StudeReg.StudentSignature);
-
+            var studentMarks = db.TblStudent_Mark_Scored.Where(x => x.RegID == StudeReg.RegId).ToList();
+            studentRegistrationCompleteModel.studentList = studentMarks;
             return View(studentRegistrationCompleteModel);
         }
         public ActionResult Accept_Student_Regitration(int Id)
@@ -146,8 +144,11 @@ namespace WinfocusLearningApp.Controllers
             {
                 student.IsActive = 1;
                 student.ProcessStage = 2; // Process Stage 2 for Accepted
-                                          // db.SaveChanges();
-                SendPaymentMail(student);
+                if(db.SaveChanges()>0)
+                {
+                    SendPaymentMail(student);
+                }
+                
             }
             return RedirectToAction("RegistrationList");
         }
@@ -158,8 +159,12 @@ namespace WinfocusLearningApp.Controllers
             {
                 student.IsActive = 0;
                 student.ProcessStage = 3; // Process Stage 3 for Rejected
-              //  db.SaveChanges();
-              SendRejectionMail(student);
+                if(db.SaveChanges() > 0)
+                {
+                    SendRejectionMail(student);
+                    // Send rejection email
+                }
+                
             }
             return RedirectToAction("RegistrationList");
         }
@@ -213,7 +218,7 @@ namespace WinfocusLearningApp.Controllers
             //  var fromEmailPassword = "DXB1234567890";mwesxhtcabdgzvhs
             //  var fromEmailPassword = "Enq@1234!!!";
             var fromEmailPassword = "dmzpwtbqmsnscbuc";
-            string subject = "Registration Reje – Complete Payment to Activate Your Account";
+            string subject = "Registration Activate – Complete Payment to Activate Your Account";
 
             /*  string body = "Dear " + info.FullName + "<br/>" + "We are pleased to inform you that your registration for " +
                   "[Course/Program Name] has been approved by the administration.<br/>To proceed further, please complete the " +

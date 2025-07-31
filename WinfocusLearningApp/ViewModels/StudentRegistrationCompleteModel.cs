@@ -66,5 +66,6 @@ namespace WinfocusLearningApp.ViewModels
         public string StudentSignaturePath { get; set; }
         public List<TblStudent_Mark_Scored> studentList { get; set; }
 
+
     }
 }
