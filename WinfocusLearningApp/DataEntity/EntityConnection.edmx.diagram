@@ -31,6 +31,7 @@
         <EntityTypeShape EntityType="Winfocus_DbModel.TblSTudentBasicDetail" Width="1.5" PointX="17.375" PointY="6.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblStudent_Parent_Basic" Width="1.5" PointX="17.375" PointY="0.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblStudent_Payment_Terms" Width="1.5" PointX="17.375" PointY="14.75" />
+        <EntityTypeShape EntityType="Winfocus_DbModel.TblDicountCoupen" Width="1.5" PointX="0.75" PointY="18.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

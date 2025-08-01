@@ -62,6 +62,27 @@
           <Property Name="ModifiedTime" Type="datetime" />
           <Property Name="Description" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="TblDicountCoupen">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BDID" Type="int" />
+          <Property Name="CoupenCode" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="ValidityDays" Type="int" />
+          <Property Name="Day1Dis" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Day2Dis" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Day3Dis" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="IsActive" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="GeneratedDate" Type="date" />
+          <Property Name="UsedBy" Type="varchar" MaxLength="50" />
+          <Property Name="FirstUsedDate" Type="date" />
+          <Property Name="IsDeleted" Type="int" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDt" Type="date" />
+        </EntityType>
         <EntityType Name="TblFeeDetails">
           <Key>
             <PropertyRef Name="Id" />
@@ -494,6 +515,7 @@
           <EntitySet Name="TblAccademicYear" EntityType="Self.TblAccademicYear" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblChapter" EntityType="Self.TblChapter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblCourse" EntityType="Self.TblCourse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblDicountCoupen" EntityType="Self.TblDicountCoupen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblFeeDetails" EntityType="Self.TblFeeDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblGrade" EntityType="Self.TblGrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblMaterial" EntityType="Self.TblMaterial" Schema="dbo" store:Type="Tables" />
@@ -559,6 +581,7 @@
           <EntitySet Name="TblSTudentBasicDetails" EntityType="Winfocus_DbModel.TblSTudentBasicDetail" />
           <EntitySet Name="TblStudent_Parent_Basic" EntityType="Winfocus_DbModel.TblStudent_Parent_Basic" />
           <EntitySet Name="TblStudent_Payment_Terms" EntityType="Winfocus_DbModel.TblStudent_Payment_Terms" />
+          <EntitySet Name="TblDicountCoupens" EntityType="Winfocus_DbModel.TblDicountCoupen" />
         </EntityContainer>
         <EntityType Name="TblAccademicYear">
           <Key>
@@ -1013,6 +1036,27 @@
           <Property Name="CreatedDt" Type="DateTime" Precision="0" />
           <Property Name="IsDeleted" Type="Int32" />
           <Property Name="DeletedDt" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TblDicountCoupen">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BDID" Type="Int32" />
+          <Property Name="CoupenCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="ValidityDays" Type="Int32" />
+          <Property Name="Day1Dis" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Day2Dis" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Day3Dis" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IsActive" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="GeneratedDate" Type="DateTime" Precision="0" />
+          <Property Name="UsedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstUsedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDt" Type="DateTime" Precision="0" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1497,6 +1541,28 @@
                 <ScalarProperty Name="CourseSelected" ColumnName="CourseSelected" />
                 <ScalarProperty Name="RegID" ColumnName="RegID" />
                 <ScalarProperty Name="ReferenceCode" ColumnName="ReferenceCode" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblDicountCoupens">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblDicountCoupen">
+              <MappingFragment StoreEntitySet="TblDicountCoupen">
+                <ScalarProperty Name="DeletedDt" ColumnName="DeletedDt" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="FirstUsedDate" ColumnName="FirstUsedDate" />
+                <ScalarProperty Name="UsedBy" ColumnName="UsedBy" />
+                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Day3Dis" ColumnName="Day3Dis" />
+                <ScalarProperty Name="Day2Dis" ColumnName="Day2Dis" />
+                <ScalarProperty Name="Day1Dis" ColumnName="Day1Dis" />
+                <ScalarProperty Name="ValidityDays" ColumnName="ValidityDays" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CoupenCode" ColumnName="CoupenCode" />
+                <ScalarProperty Name="BDID" ColumnName="BDID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

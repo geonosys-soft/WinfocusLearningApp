@@ -1,8 +1,10 @@
-﻿@model WinfocusLearningApp.ViewModels.StudentPaymentModel
+﻿@model WinfocusLearningApp.ViewModels.StudentPaymentPreviwModel
 @{
-    ViewBag.Title = "Student Registration - Winfocus Learning Centre";
+    ViewBag.Title = "Student Payment - Winfocus Learning Centre";
     Layout = "~/Views/Shared/_loginLayout.cshtml";
 }
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -557,247 +559,109 @@
                     <div class="date-display" id="currentDate"></div>
                 </div>
                 <br><br />
-                @using (Html.BeginForm("Student_payment", "Registration", FormMethod.Post, new { @name = "formCoupen", @id = "formCoupen" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Refference Code</label>
-                            <input type="text" class="form-input" id="refferenceode" name="refferenceode" value="@Model.ReferenceCode" placeholder="Enter Refference Code">
-
-                            @if (ViewBag.ErrorMessage != null)
-                            {
-                                <span class="error-message">
-                                    @ViewBag.ErrorMessage
-                                </span>
-                            }
-
-                        </div>
-                        @Html.HiddenFor(model => model.RegID)
-                        <div class="form-group">
-                            <label class="form-label required">Target Exam</label>
-                            <select class="form-input" id="courseSelected" disabled required>
-                                <option value="">Select Course</option>
-
-                                @if (Model.CourseSelected.Equals("NEET"))
-                                {
-                                    <option value="NEET" selected>🩺 NEET Preparation</option>
-                                }
-                                else if (Model.CourseSelected.Equals("JEE"))
-                                {
-                                    <option value="JEE" selected>⚙️ JEE Preparation</option>
-                                }
-                                else
-                                {
-                                    <option value="CBSE Support" selected>📚 CBSE Support</option>
-                                }
 
 
+                @*   @using (Html.BeginForm("student_pymt_init_summary", "Registration", FormMethod.Post, new { @id = "registrationForm" }))
+        {
 
-                            </select>
-                            <span class="error-message" id="courseSelectedError"></span>
-                        </div>
-                    </div>
-                }
-
-                @using (Html.BeginForm("Student_Save_payment", "Registration", FormMethod.Post, new { @id = "registrationForm", @enctype = "multipart/form-data" }))
-                {
-                    @Html.AntiForgeryToken()
-                    @Html.HiddenFor(model => model.ReferenceCode)
-                    @Html.HiddenFor(model => model.RegID)
-                    @Html.HiddenFor(model => model.CourseSelected)
-                    <!-- PART 2: Payment Details -->
-                    <div class="section">
-                        <h2 class="section-title">💳 Payment & Fee Details</h2>
-                        <div class="form-row">
-
-                        </div>
-
+                // @Html.HiddenFor(model => model.ReferenceCode)
+                // @Html.HiddenFor(model => model.RegID)
+                // @Html.HiddenFor(model => model.CourseSelected)*@
+               
+                <!-- PART 2: Payment Details -->
+            <div class="section">
+                <h2 class="section-title">💳 Payment & Fee Details</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Student Name</label>
+                        @Html.TextBoxFor(model => model.StudentName, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly=true })
                        
-                        <div class="form-group">
-                            <label class="form-label required">Fee Payment Mode</label>
-                            <div class="radio-group">
-                                <div class="radio-option">
-                                    <input type="radio" id="fullPayment" name="paymentMode" value="Full Payment" required onclick="toggleFeeTables('full')" checked>
-                                    <label for="fullPayment" class="radio-label"><span>💰 Full Payment</span></label>
-                                </div>
-                                <div class="radio-option">
-                                    <input type="radio" id="installments" name="paymentMode" value="Installments" onclick="toggleFeeTables('installment')">
-                                    <label for="installments" class="radio-label"><span>📅 Installments</span></label>
-                                </div>
-                            </div>
-                            <span class="error-message" id="paymentModeError"></span>
-                        </div>
-
-                        <div id="fullPaymentTable" class="fee-table-container">
-                            <table class="fee-table">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Class</th>
-                                        <th>Program</th>
-                                        <th>Registration</th>
-                                        <th>Course Fee</th>
-                                        <th>Dis %</th>
-                                        <th>Total Payable</th>
-                                        @if (Model.ReferenceCode != null)
-                                        {
-                                            <th>Day 1</th>
-                                            <th>Day 2</th>
-                                            <th>Day 3</th>
-                                        }
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @*installmentOption->CourseID*@
-                                    @foreach (var data in Model.FeeTermDiscounts)
-                                    {
-                                        <tr>
-                                            <td class="table-radio"><input type="radio" name="CourseID" value="@data.Id" required></td>
-                                            <td><strong>@data.Description</strong></td>
-                                            <td>@data.CourseName</td>
-                                            <td>₹@data.RegistrationFee</td>
-                                            <td>₹@data.FeeAmount</td>
-                                            <td>₹@data.DiscountPers %</td>
-                                            <td><strong>₹@data.TotalFee</strong></td>
-                                            @if (Model.ReferenceCode != null)
-                                            {
-                                                <td>₹@data.Day1.Value.ToString("0.00")</td>
-                                                <td>₹@data.Day2.Value.ToString("0.00")</td>
-                                                <td>₹@data.Day3.Value.ToString("0.00")</td>
-                                            }
-
-                                        </tr>
-                                    }
-
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div id="installmentTable" class="fee-table-container hidden">
-                            <table class="fee-table">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Class</th>
-                                        <th>Program</th>
-                                        <th>Registration</th>
-                                        <th>Course Fee</th>
-                                        <th>Dis %</th>
-                                        <th>Total Payable</th>
-                                        <th>Term 1</th>
-                                        <th>Term 2</th>
-                                        <th>Term 3</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @*installmentOption->CourseID*@
-                                    @foreach (var data in Model.FeeTermDiscounts)
-                                    {
-                                        <tr>
-                                            <td class="table-radio"><input type="radio" name="CourseID" value="@data.Id" required></td>
-                                            <td><strong>@data.Description</strong></td>
-                                            <td>@data.CourseName</td>
-                                            <td>₹@data.RegistrationFee</td>
-                                            <td>₹@data.FeeAmount</td>
-                                            <td>₹@data.DiscountPers %</td>
-                                            <td><strong>₹@data.TotalFee</strong></td>
-                                            <td>₹@data.Term1</td>
-                                            <td>₹@data.Term2</td>
-                                            <td>₹@data.Term3</td>
-                                        </tr>
-                                    }
-
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label required">Mode of Payment</label>
-                                <div class="radio-group">
-                                    <div class="radio-option">
-                                        @*paymentMethod->PaymentType*@
-                                        <input type="radio" id="upi" name="PaymentType" value="UPI" required>
-                                        <label for="upi" class="radio-label"><span>📱 UPI</span></label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="bankTransfer" name="PaymentType" value="Bank Transfer">
-                                        <label for="bankTransfer" class="radio-label"><span>🏦 Bank Transfer</span></label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="cash" name="PaymentType" value="Cash">
-                                        <label for="cash" class="radio-label"><span>💵 Cash</span></label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="cheque" name="PaymentType" value="Cheque">
-                                        <label for="cheque" class="radio-label"><span>🗃️ Cheque</span></label>
-                                    </div>
-                                    <div class="radio-option">
-                                        <input type="radio" id="online" name="PaymentType" value="Online Gateway">
-                                        <label for="online" class="radio-label"><span>💳 Online</span></label>
-                                    </div>
-                                </div>
-                                <span class="error-message" id="paymentMethodError"></span>
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            @*transactionId-TransactionID*@
-                            <label class="form-label">Transaction ID / Receipt Number</label>
-                            <input type="text" class="form-input" id="transactionId" name="TransactionID" placeholder="Enter transaction reference">
-                        </div>
-                        <br><br />
-                        <div class="form-group">
-                            <label class="form-label">Upload Payment Proof</label>
-                            <div class="file-upload">
-                                <input type="file" id="paymentProof" name="paymentProof" accept=".pdf">
-                                <label for="paymentProof" class="file-upload-label">
-                                    📎 Click to upload payment proof (PDF)
-                                </label>
-                            </div>
-                        </div>
                     </div>
-
-                    <!-- Declaration -->
-                    <div class="section">
-                        <h2 class="section-title">📜 Declaration & Agreement</h2>
-
-                        <div class="checkbox-group">
-                            <div class="checkbox-option">
-                                <input type="checkbox" id="declaration1" required>
-                                <label for="declaration1" class="checkbox-label">
-                                    I hereby declare that all information provided is true and complete. I understand that the registration fee is non-refundable and any false information may lead to cancellation of admission.
-                                </label>
-                                <span class="error-message" id="declaration1Error"></span>
-                            </div>
-
-                            <div class="checkbox-option">
-                                <input type="checkbox" id="declaration2" required>
-                                <label for="declaration2" class="checkbox-label">
-                                    I agree to abide by all rules, regulations, and code of conduct of Winfocus Learning Centre, Kottayam. I understand that violation of any rules may result in disciplinary action.
-                                </label>
-                                <span class="error-message" id="declaration2Error"></span>
-                            </div>
-
-                            <div class="checkbox-option">
-                                <input type="checkbox" id="declaration3" required>
-                                <label for="declaration3" class="checkbox-label">
-                                    I consent to receive academic updates, administrative communications, study materials, and notifications via WhatsApp, Email, and SMS for the duration of the course.
-                                </label>
-                                <span class="error-message" id="declaration3Error"></span>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="submit-btn" id="submitBtn" disabled>
-                            <span id="submitText">🚀 Submit </span>
-                            <span id="loadingSpinner" class="loading hidden"></span>
-                        </button>
+                    <div class="form-group">
+                        <label class="form-label">Date of Birth</label>
+                        @Html.TextBoxFor(model => model.DOB, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
                     </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Academic Year</label>
+                        @Html.TextBoxFor(model => model.AcademicYear, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Syllabus</label>
+                        @Html.TextBoxFor(model => model.Syllabus, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Grade</label>
+                        @Html.TextBoxFor(model => model.Grade, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Program</label>
+                        @Html.TextBoxFor(model => model.Course, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Reference Code</label>
+                        @Html.TextBoxFor(model => model.ReferenceCode, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Code Used Date</label>
+                        @Html.TextBox("CodeUsedDate", Model.CodeUsedDate.ToString("dd/MM/yyyy"), new { @class = "form-input", @placeholder = "Enter Reference Code", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Registration Fee</label>
+                        @Html.TextBoxFor(model => model.RegistrationFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Course Fee</label>
+                        @Html.TextBoxFor(model => model.CourseFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Discount Amount</label>
+                        @Html.TextBoxFor(model => model.Discount, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Total Fee</label>
+                        @Html.TextBoxFor(model => model.TotalFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Payment Mode</label>
+                        @Html.TextBoxFor(model => model.PaymentMode, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Payment Type</label>
+                        @Html.TextBoxFor(model => model.PaymentMethod, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Current Payable Amount</label>
+                        @Html.TextBoxFor(model => model.CurrentPayable, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    
+                </div>
 
-                }
+
+            </div>
+
+                <!-- Declaration -->
+                <div class="section">
+                    <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                        <span id="submitText">🚀 Proceed to payment </span>
+                        <span id="loadingSpinner" class="loading hidden"></span>
+                    </button>
+                </div>
+
+                @*}*@
 
             </div>
         </div>
@@ -864,7 +728,7 @@
             const submitBtn = document.getElementById('submitBtn');
             const submitText = document.getElementById('submitText');
             const loadingSpinner = document.getElementById('loadingSpinner');
-            
+
             // Show loading state
             submitText.classList.add('hidden');
             loadingSpinner.classList.remove('hidden');
@@ -1038,7 +902,7 @@
             });
         });
 
-       
+
         document.getElementById('refferenceode').addEventListener('blur', async function () {
             document.getElementById("formCoupen").submit();
         });
