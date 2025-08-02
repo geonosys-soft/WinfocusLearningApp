@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Razorpay.Api;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -12,9 +14,13 @@ using WinfocusLearningApp.ViewModels;
 
 namespace WinfocusLearningApp.Controllers
 {
+    
     public class RegistrationController : Controller
     {
         Winfocus_CS db = new Winfocus_CS();
+        public string key = ConfigurationManager.AppSettings["RazorpayKey"];
+        public string secret = ConfigurationManager.AppSettings["RazorpaySecret"];
+        public string orderId;
         // GET: Registration
         public ActionResult Index()
         {
@@ -381,6 +387,8 @@ namespace WinfocusLearningApp.Controllers
                                 {
                                     RegID = student.RegId,
                                     StudentName = student.FullName,
+                                    Email = student.EmailID,
+                                    Mobile = student.MobileNumber,
                                     DOB = student.DOB,
                                     ReferenceCode = studentPaymentTerms.ReferenceCode,
                                     RegistrationFee = feeDetails.RegistrationFee.ToString(),
@@ -460,12 +468,34 @@ namespace WinfocusLearningApp.Controllers
             studentPaymentPreviwModel.CodeUsedDate =Convert.ToDateTime(tblDicountCoupen.FirstUsedDate);
             var feeDiscountAmount= (Convert.ToDouble(feeDetails.TotalFee)-currentPayable );
             studentPaymentPreviwModel.Discount = feeDiscountAmount.ToString();
-            // Here you can populate the studentPaymentPreviwModel with data from the database
+           studentPaymentPreviwModel.DisPerc = DisPer;
+            Random random = new Random();
+            int unique = random.Next(10000, 99999);
+            int y = DateTime.Now.Year;
+            int m = DateTime.Now.Month;
+            studentPaymentPreviwModel.MOrderID = "WFE" + "-" + y + m + "-" + unique; // Generating a unique merchant order ID
+            // Here creating payment reference
+            Dictionary<string, object> input = new Dictionary<string, object>();
+            input.Add("amount", Convert.ToDouble(studentPaymentPreviwModel.CurrentPayable)*100); // this amount should be same as transaction amount
+            input.Add("currency", "INR");
+            input.Add("receipt", studentPaymentPreviwModel.MOrderID);
+            input.Add("payment_capture", 1);
+
+            //string key = "rzp_test_z08RG1rzYUtKrc";
+            //  string secret = "u6tPO7RYZ3Fp2zZsbMDTMIR9";
+
+            RazorpayClient client = new RazorpayClient(key, secret);
+
+            Razorpay.Api.Order order = client.Order.Create(input);
+            orderId = order["id"].ToString();
+            ViewBag.RazorpayKey = key; // ✅ Pass this to the view
+            studentPaymentPreviwModel.razorpay_order_id = orderId;
+
             return View(studentPaymentPreviwModel);
         }
 
         [HttpPost]
-        public async Task<ActionResult> student_pymt_init_summary(StudentPaymentModel model)
+        public async Task<ActionResult> student_pymt_init_summary(StudentPaymentPreviwModel model)
         {
            /* TblDicountCoupen tblDicountCoupen = db.TblDicountCoupens.FirstOrDefault(c => c.CoupenCode == model.ReferenceCode && c.IsActive == 1 && c.IsDeleted == 0);
            
