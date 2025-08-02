@@ -44,10 +44,12 @@ namespace WinfocusLearningApp.DataEntity
         public virtual DbSet<TblPaymentMode> TblPaymentModes { get; set; }
         public virtual DbSet<TblRelationship> TblRelationships { get; set; }
         public virtual DbSet<TblStudent_Mark_Scored> TblStudent_Mark_Scored { get; set; }
-        public virtual DbSet<TblStudent_Parent_Basic> TblStudent_Parent_Basic { get; set; }
-        public virtual DbSet<TblSTudentBasicDetail> TblSTudentBasicDetails { get; set; }
         public virtual DbSet<TblMaterial> TblMaterials { get; set; }
         public virtual DbSet<TblRegistrationBatch> TblRegistrationBatches { get; set; }
         public virtual DbSet<TblRegistrationBatchTime> TblRegistrationBatchTimes { get; set; }
+        public virtual DbSet<TblSTudentBasicDetail> TblSTudentBasicDetails { get; set; }
+        public virtual DbSet<TblStudent_Parent_Basic> TblStudent_Parent_Basic { get; set; }
+        public virtual DbSet<TblStudent_Payment_Terms> TblStudent_Payment_Terms { get; set; }
+        public virtual DbSet<TblDicountCoupen> TblDicountCoupens { get; set; }
     }
 }

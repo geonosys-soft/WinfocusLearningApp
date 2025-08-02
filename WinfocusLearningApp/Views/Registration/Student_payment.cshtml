@@ -1,0 +1,1047 @@
+﻿@model WinfocusLearningApp.ViewModels.StudentPaymentModel
+@{
+    ViewBag.Title = "Student Registration - Winfocus Learning Centre";
+    Layout = "~/Views/Shared/_loginLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --primary-dark: #5a67d8;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --success-color: #48bb78;
+            --error-color: #f56565;
+            --warning-color: #ed8936;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-shadow: 0 20px 40px rgba(102, 126, 234, 0.1);
+            --hover-shadow: 0 25px 50px rgba(102, 126, 234, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: white;
+            min-height: 100vh;
+            padding: 20px 0;
+            position: relative;
+            overflow-x: hidden;
+            color: #1a202c;
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.05);
+            animation: float 6s ease-in-out infinite;
+        }
+
+            .shape:nth-child(1) {
+                width: 80px;
+                height: 80px;
+                top: 10%;
+                left: 10%;
+                animation-delay: 0s;
+            }
+
+            .shape:nth-child(2) {
+                width: 120px;
+                height: 120px;
+                top: 20%;
+                right: 10%;
+                animation-delay: 2s;
+            }
+
+            .shape:nth-child(3) {
+                width: 60px;
+                height: 60px;
+                bottom: 20%;
+                left: 20%;
+                animation-delay: 4s;
+            }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .main-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .header {
+            background: var(--bg-gradient);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .header::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+                animation: pulse 4s ease-in-out infinite;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-bottom: 10px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .header p {
+                font-size: 1.1rem;
+                opacity: 0.9;
+                position: relative;
+                z-index: 1;
+            }
+
+        .form-container {
+            padding: 50px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+            .section:nth-child(1) {
+                animation-delay: 0.2s;
+            }
+
+            .section:nth-child(2) {
+                animation-delay: 0.4s;
+            }
+
+            .section:nth-child(3) {
+                animation-delay: 0.6s;
+            }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid transparent;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+            .section-title::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 60px;
+                height: 3px;
+                background: var(--bg-gradient);
+                border-radius: 2px;
+                animation: expandWidth 0.8s ease-out 0.8s both;
+            }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+            .form-label.required::after {
+                content: " *";
+                color: var(--error-color);
+                font-weight: bold;
+            }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            outline: none;
+            color: #1a202c;
+            font-weight: 500;
+        }
+
+            .form-input:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+                transform: translateY(-2px);
+            }
+
+            .form-input:hover {
+                border-color: #cbd5e0;
+            }
+
+        /* Custom Radio Buttons */
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .radio-option {
+            position: relative;
+        }
+
+            .radio-option input[type="radio"] {
+                position: absolute;
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 50px;
+            background: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            color: #2d3748;
+        }
+
+            .radio-label::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 15px;
+                width: 18px;
+                height: 18px;
+                border: 2px solid #cbd5e0;
+                border-radius: 50%;
+                transform: translateY(-50%);
+                transition: all 0.3s ease;
+                background: white;
+            }
+
+            .radio-label::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 21px;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--primary-color);
+                transform: translateY(-50%) scale(0);
+                transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+
+        .radio-option input[type="radio"]:checked + .radio-label {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+            .radio-option input[type="radio"]:checked + .radio-label::before {
+                border-color: var(--primary-color);
+                background: white;
+            }
+
+            .radio-option input[type="radio"]:checked + .radio-label::after {
+                transform: translateY(-50%) scale(1);
+            }
+
+        .radio-label span {
+            margin-left: 35px;
+        }
+
+        /* Fee Tables */
+        .fee-table-container {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 30px 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .fee-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .fee-table th {
+                background: var(--bg-gradient);
+                color: white;
+                padding: 20px 15px;
+                font-weight: 600;
+                text-align: center;
+                font-size: 0.9rem;
+                border-bottom: none;
+            }
+
+            .fee-table td {
+                padding: 18px 15px;
+                text-align: center;
+                border-bottom: 1px solid #f1f5f9;
+                font-weight: 600;
+                transition: background-color 0.3s ease;
+                color: #2d3748;
+            }
+
+            .fee-table tbody tr:hover {
+                background: rgba(102, 126, 234, 0.05);
+            }
+
+            .fee-table tbody tr:last-child td {
+                border-bottom: none;
+            }
+
+        /* Table Radio Buttons */
+        .table-radio {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* Custom Checkbox */
+        .checkbox-group {
+            margin: 20px 0;
+        }
+
+        .checkbox-option {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+            .checkbox-option input[type="checkbox"] {
+                position: absolute;
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #2d3748;
+            padding-left: 35px;
+            position: relative;
+            font-weight: 500;
+        }
+
+            .checkbox-label::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 2px;
+                width: 20px;
+                height: 20px;
+                border: 2px solid #cbd5e0;
+                border-radius: 6px;
+                background: white;
+                transition: all 0.3s ease;
+            }
+
+            .checkbox-label::after {
+                content: '✓';
+                position: absolute;
+                left: 5px;
+                top: 0px;
+                color: white;
+                font-size: 14px;
+                font-weight: bold;
+                opacity: 0;
+                transform: scale(0.5);
+                transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+
+        .checkbox-option input[type="checkbox"]:checked + .checkbox-label::before {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .checkbox-option input[type="checkbox"]:checked + .checkbox-label::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: var(--bg-gradient);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .submit-btn::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                transition: left 0.5s;
+            }
+
+            .submit-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+            }
+
+                .submit-btn:hover::before {
+                    left: 100%;
+                }
+
+            .submit-btn:active {
+                transform: translateY(-1px);
+            }
+
+        /* Error Messages */
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: block;
+            animation: shake 0.5s ease-in-out;
+            font-weight: 600;
+        }
+        /* File Upload */
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+            .file-upload input[type="file"] {
+                position: absolute;
+                opacity: 0;
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+            }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border: 2px dashed #cbd5e0;
+            border-radius: 12px;
+            background: #f7fafc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+            .file-upload-label:hover {
+                border-color: var(--primary-color);
+                background: rgba(102, 126, 234, 0.05);
+                color: var(--primary-color);
+            }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Date Display */
+        .date-display {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-align: center;
+        }
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container">
+        <div class="main-card">
+            <div class="header">
+                <h1>🎓 Winfocus Learning Center</h1>
+                <p>Winfocus Learning Centre, Kottayam – Excellence in NEET, JEE & CBSE Coaching</p>
+            </div>
+
+            <div class="form-container">
+                <!-- PART 1: Payment Date -->
+                <div class="form-group" style="margin-top: 10px;">
+                    <label class="form-label">Payment Date:</label>
+                    <div class="date-display" id="currentDate"></div>
+                </div>
+                <br><br />
+                @using (Html.BeginForm("Student_payment", "Registration", FormMethod.Post, new { @name = "formCoupen", @id = "formCoupen" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Refference Code</label>
+                            <input type="text" class="form-input" id="refferenceode" name="refferenceode" value="@Model.ReferenceCode" placeholder="Enter Refference Code">
+
+                            @if (ViewBag.ErrorMessage != null)
+                            {
+                                <span class="error-message">
+                                    @ViewBag.ErrorMessage
+                                </span>
+                            }
+
+                        </div>
+                        @Html.HiddenFor(model => model.RegID)
+                        <div class="form-group">
+                            <label class="form-label required">Target Exam</label>
+                            <select class="form-input" id="courseSelected" disabled required>
+                                <option value="">Select Course</option>
+
+                                @if (Model.CourseSelected.Equals("NEET"))
+                                {
+                                    <option value="NEET" selected>🩺 NEET Preparation</option>
+                                }
+                                else if (Model.CourseSelected.Equals("JEE"))
+                                {
+                                    <option value="JEE" selected>⚙️ JEE Preparation</option>
+                                }
+                                else
+                                {
+                                    <option value="CBSE Support" selected>📚 CBSE Support</option>
+                                }
+
+
+
+                            </select>
+                            <span class="error-message" id="courseSelectedError"></span>
+                        </div>
+                    </div>
+                }
+
+                @using (Html.BeginForm("Student_Save_payment", "Registration", FormMethod.Post, new { @id = "registrationForm", @enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.ReferenceCode)
+                    @Html.HiddenFor(model => model.RegID)
+                    @Html.HiddenFor(model => model.CourseSelected)
+                    <!-- PART 2: Payment Details -->
+                    <div class="section">
+                        <h2 class="section-title">💳 Payment & Fee Details</h2>
+                        <div class="form-row">
+
+                        </div>
+
+                       
+                        <div class="form-group">
+                            <label class="form-label required">Fee Payment Mode</label>
+                            <div class="radio-group">
+                                <div class="radio-option">
+                                    <input type="radio" id="fullPayment" name="paymentMode" value="Full Payment" required onclick="toggleFeeTables('full')" checked>
+                                    <label for="fullPayment" class="radio-label"><span>💰 Full Payment</span></label>
+                                </div>
+                                <div class="radio-option">
+                                    <input type="radio" id="installments" name="paymentMode" value="Installments" onclick="toggleFeeTables('installment')">
+                                    <label for="installments" class="radio-label"><span>📅 Installments</span></label>
+                                </div>
+                            </div>
+                            <span class="error-message" id="paymentModeError"></span>
+                        </div>
+
+                        <div id="fullPaymentTable" class="fee-table-container">
+                            <table class="fee-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Class</th>
+                                        <th>Program</th>
+                                        <th>Registration</th>
+                                        <th>Course Fee</th>
+                                        <th>Dis %</th>
+                                        <th>Total Payable</th>
+                                        @if (Model.ReferenceCode != null)
+                                        {
+                                            <th>Day 1</th>
+                                            <th>Day 2</th>
+                                            <th>Day 3</th>
+                                        }
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*installmentOption->CourseID*@
+                                    @foreach (var data in Model.FeeTermDiscounts)
+                                    {
+                                        <tr>
+                                            <td class="table-radio"><input type="radio" name="CourseID" value="@data.Id" required></td>
+                                            <td><strong>@data.Description</strong></td>
+                                            <td>@data.CourseName</td>
+                                            <td>₹@data.RegistrationFee</td>
+                                            <td>₹@data.FeeAmount</td>
+                                            <td>₹@data.DiscountPers %</td>
+                                            <td><strong>₹@data.TotalFee</strong></td>
+                                            @if (Model.ReferenceCode != null)
+                                            {
+                                                <td>₹@data.Day1.Value.ToString("0.00")</td>
+                                                <td>₹@data.Day2.Value.ToString("0.00")</td>
+                                                <td>₹@data.Day3.Value.ToString("0.00")</td>
+                                            }
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="installmentTable" class="fee-table-container hidden">
+                            <table class="fee-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Class</th>
+                                        <th>Program</th>
+                                        <th>Registration</th>
+                                        <th>Course Fee</th>
+                                        <th>Dis %</th>
+                                        <th>Total Payable</th>
+                                        <th>Term 1</th>
+                                        <th>Term 2</th>
+                                        <th>Term 3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*installmentOption->CourseID*@
+                                    @foreach (var data in Model.FeeTermDiscounts)
+                                    {
+                                        <tr>
+                                            <td class="table-radio"><input type="radio" name="CourseID" value="@data.Id" required></td>
+                                            <td><strong>@data.Description</strong></td>
+                                            <td>@data.CourseName</td>
+                                            <td>₹@data.RegistrationFee</td>
+                                            <td>₹@data.FeeAmount</td>
+                                            <td>₹@data.DiscountPers %</td>
+                                            <td><strong>₹@data.TotalFee</strong></td>
+                                            <td>₹@data.Term1</td>
+                                            <td>₹@data.Term2</td>
+                                            <td>₹@data.Term3</td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Mode of Payment</label>
+                                <div class="radio-group">
+                                    <div class="radio-option">
+                                        @*paymentMethod->PaymentType*@
+                                        <input type="radio" id="upi" name="PaymentType" value="UPI" required>
+                                        <label for="upi" class="radio-label"><span>📱 UPI</span></label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="bankTransfer" name="PaymentType" value="Bank Transfer">
+                                        <label for="bankTransfer" class="radio-label"><span>🏦 Bank Transfer</span></label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="cash" name="PaymentType" value="Cash">
+                                        <label for="cash" class="radio-label"><span>💵 Cash</span></label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="cheque" name="PaymentType" value="Cheque">
+                                        <label for="cheque" class="radio-label"><span>🗃️ Cheque</span></label>
+                                    </div>
+                                    <div class="radio-option">
+                                        <input type="radio" id="online" name="PaymentType" value="Online Gateway">
+                                        <label for="online" class="radio-label"><span>💳 Online</span></label>
+                                    </div>
+                                </div>
+                                <span class="error-message" id="paymentMethodError"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            @*transactionId-TransactionID*@
+                            <label class="form-label">Transaction ID / Receipt Number</label>
+                            <input type="text" class="form-input" id="transactionId" name="TransactionID" placeholder="Enter transaction reference">
+                        </div>
+                        <br><br />
+                        <div class="form-group">
+                            <label class="form-label">Upload Payment Proof</label>
+                            <div class="file-upload">
+                                <input type="file" id="paymentProof" name="paymentProof" accept=".pdf">
+                                <label for="paymentProof" class="file-upload-label">
+                                    📎 Click to upload payment proof (PDF)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Declaration -->
+                    <div class="section">
+                        <h2 class="section-title">📜 Declaration & Agreement</h2>
+
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="declaration1" required>
+                                <label for="declaration1" class="checkbox-label">
+                                    I hereby declare that all information provided is true and complete. I understand that the registration fee is non-refundable and any false information may lead to cancellation of admission.
+                                </label>
+                                <span class="error-message" id="declaration1Error"></span>
+                            </div>
+
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="declaration2" required>
+                                <label for="declaration2" class="checkbox-label">
+                                    I agree to abide by all rules, regulations, and code of conduct of Winfocus Learning Centre, Kottayam. I understand that violation of any rules may result in disciplinary action.
+                                </label>
+                                <span class="error-message" id="declaration2Error"></span>
+                            </div>
+
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="declaration3" required>
+                                <label for="declaration3" class="checkbox-label">
+                                    I consent to receive academic updates, administrative communications, study materials, and notifications via WhatsApp, Email, and SMS for the duration of the course.
+                                </label>
+                                <span class="error-message" id="declaration3Error"></span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                            <span id="submitText">🚀 Submit </span>
+                            <span id="loadingSpinner" class="loading hidden"></span>
+                        </button>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set current date with better formatting
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-IN', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Enhanced toggle function with animation
+        function toggleFeeTables(type) {
+            const fullTable = document.getElementById('fullPaymentTable');
+            const installmentTable = document.getElementById('installmentTable');
+
+            if (type === 'full') {
+                fullTable.style.opacity = '0';
+                installmentTable.style.opacity = '0';
+
+                setTimeout(() => {
+                    fullTable.classList.remove('hidden');
+                    installmentTable.classList.add('hidden');
+                    fullTable.style.opacity = '1';
+                }, 150);
+            } else {
+                fullTable.style.opacity = '0';
+                installmentTable.style.opacity = '0';
+
+                setTimeout(() => {
+                    fullTable.classList.add('hidden');
+                    installmentTable.classList.remove('hidden');
+                    installmentTable.style.opacity = '1';
+                }, 150);
+            }
+        }
+
+        // Check all declarations are checked to enable submit button
+        function checkDeclarations() {
+            const declaration1 = document.getElementById('declaration1').checked;
+            const declaration2 = document.getElementById('declaration2').checked;
+            const declaration3 = document.getElementById('declaration3').checked;
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (declaration1 && declaration2 && declaration3) {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        }
+
+        // Add event listeners to checkboxes
+        document.getElementById('declaration1').addEventListener('change', checkDeclarations);
+        document.getElementById('declaration2').addEventListener('change', checkDeclarations);
+        document.getElementById('declaration3').addEventListener('change', checkDeclarations);
+
+        // Enhanced form validation with better UX
+        document.getElementById('registrationForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            // Show loading state
+            submitText.classList.add('hidden');
+            loadingSpinner.classList.remove('hidden');
+            submitBtn.disabled = true;
+
+            let isValid = true;
+            this.submit();
+            // Reset all error messages
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.textContent = '';
+                el.style.display = 'none';
+            });
+
+            // Validate required text fields
+            const requiredFields = [
+                { id: 'fullName', name: 'Full Name' },
+                { id: 'dob', name: 'Date of Birth' },
+                { id: 'studentMobile', name: 'Student Mobile' },
+                { id: 'studentEmail', name: 'Student Email' },
+                { id: 'schoolName', name: 'School Name' },
+                { id: 'parentName', name: 'Parent Name' },
+                { id: 'parentMobile', name: 'Parent Mobile' },
+                { id: 'courseSelected', name: 'Course Selection' },
+                { id: 'targetYear', name: 'Target Year' }
+            ];
+
+            requiredFields.forEach(field => {
+                const element = document.getElementById(field.id);
+                const errorElement = document.getElementById(`${field.id}Error`);
+
+                if (!element.value.trim()) {
+                    errorElement.textContent = `${field.name} is required`;
+                    errorElement.style.display = 'block';
+                    isValid = false;
+
+                    // Add shake animation to the field
+                    element.style.animation = 'shake 0.5s ease-in-out';
+                    setTimeout(() => element.style.animation = '', 500);
+                }
+            });
+
+            // Validate radio button groups
+            const radioGroups = [
+                { name: 'gender', errorId: 'genderError', message: 'Please select gender' },
+                { name: 'board', errorId: 'boardError', message: 'Please select academic board' },
+                { name: 'currentClass', errorId: 'currentClassError', message: 'Please select current class' },
+                { name: 'targetExam', errorId: 'targetExamError', message: 'Please select target exam' },
+                { name: 'relationship', errorId: 'relationshipError', message: 'Please select relationship' },
+                { name: 'duration', errorId: 'durationError', message: 'Please select course duration' },
+                { name: 'paymentMode', errorId: 'paymentModeError', message: 'Please select payment mode' },
+                { name: 'paymentMethod', errorId: 'paymentMethodError', message: 'Please select payment method' },
+                { name: 'fullPaymentOption', errorId: 'paymentModeError', message: 'Please select a class option for full payment' },
+                { name: 'installmentOption', errorId: 'paymentModeError', message: 'Please select a class option for installment payment' }
+            ];
+
+            radioGroups.forEach(group => {
+                const selected = document.querySelector(`input[name="${group.name}"]:checked`);
+                const errorElement = document.getElementById(group.errorId);
+
+                if (!selected) {
+                    errorElement.textContent = group.message;
+                    errorElement.style.display = 'block';
+                    isValid = false;
+                }
+            });
+
+            // Validate checkboxes
+            const checkboxes = [
+                { id: 'declaration1', message: 'Please accept the first declaration' },
+                { id: 'declaration2', message: 'Please accept the terms and conditions' },
+                { id: 'declaration3', message: 'Please consent to communications' }
+            ];
+
+            checkboxes.forEach(checkbox => {
+                const element = document.getElementById(checkbox.id);
+                const errorElement = document.getElementById(`${checkbox.id}Error`);
+
+                if (!element.checked) {
+                    errorElement.textContent = checkbox.message;
+                    errorElement.style.display = 'block';
+                    isValid = false;
+                }
+            });
+
+            // Validate mobile numbers
+            const mobileFields = [
+                { id: 'studentMobile', name: 'Student mobile number' },
+                { id: 'parentMobile', name: 'Parent mobile number' }
+            ];
+
+            mobileFields.forEach(field => {
+                const element = document.getElementById(field.id);
+                const errorElement = document.getElementById(`${field.id}Error`);
+                const value = element.value.trim();
+
+                if (value && (!/^[0-9]{10}$/.test(value) || value.length !== 10)) {
+                    errorElement.textContent = `Please enter a valid 10-digit ${field.name}`;
+                    errorElement.style.display = 'block';
+                    isValid = false;
+                }
+            });
+
+            // Simulate form submission
+            setTimeout(() => {
+                if (isValid) {
+                    // Success animation
+                    submitBtn.style.background = 'linear-gradient(135deg, #48bb78, #38a169)';
+                    submitText.textContent = '✅ Registration Submitted Successfully!';
+                    submitText.classList.remove('hidden');
+                    loadingSpinner.classList.add('hidden');
+
+                    // Show success message
+                    setTimeout(() => {
+                        alert('🎉 Registration submitted successfully! You will receive a confirmation email shortly.');
+                        // Here you would typically submit the form to the server
+                        // this.submit();
+                    }, 500);
+                } else {
+                    // Error state
+                    submitBtn.style.background = 'linear-gradient(135deg, #f56565, #e53e3e)';
+                    submitText.textContent = '❌ Please fix the errors above';
+                    submitText.classList.remove('hidden');
+                    loadingSpinner.classList.add('hidden');
+                    submitBtn.disabled = false;
+
+                    // Reset button after 3 seconds
+                    setTimeout(() => {
+                        submitBtn.style.background = 'var(--bg-gradient)';
+                        submitText.textContent = '🚀 Submit Registration';
+                    }, 3000);
+
+                    // Scroll to first error
+                    const firstError = document.querySelector('.error-message[style*="block"]');
+                    if (firstError) {
+                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+            }, 2000);
+        });
+
+        // File upload feedback
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function () {
+                const label = this.nextElementSibling;
+                if (this.files.length > 0) {
+                    label.textContent = `✅ ${this.files[0].name}`;
+                    label.style.color = 'var(--success-color)';
+                    label.style.borderColor = 'var(--success-color)';
+                }
+            });
+        });
+
+        // Add smooth scrolling for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Enhanced input animations
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function () {
+                this.style.transform = 'translateY(-2px)';
+            });
+
+            input.addEventListener('blur', function () {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+       
+        document.getElementById('refferenceode').addEventListener('blur', async function () {
+            document.getElementById("formCoupen").submit();
+        });
+    </script>
+</body>
+</html>

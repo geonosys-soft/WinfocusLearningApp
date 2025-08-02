@@ -11,7 +11,7 @@ using WinfocusLearningApp.DataEntity;
 
 namespace WinfocusLearningApp.WebApi
 {
-    
+
     public class ManagementApiController : ApiController
     {
 
@@ -32,7 +32,7 @@ namespace WinfocusLearningApp.WebApi
                 // Assuming you have a method to add the year to the database
                 TblAccademicYear inf = new TblAccademicYear();
                 inf.AccademicYear = jsonData.AccademicYear;
-                var userId=winfocus_CS.Users.FirstOrDefault(x => x.UserName ==User.Identity.Name).Id;
+                var userId = winfocus_CS.Users.FirstOrDefault(x => x.UserName == User.Identity.Name).Id;
                 inf.CreatedBy = userId; // Assuming 1 is the ID of the admin user
                 inf.CreatedDate = DateTime.UtcNow;
                 inf.IsDeleted = 0;
@@ -107,7 +107,7 @@ namespace WinfocusLearningApp.WebApi
 
 
         }
-      //  [Authorize(Roles = "Admin")]
+        //  [Authorize(Roles = "Admin")]
         [HttpGet]
         [Route("api/ManagementApi/FetchAccademicYear")]
         public IHttpActionResult FetchAccademicYear()
@@ -1411,6 +1411,39 @@ namespace WinfocusLearningApp.WebApi
             {
                 var batchList = winfocus_CS.TblRegistrationBatches.Where(x => x.IsDeleted == 0 && x.ACID == Id).ToList();
                 return Ok(batchList);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/ManagementApi/FindMailId")]
+        [HttpGet]
+        public IHttpActionResult FindMailId([FromUri] string email)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(email))
+                {
+                    return BadRequest("Email cannot be null or empty.");
+                }
+
+                // Check in Users table
+                var user = winfocus_CS.Users.FirstOrDefault(x => x.Email == email && x.IsDeleted == 0);
+                if (user != null)
+                {
+                    return NotFound(); // Email already exists
+                }
+
+                // Check in TblStudent_Parent_Basic table
+                var student = winfocus_CS.TblSTudentBasicDetails.FirstOrDefault(x => x.EmailID == email);
+                if (student != null)
+                {
+                    return NotFound(); // Email already exists
+                }
+
+                return Ok("Valid Email"); // Email is not used in either table
             }
             catch (Exception ex)
             {
