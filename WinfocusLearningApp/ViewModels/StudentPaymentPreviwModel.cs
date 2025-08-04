@@ -10,6 +10,9 @@ namespace WinfocusLearningApp.ViewModels
         public string RegID { get; set; }
         public string StudentName { get; set; }
         public string DOB { get; set; }
+        public string Email { get; set; }
+        public string Mobile { get; set; }
+        public string MarchentOrderId { get; set; }
         public string AcademicYear { get; set; }
         public string Syllabus { get; set; }
         public string Grade { get; set; }
@@ -21,6 +24,7 @@ namespace WinfocusLearningApp.ViewModels
         public string CourseFee { get; set; }
         public string TotalFee { get; set; }
         public string Discount { get; set; }
+        public double DisPerc { get; set; }
          public string Term1 { get; set; }
         public string Term2 { get; set; }
         public string Term3 { get; set; }
@@ -40,6 +44,11 @@ namespace WinfocusLearningApp.ViewModels
         public string PaymentResponseDate { get; set; }
         public string PaymentResponseTime { get; set; }
         public string CurrentPayable { get; set; }
+        public string razorpay_payment_id { get; set; }
+        public string razorpay_order_id { get; set; }
+        public string razorpay_signature { get; set; }
+
+        public string MOrderID { get; set; }
 
     }
 }

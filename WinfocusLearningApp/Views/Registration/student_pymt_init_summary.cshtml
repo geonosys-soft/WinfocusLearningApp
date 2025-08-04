@@ -567,97 +567,120 @@
                 // @Html.HiddenFor(model => model.ReferenceCode)
                 // @Html.HiddenFor(model => model.RegID)
                 // @Html.HiddenFor(model => model.CourseSelected)*@
-               
+
                 <!-- PART 2: Payment Details -->
-            <div class="section">
-                <h2 class="section-title">💳 Payment & Fee Details</h2>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Student Name</label>
-                        @Html.TextBoxFor(model => model.StudentName, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly=true })
-                       
+                <div class="section">
+                    <h2 class="section-title">💳 Payment & Fee Details</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Student Name</label>
+                            @Html.TextBoxFor(model => model.StudentName, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                            @Html.HiddenFor(model => model.MOrderID)
+                            @Html.HiddenFor(model => model.RegID)
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date of Birth</label>
+                            @Html.TextBoxFor(model => model.DOB, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Date of Birth</label>
-                        @Html.TextBoxFor(model => model.DOB, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mobile</label>
+                            @Html.TextBoxFor(model => model.Mobile, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Academic Year</label>
-                        @Html.TextBoxFor(model => model.AcademicYear, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Academic Year</label>
+                            @Html.TextBoxFor(model => model.AcademicYear, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Syllabus</label>
+                            @Html.TextBoxFor(model => model.Syllabus, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Syllabus</label>
-                        @Html.TextBoxFor(model => model.Syllabus, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Grade</label>
+                            @Html.TextBoxFor(model => model.Grade, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Program</label>
+                            @Html.TextBoxFor(model => model.Course, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Grade</label>
-                        @Html.TextBoxFor(model => model.Grade, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Reference Code</label>
+                            @Html.TextBoxFor(model => model.ReferenceCode, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Code Used Date</label>
+                            @Html.TextBox("CodeUsedDate", Model.CodeUsedDate.ToString("dd/MM/yyyy"), new { @class = "form-input", @placeholder = "Enter Reference Code", @readonly = "readonly" })
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Program</label>
-                        @Html.TextBoxFor(model => model.Course, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Registration Fee</label>
+                            @Html.TextBoxFor(model => model.RegistrationFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Course Fee</label>
+                            @Html.TextBoxFor(model => model.CourseFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Reference Code</label>
-                        @Html.TextBoxFor(model => model.ReferenceCode, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Discount Amount</label>
+                            @Html.TextBoxFor(model => model.Discount, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Total Fee</label>
+                            @Html.TextBoxFor(model => model.TotalFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Code Used Date</label>
-                        @Html.TextBox("CodeUsedDate", Model.CodeUsedDate.ToString("dd/MM/yyyy"), new { @class = "form-input", @placeholder = "Enter Reference Code", @readonly = "readonly" })
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Payment Mode</label>
+                            @Html.TextBoxFor(model => model.PaymentMode, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Payment Type</label>
+                            @Html.TextBoxFor(model => model.PaymentMethod, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Registration Fee</label>
-                        @Html.TextBoxFor(model => model.RegistrationFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Current Payable Amount</label>
+                            @Html.TextBoxFor(model => model.CurrentPayable, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">Course Fee</label>
-                        @Html.TextBoxFor(model => model.CourseFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Discount Amount</label>
-                        @Html.TextBoxFor(model => model.Discount, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Total Fee</label>
-                        @Html.TextBoxFor(model => model.TotalFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Payment Mode</label>
-                        @Html.TextBoxFor(model => model.PaymentMode, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Payment Type</label>
-                        @Html.TextBoxFor(model => model.PaymentMethod, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label class="form-label">Current Payable Amount</label>
-                        @Html.TextBoxFor(model => model.CurrentPayable, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                    </div>
-                    
-                </div>
 
 
-            </div>
+                </div>
+                @using (Html.BeginForm("Response_Payment", "Payment", FormMethod.Post, new { @name = "razorpayForm" }))
+                {
+                    @Html.HiddenFor(model => model.razorpay_payment_id)
+                    @Html.HiddenFor(model => model.razorpay_order_id)
+                    @Html.HiddenFor(model => model.razorpay_signature)
+                    @Html.HiddenFor(model => model.RegID)
+                    @Html.HiddenFor(model => model.CurrentPayable)
+                    @Html.HiddenFor(model => model.Discount)
+                    @Html.HiddenFor(model => model.DisPerc)
+                    @Html.HiddenFor(model => model.PaymentMode)
 
+
+                }
                 <!-- Declaration -->
                 <div class="section">
-                    <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                    <button type="submit" class="submit-btn" id="submitBtn">
                         <span id="submitText">🚀 Proceed to payment </span>
-                        <span id="loadingSpinner" class="loading hidden"></span>
                     </button>
                 </div>
 
@@ -666,7 +689,7 @@
             </div>
         </div>
     </div>
-
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         // Set current date with better formatting
         document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-IN', {
@@ -676,236 +699,55 @@
             day: 'numeric'
         });
 
-        // Enhanced toggle function with animation
-        function toggleFeeTables(type) {
-            const fullTable = document.getElementById('fullPaymentTable');
-            const installmentTable = document.getElementById('installmentTable');
+        // payment
 
-            if (type === 'full') {
-                fullTable.style.opacity = '0';
-                installmentTable.style.opacity = '0';
-
-                setTimeout(() => {
-                    fullTable.classList.remove('hidden');
-                    installmentTable.classList.add('hidden');
-                    fullTable.style.opacity = '1';
-                }, 150);
-            } else {
-                fullTable.style.opacity = '0';
-                installmentTable.style.opacity = '0';
-
-                setTimeout(() => {
-                    fullTable.classList.add('hidden');
-                    installmentTable.classList.remove('hidden');
-                    installmentTable.style.opacity = '1';
-                }, 150);
+   
+    var orderId = document.getElementById('razorpay_order_id').value
+    var options = {
+            "key": "@ViewBag.RazorpayKey", // ✅ Add this line to provide the Razorpay Key ID
+            "name": document.getElementById('StudentName').value,
+        "description": document.getElementById('RegID').value + ' | ' + document.getElementById('Grade').value +' - '+ document.getElementById('Course').value,
+            "order_id": orderId,
+            "image": "https://s29.postimg.org/r6dj1g85z/daft_punk.jpg",
+            "prefill": {
+                "name": document.getElementById('StudentName').value,
+                "email": document.getElementById('Email').value,
+                "contact": document.getElementById('Mobile').value,
+            },
+            "notes": {
+                "PaymentDescription": "Registration Fee Payement",
+                "merchant_order_id": document.getElementById('MOrderID').value,
+            },
+            "theme": {
+                "color": "#F37254"
             }
         }
-
-        // Check all declarations are checked to enable submit button
-        function checkDeclarations() {
-            const declaration1 = document.getElementById('declaration1').checked;
-            const declaration2 = document.getElementById('declaration2').checked;
-            const declaration3 = document.getElementById('declaration3').checked;
-            const submitBtn = document.getElementById('submitBtn');
-
-            if (declaration1 && declaration2 && declaration3) {
-                submitBtn.disabled = false;
-            } else {
-                submitBtn.disabled = true;
-            }
-        }
-
-        // Add event listeners to checkboxes
-        document.getElementById('declaration1').addEventListener('change', checkDeclarations);
-        document.getElementById('declaration2').addEventListener('change', checkDeclarations);
-        document.getElementById('declaration3').addEventListener('change', checkDeclarations);
-
-        // Enhanced form validation with better UX
-        document.getElementById('registrationForm').addEventListener('submit', function (e) {
+        // Boolean whether to show image inside a white frame. (default: true)
+        options.theme.image_padding = false;
+        options.handler = function (response) {
+            document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+            document.getElementById('razorpay_order_id').value = orderId;
+            document.getElementById('razorpay_signature').value = response.razorpay_signature;
+            document.razorpayForm.submit();
+        };
+        options.modal = {
+            ondismiss: function () {
+                console.log("This code runs when the popup is closed");
+            },
+            // Boolean indicating whether pressing escape key
+            // should close the checkout form. (default: true)
+            escape: true,
+            // Boolean indicating whether clicking translucent blank
+            // space outside checkout form should close the form. (default: false)
+            backdropclose: false
+        };
+        var rzp = new Razorpay(options);
+        document.getElementById('submitBtn').onclick = function (e) {
+            rzp.open();
             e.preventDefault();
-
-            const submitBtn = document.getElementById('submitBtn');
-            const submitText = document.getElementById('submitText');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-
-            // Show loading state
-            submitText.classList.add('hidden');
-            loadingSpinner.classList.remove('hidden');
-            submitBtn.disabled = true;
-
-            let isValid = true;
-            this.submit();
-            // Reset all error messages
-            document.querySelectorAll('.error-message').forEach(el => {
-                el.textContent = '';
-                el.style.display = 'none';
-            });
-
-            // Validate required text fields
-            const requiredFields = [
-                { id: 'fullName', name: 'Full Name' },
-                { id: 'dob', name: 'Date of Birth' },
-                { id: 'studentMobile', name: 'Student Mobile' },
-                { id: 'studentEmail', name: 'Student Email' },
-                { id: 'schoolName', name: 'School Name' },
-                { id: 'parentName', name: 'Parent Name' },
-                { id: 'parentMobile', name: 'Parent Mobile' },
-                { id: 'courseSelected', name: 'Course Selection' },
-                { id: 'targetYear', name: 'Target Year' }
-            ];
-
-            requiredFields.forEach(field => {
-                const element = document.getElementById(field.id);
-                const errorElement = document.getElementById(`${field.id}Error`);
-
-                if (!element.value.trim()) {
-                    errorElement.textContent = `${field.name} is required`;
-                    errorElement.style.display = 'block';
-                    isValid = false;
-
-                    // Add shake animation to the field
-                    element.style.animation = 'shake 0.5s ease-in-out';
-                    setTimeout(() => element.style.animation = '', 500);
-                }
-            });
-
-            // Validate radio button groups
-            const radioGroups = [
-                { name: 'gender', errorId: 'genderError', message: 'Please select gender' },
-                { name: 'board', errorId: 'boardError', message: 'Please select academic board' },
-                { name: 'currentClass', errorId: 'currentClassError', message: 'Please select current class' },
-                { name: 'targetExam', errorId: 'targetExamError', message: 'Please select target exam' },
-                { name: 'relationship', errorId: 'relationshipError', message: 'Please select relationship' },
-                { name: 'duration', errorId: 'durationError', message: 'Please select course duration' },
-                { name: 'paymentMode', errorId: 'paymentModeError', message: 'Please select payment mode' },
-                { name: 'paymentMethod', errorId: 'paymentMethodError', message: 'Please select payment method' },
-                { name: 'fullPaymentOption', errorId: 'paymentModeError', message: 'Please select a class option for full payment' },
-                { name: 'installmentOption', errorId: 'paymentModeError', message: 'Please select a class option for installment payment' }
-            ];
-
-            radioGroups.forEach(group => {
-                const selected = document.querySelector(`input[name="${group.name}"]:checked`);
-                const errorElement = document.getElementById(group.errorId);
-
-                if (!selected) {
-                    errorElement.textContent = group.message;
-                    errorElement.style.display = 'block';
-                    isValid = false;
-                }
-            });
-
-            // Validate checkboxes
-            const checkboxes = [
-                { id: 'declaration1', message: 'Please accept the first declaration' },
-                { id: 'declaration2', message: 'Please accept the terms and conditions' },
-                { id: 'declaration3', message: 'Please consent to communications' }
-            ];
-
-            checkboxes.forEach(checkbox => {
-                const element = document.getElementById(checkbox.id);
-                const errorElement = document.getElementById(`${checkbox.id}Error`);
-
-                if (!element.checked) {
-                    errorElement.textContent = checkbox.message;
-                    errorElement.style.display = 'block';
-                    isValid = false;
-                }
-            });
-
-            // Validate mobile numbers
-            const mobileFields = [
-                { id: 'studentMobile', name: 'Student mobile number' },
-                { id: 'parentMobile', name: 'Parent mobile number' }
-            ];
-
-            mobileFields.forEach(field => {
-                const element = document.getElementById(field.id);
-                const errorElement = document.getElementById(`${field.id}Error`);
-                const value = element.value.trim();
-
-                if (value && (!/^[0-9]{10}$/.test(value) || value.length !== 10)) {
-                    errorElement.textContent = `Please enter a valid 10-digit ${field.name}`;
-                    errorElement.style.display = 'block';
-                    isValid = false;
-                }
-            });
-
-            // Simulate form submission
-            setTimeout(() => {
-                if (isValid) {
-                    // Success animation
-                    submitBtn.style.background = 'linear-gradient(135deg, #48bb78, #38a169)';
-                    submitText.textContent = '✅ Registration Submitted Successfully!';
-                    submitText.classList.remove('hidden');
-                    loadingSpinner.classList.add('hidden');
-
-                    // Show success message
-                    setTimeout(() => {
-                        alert('🎉 Registration submitted successfully! You will receive a confirmation email shortly.');
-                        // Here you would typically submit the form to the server
-                        // this.submit();
-                    }, 500);
-                } else {
-                    // Error state
-                    submitBtn.style.background = 'linear-gradient(135deg, #f56565, #e53e3e)';
-                    submitText.textContent = '❌ Please fix the errors above';
-                    submitText.classList.remove('hidden');
-                    loadingSpinner.classList.add('hidden');
-                    submitBtn.disabled = false;
-
-                    // Reset button after 3 seconds
-                    setTimeout(() => {
-                        submitBtn.style.background = 'var(--bg-gradient)';
-                        submitText.textContent = '🚀 Submit Registration';
-                    }, 3000);
-
-                    // Scroll to first error
-                    const firstError = document.querySelector('.error-message[style*="block"]');
-                    if (firstError) {
-                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                }
-            }, 2000);
-        });
-
-        // File upload feedback
-        document.querySelectorAll('input[type="file"]').forEach(input => {
-            input.addEventListener('change', function () {
-                const label = this.nextElementSibling;
-                if (this.files.length > 0) {
-                    label.textContent = `✅ ${this.files[0].name}`;
-                    label.style.color = 'var(--success-color)';
-                    label.style.borderColor = 'var(--success-color)';
-                }
-            });
-        });
-
-        // Add smooth scrolling for better UX
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Enhanced input animations
-        document.querySelectorAll('.form-input').forEach(input => {
-            input.addEventListener('focus', function () {
-                this.style.transform = 'translateY(-2px)';
-            });
-
-            input.addEventListener('blur', function () {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-
-
-        document.getElementById('refferenceode').addEventListener('blur', async function () {
-            document.getElementById("formCoupen").submit();
-        });
+        }
     </script>
+
+   
 </body>
 </html>
