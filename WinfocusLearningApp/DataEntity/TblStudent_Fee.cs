@@ -12,14 +12,20 @@ namespace WinfocusLearningApp.DataEntity
     using System;
     using System.Collections.Generic;
     
-    public partial class TblStudent_Fee_Structure
+    public partial class TblStudent_Fee
     {
-        public int Id { get; set; }
-        public string FeeID { get; set; }
-        public Nullable<int> StudentId { get; set; }
-        public Nullable<decimal> Amount { get; set; }
+        public int ID { get; set; }
+        public string RegID { get; set; }
+        public string FeePayTerm { get; set; }
+        public string DiscountPer { get; set; }
+        public Nullable<double> DiscountAmount { get; set; }
+        public Nullable<double> Amount { get; set; }
         public Nullable<int> PaymentStatus { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<int> FeeID { get; set; }
+        public Nullable<int> InstallmentMode { get; set; }
+        public Nullable<System.DateTime> PaymentDt { get; set; }
+        public Nullable<System.DateTime> PaymentDueDt { get; set; }
+        public Nullable<int> IsActive { get; set; }
         public Nullable<System.DateTime> CreatedDt { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<System.DateTime> DeletedDt { get; set; }

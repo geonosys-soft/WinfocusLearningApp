@@ -1437,7 +1437,7 @@ namespace WinfocusLearningApp.WebApi
                 }
 
                 // Check in TblStudent_Parent_Basic table
-                var student = winfocus_CS.TblStudent_Parent_Basic.FirstOrDefault(x => x.Email == email);
+                var student = winfocus_CS.TblSTudentBasicDetails.FirstOrDefault(x => x.EmailID == email);
                 if (student != null)
                 {
                     return NotFound(); // Email already exists

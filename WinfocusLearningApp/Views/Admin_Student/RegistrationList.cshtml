@@ -1,4 +1,4 @@
-﻿
+﻿@model WinfocusLearningApp.ViewModels.StudentReglistModel
 @{
     ViewBag.Title = "RegistrationList";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -573,23 +573,48 @@
                             </tr>
                         </thead>
                         <!-- Table body  ID :- registrationTableBody -->
+                      
                         <tbody id="registrationTableBody">
                             <!-- Data Rows -->
-                            <tr>
-                                <td><span class="reg-id">REG001</span></td>
-                                <td>Aarav Kumar</td>
-                                <td>+91 9876543210</td>
-                                <td>NEET Preparation</td>
-                                <td>2024-25</td>
-                                <td>CBSE</td>
-                                <td>12th</td>
-                                <td>Science</td>
-                                <td><span class="status-badge status-active">Active</span></td>
-                                <td>
-                                    <a href="@Url.Action("RegistrationListview", "Admin_Student")" class="view-btn">👁️ View</a>
-                                </td>
-                            </tr>
+                            @foreach (var data in Model.studentList)
+                            {
+                                <tr>
+                                    <td><span class="reg-id">@data.RegId</span></td>
+                                    <td>@data.FullName</td>
+                                    <td>@data.MobileNumber</td>
+                                    <td>@data.TargetExam</td>
+                                    <td>@data.ACYear</td>
+                                    <td>@data.SyllabusName</td>
+                                    <td>@data.GradeName</td>
+                                    <td>@data.StreamName</td>
+                                    <td>
+                                        @if (data.ProcessStage == 1)
+                                        {
+                                            <span class="status-badge status-pending">Requested</span>
+                                        }
+                                        else if (data.ProcessStage == 2)
+                                        {
+                                            <span class="status-badge status-pending">Payment Link Shared</span>
+                                        }
+                                        else if (data.ProcessStage == 3)
+                                        {
+                                            <span class="status-badge bg-danger text-white">Rejected</span>
+                                        }
+                                        else if (data.ProcessStage == 4)
+                                        {
+                                            <span class="status-badge status-Active">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="status-badge status-inactive">Inactive</span>
+                                        }
 
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("RegistrationListview", "Admin_Student",new { Id = data.SID })" class="view-btn">👁️ View</a>
+                                    </td>
+                                </tr>
+                            }
 
                         </tbody>
                     </table>

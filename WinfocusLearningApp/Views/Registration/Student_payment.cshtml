@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WinfocusLearningApp.ViewModels.StudentPaymentModel
+@{
     ViewBag.Title = "Student Registration - Winfocus Learning Centre";
     Layout = "~/Views/Shared/_loginLayout.cshtml";
 }
@@ -550,41 +551,74 @@
             </div>
 
             <div class="form-container">
-                <form id="registrationForm">
-                    <!-- PART 1: Payment Date -->
-                    <div class="form-group" style="margin-top: 10px;">
-                        <label class="form-label">Payment Date:</label>
-                        <div class="date-display" id="currentDate"></div>
+                <!-- PART 1: Payment Date -->
+                <div class="form-group" style="margin-top: 10px;">
+                    <label class="form-label">Payment Date:</label>
+                    <div class="date-display" id="currentDate"></div>
+                </div>
+                <br><br />
+                @using (Html.BeginForm("Student_payment", "Registration", FormMethod.Post, new { @name = "formCoupen", @id = "formCoupen" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Refference Code</label>
+                            <input type="text" class="form-input" id="refferenceode" name="refferenceode" value="@Model.ReferenceCode" placeholder="Enter Refference Code">
+
+                            @if (ViewBag.ErrorMessage != null)
+                            {
+                                <span class="error-message">
+                                    @ViewBag.ErrorMessage
+                                </span>
+                            }
+
+                        </div>
+                        @Html.HiddenFor(model => model.RegID)
+                        <div class="form-group">
+                            <label class="form-label required">Target Exam</label>
+                            <select class="form-input" id="courseSelected" disabled required>
+                                <option value="">Select Course</option>
+
+                                @if (Model.CourseSelected.Equals("NEET"))
+                                {
+                                    <option value="NEET" selected>🩺 NEET Preparation</option>
+                                }
+                                else if (Model.CourseSelected.Equals("JEE"))
+                                {
+                                    <option value="JEE" selected>⚙️ JEE Preparation</option>
+                                }
+                                else
+                                {
+                                    <option value="CBSE Support" selected>📚 CBSE Support</option>
+                                }
+
+
+
+                            </select>
+                            <span class="error-message" id="courseSelectedError"></span>
+                        </div>
                     </div>
-                    <br><br />
+                }
+
+                @using (Html.BeginForm("Student_Save_payment", "Registration", FormMethod.Post, new { @id = "registrationForm", @enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.ReferenceCode)
+                    @Html.HiddenFor(model => model.RegID)
+                    @Html.HiddenFor(model => model.CourseSelected)
                     <!-- PART 2: Payment Details -->
                     <div class="section">
                         <h2 class="section-title">💳 Payment & Fee Details</h2>
                         <div class="form-row">
 
                         </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Refference Code</label>
-                                <input type="text" class="form-input" id="refferenceode" placeholder="Enter Refference Code">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label required">Course Selected</label>
-                                <select class="form-input" id="courseSelected" required>
-                                    <option value="">Select Course</option>
-                                    <option value="NEET">🩺 NEET Preparation</option>
-                                    <option value="JEE">⚙️ JEE Preparation</option>
-                                    <option value="CBSE Support">📚 CBSE Support</option>
-                                </select>
-                                <span class="error-message" id="courseSelectedError"></span>
-                            </div>
-                        </div>
 
+                       
                         <div class="form-group">
                             <label class="form-label required">Fee Payment Mode</label>
                             <div class="radio-group">
                                 <div class="radio-option">
-                                    <input type="radio" id="fullPayment" name="paymentMode" value="Full Payment" required onclick="toggleFeeTables('full')">
+                                    <input type="radio" id="fullPayment" name="paymentMode" value="Full Payment" required onclick="toggleFeeTables('full')" checked>
                                     <label for="fullPayment" class="radio-label"><span>💰 Full Payment</span></label>
                                 </div>
                                 <div class="radio-option">
@@ -601,49 +635,42 @@
                                     <tr>
                                         <th></th>
                                         <th>Class</th>
-                                        <th>Duration</th>
+                                        <th>Program</th>
                                         <th>Registration</th>
                                         <th>Course Fee</th>
+                                        <th>Dis %</th>
                                         <th>Total Payable</th>
-                                        <th>Day 1</th>
-                                        <th>Day 2</th>
-                                        <th>Day 3</th>
+                                        @if (Model.ReferenceCode != null)
+                                        {
+                                            <th>Day 1</th>
+                                            <th>Day 2</th>
+                                            <th>Day 3</th>
+                                        }
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="table-radio"><input type="radio" name="fullPaymentOption" value="IX" required></td>
-                                        <td><strong>IX</strong></td>
-                                        <td>1 Year</td>
-                                        <td>₹500</td>
-                                        <td>₹35,000</td>
-                                        <td><strong>₹35,500</strong></td>
-                                        <td>✅</td>
-                                        <td>✅</td>
-                                        <td>✅</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table-radio"><input type="radio" name="fullPaymentOption" value="X"></td>
-                                        <td><strong>X</strong></td>
-                                        <td>2 Years</td>
-                                        <td>₹500</td>
-                                        <td>₹32,000/year</td>
-                                        <td><strong>₹64,500</strong></td>
-                                        <td>✅</td>
-                                        <td>✅</td>
-                                        <td>✅</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table-radio"><input type="radio" name="fullPaymentOption" value="XI"></td>
-                                        <td><strong>XI</strong></td>
-                                        <td>3 Years</td>
-                                        <td>₹500</td>
-                                        <td>₹30,000/year</td>
-                                        <td><strong>₹90,500</strong></td>
-                                        <td>✅</td>
-                                        <td>✅</td>
-                                        <td>✅</td>
-                                    </tr>
+                                    @*installmentOption->CourseID*@
+                                    @foreach (var data in Model.FeeTermDiscounts)
+                                    {
+                                        <tr>
+                                            <td class="table-radio"><input type="radio" name="CourseID" value="@data.Id" required></td>
+                                            <td><strong>@data.Description</strong></td>
+                                            <td>@data.CourseName</td>
+                                            <td>₹@data.RegistrationFee</td>
+                                            <td>₹@data.FeeAmount</td>
+                                            <td>₹@data.DiscountPers %</td>
+                                            <td><strong>₹@data.TotalFee</strong></td>
+                                            @if (Model.ReferenceCode != null)
+                                            {
+                                                <td>₹@data.Day1.Value.ToString("0.00")</td>
+                                                <td>₹@data.Day2.Value.ToString("0.00")</td>
+                                                <td>₹@data.Day3.Value.ToString("0.00")</td>
+                                            }
+
+                                        </tr>
+                                    }
+
                                 </tbody>
                             </table>
                         </div>
@@ -654,9 +681,10 @@
                                     <tr>
                                         <th></th>
                                         <th>Class</th>
-                                        <th>Duration</th>
+                                        <th>Program</th>
                                         <th>Registration</th>
                                         <th>Course Fee</th>
+                                        <th>Dis %</th>
                                         <th>Total Payable</th>
                                         <th>Term 1</th>
                                         <th>Term 2</th>
@@ -664,39 +692,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="table-radio"><input type="radio" name="installmentOption" value="IX" required></td>
-                                        <td><strong>IX</strong></td>
-                                        <td>1 Year</td>
-                                        <td>₹500</td>
-                                        <td>₹35,000</td>
-                                        <td><strong>₹35,500</strong></td>
-                                        <td>₹18,000</td>
-                                        <td>₹17,500</td>
-                                        <td>-</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table-radio"><input type="radio" name="installmentOption" value="X"></td>
-                                        <td><strong>X</strong></td>
-                                        <td>2 Years</td>
-                                        <td>₹500</td>
-                                        <td>₹32,000/year</td>
-                                        <td><strong>₹64,500</strong></td>
-                                        <td>₹22,000</td>
-                                        <td>₹21,000</td>
-                                        <td>₹21,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="table-radio"><input type="radio" name="installmentOption" value="XI"></td>
-                                        <td><strong>XI</strong></td>
-                                        <td>3 Years</td>
-                                        <td>₹500</td>
-                                        <td>₹30,000/year</td>
-                                        <td><strong>₹90,500</strong></td>
-                                        <td>₹31,000</td>
-                                        <td>₹30,000</td>
-                                        <td>₹29,500</td>
-                                    </tr>
+                                    @*installmentOption->CourseID*@
+                                    @foreach (var data in Model.FeeTermDiscounts)
+                                    {
+                                        <tr>
+                                            <td class="table-radio"><input type="radio" name="CourseID" value="@data.Id" required></td>
+                                            <td><strong>@data.Description</strong></td>
+                                            <td>@data.CourseName</td>
+                                            <td>₹@data.RegistrationFee</td>
+                                            <td>₹@data.FeeAmount</td>
+                                            <td>₹@data.DiscountPers %</td>
+                                            <td><strong>₹@data.TotalFee</strong></td>
+                                            <td>₹@data.Term1</td>
+                                            <td>₹@data.Term2</td>
+                                            <td>₹@data.Term3</td>
+                                        </tr>
+                                    }
+
                                 </tbody>
                             </table>
                         </div>
@@ -706,23 +718,24 @@
                                 <label class="form-label required">Mode of Payment</label>
                                 <div class="radio-group">
                                     <div class="radio-option">
-                                        <input type="radio" id="upi" name="paymentMethod" value="UPI" required>
+                                        @*paymentMethod->PaymentType*@
+                                        <input type="radio" id="upi" name="PaymentType" value="UPI" required>
                                         <label for="upi" class="radio-label"><span>📱 UPI</span></label>
                                     </div>
                                     <div class="radio-option">
-                                        <input type="radio" id="bankTransfer" name="paymentMethod" value="Bank Transfer">
+                                        <input type="radio" id="bankTransfer" name="PaymentType" value="Bank Transfer">
                                         <label for="bankTransfer" class="radio-label"><span>🏦 Bank Transfer</span></label>
                                     </div>
                                     <div class="radio-option">
-                                        <input type="radio" id="cash" name="paymentMethod" value="Cash">
+                                        <input type="radio" id="cash" name="PaymentType" value="Cash">
                                         <label for="cash" class="radio-label"><span>💵 Cash</span></label>
                                     </div>
                                     <div class="radio-option">
-                                        <input type="radio" id="cheque" name="paymentMethod" value="Cheque">
+                                        <input type="radio" id="cheque" name="PaymentType" value="Cheque">
                                         <label for="cheque" class="radio-label"><span>🗃️ Cheque</span></label>
                                     </div>
                                     <div class="radio-option">
-                                        <input type="radio" id="online" name="paymentMethod" value="Online Gateway">
+                                        <input type="radio" id="online" name="PaymentType" value="Online Gateway">
                                         <label for="online" class="radio-label"><span>💳 Online</span></label>
                                     </div>
                                 </div>
@@ -732,16 +745,17 @@
                         </div>
 
                         <div class="form-group">
+                            @*transactionId-TransactionID*@
                             <label class="form-label">Transaction ID / Receipt Number</label>
-                            <input type="text" class="form-input" id="transactionId" placeholder="Enter transaction reference">
+                            <input type="text" class="form-input" id="transactionId" name="TransactionID" placeholder="Enter transaction reference">
                         </div>
                         <br><br />
                         <div class="form-group">
                             <label class="form-label">Upload Payment Proof</label>
                             <div class="file-upload">
-                                <input type="file" id="paymentProof" accept=".jpg,.jpeg,.png,.pdf">
+                                <input type="file" id="paymentProof" name="paymentProof" accept=".pdf">
                                 <label for="paymentProof" class="file-upload-label">
-                                    📎 Click to upload payment proof (JPG, PNG, PDF)
+                                    📎 Click to upload payment proof (PDF)
                                 </label>
                             </div>
                         </div>
@@ -782,7 +796,9 @@
                             <span id="loadingSpinner" class="loading hidden"></span>
                         </button>
                     </div>
-                </form>
+
+                }
+
             </div>
         </div>
     </div>
@@ -848,14 +864,14 @@
             const submitBtn = document.getElementById('submitBtn');
             const submitText = document.getElementById('submitText');
             const loadingSpinner = document.getElementById('loadingSpinner');
-
+            
             // Show loading state
             submitText.classList.add('hidden');
             loadingSpinner.classList.remove('hidden');
             submitBtn.disabled = true;
 
             let isValid = true;
-
+            this.submit();
             // Reset all error messages
             document.querySelectorAll('.error-message').forEach(el => {
                 el.textContent = '';
@@ -1020,6 +1036,11 @@
             input.addEventListener('blur', function () {
                 this.style.transform = 'translateY(0)';
             });
+        });
+
+       
+        document.getElementById('refferenceode').addEventListener('blur', async function () {
+            document.getElementById("formCoupen").submit();
         });
     </script>
 </body>

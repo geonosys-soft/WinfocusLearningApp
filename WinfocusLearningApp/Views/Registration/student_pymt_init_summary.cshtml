@@ -1,0 +1,753 @@
+﻿@model WinfocusLearningApp.ViewModels.StudentPaymentPreviwModel
+@{
+    ViewBag.Title = "Student Payment - Winfocus Learning Centre";
+    Layout = "~/Views/Shared/_loginLayout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --primary-dark: #5a67d8;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --success-color: #48bb78;
+            --error-color: #f56565;
+            --warning-color: #ed8936;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-shadow: 0 20px 40px rgba(102, 126, 234, 0.1);
+            --hover-shadow: 0 25px 50px rgba(102, 126, 234, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: white;
+            min-height: 100vh;
+            padding: 20px 0;
+            position: relative;
+            overflow-x: hidden;
+            color: #1a202c;
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.05);
+            animation: float 6s ease-in-out infinite;
+        }
+
+            .shape:nth-child(1) {
+                width: 80px;
+                height: 80px;
+                top: 10%;
+                left: 10%;
+                animation-delay: 0s;
+            }
+
+            .shape:nth-child(2) {
+                width: 120px;
+                height: 120px;
+                top: 20%;
+                right: 10%;
+                animation-delay: 2s;
+            }
+
+            .shape:nth-child(3) {
+                width: 60px;
+                height: 60px;
+                bottom: 20%;
+                left: 20%;
+                animation-delay: 4s;
+            }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .main-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .header {
+            background: var(--bg-gradient);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .header::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+                animation: pulse 4s ease-in-out infinite;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-bottom: 10px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .header p {
+                font-size: 1.1rem;
+                opacity: 0.9;
+                position: relative;
+                z-index: 1;
+            }
+
+        .form-container {
+            padding: 50px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+            .section:nth-child(1) {
+                animation-delay: 0.2s;
+            }
+
+            .section:nth-child(2) {
+                animation-delay: 0.4s;
+            }
+
+            .section:nth-child(3) {
+                animation-delay: 0.6s;
+            }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid transparent;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+            .section-title::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 60px;
+                height: 3px;
+                background: var(--bg-gradient);
+                border-radius: 2px;
+                animation: expandWidth 0.8s ease-out 0.8s both;
+            }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+            .form-label.required::after {
+                content: " *";
+                color: var(--error-color);
+                font-weight: bold;
+            }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            outline: none;
+            color: #1a202c;
+            font-weight: 500;
+        }
+
+            .form-input:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+                transform: translateY(-2px);
+            }
+
+            .form-input:hover {
+                border-color: #cbd5e0;
+            }
+
+        /* Custom Radio Buttons */
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .radio-option {
+            position: relative;
+        }
+
+            .radio-option input[type="radio"] {
+                position: absolute;
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 50px;
+            background: white;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            color: #2d3748;
+        }
+
+            .radio-label::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 15px;
+                width: 18px;
+                height: 18px;
+                border: 2px solid #cbd5e0;
+                border-radius: 50%;
+                transform: translateY(-50%);
+                transition: all 0.3s ease;
+                background: white;
+            }
+
+            .radio-label::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 21px;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--primary-color);
+                transform: translateY(-50%) scale(0);
+                transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+
+        .radio-option input[type="radio"]:checked + .radio-label {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+            .radio-option input[type="radio"]:checked + .radio-label::before {
+                border-color: var(--primary-color);
+                background: white;
+            }
+
+            .radio-option input[type="radio"]:checked + .radio-label::after {
+                transform: translateY(-50%) scale(1);
+            }
+
+        .radio-label span {
+            margin-left: 35px;
+        }
+
+        /* Fee Tables */
+        .fee-table-container {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 30px 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .fee-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+            .fee-table th {
+                background: var(--bg-gradient);
+                color: white;
+                padding: 20px 15px;
+                font-weight: 600;
+                text-align: center;
+                font-size: 0.9rem;
+                border-bottom: none;
+            }
+
+            .fee-table td {
+                padding: 18px 15px;
+                text-align: center;
+                border-bottom: 1px solid #f1f5f9;
+                font-weight: 600;
+                transition: background-color 0.3s ease;
+                color: #2d3748;
+            }
+
+            .fee-table tbody tr:hover {
+                background: rgba(102, 126, 234, 0.05);
+            }
+
+            .fee-table tbody tr:last-child td {
+                border-bottom: none;
+            }
+
+        /* Table Radio Buttons */
+        .table-radio {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        /* Custom Checkbox */
+        .checkbox-group {
+            margin: 20px 0;
+        }
+
+        .checkbox-option {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+            .checkbox-option input[type="checkbox"] {
+                position: absolute;
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #2d3748;
+            padding-left: 35px;
+            position: relative;
+            font-weight: 500;
+        }
+
+            .checkbox-label::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 2px;
+                width: 20px;
+                height: 20px;
+                border: 2px solid #cbd5e0;
+                border-radius: 6px;
+                background: white;
+                transition: all 0.3s ease;
+            }
+
+            .checkbox-label::after {
+                content: '✓';
+                position: absolute;
+                left: 5px;
+                top: 0px;
+                color: white;
+                font-size: 14px;
+                font-weight: bold;
+                opacity: 0;
+                transform: scale(0.5);
+                transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+
+        .checkbox-option input[type="checkbox"]:checked + .checkbox-label::before {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .checkbox-option input[type="checkbox"]:checked + .checkbox-label::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: var(--bg-gradient);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .submit-btn::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                transition: left 0.5s;
+            }
+
+            .submit-btn:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+            }
+
+                .submit-btn:hover::before {
+                    left: 100%;
+                }
+
+            .submit-btn:active {
+                transform: translateY(-1px);
+            }
+
+        /* Error Messages */
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: block;
+            animation: shake 0.5s ease-in-out;
+            font-weight: 600;
+        }
+        /* File Upload */
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+            .file-upload input[type="file"] {
+                position: absolute;
+                opacity: 0;
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+            }
+
+        .file-upload-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border: 2px dashed #cbd5e0;
+            border-radius: 12px;
+            background: #f7fafc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+            .file-upload-label:hover {
+                border-color: var(--primary-color);
+                background: rgba(102, 126, 234, 0.05);
+                color: var(--primary-color);
+            }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Date Display */
+        .date-display {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            padding: 15px 20px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-align: center;
+        }
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container">
+        <div class="main-card">
+            <div class="header">
+                <h1>🎓 Winfocus Learning Center</h1>
+                <p>Winfocus Learning Centre, Kottayam – Excellence in NEET, JEE & CBSE Coaching</p>
+            </div>
+
+            <div class="form-container">
+                <!-- PART 1: Payment Date -->
+                <div class="form-group" style="margin-top: 10px;">
+                    <label class="form-label">Payment Date:</label>
+                    <div class="date-display" id="currentDate"></div>
+                </div>
+                <br><br />
+
+
+                @*   @using (Html.BeginForm("student_pymt_init_summary", "Registration", FormMethod.Post, new { @id = "registrationForm" }))
+        {
+
+                // @Html.HiddenFor(model => model.ReferenceCode)
+                // @Html.HiddenFor(model => model.RegID)
+                // @Html.HiddenFor(model => model.CourseSelected)*@
+
+                <!-- PART 2: Payment Details -->
+                <div class="section">
+                    <h2 class="section-title">💳 Payment & Fee Details</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Student Name</label>
+                            @Html.TextBoxFor(model => model.StudentName, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                            @Html.HiddenFor(model => model.MOrderID)
+                            @Html.HiddenFor(model => model.RegID)
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date of Birth</label>
+                            @Html.TextBoxFor(model => model.DOB, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Mobile</label>
+                            @Html.TextBoxFor(model => model.Mobile, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Academic Year</label>
+                            @Html.TextBoxFor(model => model.AcademicYear, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Syllabus</label>
+                            @Html.TextBoxFor(model => model.Syllabus, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Grade</label>
+                            @Html.TextBoxFor(model => model.Grade, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Program</label>
+                            @Html.TextBoxFor(model => model.Course, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Reference Code</label>
+                            @Html.TextBoxFor(model => model.ReferenceCode, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Code Used Date</label>
+                            @Html.TextBox("CodeUsedDate", Model.CodeUsedDate.ToString("dd/MM/yyyy"), new { @class = "form-input", @placeholder = "Enter Reference Code", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Registration Fee</label>
+                            @Html.TextBoxFor(model => model.RegistrationFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Course Fee</label>
+                            @Html.TextBoxFor(model => model.CourseFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Discount Amount</label>
+                            @Html.TextBoxFor(model => model.Discount, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Total Fee</label>
+                            @Html.TextBoxFor(model => model.TotalFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Payment Mode</label>
+                            @Html.TextBoxFor(model => model.PaymentMode, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Payment Type</label>
+                            @Html.TextBoxFor(model => model.PaymentMethod, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Current Payable Amount</label>
+                            @Html.TextBoxFor(model => model.CurrentPayable, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        </div>
+
+                    </div>
+
+
+                </div>
+                @using (Html.BeginForm("Response_Payment", "Payment", FormMethod.Post, new { @name = "razorpayForm" }))
+                {
+                    @Html.HiddenFor(model => model.razorpay_payment_id)
+                    @Html.HiddenFor(model => model.razorpay_order_id)
+                    @Html.HiddenFor(model => model.razorpay_signature)
+                    @Html.HiddenFor(model => model.RegID)
+                    @Html.HiddenFor(model => model.CurrentPayable)
+                    @Html.HiddenFor(model => model.Discount)
+                    @Html.HiddenFor(model => model.DisPerc)
+                    @Html.HiddenFor(model => model.PaymentMode)
+
+
+                }
+                <!-- Declaration -->
+                <div class="section">
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span id="submitText">🚀 Proceed to payment </span>
+                    </button>
+                </div>
+
+                @*}*@
+
+            </div>
+        </div>
+    </div>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        // Set current date with better formatting
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-IN', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // payment
+
+   
+    var orderId = document.getElementById('razorpay_order_id').value
+    var options = {
+            "key": "@ViewBag.RazorpayKey", // ✅ Add this line to provide the Razorpay Key ID
+            "name": document.getElementById('StudentName').value,
+        "description": document.getElementById('RegID').value + ' | ' + document.getElementById('Grade').value +' - '+ document.getElementById('Course').value,
+            "order_id": orderId,
+            "image": "https://s29.postimg.org/r6dj1g85z/daft_punk.jpg",
+            "prefill": {
+                "name": document.getElementById('StudentName').value,
+                "email": document.getElementById('Email').value,
+                "contact": document.getElementById('Mobile').value,
+            },
+            "notes": {
+                "PaymentDescription": "Registration Fee Payement",
+                "merchant_order_id": document.getElementById('MOrderID').value,
+            },
+            "theme": {
+                "color": "#F37254"
+            }
+        }
+        // Boolean whether to show image inside a white frame. (default: true)
+        options.theme.image_padding = false;
+        options.handler = function (response) {
+            document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;
+            document.getElementById('razorpay_order_id').value = orderId;
+            document.getElementById('razorpay_signature').value = response.razorpay_signature;
+            document.razorpayForm.submit();
+        };
+        options.modal = {
+            ondismiss: function () {
+                console.log("This code runs when the popup is closed");
+            },
+            // Boolean indicating whether pressing escape key
+            // should close the checkout form. (default: true)
+            escape: true,
+            // Boolean indicating whether clicking translucent blank
+            // space outside checkout form should close the form. (default: false)
+            backdropclose: false
+        };
+        var rzp = new Razorpay(options);
+        document.getElementById('submitBtn').onclick = function (e) {
+            rzp.open();
+            e.preventDefault();
+        }
+    </script>
+
+   
+</body>
+</html>

@@ -1,4 +1,4 @@
-﻿
+﻿@model WinfocusLearningApp.ViewModels.StudentRegistrationCompleteModel
 @{
     ViewBag.Title = "RegistrationListview";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -500,15 +500,15 @@
             <div class="info-bar">
                 <div class="info-box">
                     <div class="info-label">📅 Current Date</div>
-                    <div class="info-value">29 July 2025</div>
+                    <div class="info-value">@DateTime.Now.ToShortDateString()</div>
                 </div>
                 <div class="info-box">
                     <div class="info-label">🆔 Registration ID</div>
-                    <div class="info-value">REG-2023-00125</div>
+                    <div class="info-value">@Model.RegId</div>
                 </div>
                 <div class="info-box">
                     <div class="info-label">📅 Registration Date</div>
-                    <div class="info-value">15 June 2023</div>
+                    <div class="info-value">@Convert.ToDateTime(Model.CreatedDt).ToString("dd/MM/yyyy")</div>
                 </div>
             </div>
 
@@ -519,41 +519,41 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Name</label>
-                            <div class="form-value">Rahul Kumar</div>
+                            <div class="form-value">@Model.FullName</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Gender</label>
-                            <div class="form-value">Male</div>
+                            <div class="form-value">@Model.Gender</div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Date of Birth</label>
-                            <div class="form-value">12 April 2007</div>
+                            <div class="form-value">@Convert.ToDateTime(Model.DOB).ToShortDateString()</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Student Mobile Number</label>
-                            <div class="form-value">+91 9876543210</div>
+                            <div class="form-value">@Model.MobileNumber</div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Student Email ID</label>
-                            <div class="form-value">rahul.kumar@example.com</div>
+                            <div class="form-value">@Model.EmailID</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">WhatsApp Number</label>
-                            <div class="form-value">+91 9876543210</div>
+                            <div class="form-value">@Model.WhatsApp</div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Class Currently Studying</label>
-                            <div class="form-value">XI</div>
+                            <div class="form-value">@Model.CurrentStudyClass</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Name of Current/last School</label>
-                            <div class="form-value">St. Thomas Public School</div>
+                            <div class="form-value">@Model.CLSchoolName</div>
                         </div>
                     </div>
 
@@ -574,14 +574,18 @@
                                 <div class="marks-grid">
                                     <div class="mark-item">
                                         <span class="mark-label">Obtained</span>
-                                        <span class="mark-value">85</span>
+                                        <span class="mark-value">
+                                        @(Model.studentList.FirstOrDefault(x=>x.Subject=="Maths")?.MarkObtained??0)
+                                        </span>
                                     </div>
                                     <div class="mark-item">
                                         <span class="mark-label">Total</span>
-                                        <span class="mark-value">100</span>
+                                        <span class="mark-value">
+                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Maths")?.MaxMark??0)
+                                        </span>
                                     </div>
                                     <div class="percentage-display">
-                                        Percentage: 85% 
+                                        Percentage: @(((Model.studentList.FirstOrDefault(x => x.Subject == "Maths")?.MarkObtained ?? 0)/ (Model.studentList.FirstOrDefault(x => x.Subject == "Maths")?.MaxMark ?? 0))*100)%
                                     </div>
                                 </div>
                             </div>
@@ -595,14 +599,18 @@
                                 <div class="marks-grid">
                                     <div class="mark-item">
                                         <span class="mark-label">Obtained</span>
-                                        <span class="mark-value">90</span>
+                                        <span class="mark-value">
+                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Biology")?.MarkObtained??0)
+                                        </span>
                                     </div>
                                     <div class="mark-item">
                                         <span class="mark-label">Total</span>
-                                        <span class="mark-value">100</span>
+                                        <span class="mark-value">
+                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Biology")?.MaxMark??0)
+                                        </span>
                                     </div>
                                     <div class="percentage-display">
-                                        Percentage: 90% 
+                                        Percentage: @(((Model.studentList.FirstOrDefault(x => x.Subject == "Biology")?.MarkObtained ?? 0)/ (Model.studentList.FirstOrDefault(x => x.Subject == "Biology")?.MaxMark ?? 0))*100)% 
                                     </div>
                                 </div>
                             </div>
@@ -616,14 +624,18 @@
                                 <div class="marks-grid">
                                     <div class="mark-item">
                                         <span class="mark-label">Obtained</span>
-                                        <span class="mark-value">82</span>
+                                        <span class="mark-value">
+                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Chemistry")?.MarkObtained??0)
+                                        </span>
                                     </div>
                                     <div class="mark-item">
                                         <span class="mark-label">Total</span>
-                                        <span class="mark-value">100</span>
+                                        <span class="mark-value">
+                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Chemistry")?.MaxMark??0)
+                                        </span>
                                     </div>
                                     <div class="percentage-display">
-                                        Percentage: 82% 
+                                        Percentage: @(((Model.studentList.FirstOrDefault(x => x.Subject == "Chemistry")?.MarkObtained ?? 0)/ (Model.studentList.FirstOrDefault(x => x.Subject == "Chemistry")?.MaxMark ?? 0))*100)%
                                     </div>
                                 </div>
                             </div>
@@ -637,14 +649,18 @@
                                 <div class="marks-grid">
                                     <div class="mark-item">
                                         <span class="mark-label">Obtained</span>
-                                        <span class="mark-value">78</span>
+                                        <span class="mark-value">
+                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Physics")?.MarkObtained ?? 0)
+                                        </span>
                                     </div>
                                     <div class="mark-item">
                                         <span class="mark-label">Total</span>
-                                        <span class="mark-value">100</span>
+                                        <span class="mark-value">
+                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Physics")?.MaxMark??0)
+                                        </span>
                                     </div>
                                     <div class="percentage-display">
-                                        Percentage: 78% 
+                                        Percentage: @(((Model.studentList.FirstOrDefault(x => x.Subject == "Physics")?.MarkObtained ?? 0)/ (Model.studentList.FirstOrDefault(x => x.Subject == "Physics")?.MaxMark ?? 0))*100)%
                                     </div>
                                 </div>
                             </div>
@@ -654,41 +670,41 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">School Location</label>
-                            <div class="form-value">Kottayam, Kerala</div>
+                            <div class="form-value">@Model.CLSLocation</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Target Exam</label>
-                            <div class="form-value">NEET</div>
+                            <div class="form-value">@Model.TargetExam</div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Target Year Exam</label>
-                            <div class="form-value">2025</div>
+                            <div class="form-value">@Model.TargetYearExam</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Academic Year</label>
-                            <div class="form-value">2023-24</div>
+                            <div class="form-value">@Model.ACYear</div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Syllabus</label>
-                            <div class="form-value">CBSE</div>
+                            <div class="form-value">@Model.SyllabusName</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Grade</label>
-                            <div class="form-value">Grade A</div>
+                            <div class="form-value">@Model.GradeName</div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Program</label>
-                            <div class="form-value">NEET Foundation</div>
+                            <div class="form-value">@Model.StreamName</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Enter Your Dream Career</label>
-                            <div class="form-value">Cardiologist</div>
+                            <div class="form-value">@Model.Dream</div>
                         </div>
                     </div>
                 </div>
@@ -699,41 +715,41 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Name of Parent / Guardian</label>
-                            <div class="form-value">Rajesh Kumar</div>
+                            <div class="form-value">@Model.ParentName</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Relationship to Student</label>
-                            <div class="form-value">Father</div>
+                            <div class="form-value">@Model.RelationShip</div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Parent's Mobile Number</label>
-                            <div class="form-value">+91 8765432109</div>
+                            <div class="form-value">@Model.ParentMobileNumber</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Parent's WhatsApp Number</label>
-                            <div class="form-value">+91 8765432109</div>
+                            <div class="form-value">@Model.WhatsAppNumber</div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Parent's Email ID</label>
-                            <div class="form-value">rajesh.kumar@example.com</div>
+                            <div class="form-value">@Model.Email</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Occupation</label>
-                            <div class="form-value">Doctor</div>
+                            <div class="form-value">@Model.Occupation</div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Company Name</label>
-                            <div class="form-value">Kottayam Medical Center</div>
+                            <div class="form-value">@Model.CompanyName</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Work Location</label>
-                            <div class="form-value">Kottayam, Kerala</div>
+                            <div class="form-value">@Model.Location</div>
                         </div>
                     </div>
 
@@ -741,26 +757,26 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Home Address</label>
-                            <div class="form-value">123 MG Road, Near Post Office</div>
+                            <div class="form-value">@Model.HouseName</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Location</label>
-                            <div class="form-value">Kottayam Town</div>
+                            <div class="form-value">@Model.Place</div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label class="form-label">Post Office</label>
-                            <div class="form-value">Kottayam HO</div>
+                            <div class="form-value">@Model.PO</div>
                         </div>
                         <div class="form-group">
                             <label class="form-label">District</label>
-                            <div class="form-value">Kottayam</div>
+                            <div class="form-value">@Model.Dstrict</div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">State</label>
-                        <div class="form-value">Kerala</div>
+                        <div class="form-value">@Model.State</div>
                     </div>
                 </div>
 
@@ -779,7 +795,7 @@
                                 <div class="document-type">Student Photo</div>
                             </div>
                             <div class="document-preview-container">
-                                <img src="https://via.placeholder.com/300" alt="Student Photo">
+                                <img src="@Model.ProfilePath" alt="Student Photo">
                             </div>
                             <div class="document-info">
                                 <div class="document-name">student_photo.jpg</div>
@@ -798,7 +814,8 @@
                                 <div class="document-type">ID Proof</div>
                             </div>
                             <div class="document-preview-container">
-                                <img src="https://via.placeholder.com/300" alt="ID Proof">
+                                <iframe src="@Model.FatherSignaturePath"></iframe>
+                                
                             </div>
                             <div class="document-info">
                                 <div class="document-name">aadhar_card.pdf</div>
@@ -817,7 +834,7 @@
                                 <div class="document-type">Report Card</div>
                             </div>
                             <div class="document-preview-container">
-                                <img src="https://via.placeholder.com/300" alt="Report Card">
+                                <iframe src="@Model.StudentSignaturePath"></iframe>
                             </div>
                             <div class="document-info">
                                 <div class="document-name">x_grade_report.pdf</div>
@@ -834,8 +851,8 @@
                 <!-- Action Buttons -->
                 <div class="action-buttons">
                     <div class="decision-buttons">
-                        <button class="btn btn-accept">✓ Accept Registration</button>
-                        <button class="btn btn-reject">✖ Reject Registration</button>
+                        <a class="btn btn-accept" href="@Url.Action("Accept_Student_Regitration", "Admin_Student", new {Id=Model.SID})">✓ Accept Registration</a>
+                        <a class="btn btn-reject" href="@Url.Action("Reject_Student_Registration", "Admin_Student", new {Id=Model.SID})">✖ Reject Registration</a>
                     </div>
                     <a href="@Url.Action("RegistrationList", "Admin_Student")" class="btn btn-back">
                         ← Back to Registration List

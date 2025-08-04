@@ -31,9 +31,6 @@ namespace WinfocusLearningApp.DataEntity
         public virtual DbSet<TblSyllabu> TblSyllabus { get; set; }
         public virtual DbSet<TblGrade> TblGrades { get; set; }
         public virtual DbSet<TblStream> TblStreams { get; set; }
-        public virtual DbSet<TblStudent_Fee_Payment_Details> TblStudent_Fee_Payment_Details { get; set; }
-        public virtual DbSet<TblStudent_Fee_receipt> TblStudent_Fee_receipt { get; set; }
-        public virtual DbSet<TblStudent_Fee_Structure> TblStudent_Fee_Structure { get; set; }
         public virtual DbSet<TblSubject> TblSubjects { get; set; }
         public virtual DbSet<TblCourse> TblCourses { get; set; }
         public virtual DbSet<TblChapter> TblChapters { get; set; }
@@ -49,5 +46,9 @@ namespace WinfocusLearningApp.DataEntity
         public virtual DbSet<TblRegistrationBatchTime> TblRegistrationBatchTimes { get; set; }
         public virtual DbSet<TblSTudentBasicDetail> TblSTudentBasicDetails { get; set; }
         public virtual DbSet<TblStudent_Parent_Basic> TblStudent_Parent_Basic { get; set; }
+        public virtual DbSet<TblStudent_Payment_Terms> TblStudent_Payment_Terms { get; set; }
+        public virtual DbSet<TblDicountCoupen> TblDicountCoupens { get; set; }
+        public virtual DbSet<TblStudent_Fee> TblStudent_Fee { get; set; }
+        public virtual DbSet<TblStudent_Payment_History> TblStudent_Payment_History { get; set; }
     }
 }

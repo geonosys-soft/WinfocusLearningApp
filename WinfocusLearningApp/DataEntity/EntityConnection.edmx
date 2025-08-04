@@ -62,6 +62,27 @@
           <Property Name="ModifiedTime" Type="datetime" />
           <Property Name="Description" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="TblDicountCoupen">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BDID" Type="int" />
+          <Property Name="CoupenCode" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" />
+          <Property Name="ValidityDays" Type="int" />
+          <Property Name="Day1Dis" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Day2Dis" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Day3Dis" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="IsActive" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="GeneratedDate" Type="date" />
+          <Property Name="UsedBy" Type="varchar" MaxLength="50" />
+          <Property Name="FirstUsedDate" Type="date" />
+          <Property Name="IsDeleted" Type="int" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDt" Type="date" />
+        </EntityType>
         <EntityType Name="TblFeeDetails">
           <Key>
             <PropertyRef Name="Id" />
@@ -235,56 +256,25 @@
           <Property Name="ModifiedTime" Type="datetime" />
           <Property Name="Description" Type="varchar(max)" />
         </EntityType>
-        <EntityType Name="TblStudent_Fee_Payment_Details">
+        <EntityType Name="TblStudent_Fee">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FeeID" Type="varchar" MaxLength="50" />
-          <Property Name="ACID" Type="int" />
-          <Property Name="SyllabusID" Type="int" />
-          <Property Name="GradeID" Type="int" />
-          <Property Name="StreamID" Type="int" />
-          <Property Name="CourseID" Type="int" />
-          <Property Name="PaymentMode" Type="int" />
-          <Property Name="TempStudId" Type="int" />
-          <Property Name="StudentId" Type="int" />
-          <Property Name="TotalAmount" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="TransactionNo" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedDt" Type="datetime" />
-          <Property Name="IsDeleted" Type="int" />
-          <Property Name="DeletedDt" Type="datetime" />
-        </EntityType>
-        <EntityType Name="TblStudent_Fee_receipt">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FeeID" Type="varchar" MaxLength="50" />
-          <Property Name="StudentFeeID" Type="int" />
-          <Property Name="StudentId" Type="int" />
-          <Property Name="Amount" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="TransactionNo" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="PaymentDt" Type="datetime" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedDt" Type="datetime" />
-          <Property Name="IsDeleted" Type="int" />
-          <Property Name="DeletedDt" Type="datetime" />
-        </EntityType>
-        <EntityType Name="TblStudent_Fee_Structure">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FeeID" Type="varchar" MaxLength="50" />
-          <Property Name="StudentId" Type="int" />
-          <Property Name="Amount" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegID" Type="varchar" MaxLength="50" />
+          <Property Name="FeePayTerm" Type="varchar" MaxLength="50" />
+          <Property Name="DiscountPer" Type="varchar" MaxLength="50" />
+          <Property Name="DiscountAmount" Type="float" />
+          <Property Name="Amount" Type="float" />
           <Property Name="PaymentStatus" Type="int" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="CreatedDt" Type="datetime" />
+          <Property Name="FeeID" Type="int" />
+          <Property Name="InstallmentMode" Type="int" />
+          <Property Name="PaymentDt" Type="date" />
+          <Property Name="PaymentDueDt" Type="date" />
+          <Property Name="IsActive" Type="int" />
+          <Property Name="CreatedDt" Type="date" />
           <Property Name="IsDeleted" Type="int" />
-          <Property Name="DeletedDt" Type="datetime" />
+          <Property Name="DeletedDt" Type="date" />
         </EntityType>
         <EntityType Name="TblStudent_Mark_Scored">
           <Key>
@@ -323,6 +313,41 @@
           <Property Name="RegId" Type="varchar" MaxLength="50" />
           <Property Name="FatherSignature" Type="image" />
           <Property Name="StudentSignature" Type="image" />
+        </EntityType>
+        <EntityType Name="TblStudent_Payment_History">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegID" Type="varchar" MaxLength="50" />
+          <Property Name="paymentMode" Type="varchar" MaxLength="50" />
+          <Property Name="paymentType" Type="varchar" MaxLength="50" />
+          <Property Name="OrderID" Type="varchar(max)" />
+          <Property Name="PaymentID" Type="varchar(max)" />
+          <Property Name="Signature" Type="varchar(max)" />
+          <Property Name="Amount" Type="varchar" MaxLength="50" />
+          <Property Name="DiscountUsed" Type="varchar" MaxLength="50" />
+          <Property Name="TransactionDate" Type="date" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+          <Property Name="FeeID" Type="int" />
+        </EntityType>
+        <EntityType Name="TblStudent_Payment_Terms">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReferenceCode" Type="varchar" MaxLength="50" />
+          <Property Name="RegID" Type="varchar" MaxLength="50" />
+          <Property Name="CourseSelected" Type="varchar" MaxLength="50" />
+          <Property Name="PaymentMode" Type="varchar" MaxLength="50" />
+          <Property Name="CourseID" Type="int" />
+          <Property Name="PaymentType" Type="varchar" MaxLength="50" />
+          <Property Name="TransactionID" Type="varchar" MaxLength="50" />
+          <Property Name="UploadSlip" Type="image" />
+          <Property Name="PaymentStatus" Type="int" />
+          <Property Name="CreatedDt" Type="date" />
+          <Property Name="IsDeleted" Type="int" />
+          <Property Name="DeletedDt" Type="int" />
         </EntityType>
         <EntityType Name="TblSTudentBasicDetails">
           <Key>
@@ -476,6 +501,7 @@
           <EntitySet Name="TblAccademicYear" EntityType="Self.TblAccademicYear" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblChapter" EntityType="Self.TblChapter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblCourse" EntityType="Self.TblCourse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblDicountCoupen" EntityType="Self.TblDicountCoupen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblFeeDetails" EntityType="Self.TblFeeDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblGrade" EntityType="Self.TblGrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblMaterial" EntityType="Self.TblMaterial" Schema="dbo" store:Type="Tables" />
@@ -486,11 +512,11 @@
           <EntitySet Name="TblRegistrationBatchTime" EntityType="Self.TblRegistrationBatchTime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblRelationship" EntityType="Self.TblRelationship" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblStream" EntityType="Self.TblStream" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TblStudent_Fee_Payment_Details" EntityType="Self.TblStudent_Fee_Payment_Details" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TblStudent_Fee_receipt" EntityType="Self.TblStudent_Fee_receipt" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TblStudent_Fee_Structure" EntityType="Self.TblStudent_Fee_Structure" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblStudent_Fee" EntityType="Self.TblStudent_Fee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblStudent_Mark_Scored" EntityType="Self.TblStudent_Mark_Scored" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblStudent_Parent_Basic" EntityType="Self.TblStudent_Parent_Basic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblStudent_Payment_History" EntityType="Self.TblStudent_Payment_History" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblStudent_Payment_Terms" EntityType="Self.TblStudent_Payment_Terms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblSTudentBasicDetails" EntityType="Self.TblSTudentBasicDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblSubChapter" EntityType="Self.TblSubChapter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblSubject" EntityType="Self.TblSubject" Schema="dbo" store:Type="Tables" />
@@ -521,9 +547,6 @@
           <EntitySet Name="TblSyllabus" EntityType="Winfocus_DbModel.TblSyllabu" />
           <EntitySet Name="TblGrades" EntityType="Winfocus_DbModel.TblGrade" />
           <EntitySet Name="TblStreams" EntityType="Winfocus_DbModel.TblStream" />
-          <EntitySet Name="TblStudent_Fee_Payment_Details" EntityType="Winfocus_DbModel.TblStudent_Fee_Payment_Details" />
-          <EntitySet Name="TblStudent_Fee_receipt" EntityType="Winfocus_DbModel.TblStudent_Fee_receipt" />
-          <EntitySet Name="TblStudent_Fee_Structure" EntityType="Winfocus_DbModel.TblStudent_Fee_Structure" />
           <EntitySet Name="TblSubjects" EntityType="Winfocus_DbModel.TblSubject" />
           <EntitySet Name="TblCourses" EntityType="Winfocus_DbModel.TblCourse" />
           <EntitySet Name="TblChapters" EntityType="Winfocus_DbModel.TblChapter" />
@@ -539,6 +562,10 @@
           <EntitySet Name="TblRegistrationBatchTimes" EntityType="Winfocus_DbModel.TblRegistrationBatchTime" />
           <EntitySet Name="TblSTudentBasicDetails" EntityType="Winfocus_DbModel.TblSTudentBasicDetail" />
           <EntitySet Name="TblStudent_Parent_Basic" EntityType="Winfocus_DbModel.TblStudent_Parent_Basic" />
+          <EntitySet Name="TblStudent_Payment_Terms" EntityType="Winfocus_DbModel.TblStudent_Payment_Terms" />
+          <EntitySet Name="TblDicountCoupens" EntityType="Winfocus_DbModel.TblDicountCoupen" />
+          <EntitySet Name="TblStudent_Fee" EntityType="Winfocus_DbModel.TblStudent_Fee" />
+          <EntitySet Name="TblStudent_Payment_History" EntityType="Winfocus_DbModel.TblStudent_Payment_History" />
         </EntityContainer>
         <EntityType Name="TblAccademicYear">
           <Key>
@@ -637,57 +664,6 @@
           <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
           <Property Name="ModifiedTime" Type="DateTime" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="TblStudent_Fee_Payment_Details">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FeeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ACID" Type="Int32" />
-          <Property Name="SyllabusID" Type="Int32" />
-          <Property Name="GradeID" Type="Int32" />
-          <Property Name="StreamID" Type="Int32" />
-          <Property Name="CourseID" Type="Int32" />
-          <Property Name="PaymentMode" Type="Int32" />
-          <Property Name="TempStudId" Type="Int32" />
-          <Property Name="StudentId" Type="Int32" />
-          <Property Name="TotalAmount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="TransactionNo" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="IsDeleted" Type="Int32" />
-          <Property Name="DeletedDt" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="TblStudent_Fee_receipt">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FeeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="StudentFeeID" Type="Int32" />
-          <Property Name="StudentId" Type="Int32" />
-          <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="TransactionNo" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PaymentDt" Type="DateTime" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="IsDeleted" Type="Int32" />
-          <Property Name="DeletedDt" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="TblStudent_Fee_Structure">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FeeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="StudentId" Type="Int32" />
-          <Property Name="Amount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="PaymentStatus" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDt" Type="DateTime" Precision="3" />
-          <Property Name="IsDeleted" Type="Int32" />
-          <Property Name="DeletedDt" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="TblSubject">
           <Key>
@@ -976,6 +952,82 @@
           <Property Name="FatherSignature" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="StudentSignature" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <EntityType Name="TblStudent_Payment_Terms">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReferenceCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CourseSelected" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CourseID" Type="Int32" />
+          <Property Name="PaymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UploadSlip" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="PaymentStatus" Type="Int32" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="0" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="DeletedDt" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TblDicountCoupen">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BDID" Type="Int32" />
+          <Property Name="CoupenCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="ValidityDays" Type="Int32" />
+          <Property Name="Day1Dis" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Day2Dis" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Day3Dis" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IsActive" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="GeneratedDate" Type="DateTime" Precision="0" />
+          <Property Name="UsedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstUsedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDt" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="TblStudent_Fee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FeePayTerm" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DiscountPer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DiscountAmount" Type="Double" />
+          <Property Name="Amount" Type="Double" />
+          <Property Name="PaymentStatus" Type="Int32" />
+          <Property Name="FeeID" Type="Int32" />
+          <Property Name="InstallmentMode" Type="Int32" />
+          <Property Name="PaymentDt" Type="DateTime" Precision="0" />
+          <Property Name="PaymentDueDt" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Int32" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="0" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="DeletedDt" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="TblStudent_Payment_History">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="paymentMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="paymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OrderID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Signature" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DiscountUsed" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FeeID" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1084,60 +1136,6 @@
                 <ScalarProperty Name="SyllabusID" ColumnName="SyllabusID" />
                 <ScalarProperty Name="ACID" ColumnName="ACID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TblStudent_Fee_Payment_Details">
-            <EntityTypeMapping TypeName="Winfocus_DbModel.TblStudent_Fee_Payment_Details">
-              <MappingFragment StoreEntitySet="TblStudent_Fee_Payment_Details">
-                <ScalarProperty Name="DeletedDt" ColumnName="DeletedDt" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
-                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="TempStudId" ColumnName="TempStudId" />
-                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
-                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
-                <ScalarProperty Name="StreamID" ColumnName="StreamID" />
-                <ScalarProperty Name="GradeID" ColumnName="GradeID" />
-                <ScalarProperty Name="SyllabusID" ColumnName="SyllabusID" />
-                <ScalarProperty Name="ACID" ColumnName="ACID" />
-                <ScalarProperty Name="FeeID" ColumnName="FeeID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TblStudent_Fee_receipt">
-            <EntityTypeMapping TypeName="Winfocus_DbModel.TblStudent_Fee_receipt">
-              <MappingFragment StoreEntitySet="TblStudent_Fee_receipt">
-                <ScalarProperty Name="DeletedDt" ColumnName="DeletedDt" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="PaymentDt" ColumnName="PaymentDt" />
-                <ScalarProperty Name="TransactionNo" ColumnName="TransactionNo" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="StudentFeeID" ColumnName="StudentFeeID" />
-                <ScalarProperty Name="FeeID" ColumnName="FeeID" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TblStudent_Fee_Structure">
-            <EntityTypeMapping TypeName="Winfocus_DbModel.TblStudent_Fee_Structure">
-              <MappingFragment StoreEntitySet="TblStudent_Fee_Structure">
-                <ScalarProperty Name="DeletedDt" ColumnName="DeletedDt" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="FeeID" ColumnName="FeeID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1441,6 +1439,86 @@
                 <ScalarProperty Name="RelationShip" ColumnName="RelationShip" />
                 <ScalarProperty Name="ParentName" ColumnName="ParentName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblStudent_Payment_Terms">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblStudent_Payment_Terms">
+              <MappingFragment StoreEntitySet="TblStudent_Payment_Terms">
+                <ScalarProperty Name="DeletedDt" ColumnName="DeletedDt" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="UploadSlip" ColumnName="UploadSlip" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="CourseSelected" ColumnName="CourseSelected" />
+                <ScalarProperty Name="RegID" ColumnName="RegID" />
+                <ScalarProperty Name="ReferenceCode" ColumnName="ReferenceCode" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblDicountCoupens">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblDicountCoupen">
+              <MappingFragment StoreEntitySet="TblDicountCoupen">
+                <ScalarProperty Name="DeletedDt" ColumnName="DeletedDt" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="FirstUsedDate" ColumnName="FirstUsedDate" />
+                <ScalarProperty Name="UsedBy" ColumnName="UsedBy" />
+                <ScalarProperty Name="GeneratedDate" ColumnName="GeneratedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Day3Dis" ColumnName="Day3Dis" />
+                <ScalarProperty Name="Day2Dis" ColumnName="Day2Dis" />
+                <ScalarProperty Name="Day1Dis" ColumnName="Day1Dis" />
+                <ScalarProperty Name="ValidityDays" ColumnName="ValidityDays" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CoupenCode" ColumnName="CoupenCode" />
+                <ScalarProperty Name="BDID" ColumnName="BDID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblStudent_Fee">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblStudent_Fee">
+              <MappingFragment StoreEntitySet="TblStudent_Fee">
+                <ScalarProperty Name="DeletedDt" ColumnName="DeletedDt" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PaymentDueDt" ColumnName="PaymentDueDt" />
+                <ScalarProperty Name="PaymentDt" ColumnName="PaymentDt" />
+                <ScalarProperty Name="InstallmentMode" ColumnName="InstallmentMode" />
+                <ScalarProperty Name="FeeID" ColumnName="FeeID" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DiscountAmount" ColumnName="DiscountAmount" />
+                <ScalarProperty Name="DiscountPer" ColumnName="DiscountPer" />
+                <ScalarProperty Name="FeePayTerm" ColumnName="FeePayTerm" />
+                <ScalarProperty Name="RegID" ColumnName="RegID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblStudent_Payment_History">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblStudent_Payment_History">
+              <MappingFragment StoreEntitySet="TblStudent_Payment_History">
+                <ScalarProperty Name="FeeID" ColumnName="FeeID" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="DiscountUsed" ColumnName="DiscountUsed" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Signature" ColumnName="Signature" />
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="paymentType" ColumnName="paymentType" />
+                <ScalarProperty Name="paymentMode" ColumnName="paymentMode" />
+                <ScalarProperty Name="RegID" ColumnName="RegID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
