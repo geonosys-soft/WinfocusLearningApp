@@ -436,6 +436,14 @@
           <Property Name="ModifiedTime" Type="datetime" />
           <Property Name="Description" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="TblTax">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaxPercentage" Type="float" />
+          <Property Name="Tax" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="UserRoles">
           <Key>
             <PropertyRef Name="UserId" />
@@ -521,6 +529,7 @@
           <EntitySet Name="TblSubChapter" EntityType="Self.TblSubChapter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblSubject" EntityType="Self.TblSubject" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblSyllabus" EntityType="Self.TblSyllabus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblTax" EntityType="Self.TblTax" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_UserRoles_dbo_Roles_RoleId" Association="Self.FK_dbo_UserRoles_dbo_Roles_RoleId">
@@ -566,6 +575,7 @@
           <EntitySet Name="TblDicountCoupens" EntityType="Winfocus_DbModel.TblDicountCoupen" />
           <EntitySet Name="TblStudent_Fee" EntityType="Winfocus_DbModel.TblStudent_Fee" />
           <EntitySet Name="TblStudent_Payment_History" EntityType="Winfocus_DbModel.TblStudent_Payment_History" />
+          <EntitySet Name="TblTaxes" EntityType="Winfocus_DbModel.TblTax" />
         </EntityContainer>
         <EntityType Name="TblAccademicYear">
           <Key>
@@ -1027,6 +1037,14 @@
           <Property Name="TransactionDate" Type="DateTime" Precision="0" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FeeID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TblTax">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaxPercentage" Type="Double" />
+          <Property Name="Tax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1518,6 +1536,15 @@
                 <ScalarProperty Name="paymentType" ColumnName="paymentType" />
                 <ScalarProperty Name="paymentMode" ColumnName="paymentMode" />
                 <ScalarProperty Name="RegID" ColumnName="RegID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblTaxes">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblTax">
+              <MappingFragment StoreEntitySet="TblTax">
+                <ScalarProperty Name="Tax" ColumnName="Tax" />
+                <ScalarProperty Name="TaxPercentage" ColumnName="TaxPercentage" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

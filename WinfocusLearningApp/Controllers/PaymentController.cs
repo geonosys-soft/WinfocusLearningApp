@@ -3,10 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using WinfocusLearningApp.DataEntity;
 using WinfocusLearningApp.ViewModels;
 
@@ -49,7 +52,7 @@ namespace WinfocusLearningApp.Controllers
            // string paymentId = Request.Form["razorpay_payment_id"];
 
             Dictionary<string, object> input = new Dictionary<string, object>();
-            input.Add("amount", 100); // this amount should be same as transaction amount
+            input.Add("amount", model.TotalPayable); // this amount should be same as transaction amount
 
             //string key = "<Enter your Api Key here>";
             // string secret = "<Enter your Api Secret here>";
@@ -267,6 +270,15 @@ namespace WinfocusLearningApp.Controllers
                     Winfocus_CS.TblStudent_Payment_History.Add(tblStudent_Payment_History);
                     if (Winfocus_CS.SaveChanges() > 0)
                     {
+                      TblStudent_Payment_Terms term_fee_details = Winfocus_CS.TblStudent_Payment_Terms.Where(x => x.RegID == model.RegID).FirstOrDefault();
+                        term_fee_details.PaymentStatus = 1; // 1 for Success
+                        Winfocus_CS.Entry(term_fee_details).State = System.Data.Entity.EntityState.Modified;
+                       if (Winfocus_CS.SaveChanges() > 0)
+                        {
+                            var studedetails = Winfocus_CS.TblSTudentBasicDetails.Where(x => x.RegId == model.RegID).FirstOrDefault();
+                            AddUser(studedetails);
+                            SendMail(studedetails);
+                        }
                         return RedirectToAction("PaymentSuccess");//payment success page
                     }
                     else
@@ -285,7 +297,7 @@ namespace WinfocusLearningApp.Controllers
                     var term_fee_details=Winfocus_CS.TblStudent_Payment_Terms.Where(x => x.RegID == model.RegID).FirstOrDefault();
                     TblStudent_Payment_History tblStudent_Payment_History = new TblStudent_Payment_History
                     {
-                        Amount = model.CurrentPayable,
+                        Amount = model.TotalPayable,
                         RegID = model.RegID,
                         DiscountUsed = model.Discount,
                         FeeID = Convert.ToInt32(term_fee_details.CourseID), // Assuming 1 is the ID for the fee type
@@ -300,6 +312,7 @@ namespace WinfocusLearningApp.Controllers
                     };
                     if (Winfocus_CS.SaveChanges() > 0)
                     {
+                       
                         return RedirectToAction("PaymentSuccess");//payment success page
                     }
                     else
@@ -311,5 +324,105 @@ namespace WinfocusLearningApp.Controllers
                 //return View();
             }
         }
+
+        public int AddUser(TblSTudentBasicDetail tblS)
+        {
+            
+            try
+            {
+                User user = new User
+                {
+                    LastName= tblS.FullName,
+                    Email = tblS.EmailID,
+                    UserName= tblS.RegId,
+                    Password = tblS.DOB, // Assuming DOB is used as a password, which is not recommended for security reasons
+                    ActivationCode = Guid.NewGuid().ToString(),
+                    IsActive = 1, // 1 for Active
+                    IsDeleted = 0, // 0 for Not Deleted
+                    CreatedDate= DateTime.Now,
+                    RoleId=3,
+                    DeletedBy = 0, // 0 for Not Deleted
+                    DeletedDate = DateTime.Now,
+                    UniqueID=tblS.RegId, // Assuming RegId is unique for each user
+                    MobileNo= tblS.MobileNumber
+
+                };
+                Winfocus_CS.Users.Add(user);
+                if (Winfocus_CS.SaveChanges() > 0)
+                {
+
+                   
+                    // Add student basic details
+                    tblS.IsActive = 1; // 1 for Active
+                    tblS.IsDeleted = 0; // 0 for Not Deleted
+                    tblS.CreatedDt = DateTime.Now;
+                    Winfocus_CS.TblSTudentBasicDetails.Add(tblS);
+                    if (Winfocus_CS.SaveChanges() > 0)
+                    {
+                            return 1; // Success
+                    }
+                    else
+                    {
+                        return 0; // Failed to save student details
+                    }
+                }
+                else
+                {
+                    return 0; // Failed to save user details
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                return 0;
+            }
+        }
+
+        public void SendMail(TblSTudentBasicDetail model)
+        {
+            var url = string.Format("/Account/login");
+            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, url);
+
+            // var link = "https://winfocus.in/courses/login";
+
+            //var fromEmail = new MailAddress("entrancecoachme@gmail.com", "Activation Account - winwintutor.com");
+            var fromEmail = new MailAddress("entrancecoachme@gmail.com", "Account Registration - WINFOCUS");
+
+            var toEmail = new MailAddress(model.EmailID);
+
+            //  var fromEmailPassword = "DXB1234567890";mwesxhtcabdgzvhs
+            //  var fromEmailPassword = "Enq@1234!!!";
+            var fromEmailPassword = "dmzpwtbqmsnscbuc";
+            string subject = "Account Registartion !";
+
+            string body = $@"
+            <p>Dear {model.FullName},</p>
+            <p>Thank you for your payment. Your account is now active. Below are your login credentials:</p>
+            <p><b>Username:</b> {model.RegId}<br/>
+            <b>Password:</b> {model.DOB}</p>
+            <p>You can log in here: <a href='{link}'>Login Now</a></p>
+            <p>If you have any questions, feel free to contact us.</p>
+            <p>Regards,<br/>Support Team</p>
+        ";
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = true,
+                Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+            };
+
+            using (var message = new MailMessage(fromEmail, toEmail)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
+
+            })
+                smtp.Send(message);
+        }
+
     }
 }

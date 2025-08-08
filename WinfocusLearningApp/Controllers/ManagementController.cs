@@ -12,7 +12,7 @@ using WinfocusLearningApp.DataEntity;
 
 namespace WinfocusLearningApp.Controllers
 { 
-    //[CustomAuthorize(Roles = "Admin")]
+    [CustomAuthorize(Roles = "Admin")]
     public class ManagementController : Controller
     {
        

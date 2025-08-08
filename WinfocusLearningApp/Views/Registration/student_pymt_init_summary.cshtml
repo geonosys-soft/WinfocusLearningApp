@@ -569,101 +569,115 @@
                 // @Html.HiddenFor(model => model.CourseSelected)*@
 
                 <!-- PART 2: Payment Details -->
-                <div class="section">
-                    <h2 class="section-title">💳 Payment & Fee Details</h2>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Student Name</label>
-                            @Html.TextBoxFor(model => model.StudentName, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                            @Html.HiddenFor(model => model.MOrderID)
-                            @Html.HiddenFor(model => model.RegID)
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Date of Birth</label>
-                            @Html.TextBoxFor(model => model.DOB, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                        </div>
+            <div class="section">
+                <h2 class="section-title">💳 Payment & Fee Details</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Student Name</label>
+                        @Html.TextBoxFor(model => model.StudentName, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                        @Html.HiddenFor(model => model.MOrderID)
+                        @Html.HiddenFor(model => model.RegID)
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Email</label>
-                            @Html.TextBoxFor(model => model.Email, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Mobile</label>
-                            @Html.TextBoxFor(model => model.Mobile, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                        </div>
+                    <div class="form-group">
+                        <label class="form-label">Date of Birth</label>
+                        @Html.TextBoxFor(model => model.DOB, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Academic Year</label>
-                            @Html.TextBoxFor(model => model.AcademicYear, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Syllabus</label>
-                            @Html.TextBoxFor(model => model.Syllabus, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Grade</label>
-                            @Html.TextBoxFor(model => model.Grade, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Program</label>
-                            @Html.TextBoxFor(model => model.Course, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Reference Code</label>
-                            @Html.TextBoxFor(model => model.ReferenceCode, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Code Used Date</label>
-                            @Html.TextBox("CodeUsedDate", Model.CodeUsedDate.ToString("dd/MM/yyyy"), new { @class = "form-input", @placeholder = "Enter Reference Code", @readonly = "readonly" })
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Registration Fee</label>
-                            @Html.TextBoxFor(model => model.RegistrationFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Course Fee</label>
-                            @Html.TextBoxFor(model => model.CourseFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Discount Amount</label>
-                            @Html.TextBoxFor(model => model.Discount, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Total Fee</label>
-                            @Html.TextBoxFor(model => model.TotalFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Payment Mode</label>
-                            @Html.TextBoxFor(model => model.PaymentMode, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Payment Type</label>
-                            @Html.TextBoxFor(model => model.PaymentMethod, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Current Payable Amount</label>
-                            @Html.TextBoxFor(model => model.CurrentPayable, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
-                        </div>
-
-                    </div>
-
-
                 </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mobile</label>
+                        @Html.TextBoxFor(model => model.Mobile, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Academic Year</label>
+                        @Html.TextBoxFor(model => model.AcademicYear, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Syllabus</label>
+                        @Html.TextBoxFor(model => model.Syllabus, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Grade</label>
+                        @Html.TextBoxFor(model => model.Grade, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Program</label>
+                        @Html.TextBoxFor(model => model.Course, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Reference Code</label>
+                        @Html.TextBoxFor(model => model.ReferenceCode, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Code Used Date</label>
+                        @Html.TextBox("CodeUsedDate", Model.CodeUsedDate.ToString("dd/MM/yyyy"), new { @class = "form-input", @placeholder = "Enter Reference Code", @readonly = "readonly" })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Registration Fee</label>
+                        @Html.TextBoxFor(model => model.RegistrationFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Course Fee</label>
+                        @Html.TextBoxFor(model => model.CourseFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Discount Amount</label>
+                        @Html.TextBoxFor(model => model.Discount, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Total Fee</label>
+                        @Html.TextBoxFor(model => model.TotalFee, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Payment Mode</label>
+                        @Html.TextBoxFor(model => model.PaymentMode, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Payment Type</label>
+                        @Html.TextBoxFor(model => model.PaymentMethod, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Payable Amount</label>
+                        @Html.TextBoxFor(model => model.CurrentPayable, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Current Payable Amount</label>
+                        @Html.TextBoxFor(model => model.GSTPerc, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    
+                </div>
+
+                <div class="form-row">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Current Payable Amount</label>
+                        @Html.TextBoxFor(model => model.GSTAmount, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Total Payable Amount</label>
+                        @Html.TextBoxFor(model => model.TotalPayable, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
+                    </div>
+                </div>
+            </div>
                 @using (Html.BeginForm("Response_Payment", "Payment", FormMethod.Post, new { @name = "razorpayForm" }))
                 {
                     @Html.HiddenFor(model => model.razorpay_payment_id)
@@ -673,7 +687,8 @@
                     @Html.HiddenFor(model => model.CurrentPayable)
                     @Html.HiddenFor(model => model.Discount)
                     @Html.HiddenFor(model => model.DisPerc)
-                    @Html.HiddenFor(model => model.PaymentMode)
+                    @Html.HiddenFor(model => model.TotalPayable)
+                    @Html.HiddenFor(model=>model.PaymentMode)
 
 
                 }
