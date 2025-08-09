@@ -12,6 +12,8 @@ namespace WinfocusLearningApp.DataEntity
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class Winfocus_CS : DbContext
     {
@@ -48,7 +50,21 @@ namespace WinfocusLearningApp.DataEntity
         public virtual DbSet<TblStudent_Parent_Basic> TblStudent_Parent_Basic { get; set; }
         public virtual DbSet<TblStudent_Payment_Terms> TblStudent_Payment_Terms { get; set; }
         public virtual DbSet<TblDicountCoupen> TblDicountCoupens { get; set; }
+        public virtual DbSet<TblTax> TblTaxes { get; set; }
         public virtual DbSet<TblStudent_Fee> TblStudent_Fee { get; set; }
         public virtual DbSet<TblStudent_Payment_History> TblStudent_Payment_History { get; set; }
+    
+        public virtual int SPinsertRole(Nullable<int> roleId, Nullable<int> userId)
+        {
+            var roleIdParameter = roleId.HasValue ?
+                new ObjectParameter("RoleId", roleId) :
+                new ObjectParameter("RoleId", typeof(int));
+    
+            var userIdParameter = userId.HasValue ?
+                new ObjectParameter("UserId", userId) :
+                new ObjectParameter("UserId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SPinsertRole", roleIdParameter, userIdParameter);
+        }
     }
 }

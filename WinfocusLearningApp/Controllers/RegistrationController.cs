@@ -201,9 +201,19 @@ namespace WinfocusLearningApp.Controllers
            var tblstudentpaymentterms = db.TblStudent_Payment_Terms.FirstOrDefault(s => s.RegID == RegId && s.IsDeleted == 0);
             if (tblstudentpaymentterms != null)
             {
+                if( tblstudentpaymentterms.PaymentStatus == 1)
+                {
+                    ViewBag.ErrorMessage = "Payment already done for this student.";
+                    return RedirectToAction("Login","Account", new { RegID = RegId });
+                }
+                else if (tblstudentpaymentterms.PaymentStatus == 0)
+                {
+                    ViewBag.ErrorMessage = "Payment is in process for this student.";
+                    return RedirectToAction("student_pymt_init_summary", new { RegID = RegId });
+                }
                 return RedirectToAction("student_pymt_init_summary", new { RegID = RegId });
             }
-
+           
             TblDicountCoupen tblDicountCoupen = db.TblDicountCoupens.FirstOrDefault(c => c.CoupenCode == refferenceode && c.IsActive == 1 && c.IsDeleted == 0);
                         
             if (tblDicountCoupen != null)
@@ -327,7 +337,8 @@ namespace WinfocusLearningApp.Controllers
                 UploadSlip = model.UploadSlip,
                 CreatedDt = DateTime.Now,
                 IsDeleted = 0,
-                ReferenceCode= model.ReferenceCode
+                ReferenceCode= model.ReferenceCode,
+                PaymentStatus = 0 // Assuming 0 means pending or not paid
             };
             db.TblStudent_Payment_Terms.Add(tblStudent_Payment_Terms);
             db.SaveChanges();
@@ -340,6 +351,8 @@ namespace WinfocusLearningApp.Controllers
             {
                 return HttpNotFound("Registration ID is required.");
             }
+            TblTax tblTaxDetails = db.TblTaxes.Where(s=>s.Tax.Equals("GST")).FirstOrDefault();
+
             StudentPaymentPreviwModel studentPaymentPreviwModel = new StudentPaymentPreviwModel();
             var studentPaymentTerms = db.TblStudent_Payment_Terms.FirstOrDefault(s => s.RegID == RegID && s.IsDeleted == 0);
             var feeDetails = (from fee in db.TblFeeDetails
@@ -469,6 +482,9 @@ namespace WinfocusLearningApp.Controllers
             var feeDiscountAmount= (Convert.ToDouble(feeDetails.TotalFee)-currentPayable );
             studentPaymentPreviwModel.Discount = feeDiscountAmount.ToString();
            studentPaymentPreviwModel.DisPerc = DisPer;
+            studentPaymentPreviwModel.GSTPerc = tblTaxDetails.TaxPercentage.ToString();
+            studentPaymentPreviwModel.GSTAmount = ((currentPayable * Convert.ToDouble(tblTaxDetails.TaxPercentage)) / 100).ToString();
+            studentPaymentPreviwModel.TotalPayable = (currentPayable + (currentPayable * Convert.ToDouble(tblTaxDetails.TaxPercentage) / 100)).ToString();
             Random random = new Random();
             int unique = random.Next(10000, 99999);
             int y = DateTime.Now.Year;
@@ -476,7 +492,7 @@ namespace WinfocusLearningApp.Controllers
             studentPaymentPreviwModel.MOrderID = "WFE" + "-" + y + m + "-" + unique; // Generating a unique merchant order ID
             // Here creating payment reference
             Dictionary<string, object> input = new Dictionary<string, object>();
-            input.Add("amount", Convert.ToDouble(studentPaymentPreviwModel.CurrentPayable)*100); // this amount should be same as transaction amount
+            input.Add("amount", Convert.ToDouble(studentPaymentPreviwModel.TotalPayable)*100); // this amount should be same as transaction amount
             input.Add("currency", "INR");
             input.Add("receipt", studentPaymentPreviwModel.MOrderID);
             input.Add("payment_capture", 1);

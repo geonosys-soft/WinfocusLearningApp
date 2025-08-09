@@ -25,6 +25,7 @@ namespace WinfocusLearningApp.ViewModels
         public string TotalFee { get; set; }
         public string Discount { get; set; }
         public double DisPerc { get; set; }
+
          public string Term1 { get; set; }
         public string Term2 { get; set; }
         public string Term3 { get; set; }
@@ -44,6 +45,10 @@ namespace WinfocusLearningApp.ViewModels
         public string PaymentResponseDate { get; set; }
         public string PaymentResponseTime { get; set; }
         public string CurrentPayable { get; set; }
+        public string GSTPerc { get; set; }
+        public string GSTAmount { get; set; }
+        public string TotalPayable { get; set; }
+
         public string razorpay_payment_id { get; set; }
         public string razorpay_order_id { get; set; }
         public string razorpay_signature { get; set; }
