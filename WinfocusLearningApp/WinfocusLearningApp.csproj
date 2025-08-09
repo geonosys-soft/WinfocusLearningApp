@@ -392,6 +392,7 @@
     <Content Include="Views\Registration\student_pymt_init_summary.cshtml" />
     <Content Include="Views\Payment\Payment.cshtml" />
     <Content Include="Views\Payment\Charge.cshtml" />
+    <Content Include="Views\Management\TargetyearExam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

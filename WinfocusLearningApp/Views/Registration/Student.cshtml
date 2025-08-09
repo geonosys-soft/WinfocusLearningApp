@@ -23,7 +23,6 @@
             --bg-light: #f7fafc;
             --bg-white: #ffffff;
         }
-        /* --- Basic & Body --- */
 
         * {
             margin: 0;
@@ -47,7 +46,6 @@
             padding: 0 20px;
         }
 
-        /* --- Decorative Elements --- */
         .floating-shapes {
             position: fixed;
             top: 0;
@@ -65,31 +63,30 @@
             animation: float 6s ease-in-out infinite;
         }
 
-            .shape:nth-child(1) {
-                width: 80px;
-                height: 80px;
-                top: 10%;
-                left: 10%;
-                animation-delay: 0s;
-            }
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
 
-            .shape:nth-child(2) {
-                width: 120px;
-                height: 120px;
-                top: 20%;
-                right: 10%;
-                animation-delay: 2s;
-            }
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 20%;
+            right: 10%;
+            animation-delay: 2s;
+        }
 
-            .shape:nth-child(3) {
-                width: 60px;
-                height: 60px;
-                bottom: 20%;
-                left: 20%;
-                animation-delay: 4s;
-            }
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
 
-        /* --- Main Form Card & Header --- */
         .main-card {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
@@ -109,31 +106,30 @@
             overflow: hidden;
         }
 
-            .header::before {
-                content: '';
-                position: absolute;
-                top: -50%;
-                left: -50%;
-                width: 200%;
-                height: 200%;
-                background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-                animation: pulse 4s ease-in-out infinite;
-            }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
 
-            .header h1 {
-                font-size: 2.5rem;
-                font-weight: 700;
-                margin-bottom: 10px;
-                z-index: 1;
-            }
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            z-index: 1;
+        }
 
-            .header p {
-                font-size: 1.1rem;
-                opacity: 0.9;
-                z-index: 1;
-            }
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            z-index: 1;
+        }
 
-        /* --- Form Sections & Layout --- */
         .form-container {
             padding: 50px;
         }
@@ -144,17 +140,17 @@
             animation-fill-mode: both;
         }
 
-            .section:nth-child(1) {
-                animation-delay: 0.2s;
-            }
+        .section:nth-child(1) {
+            animation-delay: 0.2s;
+        }
 
-            .section:nth-child(2) {
-                animation-delay: 0.4s;
-            }
+        .section:nth-child(2) {
+            animation-delay: 0.4s;
+        }
 
-            .section:nth-child(3) {
-                animation-delay: 0.6s;
-            }
+        .section:nth-child(3) {
+            animation-delay: 0.6s;
+        }
 
         .section-title {
             font-size: 1.8rem;
@@ -170,17 +166,17 @@
             position: relative;
         }
 
-            .section-title::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 60px;
-                height: 3px;
-                background: var(--bg-gradient);
-                border-radius: 2px;
-                animation: expandWidth 0.8s ease-out 0.8s both;
-            }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--bg-gradient);
+            border-radius: 2px;
+            animation: expandWidth 0.8s ease-out 0.8s both;
+        }
 
         .form-row {
             display: grid;
@@ -193,7 +189,6 @@
             position: relative;
         }
 
-        /* --- Form Inputs, Labels, Radios --- */
         .form-label {
             display: block;
             font-weight: 600;
@@ -202,11 +197,11 @@
             font-size: 0.95rem;
         }
 
-            .form-label.required::after {
-                content: " *";
-                color: var(--error-color);
-                font-weight: bold;
-            }
+        .form-label.required::after {
+            content: " *";
+            color: var(--error-color);
+            font-weight: bold;
+        }
 
         .form-input {
             width: 100%;
@@ -221,15 +216,15 @@
             font-weight: 500;
         }
 
-            .form-input:focus {
-                border-color: var(--primary-color);
-                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-                transform: translateY(-2px);
-            }
+        .form-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
 
-            .form-input:hover {
-                border-color: #cbd5e0;
-            }
+        .form-input:hover {
+            border-color: #cbd5e0;
+        }
 
         .radio-group {
             display: flex;
@@ -242,10 +237,10 @@
             position: relative;
         }
 
-            .radio-option input[type="radio"] {
-                position: absolute;
-                opacity: 0;
-            }
+        .radio-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
 
         .radio-label {
             display: flex;
@@ -268,7 +263,6 @@
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
         }
 
-        /* --- Subject & Document Uploads --- */
         .subjects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -284,18 +278,18 @@
             transition: all 0.3s ease;
         }
 
-            .subject-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 15px 35px rgba(102, 126, 234, 0.15);
-                border-color: var(--primary-color);
-            }
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.15);
+            border-color: var(--primary-color);
+        }
 
-            .subject-card h4 {
-                color: var(--primary-color);
-                font-weight: 600;
-                margin-bottom: 15px;
-                font-size: 1.1rem;
-            }
+        .subject-card h4 {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
 
         .subject-inputs {
             display: flex;
@@ -309,13 +303,13 @@
             width: 100%;
         }
 
-            .file-upload input[type="file"] {
-                position: absolute;
-                opacity: 0;
-                width: 100%;
-                height: 100%;
-                cursor: pointer;
-            }
+        .file-upload input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
 
         .file-upload-label {
             display: flex;
@@ -331,13 +325,12 @@
             font-weight: 600;
         }
 
-            .file-upload-label:hover {
-                border-color: var(--primary-color);
-                background: rgba(102, 126, 234, 0.05);
-                color: var(--primary-color);
-            }
+        .file-upload-label:hover {
+            border-color: var(--primary-color);
+            background: rgba(102, 126, 234, 0.05);
+            color: var(--primary-color);
+        }
 
-        /* --- Checkbox & Declaration --- */
         .checkbox-group {
             margin: 20px 0;
         }
@@ -347,10 +340,10 @@
             margin-bottom: 15px;
         }
 
-            .checkbox-option input[type="checkbox"] {
-                position: absolute;
-                opacity: 0;
-            }
+        .checkbox-option input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+        }
 
         .checkbox-label {
             display: flex;
@@ -364,18 +357,18 @@
             font-weight: 500;
         }
 
-            .checkbox-label::before {
-                content: '';
-                position: absolute;
-                left: 0;
-                top: 2px;
-                width: 20px;
-                height: 20px;
-                border: 2px solid #cbd5e0;
-                border-radius: 6px;
-                background: white;
-                transition: all 0.3s ease;
-            }
+        .checkbox-label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #cbd5e0;
+            border-radius: 6px;
+            background: white;
+            transition: all 0.3s ease;
+        }
 
         .checkbox-option input[type="checkbox"]:checked + .checkbox-label::before {
             background: var(--primary-color);
@@ -410,7 +403,6 @@
             text-align: center;
         }
 
-        /* --- Buttons --- */
         .button-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -435,11 +427,11 @@
             border: 2px solid var(--primary-color);
         }
 
-            .preview-btn:hover {
-                background: rgba(102, 126, 234, 0.1);
-                transform: translateY(-3px);
-                box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
-            }
+        .preview-btn:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
 
         .submit-btn {
             background: var(--bg-gradient);
@@ -449,20 +441,19 @@
             overflow: hidden;
         }
 
-            .submit-btn:hover:not(:disabled) {
-                transform: translateY(-3px);
-                box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
-            }
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
 
-            .submit-btn:disabled {
-                background: #b0bec5;
-                opacity: 0.7;
-                cursor: not-allowed;
-                box-shadow: none;
-                transform: none;
-            }
+        .submit-btn:disabled {
+            background: #b0bec5;
+            opacity: 0.7;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
 
-        /* --- Utility & State --- */
         .error-message {
             color: var(--error-color);
             font-size: 0.85rem;
@@ -486,7 +477,6 @@
             animation: spin 1s ease-in-out infinite;
         }
 
-        /* --- MODAL BASE STYLES --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -504,10 +494,10 @@
             transition: opacity 0.3s ease;
         }
 
-            .modal-overlay:not(.hidden) {
-                opacity: 1;
-                pointer-events: auto;
-            }
+        .modal-overlay:not(.hidden) {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
         .modal-content {
             background: var(--bg-light);
@@ -539,13 +529,11 @@
             z-index: 10;
         }
 
+        .modal-close-btn:hover {
+            color: var(--text-light);
+            transform: rotate(90deg);
+        }
 
-            .modal-close-btn:hover {
-                color: var(--text-light);
-                transform: rotate(90deg);
-            }
-
-        /* --- FINAL CORRECTED PREVIEW MODAL STYLES --- */
         .preview-header {
             padding: 30px 40px;
             background: var(--bg-gradient);
@@ -554,18 +542,15 @@
             position: relative;
         }
 
+        .preview-header h2 {
+            font-size: 1.8rem;
+            margin: 0;
+        }
 
-            .preview-header h2 {
-                font-size: 1.8rem;
-                margin: 0;
-            }
-
-
-            .preview-header p {
-                opacity: 0.8;
-                margin-top: 5px;
-            }
-
+        .preview-header p {
+            opacity: 0.8;
+            margin-top: 5px;
+        }
 
         .preview-body-container {
             display: grid;
@@ -574,11 +559,11 @@
         }
 
         .preview-sidebar {
-            padding: 20px 0 30px 40px; /* Added top padding */
+            padding: 20px 0 30px 40px;
         }
 
         .preview-main {
-            padding: 20px 40px 30px 30px; /* Added top padding */
+            padding: 20px 40px 30px 30px;
         }
 
         .preview-profile {
@@ -589,7 +574,7 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            margin: -75px auto 20px; /* Pulls up into header space */
+            margin: -75px auto 20px;
             background: var(--bg-white);
             border: 6px solid var(--bg-white);
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -665,20 +650,20 @@
             font-weight: 500;
         }
 
-            .detail-value .not-provided {
-                color: #a0aec0;
-                font-style: italic;
-            }
+        .detail-value .not-provided {
+            color: #a0aec0;
+            font-style: italic;
+        }
 
-            .detail-value .tag {
-                display: inline-block;
-                padding: 4px 12px;
-                border-radius: 20px;
-                background-color: #e0e7ff;
-                color: var(--primary-dark);
-                font-weight: 600;
-                font-size: 0.9rem;
-            }
+        .detail-value .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background-color: #e0e7ff;
+            color: var(--primary-dark);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
 
         .document-list {
             display: grid;
@@ -696,11 +681,11 @@
             transition: all 0.2s ease;
         }
 
-            .document-tile:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 6px 15px rgba(0,0,0,0.07);
-                border-color: var(--primary-color);
-            }
+        .document-tile:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.07);
+            border-color: var(--primary-color);
+        }
 
         .document-icon {
             font-size: 2.5rem;
@@ -720,7 +705,7 @@
             text-overflow: ellipsis;
             display: block;
         }
-        /* Ensure it's a block for ellipsis */
+
         .document-size {
             font-size: 0.8rem;
             color: var(--text-light);
@@ -752,94 +737,104 @@
             font-size: 1rem;
         }
 
-            .edit-btn:hover {
-                background: rgba(102, 126, 234, 0.1);
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
-            }
+        .edit-btn:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
 
-        /* --- Animations --- */
         @@keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-20px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
 
         @@keyframes slideInUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         @@keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @@keyframes pulse {
-            0% {
-                transform: scale(0.9);
-            }
-
-            70% {
-                transform: scale(1.1);
-            }
-
-            100% {
-                transform: scale(0.9);
-            }
+            0% { transform: scale(0.9); }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(0.9); }
         }
 
         @@keyframes expandWidth {
-            from {
-                width: 0;
-            }
-
-            to {
-                width: 60px;
-            }
+            from { width: 0; }
+            to { width: 60px; }
         }
 
         @@keyframes shake {
-            0%, 100% {
-                transform: translateX(0);
-            }
-
-            10%, 30%, 50%, 70%, 90% {
-                transform: translateX(-5px);
-            }
-
-            20%, 40%, 60%, 80% {
-                transform: translateX(5px);
-            }
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
         }
 
         @@keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
+            to { transform: rotate(360deg); }
+        }
+
+        /*  Subject Marks Styles */
+        .marks-options-container {
+            margin-bottom: 20px;
+        }
+
+        .percentage-display {
+            background-color: #f5f5f5;
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+
+        .subject-marks-toggle {
+            margin-bottom: 15px;
+        }
+
+        /* Radio button icons */
+        .radio-icon {
+            display: inline-block;
+            margin-right: 10px;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+
+        .radio-option input[type="radio"]:checked + .radio-label .radio-icon {
+            transform: scale(1.1);
+            color: var(--primary-color);
+        }
+
+        /* Percentage boxes layout */
+        .percentage-boxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .percentage-box {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .percentage-box h5 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1rem;
         }
     </style>
 </head>
 <body>
-    <div class="floating-shapes"> <div class="shape"></div> <div class="shape"></div> <div class="shape"></div> </div>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
     <div class="container">
         <div class="main-card">
             <div class="header">
@@ -850,13 +845,11 @@
             <div class="form-container">
                 <form id="registrationForm" method="post" enctype="multipart/form-data" novalidate>
                     <!-- PART 1: Student Details -->
-
                     <div class="section">
                         <h2 class="section-title">✨ Part 1: Student Details & Academic Information</h2>
                         <div class="form-row">
                             <div class="form-group">
                                 @Html.HiddenFor(model => model.RegistrationId)
-
                                 <label class="form-label required">Full Name of Student</label>
                                 <input type="text" class="form-input" id="fullName" name="fullName" required>
                                 <span class="error-message" id="fullNameError"></span>
@@ -935,52 +928,155 @@
                                         <label for="class9" class="radio-label"><span>IX</span></label>
                                     </div>
                                     <div class="radio-option">
-                                        <input type="radio" id="class10" name="currentClass" value="X"><label for="class10" class="radio-label">
-                                            <span>X</span>
-                                        </label>
-                                    </div><div class="radio-option">
+                                        <input type="radio" id="class10" name="currentClass" value="X">
+                                        <label for="class10" class="radio-label"><span>X</span></label>
+                                    </div>
+                                    <div class="radio-option">
                                         <input type="radio" id="class11" name="currentClass" value="XI">
                                         <label for="class11" class="radio-label"><span>XI</span></label>
-                                    </div><div class="radio-option">
+                                    </div>
+                                    <div class="radio-option">
                                         <input type="radio" id="class12" name="currentClass" value="XII">
                                         <label for="class12" class="radio-label"><span>XII</span></label>
                                     </div>
-                                </div><span class="error-message" id="currentClassError"></span>
+                                </div>
+                                <span class="error-message" id="currentClassError"></span>
                             </div>
                         </div>
-                        <div class="form-group">
+
+                        <!-- Subject Marks Section -->
+                        <div class="form-group" id="subjectMarksContainer" style="display: none;">
                             <label class="form-label">Subject Marks (Previous Exam)</label>
-                            <div class="subjects-grid">
-                                <div class="subject-card">
-                                    <h4>📐 Mathematics</h4>
-                                    <div class="subject-inputs">
-                                        <input type="number" class="form-input" placeholder="Obtained" id="mathObtained" name="mathObtained">
-                                        <input type="number" class="form-input" placeholder="Total" id="mathTotal" name="mathTotal">
+
+                            <!-- Junior Classes (VIII, IX, X) -->
+                            <div id="juniorClassMarks" style="display: none;">
+                                <div class="marks-options-container">
+                                    <div class="radio-group subject-marks-toggle">
+                                        <div class="radio-option">
+                                            <input type="radio" id="totalMarksOption" name="marksEntryType" value="total">
+                                            <label for="totalMarksOption" class="radio-label">
+                                                <span class="radio-icon">📊</span>
+                                                <span>Enter total mark obtained</span>
+                                            </label>
+                                        </div>
+                                        <div class="radio-option">
+                                            <input type="radio" id="separateMarksOption" name="marksEntryType" value="separate">
+                                            <label for="separateMarksOption" class="radio-label">
+                                                <span class="radio-icon">📝</span>
+                                                <span>Enter separate marks for each subject</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Total Marks Entry -->
+                                    <div id="totalMarksContent" style="display: none;">
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label class="form-label">Enter Total Science Mark</label>
+                                                <input type="number" class="form-input" id="totalScienceMark" name="totalScienceMark" min="0" step="0.01">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Enter Maximum Science Mark</label>
+                                                <input type="number" class="form-input" id="maxScienceMark" name="maxScienceMark" min="0" step="0.01">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Mark Percentage</label>
+                                            <input type="text" class="form-input percentage-display" id="juniorPercentage" readonly>
+                                        </div>
+                                    </div>
+
+                                    <!-- Separate Marks Entry -->
+                                    <div id="separateMarksContent" style="display: none;">
+                                        <div class="subjects-grid">
+                                            <div class="subject-card">
+                                                <h4>⚡ Physics</h4>
+                                                <div class="subject-inputs">
+                                                    <input type="number" class="form-input" placeholder="Obtained" id="phyObtainedJunior" name="phyObtainedJunior" min="0" step="0.01">
+                                                    <input type="number" class="form-input" placeholder="Total" id="phyTotalJunior" name="phyTotalJunior" min="0" step="0.01">
+                                                </div>
+                                            </div>
+                                            <div class="subject-card">
+                                                <h4>⚗️ Chemistry</h4>
+                                                <div class="subject-inputs">
+                                                    <input type="number" class="form-input" placeholder="Obtained" id="chemObtainedJunior" name="chemObtainedJunior" min="0" step="0.01">
+                                                    <input type="number" class="form-input" placeholder="Total" id="chemTotalJunior" name="chemTotalJunior" min="0" step="0.01">
+                                                </div>
+                                            </div>
+                                            <div class="subject-card">
+                                                <h4>🧬 Biology</h4>
+                                                <div class="subject-inputs">
+                                                    <input type="number" class="form-input" placeholder="Obtained" id="bioObtainedJunior" name="bioObtainedJunior" min="0" step="0.01">
+                                                    <input type="number" class="form-input" placeholder="Total" id="bioTotalJunior" name="bioTotalJunior" min="0" step="0.01">
+                                                </div>
+                                            </div>
+                                            <div class="subject-card">
+                                                <h4>📐 Mathematics</h4>
+                                                <div class="subject-inputs">
+                                                    <input type="number" class="form-input" placeholder="Obtained" id="mathObtainedJunior" name="mathObtainedJunior" min="0" step="0.01">
+                                                    <input type="number" class="form-input" placeholder="Total" id="mathTotalJunior" name="mathTotalJunior" min="0" step="0.01">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Mark Percentage</label>
+                                            <input type="text" class="form-input percentage-display" id="juniorSeparatePercentage" readonly>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="subject-card">
-                                    <h4>🧬 Biology</h4>
-                                    <div class="subject-inputs">
-                                        <input type="number" class="form-input" placeholder="Obtained" id="bioObtained" name="bioObtained">
-                                        <input type="number" class="form-input" placeholder="Total" id="bioTotal" name="bioTotal">
+                            </div>
+
+                            <!-- Senior Classes (XI, XII) -->
+                            <div id="seniorClassMarks" style="display: none;">
+                                <div class="subjects-grid">
+                                    <div class="subject-card">
+                                        <h4>📐 Mathematics</h4>
+                                        <div class="subject-inputs">
+                                            <input type="number" class="form-input" placeholder="Obtained" id="mathObtained" name="mathObtained" min="0" step="0.01">
+                                            <input type="number" class="form-input" placeholder="Total" id="mathTotal" name="mathTotal" min="0" step="0.01">
+                                        </div>
+                                    </div>
+                                    <div class="subject-card">
+                                        <h4>🧬 Biology</h4>
+                                        <div class="subject-inputs">
+                                            <input type="number" class="form-input" placeholder="Obtained" id="bioObtained" name="bioObtained" min="0" step="0.01">
+                                            <input type="number" class="form-input" placeholder="Total" id="bioTotal" name="bioTotal" min="0" step="0.01">
+                                        </div>
+                                    </div>
+                                    <div class="subject-card">
+                                        <h4>⚗️ Chemistry</h4>
+                                        <div class="subject-inputs">
+                                            <input type="number" class="form-input" placeholder="Obtained" id="chemObtained" name="chemObtained" min="0" step="0.01">
+                                            <input type="number" class="form-input" placeholder="Total" id="chemTotal" name="chemTotal" min="0" step="0.01">
+                                        </div>
+                                    </div>
+                                    <div class="subject-card">
+                                        <h4>⚡ Physics</h4>
+                                        <div class="subject-inputs">
+                                            <input type="number" class="form-input" placeholder="Obtained" id="phyObtained" name="phyObtained" min="0" step="0.01">
+                                            <input type="number" class="form-input" placeholder="Total" id="phyTotal" name="phyTotal" min="0" step="0.01">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="subject-card">
-                                    <h4>⚗️ Chemistry</h4>
-                                    <div class="subject-inputs">
-                                        <input type="number" class="form-input" placeholder="Obtained" id="chemObtained" name="chemObtained">
-                                        <input type="number" class="form-input" placeholder="Total" id="chemTotal" name="chemTotal">
+
+                                <!-- Percentage Boxes for Senior Classes -->
+                                <div class="percentage-boxes">
+                                    <div class="percentage-box">
+                                        <h5>🔬 Science Percentage (Physics, Chemistry, Biology)</h5>
+                                        <input type="text" class="form-input percentage-display" id="sciencePercentage" readonly>
                                     </div>
-                                </div>
-                                <div class="subject-card">
-                                    <h4>⚡ Physics</h4>
-                                    <div class="subject-inputs">
-                                        <input type="number" class="form-input" placeholder="Obtained" id="phyObtained" name="phyObtained">
-                                        <input type="number" class="form-input" placeholder="Total" id="phyTotal" name="phyTotal">
+                                    <div class="percentage-box">
+                                        <h5>🧮 Maths Percentage (Maths, Physics, Chemistry)</h5>
+                                        <input type="text" class="form-input percentage-display" id="mathsPercentage" readonly>
+                                    </div>
+                                    <div class="percentage-box">
+                                        <h5>📊 Overall Percentage (All Subjects)</h5>
+                                        <input type="text" class="form-input percentage-display" id="seniorPercentage" readonly>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label required">Name of Current/Last School</label>
@@ -989,6 +1085,10 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">School Location</label>
+                                <input type="text" class="form-input" id="schoolLocation" name="schoolLocation">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">School Area</label>
                                 <input type="text" class="form-input" id="schoolLocation" name="schoolLocation">
                             </div>
                         </div>
@@ -1024,7 +1124,6 @@
                                 <span class="error-message" id="targetYearError"></span>
                             </div>
                         </div>
-
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label required">Registration Academic Year</label>
@@ -1057,27 +1156,27 @@
                                 <span class="error-message" id="program-Error"></span>
                             </div>
                         </div>
-
-
                         <div class="form-group">
                             <label class="form-label">Enter Your Dream Career</label>
                             <input type="text" class="form-input" id="dreamCareer" name="dreamCareer" placeholder="e.g., Doctor, Engineer, Scientist">
                         </div>
                     </div>
+
                     <!-- PART 2: Parent Details -->
                     <div class="section">
                         <h2 class="section-title">👨‍👩‍👧‍👦 Part 2: Parent / Guardian Details</h2>
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label required">Name of Parent / Guardian</label>
-                                <input type="text" class="form-input" id="parentName" name="parentName" required><span class="error-message" id="parentNameError"></span>
+                                <input type="text" class="form-input" id="parentName" name="parentName" required>
+                                <span class="error-message" id="parentNameError"></span>
                             </div>
                             <div class="form-group">
                                 <label class="form-label required">Relationship to Student</label>
                                 <div class="radio-group">
                                     <div class="radio-option">
                                         <input type="radio" id="father" name="relationship" value="Father" required>
-                                        <label for="father" class="radio-label"><span>Father</span> </label>
+                                        <label for="father" class="radio-label"><span>Father</span></label>
                                     </div>
                                     <div class="radio-option">
                                         <input type="radio" id="mother" name="relationship" value="Mother">
@@ -1087,13 +1186,15 @@
                                         <input type="radio" id="otherRelation" name="relationship" value="Other">
                                         <label for="otherRelation" class="radio-label"><span>Other</span></label>
                                     </div>
-                                </div><span class="error-message" id="relationshipError"></span>
+                                </div>
+                                <span class="error-message" id="relationshipError"></span>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label required">Parent's Mobile Number</label>
-                                <input type="tel" class="form-input" id="parentMobile" name="parentMobile" required><span class="error-message" id="parentMobileError"></span>
+                                <input type="tel" class="form-input" id="parentMobile" name="parentMobile" required>
+                                <span class="error-message" id="parentMobileError"></span>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Parent's WhatsApp Number</label>
@@ -1102,19 +1203,27 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group">
+                                <label class="form-label">Parent's Botim Number</label>
+                                <input type="tel" class="form-input" id="parentWhatsapp" name="parentWhatsapp">
+                            </div>
+                            <div class="form-group">
                                 <label class="form-label">Parent's Email ID</label>
                                 <input type="email" class="form-input" id="parentEmail" name="parentEmail">
                             </div>
+                        </div>
+                        <div class="form-row">
+
                             <div class="form-group">
                                 <label class="form-label">Occupation</label>
                                 <input type="text" class="form-input" id="parentOccupation" name="parentOccupation">
                             </div>
-                        </div>
-                        <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label">Company Name</label>
                                 <input type="text" class="form-input" id="companyName" name="companyName">
                             </div>
+                        </div>
+                        <div class="form-row">
+                            
                             <div class="form-group">
                                 <label class="form-label">Work Location</label>
                                 <input type="text" class="form-input" id="parentLocation" name="parentLocation">
@@ -1125,7 +1234,8 @@
                             <div class="form-group">
                                 <label class="form-label">Home Address</label>
                                 <input type="text" class="form-input" id="homeAddress" name="homeAddress">
-                            </div><div class="form-group">
+                            </div>
+                            <div class="form-group">
                                 <label class="form-label">Location</label>
                                 <input type="text" class="form-input" id="permanentLocation" name="permanentLocation">
                             </div>
@@ -1145,6 +1255,7 @@
                             <input type="text" class="form-input" id="state" name="state">
                         </div>
                     </div>
+
                     <!-- Document Upload Section -->
                     <div class="section">
                         <h2 class="section-title">📄 Document Upload Section</h2>
@@ -1172,12 +1283,38 @@
                             </div>
                         </div>
                     </div>
+
                     <!-- Declaration -->
                     <div class="section">
                         <h2 class="section-title">📜 Declaration & Agreement</h2>
-                        <div class="checkbox-group"><div class="checkbox-option"><input type="checkbox" id="declaration1" required><label for="declaration1" class="checkbox-label">I hereby declare that all information provided is true and complete. I understand that the registration fee is non-refundable and any false information may lead to cancellation of admission.</label><span class="error-message" id="declaration1Error"></span></div><div class="checkbox-option"><input type="checkbox" id="declaration2" required><label for="declaration2" class="checkbox-label">I agree to abide by all rules, regulations, and code of conduct of Winfocus Learning Centre, Kottayam. I understand that violation of any rules may result in disciplinary action.</label><span class="error-message" id="declaration2Error"></span></div><div class="checkbox-option"><input type="checkbox" id="declaration3" required><label for="declaration3" class="checkbox-label">I consent to receive academic updates, administrative communications, study materials, and notifications via WhatsApp, Email, and SMS for the duration of the course.</label><span class="error-message" id="declaration3Error"></span></div></div>
-                        <div class="form-group" style="margin-top: 30px;"><label class="form-label">Registration Date:</label><div class="date-display" id="currentDate"></div></div>
-                        <div class="button-container"><button type="button" class="preview-btn" id="previewBtn">🔍 Preview Application</button><button type="submit" class="submit-btn" id="submitBtn"><span id="submitText">🚀 Submit Registration</span><span id="loadingSpinner" class="loading hidden"></span></button></div>
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="declaration1" required>
+                                <label for="declaration1" class="checkbox-label">I hereby declare that all information provided is true and complete. I understand that the registration fee is non-refundable and any false information may lead to cancellation of admission.</label>
+                                <span class="error-message" id="declaration1Error"></span>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="declaration2" required>
+                                <label for="declaration2" class="checkbox-label">I agree to abide by all rules, regulations, and code of conduct of Winfocus Learning Centre, Kottayam. I understand that violation of any rules may result in disciplinary action.</label>
+                                <span class="error-message" id="declaration2Error"></span>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="declaration3" required>
+                                <label for="declaration3" class="checkbox-label">I consent to receive academic updates, administrative communications, study materials, and notifications via WhatsApp, Email, and SMS for the duration of the course.</label>
+                                <span class="error-message" id="declaration3Error"></span>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top: 30px;">
+                            <label class="form-label">Registration Date:</label>
+                            <div class="date-display" id="currentDate"></div>
+                        </div>
+                        <div class="button-container">
+                            <button type="button" class="preview-btn" id="previewBtn">🔍 Preview Application</button>
+                            <button type="submit" class="submit-btn" id="submitBtn">
+                                <span id="submitText">🚀 Submit Registration</span>
+                                <span id="loadingSpinner" class="loading hidden"></span>
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -1195,7 +1332,6 @@
     </div>
 
     <script>
-
         // Load academic years from database
         async function loadAcademicYears() {
             try {
@@ -1221,10 +1357,9 @@
             }
         }
 
-
         document.addEventListener('DOMContentLoaded', function () {
-
             loadAcademicYears();
+
             // --- DOM Elements ---
             const form = document.getElementById('registrationForm');
             const previewBtn = document.getElementById('previewBtn');
@@ -1233,6 +1368,13 @@
             const closePreviewBtn = document.getElementById('closePreviewBtn');
             const previewDataContainer = document.getElementById('previewDataContainer');
             const declarationCheckboxes = document.querySelectorAll('input[id^="declaration"]');
+            const subjectMarksContainer = document.getElementById('subjectMarksContainer');
+            const juniorClassMarks = document.getElementById('juniorClassMarks');
+            const seniorClassMarks = document.getElementById('seniorClassMarks');
+            const totalMarksOption = document.getElementById('totalMarksOption');
+            const separateMarksOption = document.getElementById('separateMarksOption');
+            const totalMarksContent = document.getElementById('totalMarksContent');
+            const separateMarksContent = document.getElementById('separateMarksContent');
 
             let studentPhotoUrl = null;
 
@@ -1266,7 +1408,142 @@
                 });
             };
 
-            // --- Declaration & File Shortening Logic ---
+            // --- Subject Marks Functionality ---
+            const classRadios = document.querySelectorAll('input[name="currentClass"]');
+
+            classRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    const selectedClass = this.value;
+                    subjectMarksContainer.style.display = 'block';
+
+                    if (['VIII', 'IX', 'X'].includes(selectedClass)) {
+                        juniorClassMarks.style.display = 'block';
+                        seniorClassMarks.style.display = 'none';
+                        resetJuniorMarksSection();
+                    } else if (['XI', 'XII'].includes(selectedClass)) {
+                        juniorClassMarks.style.display = 'none';
+                        seniorClassMarks.style.display = 'block';
+                        calculateAllSeniorPercentages();
+                    }
+                });
+            });
+
+            totalMarksOption.addEventListener('change', function() {
+                if (this.checked) {
+                    totalMarksContent.style.display = 'block';
+                    separateMarksContent.style.display = 'none';
+                    calculateJuniorPercentage();
+                }
+            });
+
+            separateMarksOption.addEventListener('change', function() {
+                if (this.checked) {
+                    totalMarksContent.style.display = 'none';
+                    separateMarksContent.style.display = 'block';
+                    calculateJuniorSeparatePercentage();
+                }
+            });
+
+            function calculateJuniorPercentage() {
+                const obtained = parseFloat(document.getElementById('totalScienceMark').value) || 0;
+                const total = parseFloat(document.getElementById('maxScienceMark').value) || 1;
+                const percentage = total > 0 ? (obtained / total) * 100 : 0;
+                document.getElementById('juniorPercentage').value = percentage.toFixed(2) + '%';
+            }
+
+            function calculateJuniorSeparatePercentage() {
+                const phyObtained = parseFloat(document.getElementById('phyObtainedJunior').value) || 0;
+                const phyTotal = parseFloat(document.getElementById('phyTotalJunior').value) || 1;
+                const chemObtained = parseFloat(document.getElementById('chemObtainedJunior').value) || 0;
+                const chemTotal = parseFloat(document.getElementById('chemTotalJunior').value) || 1;
+                const bioObtained = parseFloat(document.getElementById('bioObtainedJunior').value) || 0;
+                const bioTotal = parseFloat(document.getElementById('bioTotalJunior').value) || 1;
+
+                const mathObtained = parseFloat(document.getElementById('mathObtainedJunior').value) || 0;
+                const mathTotal = parseFloat(document.getElementById('mathTotalJunior').value) || 1;
+
+                const totalObtained = phyObtained + chemObtained + bioObtained + mathObtained;
+                const totalMax = phyTotal + chemTotal + bioTotal + mathTotal;
+                const percentage = totalMax > 0 ? (totalObtained / totalMax) * 100 : 0;
+
+                document.getElementById('juniorSeparatePercentage').value = percentage.toFixed(2) + '%';
+            }
+
+            function calculateAllSeniorPercentages() {
+                // Get all subject values
+                const mathObtained = parseFloat(document.getElementById('mathObtained').value) || 0;
+                const mathTotal = parseFloat(document.getElementById('mathTotal').value) || 1;
+                const phyObtained = parseFloat(document.getElementById('phyObtained').value) || 0;
+                const phyTotal = parseFloat(document.getElementById('phyTotal').value) || 1;
+                const chemObtained = parseFloat(document.getElementById('chemObtained').value) || 0;
+                const chemTotal = parseFloat(document.getElementById('chemTotal').value) || 1;
+                const bioObtained = parseFloat(document.getElementById('bioObtained').value) || 0;
+                const bioTotal = parseFloat(document.getElementById('bioTotal').value) || 1;
+
+                // Calculate Science Percentage (Physics, Chemistry, Biology)
+                const scienceObtained = phyObtained + chemObtained + bioObtained;
+                const scienceTotal = phyTotal + chemTotal + bioTotal;
+                const sciencePercentage = scienceTotal > 0 ? (scienceObtained / scienceTotal) * 100 : 0;
+                document.getElementById('sciencePercentage').value = sciencePercentage.toFixed(2) + '%';
+
+                // Calculate Maths Percentage (Maths, Physics, Chemistry)
+                const mathsObtained = mathObtained + phyObtained + chemObtained;
+                const mathsTotal = mathTotal + phyTotal + chemTotal;
+                const mathsPercentage = mathsTotal > 0 ? (mathsObtained / mathsTotal) * 100 : 0;
+                document.getElementById('mathsPercentage').value = mathsPercentage.toFixed(2) + '%';
+
+                // Calculate Overall Percentage (All Subjects)
+                const totalObtained = mathObtained + phyObtained + chemObtained + bioObtained;
+                const totalMax = mathTotal + phyTotal + chemTotal + bioTotal;
+                const overallPercentage = totalMax > 0 ? (totalObtained / totalMax) * 100 : 0;
+                document.getElementById('seniorPercentage').value = overallPercentage.toFixed(2) + '%';
+            }
+
+            function resetJuniorMarksSection() {
+                totalMarksOption.checked = false;
+                separateMarksOption.checked = false;
+                totalMarksContent.style.display = 'none';
+                separateMarksContent.style.display = 'none';
+                document.getElementById('totalScienceMark').value = '';
+                document.getElementById('maxScienceMark').value = '';
+                document.getElementById('juniorPercentage').value = '';
+                document.getElementById('phyObtainedJunior').value = '';
+                document.getElementById('phyTotalJunior').value = '';
+                document.getElementById('chemObtainedJunior').value = '';
+                document.getElementById('chemTotalJunior').value = '';
+                document.getElementById('bioObtainedJunior').value = '';
+                document.getElementById('bioTotalJunior').value = '';
+                document.getElementById('mathObtainedJunior').value = '';
+                document.getElementById('mathTotalJunior').value = '';                
+                document.getElementById('juniorSeparatePercentage').value = '';
+            }
+            
+            // Event Listeners for Real-time Calculation
+            document.getElementById('totalScienceMark').addEventListener('input', calculateJuniorPercentage);
+            document.getElementById('maxScienceMark').addEventListener('input', calculateJuniorPercentage);
+
+            document.getElementById('phyObtainedJunior').addEventListener('input', calculateJuniorSeparatePercentage);
+            document.getElementById('phyTotalJunior').addEventListener('input', calculateJuniorSeparatePercentage);
+            document.getElementById('chemObtainedJunior').addEventListener('input', calculateJuniorSeparatePercentage);
+            document.getElementById('chemTotalJunior').addEventListener('input', calculateJuniorSeparatePercentage);
+            document.getElementById('bioObtainedJunior').addEventListener('input', calculateJuniorSeparatePercentage);
+            document.getElementById('bioTotalJunior').addEventListener('input', calculateJuniorSeparatePercentage);
+            document.getElementById('mathObtainedJunior').addEventListener('input', calculateJuniorSeparatePercentage);
+            document.getElementById('mathTotalJunior').addEventListener('input', calculateJuniorSeparatePercentage);
+
+            // Senior class percentage calculations
+            const seniorInputs = [
+                'mathObtained', 'mathTotal',
+                'phyObtained', 'phyTotal',
+                'chemObtained', 'chemTotal',
+                'bioObtained', 'bioTotal'
+            ];
+
+            seniorInputs.forEach(id => {
+                document.getElementById(id).addEventListener('input', calculateAllSeniorPercentages);
+            });
+
+            // --- Declaration & File Logic ---
             const checkDeclarations = () => {
                 const allChecked = Array.from(declarationCheckboxes).every(cb => cb.checked);
                 submitBtn.disabled = !allChecked;
@@ -1287,23 +1564,75 @@
                 const start = nameWithoutExt.substring(0, startChars);
                 const end = nameWithoutExt.substring(nameWithoutExt.length - endChars);
                 return `${start}...${end}${extension}`;
-
-
-
             };
 
             // --- Form Validation ---
             const validateForm = () => {
                 clearErrors();
                 let isValid = true;
-                // ... (validation logic is unchanged and correct)
-                const requiredFields = [{ id: 'fullName', name: 'Full Name' }, { id: 'dob', name: 'Date of Birth' }, { id: 'studentMobile', name: 'Student Mobile' }, { id: 'studentEmail', name: 'Student Email' }, { id: 'schoolName', name: 'School Name' }, { id: 'parentName', name: 'Parent Name' }, { id: 'parentMobile', name: 'Parent Mobile' }, { id: 'targetYear', name: 'Target Year' }]; requiredFields.forEach(field => { if (!getValue(field.id)) { displayError(field.id, `${field.name} is required.`); isValid = false; } }); const radioGroups = [{ name: 'gender', message: 'Please select gender' }, { name: 'board', message: 'Please select academic board' }, { name: 'currentClass', message: 'Please select current class' }, { name: 'targetExam', message: 'Please select target exam' }, { name: 'relationship', message: 'Please select relationship' }]; radioGroups.forEach(group => { if (!getRadioValue(group.name)) { displayError(group.name, group.message); isValid = false; } }); if (getValue('studentEmail') && !/^\S+@@\S+\.\S+$/.test(getValue('studentEmail'))) { displayError('studentEmail', 'Please enter a valid email address.'); isValid = false; }
-                ['studentMobile', 'parentMobile'].forEach(id => { const phoneValue = getValue(id); if (phoneValue && !/^[0-9]{10}$/.test(phoneValue)) { displayError(id, 'Please enter a valid 10-digit mobile number.'); isValid = false; } }); for (let i = 1; i <= 3; i++) { if (!document.getElementById(`declaration${i}`).checked) { displayError(`declaration${i}`, 'You must agree to this declaration.'); isValid = false; } }
-                if (!isValid) { const firstError = document.querySelector('.error-message[style*="block"]'); if (firstError) { firstError.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }
+                const requiredFields = [
+                    { id: 'fullName', name: 'Full Name' },
+                    { id: 'dob', name: 'Date of Birth' },
+                    { id: 'studentMobile', name: 'Student Mobile' },
+                    { id: 'studentEmail', name: 'Student Email' },
+                    { id: 'schoolName', name: 'School Name' },
+                    { id: 'parentName', name: 'Parent Name' },
+                    { id: 'parentMobile', name: 'Parent Mobile' },
+                    { id: 'targetYear', name: 'Target Year' }
+                ];
+
+                requiredFields.forEach(field => {
+                    if (!getValue(field.id)) {
+                        displayError(field.id, `${field.name} is required.`);
+                        isValid = false;
+                    }
+                });
+
+                const radioGroups = [
+                    { name: 'gender', message: 'Please select gender' },
+                    { name: 'board', message: 'Please select academic board' },
+                    { name: 'currentClass', message: 'Please select current class' },
+                    { name: 'targetExam', message: 'Please select target exam' },
+                    { name: 'relationship', message: 'Please select relationship' }
+                ];
+
+                radioGroups.forEach(group => {
+                    if (!getRadioValue(group.name)) {
+                        displayError(group.name, group.message);
+                        isValid = false;
+                    }
+                });
+
+                if (getValue('studentEmail') && !/^\S+@@\S+\.\S+$/.test(getValue('studentEmail'))) {
+                    displayError('studentEmail', 'Please enter a valid email address.');
+                    isValid = false;
+                }
+
+                ['studentMobile', 'parentMobile'].forEach(id => {
+                    const phoneValue = getValue(id);
+                    if (phoneValue && !/^[0-9]{10}$/.test(phoneValue)) {
+                        displayError(id, 'Please enter a valid 10-digit mobile number.');
+                        isValid = false;
+                    }
+                });
+
+                for (let i = 1; i <= 3; i++) {
+                    if (!document.getElementById(`declaration${i}`).checked) {
+                        displayError(`declaration${i}`, 'You must agree to this declaration.');
+                        isValid = false;
+                    }
+                }
+
+                if (!isValid) {
+                    const firstError = document.querySelector('.error-message[style*="block"]');
+                    if (firstError) {
+                        firstError.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
                 return isValid;
             };
 
-            // --- ENHANCED PREVIEW LOGIC ---
+            // --- PREVIEW LOGIC ---
             const createDetailItem = (label, value, isTag = false) => {
                 const notProvided = '<span class="not-provided">Not Provided</span>';
                 const val = value ? escapeHTML(value) : notProvided;
@@ -1323,13 +1652,13 @@
                 const fullName = escapeHTML(file.name);
 
                 return `
-                            <div class="document-tile">
-                                <div class="document-icon">${icon}</div>
-                                <div class="document-info">
-                                    <div class="document-name" title="${fullName}">${escapeHTML(shortName)}</div>
-                                    <div class="document-size">${(file.size / 1024).toFixed(1)} KB</div>
-                                </div>
-                            </div>`;
+                    <div class="document-tile">
+                        <div class="document-icon">${icon}</div>
+                        <div class="document-info">
+                            <div class="document-name" title="${fullName}">${escapeHTML(shortName)}</div>
+                            <div class="document-size">${(file.size / 1024).toFixed(1)} KB</div>
+                        </div>
+                    </div>`;
             };
 
             const showPreview = () => {
@@ -1347,86 +1676,140 @@
                 }
 
                 const documentTiles = [
-                    createDocumentTile('studentPhoto'), createDocumentTile('idProof'), createDocumentTile('reportCard')
+                    createDocumentTile('studentPhoto'),
+                    createDocumentTile('idProof'),
+                    createDocumentTile('reportCard')
                 ].filter(Boolean).join('');
+
                 const documentsHTML = documentTiles || '<div class="document-not-provided">No documents were uploaded.</div>';
 
-                const marksHTML = [
-                    { s: 'Mathematics', o: 'mathObtained', t: 'mathTotal' },
-                    { s: 'Biology', o: 'bioObtained', t: 'bioTotal' },
-                    { s: 'Chemistry', o: 'chemObtained', t: 'chemTotal' },
-                    { s: 'Physics', o: 'phyObtained', t: 'phyTotal' }
-                ].map(m => {
-                    const obtained = getValue(m.o);
-                    const total = getValue(m.t);
-                    return (obtained && total) ? createDetailItem(m.s, `${obtained} / ${total}`) : '';
-                }).join('');
+                // Handle subject marks display in preview
+                let marksHTML = '';
+                const selectedClass = getRadioValue('currentClass');
+
+                if (['VIII', 'IX', 'X'].includes(selectedClass)) {
+                    const marksType = getRadioValue('marksEntryType');
+                    if (marksType === 'total') {
+                        const obtained = getValue('totalScienceMark');
+                        const total = getValue('maxScienceMark');
+                        const percentage = document.getElementById('juniorPercentage').value;
+                        if (obtained || total) {
+                            marksHTML = createDetailItem('Science Marks', `${obtained} / ${total} (${percentage})`);
+                        }
+                    } else if (marksType === 'separate') {
+                        const phyObtained = getValue('phyObtainedJunior');
+                        const phyTotal = getValue('phyTotalJunior');
+                        const chemObtained = getValue('chemObtainedJunior');
+                        const chemTotal = getValue('chemTotalJunior');
+                        const bioObtained = getValue('bioObtainedJunior');
+                        const bioTotal = getValue('bioTotalJunior');
+
+                        const mathObtained = getValue('mathObtainedJunior');
+                        const mathTotal = getValue('mathTotalJunior');
+                        
+                        const percentage = document.getElementById('juniorSeparatePercentage').value;
+
+                        if (phyObtained || chemObtained || bioObtained) {
+                            marksHTML = `
+                                ${phyObtained ? createDetailItem('Physics', `${phyObtained} / ${phyTotal}`) : ''}
+                                ${chemObtained ? createDetailItem('Chemistry', `${chemObtained} / ${chemTotal}`) : ''}
+                                ${bioObtained ? createDetailItem('Biology', `${bioObtained} / ${bioTotal}`) : ''}
+                                ${createDetailItem('Total Percentage', percentage)}
+                            `;
+                        }
+                    }
+                } else if (['XI', 'XII'].includes(selectedClass)) {
+                    const mathObtained = getValue('mathObtained');
+                    const mathTotal = getValue('mathTotal');
+                    const phyObtained = getValue('phyObtained');
+                    const phyTotal = getValue('phyTotal');
+                    const chemObtained = getValue('chemObtained');
+                    const chemTotal = getValue('chemTotal');
+                    const bioObtained = getValue('bioObtained');
+                    const bioTotal = getValue('bioTotal');
+                    const sciencePercentage = document.getElementById('sciencePercentage').value;
+                    const mathsPercentage = document.getElementById('mathsPercentage').value;
+                    const overallPercentage = document.getElementById('seniorPercentage').value;
+
+                    if (mathObtained || phyObtained || chemObtained || bioObtained) {
+                        marksHTML = `
+                            ${mathObtained ? createDetailItem('Mathematics', `${mathObtained} / ${mathTotal}`) : ''}
+                            ${phyObtained ? createDetailItem('Physics', `${phyObtained} / ${phyTotal}`) : ''}
+                            ${chemObtained ? createDetailItem('Chemistry', `${chemObtained} / ${chemTotal}`) : ''}
+                            ${bioObtained ? createDetailItem('Biology', `${bioObtained} / ${bioTotal}`) : ''}
+                            ${createDetailItem('Science Percentage', sciencePercentage)}
+                            ${createDetailItem('Maths Percentage', mathsPercentage)}
+                            ${createDetailItem('Overall Percentage', overallPercentage)}
+                        `;
+                    }
+                }
 
                 previewDataContainer.innerHTML = `
-                            <div class="preview-header">
-                                <h2>Application Summary</h2>
-                                <p>Please review your details carefully before final submission.</p>
-                            </div>
+                    <div class="preview-header">
+                        <h2>Application Summary</h2>
+                        <p>Please review your details carefully before final submission.</p>
+                    </div>
 
-                            <div class="preview-body-container">
-                                <aside class="preview-sidebar">
-                                    <div class="preview-profile">
-                                        <div class="preview-photo-container">${photoHTML}</div>
-                                        <h3>${escapeHTML(getValue('fullName')) || 'Student Name'}</h3>
-                                        <p>${escapeHTML(getValue('studentEmail')) || 'No Email Provided'}</p>
-                                    </div>
-                                    <div class="detail-block">
-                                        <div class="detail-block__title">📄 Uploaded Documents</div>
-                                        <div class="document-list">
-                                            ${documentsHTML}
-                                        </div>
-                                    </div>
-                                </aside>
+                    <div class="preview-body-container">
+                        <aside class="preview-sidebar">
+                            <div class="preview-profile">
+                                <div class="preview-photo-container">${photoHTML}</div>
+                                <h3>${escapeHTML(getValue('fullName')) || 'Student Name'}</h3>
+                                <p>${escapeHTML(getValue('studentEmail')) || 'No Email Provided'}</p>
+                            </div>
+                            <div class="detail-block">
+                                <div class="detail-block__title">📄 Uploaded Documents</div>
+                                <div class="document-list">
+                                    ${documentsHTML}
+                                </div>
+                            </div>
+                        </aside>
 
-                                <main class="preview-main">
-                                    <div class="detail-block">
-                                        <div class="detail-block__title">👤 Personal & Contact</div>
-                                        <div class="detail-block__content">
-                                            ${createDetailItem('Gender', getRadioValue('gender'), true)}
-                                            ${createDetailItem('Date of Birth', getValue('dob'))}
-                                            ${createDetailItem('Mobile Number', getValue('studentMobile'))}
-                                            ${createDetailItem('WhatsApp Number', getValue('whatsappNumber'))}
-                                        </div>
-                                    </div>
-                                    <div class="detail-block">
-                                        <div class="detail-block__title">🎓 Academic Information</div>
-                                        <div class="detail-block__content">
-                                            ${createDetailItem('Current School', getValue('schoolName'))}
-                                            ${createDetailItem('School Location', getValue('schoolLocation'))}
-                                            ${createDetailItem('Board', getRadioValue('board'), true)}
-                                            ${createDetailItem('Current Class', getRadioValue('currentClass'), true)}
-                                            ${createDetailItem('Target Exam', getRadioValue('targetExam'), true)}
-                                            ${createDetailItem('Target Year', getValue('targetYear'))}
-                                            ${createDetailItem('Dream Career', getValue('dreamCareer'))}
-                                        </div>
-                                    </div>
-                                    <div class="detail-block">
-                                        <div class="detail-block__title">👨‍👩‍👧‍👦 Parent / Guardian</div>
-                                        <div class="detail-block__content">
-                                            ${createDetailItem('Name', getValue('parentName'))}
-                                            ${createDetailItem('Relationship', getRadioValue('relationship'), true)}
-                                            ${createDetailItem('Mobile', getValue('parentMobile'))}
-                                            ${createDetailItem('Email', getValue('parentEmail'))}
-                                            ${createDetailItem('Occupation', getValue('parentOccupation'))}
-                                        </div>
-                                    </div>
-                                    <div class="detail-block">
-                                        <div class="detail-block__title">📊 Subject Marks</div>
-                                        <div class="detail-block__content">
-                                            ${marksHTML || '<div class="detail-item"><span class="not-provided">No subject marks were provided.</span></div>'}
-                                        </div>
-                                    </div>
-                                </main>
+                        <main class="preview-main">
+                            <div class="detail-block">
+                                <div class="detail-block__title">👤 Personal & Contact</div>
+                                <div class="detail-block__content">
+                                    ${createDetailItem('Gender', getRadioValue('gender'), true)}
+                                    ${createDetailItem('Date of Birth', getValue('dob'))}
+                                    ${createDetailItem('Mobile Number', getValue('studentMobile'))}
+                                    ${createDetailItem('WhatsApp Number', getValue('whatsappNumber'))}
+                                </div>
                             </div>
-                            <div class="modal-actions">
-                                <button type="button" class="edit-btn" id="editDetailsBtn">✏️ Edit Details</button>
+                            <div class="detail-block">
+                                <div class="detail-block__title">🎓 Academic Information</div>
+                                <div class="detail-block__content">
+                                    ${createDetailItem('Current School', getValue('schoolName'))}
+                                    ${createDetailItem('School Location', getValue('schoolLocation'))}
+                                    ${createDetailItem('Board', getRadioValue('board'), true)}
+                                    ${createDetailItem('Current Class', getRadioValue('currentClass'), true)}
+                                    ${createDetailItem('Target Exam', getRadioValue('targetExam'), true)}
+                                    ${createDetailItem('Target Year', getValue('targetYear'))}
+                                    ${createDetailItem('Dream Career', getValue('dreamCareer'))}
+                                </div>
                             </div>
-                        `;
+                            <div class="detail-block">
+                                <div class="detail-block__title">👨‍👩‍👧‍👦 Parent / Guardian</div>
+                                <div class="detail-block__content">
+                                    ${createDetailItem('Name', getValue('parentName'))}
+                                    ${createDetailItem('Relationship', getRadioValue('relationship'), true)}
+                                    ${createDetailItem('Mobile', getValue('parentMobile'))}
+                                    ${createDetailItem('Email', getValue('parentEmail'))}
+                                    ${createDetailItem('Occupation', getValue('parentOccupation'))}
+                                </div>
+                            </div>
+                            ${marksHTML ? `
+                            <div class="detail-block">
+                                <div class="detail-block__title">📊 Subject Marks</div>
+                                <div class="detail-block__content">
+                                    ${marksHTML}
+                                </div>
+                            </div>` : ''}
+                        </main>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="edit-btn" id="editDetailsBtn">✏️ Edit Details</button>
+                    </div>
+                `;
 
                 document.getElementById('editDetailsBtn').addEventListener('click', hidePreview);
                 previewModal.classList.remove('hidden');
@@ -1446,6 +1829,7 @@
             previewBtn.addEventListener('click', showPreview);
             closePreviewBtn.addEventListener('click', hidePreview);
             previewModal.addEventListener('click', (e) => { if (e.target === previewModal) hidePreview(); });
+
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
                 if (!validateForm()) return;
@@ -1453,21 +1837,16 @@
                 const submitText = document.getElementById('submitText');
                 const loadingSpinner = document.getElementById('loadingSpinner');
 
-                const form = document.getElementById("registrationForm");
-                form.submit(); // Submits the form
-
                 submitText.classList.add('hidden');
                 loadingSpinner.classList.remove('hidden');
                 submitBtn.disabled = true;
 
+                // Submit the form after a brief delay to show loading state
                 setTimeout(() => {
-                    submitBtn.style.background = 'var(--success-color)';
-                    submitText.textContent = '✅ Submitted Successfully!';
-                    submitText.classList.remove('hidden');
-                    loadingSpinner.classList.add('hidden');
-                  //  alert('🎉 Registration submitted successfully! You will receive a confirmation email shortly.');
-                }, 2000);
+                    form.submit();
+                }, 1000);
             });
+
             document.querySelectorAll('input[type="file"]').forEach(input => {
                 input.addEventListener('change', function () {
                     const label = this.nextElementSibling;
@@ -1476,24 +1855,28 @@
                         label.style.color = 'var(--success-color)';
                         label.style.borderColor = 'var(--success-color)';
                     } else {
-                        const originalText = { studentPhoto: "📷 Upload Photo (JPEG/PNG)", idProof: "🆔 Upload Aadhar/Passport", reportCard: "📊 Upload Report Card" }[this.id];
+                        const originalText = {
+                            studentPhoto: "📷 Upload Photo (JPEG/PNG)",
+                            idProof: "🆔 Upload Aadhar/Passport",
+                            reportCard: "📊 Upload Report Card"
+                        }[this.id];
                         label.textContent = originalText;
-                        label.style.color = ''; label.style.borderColor = '';
+                        label.style.color = '';
+                        label.style.borderColor = '';
                     }
                 });
             });
         });
 
-
-
         function loadSyllabusOptions(academicYearId, targetSelectId) {
             if (!academicYearId) return;
-            //showNotification('Failed to load academic years'+academicYearId, 'error');
+
             fetch(`/api/ManagementApi/FetchSyllabus/${academicYearId}`)
                 .then(response => response.json())
                 .then(data => {
                     const select = document.getElementById(targetSelectId);
                     select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+
                     data.forEach(syllabus => {
                         const option = document.createElement('option');
                         option.value = syllabus.Id;
@@ -1507,15 +1890,14 @@
                 });
         }
 
-        // Load class data when syllabus is selected
         function loadClassOptions(SLBID, targetSelectId) {
             if (!SLBID) return;
-            //showNotification('Failed to load academic years'+academicYearId, 'error');
+
             fetch(`/api/ManagementApi/FetchGrade/${SLBID}`)
                 .then(response => response.json())
                 .then(data => {
                     const select = document.getElementById(targetSelectId);
-                    select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                    select.innerHTML = '<option value="">-- Select Grade --</option>';
                     data.forEach(fetchedData => {
                         const option = document.createElement('option');
                         option.value = fetchedData.Id;
@@ -1524,20 +1906,19 @@
                     });
                 })
                 .catch(error => {
-                    console.error('Error loading syllabus:', error);
-                    showNotification('Failed to load syllabus', 'error');
+                    console.error('Error loading grade:', error);
+                    showNotification('Failed to load grade', 'error');
                 });
         }
 
-        // Load Stream data when grade is selected
         function loadStreamOptions(classId, targetSelectId) {
             if (!classId) return;
-            //showNotification('Failed to load academic years'+academicYearId, 'error');
+
             fetch(`/api/ManagementApi/FetchStream/${classId}`)
                 .then(response => response.json())
                 .then(data => {
                     const select = document.getElementById(targetSelectId);
-                    select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                    select.innerHTML = '<option value="">-- Select Program --</option>';
                     data.forEach(fetchedData => {
                         const option = document.createElement('option');
                         option.value = fetchedData.Id;
@@ -1546,22 +1927,22 @@
                     });
                 })
                 .catch(error => {
-                    console.error('Error loading syllabus:', error);
-                    showNotification('Failed to load syllabus', 'error');
+                    console.error('Error loading program:', error);
+                    showNotification('Failed to load program', 'error');
                 });
         }
 
-        // Event listeners for accademic year dropdowns form
+        // Event listeners for academic year dropdowns
         document.getElementById('academic_year').addEventListener('change', function () {
             loadSyllabusOptions(this.value, 'syllabus');
         });
 
-        // Event listeners for accademic year dropdowns form
+        // Event listeners for syllabus dropdowns
         document.getElementById('syllabus').addEventListener('change', function () {
             loadClassOptions(this.value, 'grade');
         });
 
-        // Event listeners for grade dropdowns form
+        // Event listeners for grade dropdowns
         document.getElementById('grade').addEventListener('change', function () {
             loadStreamOptions(this.value, 'program');
         });
@@ -1578,18 +1959,13 @@
                 });
 
                 if (response.status === 200) {
-                    // Email not found in database - valid to use
-                   // alert('✅ Email is available');
                     statusSpan.textContent = '✅ Email is available';
                     statusSpan.style.color = 'green';
                 } else if (response.status === 404) {
-                    // Email already exists
                     this.value = '';
-                  //  alert('❌ Email already exists');
                     statusSpan.textContent = '❌ Email already registered';
                     statusSpan.style.color = 'red';
                 } else {
-                    // Any other error
                     statusSpan.textContent = '⚠️ Unexpected response';
                     statusSpan.style.color = 'orange';
                 }
