@@ -302,7 +302,7 @@
                                 <div class="action-buttons">
                                     <a href="~/Management/TargetyearExam/@data.ID" class="btn btn-edit"> <i class="fas fa-edit"></i> Edit</a>
 
-                                    <button class="btn btn-delete" onclick="openModal()">
+                                    <button class="btn btn-delete" onclick="openModal(@data.ID,'@data.TargetYear','@data.TargetExam')">
                                         <i class="fas fa-trash"></i> Delete
                                     </button>
                                 </div>
@@ -331,7 +331,13 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Delete</button>
+                @using (Html.BeginForm("deleteTargetExamYear", "Management", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="deleteId" id="deleteId" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                }
+
             </div>
         </div>
     </div>
@@ -355,8 +361,10 @@
     function closeModal() {
         document.getElementById('deleteModal').style.display = 'none';
     }
-    function openModal(id, content) {
+    function openModal(id, content,content2) {
         var myModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        document.getElementById("deleteContent").innerText = content2 + ' - ' + content;
+        document.getElementById("deleteId").value = id;
         myModal.show();
     }
     // Show notification function

@@ -166,6 +166,30 @@ namespace WinfocusLearningApp.Controllers
             ViewBag.TargetExamID = new SelectList(dbEntities.TblTargetExams.Where(p => p.IsDeleted == 0), "ID", "TargetExam");
             return View(model);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult deleteTargetExamYear(int? deleteId) {
+            var targetYearExam = dbEntities.TblTargetYears.Find(deleteId);
+            if (targetYearExam != null)
+            {
+                targetYearExam.IsDelete = 1;
+                targetYearExam.DeletedDt = DateTime.UtcNow;
+                dbEntities.Entry(targetYearExam).State = System.Data.Entity.EntityState.Modified;
+                if (dbEntities.SaveChanges() > 0)
+                {
+                    TempData["SuccessMessage"] = "Target Year Exam deleted successfully.";
+                }
+                else
+                {
+                    TempData["ErrorMessage"] = "Failed to delete Target Year Exam.";
+                }
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Target Year Exam not found.";
+            }
+            return RedirectToAction("TargetyearExam", "Management");
+        }
         public ActionResult Dashboard() {
             return View();
         }

@@ -1089,7 +1089,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">School Area</label>
-                                <input type="text" class="form-input" id="schoolLocation" name="schoolLocation">
+                                <input type="text" class="form-input" id="schoolArea" name="schoolArea">
                             </div>
                         </div>
                         <div class="form-row">
@@ -1115,11 +1115,7 @@
                                 <label class="form-label required">Target Year of Exam</label>
                                 <select class="form-input" id="targetYear" name="targetYear" required>
                                     <option value="">Select Year</option>
-                                    <option value="2024">2024</option>
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
-                                    <option value="2027">2027</option>
-                                    <option value="2028">2028</option>
+                                   
                                 </select>
                                 <span class="error-message" id="targetYearError"></span>
                             </div>
@@ -1204,7 +1200,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label">Parent's Botim Number</label>
-                                <input type="tel" class="form-input" id="parentWhatsapp" name="parentWhatsapp">
+                                <input type="tel" class="form-input" id="parentBotim" name="parentBotim">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Parent's Email ID</label>
@@ -1974,6 +1970,50 @@
                 statusSpan.textContent = '⚠️ Server error';
                 statusSpan.style.color = 'orange';
             }
+        });
+
+        document.querySelectorAll('input[name="targetExam"]').forEach(radio => {
+            radio.addEventListener('change', async function () {
+                if (this.checked) {
+                    const selectedValue = this.value;
+
+                    var selectedIndex = 0;
+                    switch (selectedValue) {
+                        case 'NEET':
+                            selectedIndex = 1;
+                            break;
+                        case 'JEE':
+                            selectedIndex = 2;
+                            break;
+                        case 'CBSE':
+                            selectedIndex = 3;
+                            break;
+                        default:
+                            break;
+                    }
+                    try {
+                        // Call your API with the selected value
+                        const response = await fetch(`/api/ManagementApi/FetchTargetYear/${selectedIndex}`);
+                        if (!response.ok) throw new Error("Network response was not ok");
+
+                        const data = await response.json();
+
+                        // Populate the select dropdown
+                        const select = document.getElementById("targetYear");
+                        select.innerHTML = '<option value="">-- Select --</option>'; // Clear old options
+
+                        data.forEach(item => {
+                            const option = document.createElement("option");
+                            option.value = item.ID; // Assuming your API returns {id, name}
+                            option.textContent = item.TargetYear;
+                            select.appendChild(option);
+                        });
+
+                    } catch (error) {
+                        console.error("Error fetching data:", error);
+                    }
+                }
+            });
         });
     </script>
 </body>

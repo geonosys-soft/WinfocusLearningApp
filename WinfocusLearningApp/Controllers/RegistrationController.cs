@@ -49,6 +49,7 @@ namespace WinfocusLearningApp.Controllers
                 FullName = info.fullName,
                 CLSchoolName = info.schoolName,
                 CLSLocation = info.schoolLocation,
+                CLSArea = info.schoolArea,
                 DOB = info.dob,
                 EmailID = info.studentEmail,
                 CousreID = info.program,
@@ -91,11 +92,77 @@ namespace WinfocusLearningApp.Controllers
                 State = info.state,
                 WhatsAppNumber = info.parentWhatsapp != null ? info.parentWhatsapp : info.parentMobile,
                 Place= info.permanentLocation,
-                StudentSignature= reportCard != null ? convertFile(reportCard) : null
+                StudentSignature= reportCard != null ? convertFile(reportCard) : null,
+                Botim= info.parentBotim != null ? info.parentBotim : info.parentMobile,
             };
             db.TblStudent_Parent_Basic.Add(tblStudent_Parent_Basic);
 
-            var tblStudent_Mark_Scoreds = new List<TblStudent_Mark_Scored>
+            if(info.maxScienceMark!=0 && info.totalScienceMark!=0)
+            {
+               TblStudent_Mark_Scored tblStudent_Mark_Scored = new TblStudent_Mark_Scored
+                {
+                    RegID = info.RegistrationId,
+                    Subject = "Science",
+                    MaxMark = (decimal?)info.maxScienceMark,
+                    MarkObtained = (decimal?)info.totalScienceMark,
+                    IsActive = 1,
+                    CreatedDt = DateTime.Now,
+                    IsDeleted = 0
+                };
+                db.TblStudent_Mark_Scored.Add(tblStudent_Mark_Scored);
+            }
+            else if(info.bioObtainedJunior!=0 && info.bioTotalJunior!=0)
+            {
+                var tblStudent_Mark_Scoreds = new List<TblStudent_Mark_Scored>
+            {
+                new TblStudent_Mark_Scored
+                {
+                    RegID = info.RegistrationId,
+                    Subject = "JMaths",
+                    MaxMark = (decimal?)info.mathTotalJunior,
+                    MarkObtained = (decimal?)info.mathObtainedJunior,
+                    IsActive = 1,
+                    CreatedDt = DateTime.Now,
+                    IsDeleted = 0
+                },
+                new TblStudent_Mark_Scored
+                {
+                    RegID = info.RegistrationId,
+                    Subject = "JBiology",
+                    MaxMark = (decimal?)info.bioTotalJunior,
+                    MarkObtained = (decimal?)info.bioObtainedJunior,
+                    IsActive = 1,
+                    CreatedDt = DateTime.Now,
+                    IsDeleted = 0
+                },
+                new TblStudent_Mark_Scored
+                {
+                    RegID = info.RegistrationId,
+                    Subject = "JChemistry",
+                    MaxMark = (decimal?)info.chemTotalJunior,
+                    MarkObtained = (decimal?)info.chemObtainedJunior,
+                    IsActive = 1,
+                    CreatedDt = DateTime.Now,
+                    IsDeleted = 0
+                },
+                new TblStudent_Mark_Scored
+                {
+                    RegID = info.RegistrationId,
+                    Subject = "JPhysics",
+                    MaxMark = (decimal?)info.phyTotalJunior,
+                    MarkObtained = (decimal?)info.phyObtainedJunior,
+                    IsActive = 1,
+                    CreatedDt = DateTime.Now,
+                    IsDeleted = 0
+                }
+            };
+
+                db.TblStudent_Mark_Scored.AddRange(tblStudent_Mark_Scoreds);
+
+            }
+            else
+            {
+                var tblStudent_Mark_Scoreds = new List<TblStudent_Mark_Scored>
             {
                 new TblStudent_Mark_Scored
                 {
@@ -139,7 +206,10 @@ namespace WinfocusLearningApp.Controllers
                 }
             };
 
-            db.TblStudent_Mark_Scored.AddRange(tblStudent_Mark_Scoreds);
+                db.TblStudent_Mark_Scored.AddRange(tblStudent_Mark_Scoreds);
+
+            }
+
             //db.TblSTudentBasicDetails.AddRange(tblSTudentBasicDetail);
             db.SaveChanges();
             return View();

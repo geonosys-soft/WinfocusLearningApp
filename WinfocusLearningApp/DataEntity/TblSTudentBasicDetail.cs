@@ -42,5 +42,6 @@ namespace WinfocusLearningApp.DataEntity
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<int> ProcessStage { get; set; }
         public byte[] Profile { get; set; }
+        public string CLSArea { get; set; }
     }
 }
