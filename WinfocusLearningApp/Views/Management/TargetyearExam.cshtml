@@ -1,0 +1,485 @@
+﻿
+@{
+    ViewBag.Title = "Target Exam Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --primary-hover: #3a56d4;
+        --secondary-color: #3f37c9;
+        --danger-color: #f72585;
+        --danger-hover: #e5177b;
+        --success-color: #4cc9f0;
+        --success-hover: #2fb5e0;
+        --text-color: #2b2d42;
+        --light-bg: #f8f9fa;
+    }
+
+    body {
+        background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text-color);
+        min-height: 100vh;
+    }
+
+    .top-bar {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 20px 0;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .top-bar::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4cc9f0, #f72585, #7209b7);
+        }
+
+        .top-bar h1 {
+            margin: 0;
+            padding: 0 30px;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        border-top: 4px solid var(--primary-color);
+    }
+
+        .form-container h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+            .form-container h3::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 60px;
+                height: 3px;
+                background: var(--primary-color);
+            }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+    .btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+    .btn-submit {
+        background-color: var(--success-color);
+    }
+
+        .btn-submit:hover {
+            background-color: var(--success-hover);
+        }
+
+    .btn-edit {
+        background-color: #7209b7;
+    }
+
+        .btn-edit:hover {
+            background-color: #5e079b;
+        }
+
+    .btn-delete {
+        background-color: var(--danger-color);
+    }
+
+        .btn-delete:hover {
+            background-color: var(--danger-hover);
+        }
+
+    .table-container {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 30px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    th {
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: 500;
+    }
+
+    tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+    }
+
+    .floating-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        z-index: 1000;
+        transform: translateX(150%);
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+        .floating-notification.show {
+            transform: translateX(0);
+        }
+
+    .notification-icon {
+        margin-right: 10px;
+        font-size: 24px;
+    }
+
+    .notification-success {
+        border-left: 4px solid var(--success-color);
+    }
+
+    .notification-error {
+        border-left: 4px solid var(--danger-color);
+    }
+
+    .month-year-input {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .month-year-input input {
+            flex: 1;
+        }
+</style>
+
+<div class="top-bar">
+    <h1><i class="fas fa-calendar-alt"></i> Target Exam Management</h1>
+</div>
+
+<div class="container">
+    <div class="form-container">
+        <h3><i class="fas fa-plus-circle"></i> Add Target Exam</h3>
+        <div class="form-group">
+            <label for="TargetExam">Target Exam:</label>
+            <select id="TargetExam" class="form-control" required>
+                <option value="">-- Select Exam --</option>
+                
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="TargetMonthYear">Target Month/Year:</label>
+            <div class="month-year-input">
+                <input type="text" id="TargetMonthYear" class="form-control" placeholder="MM/YYYY" required>
+                <button type="button" class="btn btn-submit" onclick="addTargetExam()">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <h3><i class="fas fa-list"></i> Target Exams</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Target Exam</th>
+                    <th>MM/YYYY</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                {
+                    <tr>
+                        <td>NEET</td>
+                        <td>08/2026</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-edit" onclick="">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <button class="btn btn-delete" onclick="">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div id="editModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3><i class="fas fa-edit"></i> Edit Target Exam</h3>
+        <input type="hidden" id="editId">
+        <div class="form-group">
+            <label for="editExam">Target Exam:</label>
+            <select id="editExam" class="form-control" required>
+                <option value="">-- Select Exam --</option>
+                
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="editMonthYear">Target Month/Year:</label>
+            <input type="text" id="editMonthYear" class="form-control" placeholder="MM/YYYY" required>
+        </div>
+        <button type="button" class="btn" onclick="updateTargetExam()">
+            <i class="fas fa-save"></i> Update
+        </button>
+    </div>
+</div>
+
+<!-- Notification -->
+<div id="notification" class="floating-notification">
+    <div class="notification-icon"></div>
+    <div class="notification-message"></div>
+</div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script>
+    // Add target exam
+    function addTargetExam() {
+        const examId = document.getElementById('TargetExam').value;
+        const monthYear = document.getElementById('TargetMonthYear').value.trim();
+
+        if (!examId || !monthYear) {
+            showNotification('Please select exam and enter month/year', 'error');
+            return;
+        }
+
+        // Validate MM/YYYY format
+        if (!/^(0[1-9]|1[0-2])\/\d{4}$/.test(monthYear)) {
+            showNotification('Please enter month/year in MM/YYYY format', 'error');
+            return;
+        }
+
+        // AJAX call to add target exam
+        fetch('/TargetExam/Add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ExamId: examId,
+                TargetMonthYear: monthYear
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showNotification('Target exam added successfully!', 'success');
+                // Refresh the page or update the table
+                setTimeout(() => location.reload(), 1500);
+            } else {
+                showNotification(data.message || 'Failed to add target exam', 'error');
+            }
+        })
+        .catch(error => {
+            showNotification('An error occurred', 'error');
+            console.error('Error:', error);
+        });
+    }
+
+    // Edit target exam - open modal
+    function editTargetExam(id, examName, monthYear) {
+        document.getElementById('editId').value = id;
+        document.getElementById('editMonthYear').value = monthYear;
+
+        // Select the exam in the dropdown
+        const examSelect = document.getElementById('editExam');
+        for (let i = 0; i < examSelect.options.length; i++) {
+            if (examSelect.options[i].text === examName) {
+                examSelect.selectedIndex = i;
+                break;
+            }
+        }
+
+        // Show modal
+        document.getElementById('editModal').style.display = 'block';
+    }
+
+    // Update target exam
+    function updateTargetExam() {
+        const id = document.getElementById('editId').value;
+        const examId = document.getElementById('editExam').value;
+        const monthYear = document.getElementById('editMonthYear').value.trim();
+
+        if (!id || !examId || !monthYear) {
+            showNotification('Please fill all fields', 'error');
+            return;
+        }
+
+        // Validate MM/YYYY format
+        if (!/^(0[1-9]|1[0-2])\/\d{4}$/.test(monthYear)) {
+            showNotification('Please enter month/year in MM/YYYY format', 'error');
+            return;
+        }
+
+        // AJAX call to update target exam
+        fetch('/TargetExam/Update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                Id: id,
+                ExamId: examId,
+                TargetMonthYear: monthYear
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showNotification('Target exam updated successfully!', 'success');
+                // Refresh the page or update the table
+                setTimeout(() => location.reload(), 1500);
+            } else {
+                showNotification(data.message || 'Failed to update target exam', 'error');
+            }
+        })
+        .catch(error => {
+            showNotification('An error occurred', 'error');
+            console.error('Error:', error);
+        });
+    }
+
+
+    // Close modal
+    function closeModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+
+    // Show notification function
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        const notificationIcon = notification.querySelector('.notification-icon');
+        const notificationMsg = notification.querySelector('.notification-message');
+
+        // Clear previous classes
+        notification.className = 'floating-notification';
+        notification.classList.add('show', `notification-${type}`);
+
+        // Set icon and message
+        if (type === 'success') {
+            notificationIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            notificationIcon.style.color = '#4cc9f0';
+        } else {
+            notificationIcon.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+            notificationIcon.style.color = '#f72585';
+        }
+
+        notificationMsg.textContent = message;
+
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 5000);
+    }
+
+    // Close notification when clicked
+    document.getElementById('notification').addEventListener('click', function() {
+        this.classList.remove('show');
+    });
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        const modal = document.getElementById('editModal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+</script>

@@ -77,6 +77,7 @@ namespace WinfocusLearningApp.Controllers
         public ActionResult St_Registration() { return View(); }
         public ActionResult BDE_Registration() { return View(); }
         public ActionResult FeesDetails() { return View(); }
+        public ActionResult TargetyearExam() { return View(); }
         public ActionResult Dashboard() {
             return View();
         }
