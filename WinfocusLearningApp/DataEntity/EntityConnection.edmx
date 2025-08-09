@@ -275,6 +275,8 @@
           <Property Name="CreatedDt" Type="date" />
           <Property Name="IsDeleted" Type="int" />
           <Property Name="DeletedDt" Type="date" />
+          <Property Name="TaxPer" Type="float" />
+          <Property Name="TaxAmount" Type="float" />
         </EntityType>
         <EntityType Name="TblStudent_Mark_Scored">
           <Key>
@@ -330,6 +332,8 @@
           <Property Name="TransactionDate" Type="date" />
           <Property Name="Status" Type="varchar" MaxLength="50" />
           <Property Name="FeeID" Type="int" />
+          <Property Name="TaxPer" Type="float" />
+          <Property Name="TaxAmount" Type="float" />
         </EntityType>
         <EntityType Name="TblStudent_Payment_Terms">
           <Key>
@@ -504,6 +508,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="SPinsertRole" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RoleId" Type="int" Mode="In" />
+          <Parameter Name="UserId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="Winfocus_DbModelStoreContainer">
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblAccademicYear" EntityType="Self.TblAccademicYear" Schema="dbo" store:Type="Tables" />
@@ -573,9 +581,13 @@
           <EntitySet Name="TblStudent_Parent_Basic" EntityType="Winfocus_DbModel.TblStudent_Parent_Basic" />
           <EntitySet Name="TblStudent_Payment_Terms" EntityType="Winfocus_DbModel.TblStudent_Payment_Terms" />
           <EntitySet Name="TblDicountCoupens" EntityType="Winfocus_DbModel.TblDicountCoupen" />
+          <EntitySet Name="TblTaxes" EntityType="Winfocus_DbModel.TblTax" />
           <EntitySet Name="TblStudent_Fee" EntityType="Winfocus_DbModel.TblStudent_Fee" />
           <EntitySet Name="TblStudent_Payment_History" EntityType="Winfocus_DbModel.TblStudent_Payment_History" />
-          <EntitySet Name="TblTaxes" EntityType="Winfocus_DbModel.TblTax" />
+          <FunctionImport Name="SPinsertRole">
+            <Parameter Name="RoleId" Mode="In" Type="Int32" />
+            <Parameter Name="UserId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="TblAccademicYear">
           <Key>
@@ -1001,6 +1013,14 @@
           <Property Name="DeletedBy" Type="Int32" />
           <Property Name="DeletedDt" Type="DateTime" Precision="0" />
         </EntityType>
+        <EntityType Name="TblTax">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaxPercentage" Type="Double" />
+          <Property Name="Tax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="TblStudent_Fee">
           <Key>
             <PropertyRef Name="ID" />
@@ -1020,6 +1040,8 @@
           <Property Name="CreatedDt" Type="DateTime" Precision="0" />
           <Property Name="IsDeleted" Type="Int32" />
           <Property Name="DeletedDt" Type="DateTime" Precision="0" />
+          <Property Name="TaxPer" Type="Double" />
+          <Property Name="TaxAmount" Type="Double" />
         </EntityType>
         <EntityType Name="TblStudent_Payment_History">
           <Key>
@@ -1037,14 +1059,8 @@
           <Property Name="TransactionDate" Type="DateTime" Precision="0" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FeeID" Type="Int32" />
-        </EntityType>
-        <EntityType Name="TblTax">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TaxPercentage" Type="Double" />
-          <Property Name="Tax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TaxPer" Type="Double" />
+          <Property Name="TaxAmount" Type="Double" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1501,9 +1517,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TblTaxes">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblTax">
+              <MappingFragment StoreEntitySet="TblTax">
+                <ScalarProperty Name="Tax" ColumnName="Tax" />
+                <ScalarProperty Name="TaxPercentage" ColumnName="TaxPercentage" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TblStudent_Fee">
             <EntityTypeMapping TypeName="Winfocus_DbModel.TblStudent_Fee">
               <MappingFragment StoreEntitySet="TblStudent_Fee">
+                <ScalarProperty Name="TaxAmount" ColumnName="TaxAmount" />
+                <ScalarProperty Name="TaxPer" ColumnName="TaxPer" />
                 <ScalarProperty Name="DeletedDt" ColumnName="DeletedDt" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
@@ -1525,6 +1552,8 @@
           <EntitySetMapping Name="TblStudent_Payment_History">
             <EntityTypeMapping TypeName="Winfocus_DbModel.TblStudent_Payment_History">
               <MappingFragment StoreEntitySet="TblStudent_Payment_History">
+                <ScalarProperty Name="TaxAmount" ColumnName="TaxAmount" />
+                <ScalarProperty Name="TaxPer" ColumnName="TaxPer" />
                 <ScalarProperty Name="FeeID" ColumnName="FeeID" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
@@ -1540,15 +1569,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TblTaxes">
-            <EntityTypeMapping TypeName="Winfocus_DbModel.TblTax">
-              <MappingFragment StoreEntitySet="TblTax">
-                <ScalarProperty Name="Tax" ColumnName="Tax" />
-                <ScalarProperty Name="TaxPercentage" ColumnName="TaxPercentage" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SPinsertRole" FunctionName="Winfocus_DbModel.Store.SPinsertRole" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

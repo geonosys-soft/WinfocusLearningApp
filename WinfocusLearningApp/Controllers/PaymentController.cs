@@ -131,7 +131,9 @@ namespace WinfocusLearningApp.Controllers
                             IsActive = 1, // 1 for Active
                             CreatedDt = DateTime.Now,
                             IsDeleted = 0, // 0 for Not Deleted
-                            DeletedDt = null
+                            DeletedDt = null,
+                            TaxAmount=model.GSTAmount != null ? Convert.ToDouble(model.GSTAmount) : 0,
+                            TaxPer = model.GSTPerc != null ? Convert.ToDouble(model.GSTPerc) : 0
 
                         };
                         Winfocus_CS.TblStudent_Fee.Add(std_fee_info);
@@ -155,7 +157,9 @@ namespace WinfocusLearningApp.Controllers
                             IsActive = 1, // 1 for Active
                             CreatedDt = DateTime.Now,
                             IsDeleted = 0, // 0 for Not Deleted
-                            DeletedDt = null
+                            DeletedDt = null,
+                            TaxAmount = model.GSTAmount != null ? Convert.ToDouble(model.GSTAmount) : 0,
+                            TaxPer = model.GSTPerc != null ? Convert.ToDouble(model.GSTPerc) : 0
 
                         };
                         List<TblStudent_Fee> lstStdFee = new List<TblStudent_Fee>();
@@ -178,7 +182,8 @@ namespace WinfocusLearningApp.Controllers
                                 IsActive = 1, // 1 for Active
                                 CreatedDt = DateTime.Now,
                                 IsDeleted = 0, // 0 for Not Deleted
-                                DeletedDt = null
+                                DeletedDt = null,
+                                
                             };
                             lstStdFee.Add(std_fee_info2);
                         }
@@ -200,7 +205,8 @@ namespace WinfocusLearningApp.Controllers
                                 IsActive = 1, // 1 for Active
                                 CreatedDt = DateTime.Now,
                                 IsDeleted = 0, // 0 for Not Deleted
-                                DeletedDt = null
+                                DeletedDt = null,
+                                
                             };
                             lstStdFee.Add(std_fee_info3);
                         }
@@ -222,7 +228,8 @@ namespace WinfocusLearningApp.Controllers
                                 IsActive = 1, // 1 for Active
                                 CreatedDt = DateTime.Now,
                                 IsDeleted = 0, // 0 for Not Deleted
-                                DeletedDt = null
+                                DeletedDt = null,
+                               
                             };
                             lstStdFee.Add(std_fee_info4);
                         }
@@ -244,7 +251,8 @@ namespace WinfocusLearningApp.Controllers
                                 IsActive = 1, // 1 for Active
                                 CreatedDt = DateTime.Now,
                                 IsDeleted = 0, // 0 for Not Deleted
-                                DeletedDt = null
+                                DeletedDt = null,
+                                
                             };
                             lstStdFee.Add(std_fee_info5);
                         }
@@ -264,8 +272,10 @@ namespace WinfocusLearningApp.Controllers
                         OrderID = model.razorpay_order_id,
                         PaymentID = model.razorpay_payment_id,
                         Signature = model.razorpay_signature,
-                        TransactionDate = DateTime.Now
-                        
+                        TransactionDate = DateTime.Now,
+                        TaxPer = model.GSTPerc != null ? Convert.ToDouble(model.GSTPerc) : 0,
+                        TaxAmount = model.GSTAmount != null ? Convert.ToDouble(model.GSTAmount) : 0
+
                     };
                     Winfocus_CS.TblStudent_Payment_History.Add(tblStudent_Payment_History);
                     if (Winfocus_CS.SaveChanges() > 0)
@@ -340,7 +350,7 @@ namespace WinfocusLearningApp.Controllers
                     IsActive = 1, // 1 for Active
                     IsDeleted = 0, // 0 for Not Deleted
                     CreatedDate= DateTime.Now,
-                    RoleId=3,
+                   RoleId=3, // Assuming 3 is the role ID for Student
                     DeletedBy = 0, // 0 for Not Deleted
                     DeletedDate = DateTime.Now,
                     UniqueID=tblS.RegId, // Assuming RegId is unique for each user
@@ -350,8 +360,9 @@ namespace WinfocusLearningApp.Controllers
                 Winfocus_CS.Users.Add(user);
                 if (Winfocus_CS.SaveChanges() > 0)
                 {
+                    var findUser = Winfocus_CS.Users.Where(x => x.UniqueID == tblS.RegId).FirstOrDefault();
+                    Winfocus_CS.SPinsertRole(findUser.RoleId,findUser.Id); // Assuming 3 is the role ID for Student
 
-                   
                     // Add student basic details
                     tblS.IsActive = 1; // 1 for Active
                     tblS.IsDeleted = 0; // 0 for Not Deleted
@@ -359,7 +370,9 @@ namespace WinfocusLearningApp.Controllers
                     Winfocus_CS.TblSTudentBasicDetails.Add(tblS);
                     if (Winfocus_CS.SaveChanges() > 0)
                     {
-                            return 1; // Success
+                      
+                       
+                        return 1; // Success
                     }
                     else
                     {

@@ -660,7 +660,7 @@
                         @Html.TextBoxFor(model => model.CurrentPayable, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Current Payable Amount</label>
+                        <label class="form-label">Payable Tax %</label>
                         @Html.TextBoxFor(model => model.GSTPerc, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
                     </div>
                     
@@ -669,7 +669,7 @@
                 <div class="form-row">
                     
                     <div class="form-group">
-                        <label class="form-label">Current Payable Amount</label>
+                        <label class="form-label">Tax Amount</label>
                         @Html.TextBoxFor(model => model.GSTAmount, new { @class = "form-input", @placeholder = "Enter Refference Code", @readonly = true })
                     </div>
                     <div class="form-group">
@@ -689,7 +689,8 @@
                     @Html.HiddenFor(model => model.DisPerc)
                     @Html.HiddenFor(model => model.TotalPayable)
                     @Html.HiddenFor(model=>model.PaymentMode)
-
+                    @Html.HiddenFor(model=>model.GSTPerc)
+                    @Html.HiddenFor(model=>model.GSTAmount)
 
                 }
                 <!-- Declaration -->
