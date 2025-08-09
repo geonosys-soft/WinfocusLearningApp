@@ -259,6 +259,12 @@
     <Compile Include="DataEntity\TblSyllabu.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataEntity\TblTargetExam.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataEntity\TblTargetYear.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataEntity\TblTax.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
@@ -280,6 +286,7 @@
     <Compile Include="ViewModels\StudentRegistrationCompleteModel.cs" />
     <Compile Include="ViewModels\StudentRegistrationModel.cs" />
     <Compile Include="ViewModels\StudentReglistModel.cs" />
+    <Compile Include="ViewModels\TargetYearExamViewModel.cs" />
     <Compile Include="WebApi\FeeApiController.cs" />
     <Compile Include="WebApi\ManagementApiController.cs" />
   </ItemGroup>

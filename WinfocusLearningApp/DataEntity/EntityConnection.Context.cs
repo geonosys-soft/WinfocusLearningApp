@@ -53,6 +53,8 @@ namespace WinfocusLearningApp.DataEntity
         public virtual DbSet<TblTax> TblTaxes { get; set; }
         public virtual DbSet<TblStudent_Fee> TblStudent_Fee { get; set; }
         public virtual DbSet<TblStudent_Payment_History> TblStudent_Payment_History { get; set; }
+        public virtual DbSet<TblTargetExam> TblTargetExams { get; set; }
+        public virtual DbSet<TblTargetYear> TblTargetYears { get; set; }
     
         public virtual int SPinsertRole(Nullable<int> roleId, Nullable<int> userId)
         {

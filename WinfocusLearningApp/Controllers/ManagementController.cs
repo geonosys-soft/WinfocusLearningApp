@@ -1,14 +1,17 @@
 ﻿using Newtonsoft.Json.Linq;
+using Razorpay.Api;
 using System;
 using System.Collections.Generic;
 using System.EnterpriseServices;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Http;
+
 using System.Web.Mvc;
 using WinfocusLearningApp.Authentication;
 using WinfocusLearningApp.DataEntity;
+using WinfocusLearningApp.ViewModels;
+
 
 namespace WinfocusLearningApp.Controllers
 { 
@@ -77,7 +80,92 @@ namespace WinfocusLearningApp.Controllers
         public ActionResult St_Registration() { return View(); }
         public ActionResult BDE_Registration() { return View(); }
         public ActionResult FeesDetails() { return View(); }
-        public ActionResult TargetyearExam() { return View(); }
+        public ActionResult TargetyearExam(int? id) { 
+            TargetYearExamViewModel model = new TargetYearExamViewModel();
+            if (id!=null)
+            {
+                var targetYearExam = dbEntities.TblTargetYears.Find(id);
+                ViewBag.TargetExamID = new SelectList(dbEntities.TblTargetExams.Where(p => p.IsDeleted == 0), "ID", "TargetExam",targetYearExam.TargetExamID);
+                model.ID = targetYearExam.ID;
+                model.TargetYear = targetYearExam.TargetYear;
+            }
+            else
+            {
+                ViewBag.TargetExamID = new SelectList(dbEntities.TblTargetExams.Where(p => p.IsDeleted == 0), "ID", "TargetExam");
+                
+            }
+            var data = (from TYre in dbEntities.TblTargetYears
+                        join TExm in dbEntities.TblTargetExams on TYre.TargetExamID equals TExm.ID
+                        where TYre.IsDelete == 0
+                        select new TargetYearExamViewModel
+                        {
+                            ID = TYre.ID,
+                            TargetExam = TExm.TargetExam,
+                            TargetExamID = TYre.TargetExamID,
+                            TargetYear = TYre.TargetYear,
+                            IsDelete = TYre.IsDelete,
+                            CreatedDt = TYre.CreatedDt,
+                            DeletedDt = TYre.DeletedDt,
+                            IsActive = TYre.IsActive
+                        }).ToList();
+            model.Exam = data;
+            if (TempData["SuccessMessage"]!= null)
+            {
+                ViewBag.Success = TempData["SuccessMessage"];
+            }
+            if (TempData["ErrorMessage"] != null)
+            {
+                ViewBag.Error = TempData["ErrorMessage"];
+            }
+            return View(model); 
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TargetYearExam(TargetYearExamViewModel model) {
+            if (ModelState.IsValid)
+            {
+                if(model.ID!=0)
+                {
+                    var targetyearExam = dbEntities.TblTargetYears.Find(model.ID);
+                    targetyearExam.TargetYear = model.TargetYear;
+                    targetyearExam.TargetExamID = model.TargetExamID;
+                    dbEntities.Entry(targetyearExam).State = System.Data.Entity.EntityState.Modified;
+                    if (dbEntities.SaveChanges() > 0)
+                    {
+                        TempData["SuccessMessage"] = "Target Year Exam updated successfully.";
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Failed to update Target Year Exam.";
+                    }
+                }
+                else
+                {
+
+                    TblTargetYear tblTargetYear = new TblTargetYear()
+                    {
+                        CreatedDt = DateTime.UtcNow,
+                        IsActive = 1,
+                        IsDelete = 0,
+                        TargetYear = model.TargetYear,
+                        TargetExamID = model.TargetExamID
+                    };
+                    dbEntities.TblTargetYears.Add(tblTargetYear);
+                    if (dbEntities.SaveChanges() > 0)
+                    {
+                        TempData["SuccessMessage"] = "Target Year Exam created successfully.";
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Failed to create Target Year Exam.";
+                    }
+                }
+
+                    return RedirectToAction("TargetyearExam","Management");
+            }
+            ViewBag.TargetExamID = new SelectList(dbEntities.TblTargetExams.Where(p => p.IsDeleted == 0), "ID", "TargetExam");
+            return View(model);
+        }
         public ActionResult Dashboard() {
             return View();
         }

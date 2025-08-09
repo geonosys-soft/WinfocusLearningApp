@@ -440,6 +440,29 @@
           <Property Name="ModifiedTime" Type="datetime" />
           <Property Name="Description" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="TblTargetExam">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TargetExam" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="int" />
+          <Property Name="IsDeleted" Type="int" />
+          <Property Name="CreatedDt" Type="date" />
+          <Property Name="DeletedDt" Type="date" />
+        </EntityType>
+        <EntityType Name="TblTargetYear">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TargetYear" Type="varchar" MaxLength="50" />
+          <Property Name="TargetExamID" Type="int" />
+          <Property Name="IsActive" Type="int" />
+          <Property Name="IsDelete" Type="int" />
+          <Property Name="CreatedDt" Type="date" />
+          <Property Name="DeletedDt" Type="date" />
+        </EntityType>
         <EntityType Name="TblTax">
           <Key>
             <PropertyRef Name="ID" />
@@ -537,6 +560,8 @@
           <EntitySet Name="TblSubChapter" EntityType="Self.TblSubChapter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblSubject" EntityType="Self.TblSubject" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblSyllabus" EntityType="Self.TblSyllabus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblTargetExam" EntityType="Self.TblTargetExam" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblTargetYear" EntityType="Self.TblTargetYear" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblTax" EntityType="Self.TblTax" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -588,6 +613,8 @@
             <Parameter Name="RoleId" Mode="In" Type="Int32" />
             <Parameter Name="UserId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="TblTargetExams" EntityType="Winfocus_DbModel.TblTargetExam" />
+          <EntitySet Name="TblTargetYears" EntityType="Winfocus_DbModel.TblTargetYear" />
         </EntityContainer>
         <EntityType Name="TblAccademicYear">
           <Key>
@@ -1061,6 +1088,29 @@
           <Property Name="FeeID" Type="Int32" />
           <Property Name="TaxPer" Type="Double" />
           <Property Name="TaxAmount" Type="Double" />
+        </EntityType>
+        <EntityType Name="TblTargetExam">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TargetExam" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Int32" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="0" />
+          <Property Name="DeletedDt" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="TblTargetYear">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TargetYear" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TargetExamID" Type="Int32" />
+          <Property Name="IsActive" Type="Int32" />
+          <Property Name="IsDelete" Type="Int32" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="0" />
+          <Property Name="DeletedDt" Type="DateTime" Precision="0" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1570,6 +1620,31 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SPinsertRole" FunctionName="Winfocus_DbModel.Store.SPinsertRole" />
+          <EntitySetMapping Name="TblTargetExams">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblTargetExam">
+              <MappingFragment StoreEntitySet="TblTargetExam">
+                <ScalarProperty Name="DeletedDt" ColumnName="DeletedDt" />
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="TargetExam" ColumnName="TargetExam" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblTargetYears">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblTargetYear">
+              <MappingFragment StoreEntitySet="TblTargetYear">
+                <ScalarProperty Name="DeletedDt" ColumnName="DeletedDt" />
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="TargetExamID" ColumnName="TargetExamID" />
+                <ScalarProperty Name="TargetYear" ColumnName="TargetYear" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
