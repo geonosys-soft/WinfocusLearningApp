@@ -29,5 +29,7 @@ namespace WinfocusLearningApp.DataEntity
         public Nullable<System.DateTime> CreatedDt { get; set; }
         public Nullable<int> IsDeleted { get; set; }
         public Nullable<System.DateTime> DeletedDt { get; set; }
+        public Nullable<double> TaxPer { get; set; }
+        public Nullable<double> TaxAmount { get; set; }
     }
 }

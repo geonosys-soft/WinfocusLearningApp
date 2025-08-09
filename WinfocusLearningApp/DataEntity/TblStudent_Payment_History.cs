@@ -26,5 +26,7 @@ namespace WinfocusLearningApp.DataEntity
         public Nullable<System.DateTime> TransactionDate { get; set; }
         public string Status { get; set; }
         public Nullable<int> FeeID { get; set; }
+        public Nullable<double> TaxPer { get; set; }
+        public Nullable<double> TaxAmount { get; set; }
     }
 }
