@@ -35,6 +35,14 @@ namespace WinfocusLearningApp.Controllers
             var uniqueID = alpha +"-"+ y + m+"-"+ unique;
             StudentRegistrationModel info=new StudentRegistrationModel();
             info.RegistrationId = uniqueID;
+            if (TempData["Success"]!=null)
+            {
+                ViewBag.success = TempData["Success"];
+            }
+            if (TempData["Error"]!=null)
+            {
+                ViewBag.Error = TempData["Error"];
+            }
             return View(info);
         }
         [HttpPost]
@@ -85,8 +93,8 @@ namespace WinfocusLearningApp.Controllers
                 MobileNumber = info.parentMobile,
                 Occupation = info.parentOccupation,
                 FatherSignature = idProof != null ? convertFile(idProof) : null,
-                PIN = info.postOffice,
-                PO= info.permanentLocation,
+                PIN = null,
+                PO= info.postOffice,
                 RelationShip = info.relationship != null ? info.relationship : null,
                 RegId = info.RegistrationId,
                 State = info.state,
@@ -211,8 +219,15 @@ namespace WinfocusLearningApp.Controllers
             }
 
             //db.TblSTudentBasicDetails.AddRange(tblSTudentBasicDetail);
-            db.SaveChanges();
-            return View();
+          if(db.SaveChanges()>0)
+            {
+                TempData["Success"] = "Registration successfully completed. You will recive a payment after Approval";
+            }
+          else
+            {
+                TempData["Error"] = "Unable to register your request please try again after sometime";
+            }
+            return RedirectToAction("Student","Registration");
         }
         public byte[] convertFile(HttpPostedFileBase file)
         {

@@ -846,6 +846,20 @@
                 <form id="registrationForm" method="post" enctype="multipart/form-data" novalidate>
                     <!-- PART 1: Student Details -->
                     <div class="section">
+                        <div class="form-row">
+                            <div class="form-group">
+                                @if (ViewBag.success != null)
+                                {
+                                    <label style="color:forestgreen;"> @ViewBag.success </label>
+                                }
+                                @if (ViewBag.Error!=null)
+                                {
+                                    <label style="color:red;"> @ViewBag.Error </label>
+                                }
+
+                            </div>
+                        </div>
+                       
                         <h2 class="section-title">✨ Part 1: Student Details & Academic Information</h2>
                         <div class="form-row">
                             <div class="form-group">
