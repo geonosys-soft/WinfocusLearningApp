@@ -1,0 +1,391 @@
+﻿@model WinfocusLearningApp.ViewModels.DTPRegistrationModel
+@{
+    ViewBag.Title = "DTPRegistrationList";
+}
+
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --primary-hover: #3a56d4;
+        --secondary-color: #3f37c9;
+        --danger-color: #f72585;
+        --danger-hover: #e5177b;
+        --success-color: #4cc9f0;
+        --success-hover: #2fb5e0;
+        --text-color: #2b2d42;
+        --light-bg: #f8f9fa;
+    }
+
+    body {
+        background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text-color);
+        min-height: 100vh;
+    }
+
+    .top-bar {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 20px 0;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .top-bar::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4cc9f0, #f72585, #7209b7);
+        }
+
+        .top-bar h1 {
+            margin: 0;
+            padding: 0 30px;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        border-top: 4px solid var(--primary-color);
+    }
+
+        .form-container h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+            .form-container h3::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 60px;
+                height: 3px;
+                background: var(--primary-color);
+            }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+    .btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+    .btn-submit {
+        background-color: var(--success-color);
+    }
+
+        .btn-submit:hover {
+            background-color: var(--success-hover);
+        }
+
+    .btn-edit {
+        background-color: #7209b7;
+    }
+
+        .btn-edit:hover {
+            background-color: #5e079b;
+        }
+
+    .btn-delete {
+        background-color: var(--danger-color);
+    }
+
+        .btn-delete:hover {
+            background-color: var(--danger-hover);
+        }
+
+    .table-container {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 30px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    th {
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: 500;
+    }
+
+    tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+    }
+
+    .floating-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        z-index: 1000;
+        transform: translateX(150%);
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+        .floating-notification.show {
+            transform: translateX(0);
+        }
+
+    .notification-icon {
+        margin-right: 10px;
+        font-size: 24px;
+    }
+
+    .notification-success {
+        border-left: 4px solid var(--success-color);
+    }
+
+    .notification-error {
+        border-left: 4px solid var(--danger-color);
+    }
+
+    .month-year-input {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .month-year-input input {
+            flex: 1;
+        }
+</style>
+
+<div class="top-bar">
+    <h1><i class="fas fa-calendar-alt"></i> DTP Registration Management</h1>
+</div>
+
+<div class="container">
+   
+    <div class="table-container">
+        <h3><i class="fas fa-list"></i> DTP List</h3>
+        @if (ViewBag.Success != null)
+        {
+            <span class="text-success">@ViewBag.Success</span>
+        }
+        @if (ViewBag.Error != null)
+        {
+            <span class="text-danger">@ViewBag.Error</span>
+        }
+
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Reg ID</th>
+                    <th>Full Name</th>
+                    <th>Mobile Number</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model._dtpRegistrationList != null)
+                {
+                    foreach (var data in Model._dtpRegistrationList)
+                    {
+                        <tr>
+                            <td> <img src="data:image/png;base64,@Convert.ToBase64String(data.ProfilePic)" sizes="50" width="50" alt="Alternate Text" /></td>
+                            <td>@data.RegID</td>
+                            <td>@data.Fullname</td>
+                            <td>@data.MobileNumber</td>
+                            <td>@data.EmailId</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="~/Management/addDTPUser/@data.ID" class="btn btn-success"> <i class="fas fa-plus"></i> Add User</a>
+                                    <a href="~/Management/DTPRegistration/@data.ID" class="btn btn-edit"> <i class="fas fa-edit"></i> Edit</a>
+
+                                    <button class="btn btn-delete" onclick="openModal(@data.ID,'@data.RegID','@data.Fullname')">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+
+
+<div class="modal" tabindex="-1" id="deleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Do you Want to delete <span id="deleteContent"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                @using (Html.BeginForm("DeleteDTPRegistration", "Management", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="deleteId" id="deleteId" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Notification -->
+<div id="notification" class="floating-notification">
+    <div class="notification-icon"></div>
+    <div class="notification-message"></div>
+</div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script>
+
+
+    // Close modal
+    function closeModal() {
+        document.getElementById('deleteModal').style.display = 'none';
+    }
+    function openModal(id, content,content2) {
+        var myModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        document.getElementById("deleteContent").innerText = content2 + ' - ' + content;
+        document.getElementById("deleteId").value = id;
+        myModal.show();
+    }
+    // Show notification function
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        const notificationIcon = notification.querySelector('.notification-icon');
+        const notificationMsg = notification.querySelector('.notification-message');
+
+        // Clear previous classes
+        notification.className = 'floating-notification';
+        notification.classList.add('show', `notification-${type}`);
+
+        // Set icon and message
+        if (type === 'success') {
+            notificationIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            notificationIcon.style.color = '#4cc9f0';
+        } else {
+            notificationIcon.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+            notificationIcon.style.color = '#f72585';
+        }
+
+        notificationMsg.textContent = message;
+
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 5000);
+    }
+
+    // Close notification when clicked
+    document.getElementById('notification').addEventListener('click', function () {
+        this.classList.remove('show');
+    });
+
+    // Close modal when clicking outside of it
+    window.onclick = function (event) {
+        const modal = document.getElementById('deleteModal');
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+</script>

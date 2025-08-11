@@ -205,6 +205,9 @@
     <Compile Include="DataEntity\TblDicountCoupen.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataEntity\TblDTPRegistration.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataEntity\TblFeeDetail.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
@@ -282,6 +285,7 @@
     <Compile Include="Models\AccademicYearModel.cs" />
     <Compile Include="Models\MaterialModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DTPRegistrationModel.cs" />
     <Compile Include="ViewModels\FeeTermDiscountModel.cs" />
     <Compile Include="ViewModels\RazorPayPaymentModel.cs" />
     <Compile Include="ViewModels\StudentPaymentModel.cs" />
@@ -409,6 +413,8 @@
     <Content Include="Views\DTP\Index.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Exam\Index.cshtml" />
+    <Content Include="Views\Management\DTPRegistration.cshtml" />
+    <Content Include="Views\Management\DTPRegistrationList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
