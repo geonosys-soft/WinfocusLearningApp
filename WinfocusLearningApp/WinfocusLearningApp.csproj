@@ -168,10 +168,12 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\Admin_StudentController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DTPController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagementController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\RegistrationController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="DataEntity\EntityConnection.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -403,6 +405,8 @@
     <Content Include="Views\Payment\Payment.cshtml" />
     <Content Include="Views\Payment\Charge.cshtml" />
     <Content Include="Views\Management\TargetyearExam.cshtml" />
+    <Content Include="Views\DTP\Index.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
