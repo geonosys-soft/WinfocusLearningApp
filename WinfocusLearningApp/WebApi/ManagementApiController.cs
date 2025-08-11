@@ -1451,5 +1451,19 @@ namespace WinfocusLearningApp.WebApi
                 return InternalServerError(ex);
             }
         }
+        [Route("api/ManagementApi/FetchTargetYear/{Id}")]
+        [HttpGet]
+        public IHttpActionResult FetchTargetYear(int Id)
+        {
+            try
+            {
+                var targetYearList = winfocus_CS.TblTargetYears.Where(x => x.IsDelete == 0 && x.TargetExamID == Id).ToList();
+                return Ok(targetYearList);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
     }
 }

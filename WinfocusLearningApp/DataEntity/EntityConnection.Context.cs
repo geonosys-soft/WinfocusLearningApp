@@ -46,13 +46,15 @@ namespace WinfocusLearningApp.DataEntity
         public virtual DbSet<TblMaterial> TblMaterials { get; set; }
         public virtual DbSet<TblRegistrationBatch> TblRegistrationBatches { get; set; }
         public virtual DbSet<TblRegistrationBatchTime> TblRegistrationBatchTimes { get; set; }
-        public virtual DbSet<TblSTudentBasicDetail> TblSTudentBasicDetails { get; set; }
-        public virtual DbSet<TblStudent_Parent_Basic> TblStudent_Parent_Basic { get; set; }
         public virtual DbSet<TblStudent_Payment_Terms> TblStudent_Payment_Terms { get; set; }
         public virtual DbSet<TblDicountCoupen> TblDicountCoupens { get; set; }
         public virtual DbSet<TblTax> TblTaxes { get; set; }
         public virtual DbSet<TblStudent_Fee> TblStudent_Fee { get; set; }
         public virtual DbSet<TblStudent_Payment_History> TblStudent_Payment_History { get; set; }
+        public virtual DbSet<TblTargetExam> TblTargetExams { get; set; }
+        public virtual DbSet<TblTargetYear> TblTargetYears { get; set; }
+        public virtual DbSet<TblStudent_Parent_Basic> TblStudent_Parent_Basic { get; set; }
+        public virtual DbSet<TblSTudentBasicDetail> TblSTudentBasicDetails { get; set; }
     
         public virtual int SPinsertRole(Nullable<int> roleId, Nullable<int> userId)
         {

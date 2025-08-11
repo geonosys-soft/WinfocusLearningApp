@@ -24,6 +24,7 @@ namespace WinfocusLearningApp.Controllers
                             join gradeData in db.TblGrades on student.GradeID equals gradeData.Id
                             join streamData in db.TblStreams on student.StreamID equals streamData.Id
                             where student.IsDeleted == 0
+                            orderby student.CreatedDt descending
                             select new StudentReglistModel
                             {
                                 SID = student.SID,
@@ -71,6 +72,7 @@ namespace WinfocusLearningApp.Controllers
                             join gradeData in db.TblGrades on student.GradeID equals gradeData.Id
                             join streamData in db.TblStreams on student.StreamID equals streamData.Id
                             join parentData in db.TblStudent_Parent_Basic on student.RegId equals parentData.RegId
+                            join targetyear in db.TblTargetYears on student.TargetYearExam equals targetyear.ID.ToString()
                             where student.IsDeleted == 0 && student.SID==Id
                             select new StudentRegistrationCompleteModel
                             {
@@ -101,7 +103,7 @@ namespace WinfocusLearningApp.Controllers
                                 StreamName = streamData.Name,
                                 Emirate = student.Emirate,
                                 TargetExam = student.TargetExam,
-                                TargetYearExam = student.TargetYearExam,
+                                TargetYearExam = targetyear.TargetYear,
                                 CousreID = student.CousreID,
                                 ProcessStage = student.ProcessStage,
                                 Profile = student.Profile,
