@@ -323,11 +323,11 @@ namespace WinfocusLearningApp.Controllers
                     if (Winfocus_CS.SaveChanges() > 0)
                     {
                        
-                        return RedirectToAction("PaymentSuccess");//payment success page
+                        return RedirectToAction("Login","Account");//payment success page
                     }
                     else
                     {
-                        return RedirectToAction("PaymentFailed");//db save failed message
+                        return RedirectToAction("Login", "Account");//db save failed message
                     }
                    // return RedirectToAction("PaymentFailed");
                 }
@@ -366,6 +366,7 @@ namespace WinfocusLearningApp.Controllers
                     // Add student basic details
                     tblS.IsActive = 1; // 1 for Active
                     tblS.IsDeleted = 0; // 0 for Not Deleted
+                    tblS.ProcessStage = 4;
                     tblS.CreatedDt = DateTime.Now;
                     Winfocus_CS.TblSTudentBasicDetails.Add(tblS);
                     if (Winfocus_CS.SaveChanges() > 0)

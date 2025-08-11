@@ -33,5 +33,6 @@ namespace WinfocusLearningApp.DataEntity
         public string RegId { get; set; }
         public byte[] FatherSignature { get; set; }
         public byte[] StudentSignature { get; set; }
+        public string Botim { get; set; }
     }
 }

@@ -565,105 +565,184 @@
                         </div>
 
                         <div class="subjects-container">
-                            <!-- Mathematics -->
-                            <div class="subject-card math">
-                                <div class="subject-header">
-                                    <div class="subject-icon">📐</div>
-                                    <div class="subject-name">Mathematics</div>
-                                </div>
-                                <div class="marks-grid">
-                                    <div class="mark-item">
-                                        <span class="mark-label">Obtained</span>
-                                        <span class="mark-value">
-                                        @(Model.studentList.FirstOrDefault(x=>x.Subject=="Maths")?.MarkObtained??0)
-                                        </span>
-                                    </div>
-                                    <div class="mark-item">
-                                        <span class="mark-label">Total</span>
-                                        <span class="mark-value">
-                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Maths")?.MaxMark??0)
-                                        </span>
-                                    </div>
-                                    <div class="percentage-display">
-                                        Percentage: @(((Model.studentList.FirstOrDefault(x => x.Subject == "Maths")?.MarkObtained ?? 0)/ (Model.studentList.FirstOrDefault(x => x.Subject == "Maths")?.MaxMark ?? 0))*100)%
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- Science -->
+                            @{
+                                var science = Model.studentList.FirstOrDefault(x => x.Subject == "Science");
 
-                            <!-- Biology -->
-                            <div class="subject-card bio">
-                                <div class="subject-header">
-                                    <div class="subject-icon">🧬</div>
-                                    <div class="subject-name">Biology</div>
-                                </div>
-                                <div class="marks-grid">
-                                    <div class="mark-item">
-                                        <span class="mark-label">Obtained</span>
-                                        <span class="mark-value">
-                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Biology")?.MarkObtained??0)
-                                        </span>
-                                    </div>
-                                    <div class="mark-item">
-                                        <span class="mark-label">Total</span>
-                                        <span class="mark-value">
-                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Biology")?.MaxMark??0)
-                                        </span>
-                                    </div>
-                                    <div class="percentage-display">
-                                        Percentage: @(((Model.studentList.FirstOrDefault(x => x.Subject == "Biology")?.MarkObtained ?? 0)/ (Model.studentList.FirstOrDefault(x => x.Subject == "Biology")?.MaxMark ?? 0))*100)% 
-                                    </div>
-                                </div>
-                            </div>
+                                // Pick whichever is not null
+                                var scienceData = science;
 
-                            <!-- Chemistry -->
-                            <div class="subject-card chem">
-                                <div class="subject-header">
-                                    <div class="subject-icon">⚗️</div>
-                                    <div class="subject-name">Chemistry</div>
-                                </div>
-                                <div class="marks-grid">
-                                    <div class="mark-item">
-                                        <span class="mark-label">Obtained</span>
-                                        <span class="mark-value">
-                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Chemistry")?.MarkObtained??0)
-                                        </span>
-                                    </div>
-                                    <div class="mark-item">
-                                        <span class="mark-label">Total</span>
-                                        <span class="mark-value">
-                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Chemistry")?.MaxMark??0)
-                                        </span>
-                                    </div>
-                                    <div class="percentage-display">
-                                        Percentage: @(((Model.studentList.FirstOrDefault(x => x.Subject == "Chemistry")?.MarkObtained ?? 0)/ (Model.studentList.FirstOrDefault(x => x.Subject == "Chemistry")?.MaxMark ?? 0))*100)%
-                                    </div>
-                                </div>
-                            </div>
+                                var scienceObtained = scienceData?.MarkObtained ?? 0;
+                                var scienceTotal = scienceData?.MaxMark ?? 0;
+                                var sciencePercentage = scienceTotal > 0 ? (scienceObtained / (decimal)scienceTotal) * 100 : 0;
+                            }
 
-                            <!-- Physics -->
-                            <div class="subject-card phy">
-                                <div class="subject-header">
-                                    <div class="subject-icon">⚡</div>
-                                    <div class="subject-name">Physics</div>
+                            @if (sciencePercentage == 0)
+                            {
+                                <!-- Maths -->
+
+
+                                var maths = Model.studentList.FirstOrDefault(x => x.Subject == "Maths");
+                                var jmaths = Model.studentList.FirstOrDefault(x => x.Subject == "JMaths");
+
+                                // Pick whichever is not null
+                                var subjectData = maths ?? jmaths;
+
+                                var mathsObtained = subjectData?.MarkObtained ?? 0;
+                                var mathsTotal = subjectData?.MaxMark ?? 0;
+                                var mathsPercentage = mathsTotal > 0 ? (mathsObtained / (decimal)mathsTotal) * 100 : 0;
+
+                                <div class="subject-card math">
+                                    <div class="subject-header">
+                                        <div class="subject-icon">📐</div>
+                                        <div class="subject-name">Mathematics</div>
+                                    </div>
+                                    <div class="marks-grid">
+                                        <div class="mark-item">
+                                            <span class="mark-label">Obtained</span>
+                                            <span class="mark-value">@mathsObtained</span>
+                                        </div>
+                                        <div class="mark-item">
+                                            <span class="mark-label">Total</span>
+                                            <span class="mark-value">@mathsTotal</span>
+                                        </div>
+                                        <div class="percentage-display">
+                                            Percentage: @mathsPercentage %
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="marks-grid">
-                                    <div class="mark-item">
-                                        <span class="mark-label">Obtained</span>
-                                        <span class="mark-value">
-                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Physics")?.MarkObtained ?? 0)
-                                        </span>
+
+                                <!-- Biology -->
+
+                                var biology = Model.studentList.FirstOrDefault(x => x.Subject == "Biology");
+                                var jbiology = Model.studentList.FirstOrDefault(x => x.Subject == "JBiology");
+
+                                // Pick whichever is not null
+                                var biologyData = biology ?? jbiology;
+
+                                var biologyObtained = biologyData?.MarkObtained ?? 0;
+                                var biologyTotal = biologyData?.MaxMark ?? 0;
+                                var biologyPercentage = biologyTotal > 0 ? (biologyObtained / (decimal)biologyTotal) * 100 : 0;
+
+                                <div class="subject-card bio">
+                                    <div class="subject-header">
+                                        <div class="subject-icon">🧬</div>
+                                        <div class="subject-name">Biology</div>
                                     </div>
-                                    <div class="mark-item">
-                                        <span class="mark-label">Total</span>
-                                        <span class="mark-value">
-                                            @(Model.studentList.FirstOrDefault(x => x.Subject == "Physics")?.MaxMark??0)
-                                        </span>
-                                    </div>
-                                    <div class="percentage-display">
-                                        Percentage: @(((Model.studentList.FirstOrDefault(x => x.Subject == "Physics")?.MarkObtained ?? 0)/ (Model.studentList.FirstOrDefault(x => x.Subject == "Physics")?.MaxMark ?? 0))*100)%
+                                    <div class="marks-grid">
+                                        <div class="mark-item">
+                                            <span class="mark-label">Obtained</span>
+                                            <span class="mark-value">
+                                                @biologyObtained
+                                            </span>
+                                        </div>
+                                        <div class="mark-item">
+                                            <span class="mark-label">Total</span>
+                                            <span class="mark-value">
+                                                @biologyTotal
+                                            </span>
+                                        </div>
+                                        <div class="percentage-display">
+                                            Percentage: @biologyPercentage %
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+
+                                <!-- Chemistry -->
+
+                                var chemistry = Model.studentList.FirstOrDefault(x => x.Subject == "Biology");
+                                var jchemistry = Model.studentList.FirstOrDefault(x => x.Subject == "JBiology");
+
+                                // Pick whichever is not null
+                                var chemistryData = chemistry ?? jchemistry;
+
+                                var chemistryObtained = chemistryData?.MarkObtained ?? 0;
+                                var chemistryTotal = chemistryData?.MaxMark ?? 0;
+                                var chemistryPercentage = chemistryTotal > 0 ? (chemistryObtained / (decimal)chemistryTotal) * 100 : 0;
+
+                                <div class="subject-card chem">
+                                    <div class="subject-header">
+                                        <div class="subject-icon">⚗️</div>
+                                        <div class="subject-name">Chemistry</div>
+                                    </div>
+                                    <div class="marks-grid">
+                                        <div class="mark-item">
+                                            <span class="mark-label">Obtained</span>
+                                            <span class="mark-value">
+                                                @chemistryObtained
+                                            </span>
+                                        </div>
+                                        <div class="mark-item">
+                                            <span class="mark-label">Total</span>
+                                            <span class="mark-value">
+                                                @chemistryTotal
+                                            </span>
+                                        </div>
+                                        <div class="percentage-display">
+                                            Percentage:  @chemistryPercentage %
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Physics -->
+
+                                var physics = Model.studentList.FirstOrDefault(x => x.Subject == "Biology");
+                                var jphysics = Model.studentList.FirstOrDefault(x => x.Subject == "JBiology");
+
+                                // Pick whichever is not null
+                                var physicsData = maths ?? jmaths;
+
+                                var physicsObtained = physicsData?.MarkObtained ?? 0;
+                                var physicsTotal = physicsData?.MaxMark ?? 0;
+                                var physicsPercentage = physicsTotal > 0 ? (physicsObtained / (decimal)physicsTotal) * 100 : 0;
+
+                                <div class="subject-card phy">
+                                    <div class="subject-header">
+                                        <div class="subject-icon">⚡</div>
+                                        <div class="subject-name">Physics</div>
+                                    </div>
+                                    <div class="marks-grid">
+                                        <div class="mark-item">
+                                            <span class="mark-label">Obtained</span>
+                                            <span class="mark-value">
+                                                @physicsObtained
+                                            </span>
+                                        </div>
+                                        <div class="mark-item">
+                                            <span class="mark-label">Total</span>
+                                            <span class="mark-value">
+                                                @physicsTotal
+                                            </span>
+                                        </div>
+                                        <div class="percentage-display">
+                                            Percentage: @physicsPercentage %
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="subject-card math">
+                                    <div class="subject-header">
+                                        <div class="subject-icon">📐🧬⚗️⚡</div>
+                                        <div class="subject-name">Science</div>
+                                    </div>
+                                    <div class="marks-grid">
+                                        <div class="mark-item">
+                                            <span class="mark-label">Obtained</span>
+                                            <span class="mark-value">@scienceObtained</span>
+                                        </div>
+                                        <div class="mark-item">
+                                            <span class="mark-label">Total</span>
+                                            <span class="mark-value">@scienceTotal</span>
+                                        </div>
+                                        <div class="percentage-display">
+                                            Percentage: @sciencePercentage %
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
                         </div>
                     </div>
 

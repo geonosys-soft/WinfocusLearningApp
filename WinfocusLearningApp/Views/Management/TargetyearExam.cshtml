@@ -1,4 +1,4 @@
-﻿
+﻿@model WinfocusLearningApp.ViewModels.TargetYearExamViewModel
 @{
     ViewBag.Title = "Target Exam Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -246,23 +246,38 @@
 
 <div class="container">
     <div class="form-container">
-        <h3><i class="fas fa-plus-circle"></i> Add Target Exam</h3>
-        <div class="form-group">
-            <label for="TargetExam">Target Exam:</label>
-            <select id="TargetExam" class="form-control" required>
-                <option value="">-- Select Exam --</option>
-                
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="TargetMonthYear">Target Month/Year:</label>
-            <div class="month-year-input">
-                <input type="text" id="TargetMonthYear" class="form-control" placeholder="MM/YYYY" required>
-                <button type="button" class="btn btn-submit" onclick="addTargetExam()">
-                    <i class="fas fa-plus"></i> Add
-                </button>
+        @using (Html.BeginForm("TargetYearExam", "Management", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.ID)
+            <h3><i class="fas fa-plus-circle"></i> Add Target Exam</h3>
+            <div class="form-group">
+                <label for="TargetExam">Target Exam:</label>
+                @Html.DropDownList("TargetExamID", null, "--Select Exam--", htmlAttributes: new { @class = "form-control", @required = true })
+
             </div>
-        </div>
+            <div class="form-group">
+                <label for="TargetMonthYear">Target Month/Year:</label>
+                <div class="month-year-input">
+                    @Html.TextBoxFor(model => model.TargetYear, new { @class = "form-control", @placeholder = "MMMM/YYYY", @required = true })
+
+                    <button type="submit" class="btn btn-submit" onclick="addTargetExam()">
+                        <i class="fas fa-plus"></i> Add
+                    </button>
+
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(ViewBag.Success as string) || !string.IsNullOrWhiteSpace(ViewBag.Error as string))
+                {
+                    <div class="alert @(ViewBag.Success != null ? "alert-success" : "alert-danger")">
+                        @ViewBag.Success @ViewBag.Error
+                    </div>
+                }
+
+
+            </div>
+        }
+
     </div>
 
     <div class="table-container">
@@ -276,22 +291,25 @@
                 </tr>
             </thead>
             <tbody>
-                
+                @if (Model.Exam.Count > 0)
                 {
-                    <tr>
-                        <td>NEET</td>
-                        <td>08/2026</td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="btn btn-edit" onclick="">
-                                    <i class="fas fa-edit"></i> Edit
-                                </button>
-                                <button class="btn btn-delete" onclick="">
-                                    <i class="fas fa-trash"></i> Delete
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    foreach (var data in Model.Exam)
+                    {
+                        <tr>
+                            <td>@data.TargetExam</td>
+                            <td>@data.TargetYear</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="~/Management/TargetyearExam/@data.ID" class="btn btn-edit"> <i class="fas fa-edit"></i> Edit</a>
+
+                                    <button class="btn btn-delete" onclick="openModal(@data.ID,'@data.TargetYear','@data.TargetExam')">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
                 }
             </tbody>
         </table>
@@ -299,27 +317,33 @@
 </div>
 
 <!-- Edit Modal -->
-<div id="editModal" class="modal" style="display:none;">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h3><i class="fas fa-edit"></i> Edit Target Exam</h3>
-        <input type="hidden" id="editId">
-        <div class="form-group">
-            <label for="editExam">Target Exam:</label>
-            <select id="editExam" class="form-control" required>
-                <option value="">-- Select Exam --</option>
-                
-            </select>
+
+
+<div class="modal" tabindex="-1" id="deleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Do you Want to delete <span id="deleteContent"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                @using (Html.BeginForm("deleteTargetExamYear", "Management", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="deleteId" id="deleteId" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                }
+
+            </div>
         </div>
-        <div class="form-group">
-            <label for="editMonthYear">Target Month/Year:</label>
-            <input type="text" id="editMonthYear" class="form-control" placeholder="MM/YYYY" required>
-        </div>
-        <button type="button" class="btn" onclick="updateTargetExam()">
-            <i class="fas fa-save"></i> Update
-        </button>
     </div>
 </div>
+
+
 
 <!-- Notification -->
 <div id="notification" class="floating-notification">
@@ -331,118 +355,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
-    // Add target exam
-    function addTargetExam() {
-        const examId = document.getElementById('TargetExam').value;
-        const monthYear = document.getElementById('TargetMonthYear').value.trim();
-
-        if (!examId || !monthYear) {
-            showNotification('Please select exam and enter month/year', 'error');
-            return;
-        }
-
-        // Validate MM/YYYY format
-        if (!/^(0[1-9]|1[0-2])\/\d{4}$/.test(monthYear)) {
-            showNotification('Please enter month/year in MM/YYYY format', 'error');
-            return;
-        }
-
-        // AJAX call to add target exam
-        fetch('/TargetExam/Add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                ExamId: examId,
-                TargetMonthYear: monthYear
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                showNotification('Target exam added successfully!', 'success');
-                // Refresh the page or update the table
-                setTimeout(() => location.reload(), 1500);
-            } else {
-                showNotification(data.message || 'Failed to add target exam', 'error');
-            }
-        })
-        .catch(error => {
-            showNotification('An error occurred', 'error');
-            console.error('Error:', error);
-        });
-    }
-
-    // Edit target exam - open modal
-    function editTargetExam(id, examName, monthYear) {
-        document.getElementById('editId').value = id;
-        document.getElementById('editMonthYear').value = monthYear;
-
-        // Select the exam in the dropdown
-        const examSelect = document.getElementById('editExam');
-        for (let i = 0; i < examSelect.options.length; i++) {
-            if (examSelect.options[i].text === examName) {
-                examSelect.selectedIndex = i;
-                break;
-            }
-        }
-
-        // Show modal
-        document.getElementById('editModal').style.display = 'block';
-    }
-
-    // Update target exam
-    function updateTargetExam() {
-        const id = document.getElementById('editId').value;
-        const examId = document.getElementById('editExam').value;
-        const monthYear = document.getElementById('editMonthYear').value.trim();
-
-        if (!id || !examId || !monthYear) {
-            showNotification('Please fill all fields', 'error');
-            return;
-        }
-
-        // Validate MM/YYYY format
-        if (!/^(0[1-9]|1[0-2])\/\d{4}$/.test(monthYear)) {
-            showNotification('Please enter month/year in MM/YYYY format', 'error');
-            return;
-        }
-
-        // AJAX call to update target exam
-        fetch('/TargetExam/Update', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                Id: id,
-                ExamId: examId,
-                TargetMonthYear: monthYear
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                showNotification('Target exam updated successfully!', 'success');
-                // Refresh the page or update the table
-                setTimeout(() => location.reload(), 1500);
-            } else {
-                showNotification(data.message || 'Failed to update target exam', 'error');
-            }
-        })
-        .catch(error => {
-            showNotification('An error occurred', 'error');
-            console.error('Error:', error);
-        });
-    }
 
 
     // Close modal
     function closeModal() {
-        document.getElementById('editModal').style.display = 'none';
+        document.getElementById('deleteModal').style.display = 'none';
     }
-
+    function openModal(id, content,content2) {
+        var myModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        document.getElementById("deleteContent").innerText = content2 + ' - ' + content;
+        document.getElementById("deleteId").value = id;
+        myModal.show();
+    }
     // Show notification function
     function showNotification(message, type) {
         const notification = document.getElementById('notification');
@@ -471,13 +395,13 @@
     }
 
     // Close notification when clicked
-    document.getElementById('notification').addEventListener('click', function() {
+    document.getElementById('notification').addEventListener('click', function () {
         this.classList.remove('show');
     });
 
     // Close modal when clicking outside of it
-    window.onclick = function(event) {
-        const modal = document.getElementById('editModal');
+    window.onclick = function (event) {
+        const modal = document.getElementById('deleteModal');
         if (event.target == modal) {
             modal.style.display = 'none';
         }
