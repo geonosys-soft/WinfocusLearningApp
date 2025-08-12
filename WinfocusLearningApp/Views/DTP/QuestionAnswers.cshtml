@@ -1,8 +1,8 @@
-﻿@*@model WinfocusLearningApp.DataEntity.TblModule*@
+﻿
 @{
-    ViewBag.Title = "Module Management";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "QuestionAnswers";
 }
+
 
 <style>
     :root {
@@ -283,33 +283,15 @@
 </style>
 
 <div class="top-bar">
-    <h1><i class="fas fa-cubes"></i> Module Management</h1>
+    <h1></i> Question Management</h1>
 </div>
 
 <div class="container">
-    <div class="action-container">
-        <div class="action-box insert" onclick="showForm('insert')">
-            <div class="action-icon">➕</div>
-            <div class="action-title">Add Module</div>
-            <div class="action-desc">Create a new module record</div>
-        </div>
-
-        <div class="action-box edit" onclick="showForm('edit')">
-            <div class="action-icon">✏️</div>
-            <div class="action-title">Edit Module</div>
-            <div class="action-desc">Modify existing module</div>
-        </div>
-
-        <div class="action-box delete" onclick="showForm('delete')">
-            <div class="action-icon">🗑️</div>
-            <div class="action-title">Remove Module</div>
-            <div class="action-desc">Delete module record</div>
-        </div>
-    </div>
+    
 
     <!-- Insert Form (shown by default) -->
     <div id="insert-form" class="form-container">
-        <h3><i class="fas fa-plus-circle"></i> Add Module</h3>
+        <h3><i class="fas fa-plus-circle"></i> Add Questions</h3>
         <div class="form-row">
             <div class="form-col">
                 <div class="form-group">
@@ -318,16 +300,26 @@
                         <option value="">-- Select Academic Year --</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="insert-syllabus">Syllabus:</label>
-                    <select id="insert-syllabus" class="form-control" required>
-                        <option value="">-- Select Syllabus --</option>
-                    </select>
-                </div>
+
                 <div class="form-group">
                     <label for="insert-class">Class:</label>
                     <select id="insert-class" class="form-control" required>
                         <option value="">-- Select Class --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="insert-subject">Subject:</label>
+                    <select id="insert-subject" class="form-control" required>
+                        <option value="">-- Select Subject --</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="insert-syllabus">Syllabus:</label>
+                    <select id="insert-syllabus" class="form-control" required>
+                        <option value="">-- Select Syllabus --</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -336,190 +328,76 @@
                         <option value="">-- Select Stream --</option>
                     </select>
                 </div>
-            </div>
-            <div class="form-col">
-                <!--<div class="form-group">
-                    <label for="insert-course">Course:</label>
-                    <select id="insert-course" class="form-control" required>
-                        <option value="">-- Select Course --</option>
-                    </select>
-                </div>-->
-                <div class="form-group">
-                    <label for="insert-subject">Subject:</label>
-                    <select id="insert-subject" class="form-control" required>
-                        <option value="">-- Select Subject --</option>
-                    </select>
-                </div>
+
                 <div class="form-group">
                     <label for="insert-chapter">Chapter:</label>
                     <select id="insert-chapter" class="form-control" required>
                         <option value="">-- Select Chapter --</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="insert-subchapter">Sub-chapter:</label>
-                    <select id="insert-subchapter" class="form-control" required>
-                        <option value="">-- Select Sub-chapter --</option>
-                    </select>
-                </div>
+
             </div>
+
         </div>
         <div class="form-group">
-            <label for="insert-module">Module:</label>
-            <input type="text" id="insert-module" class="form-control" placeholder="Enter module name" required>
+            <label for="insert-question">Question:</label>
+            <textarea class="form-control" placeholder="Enter Question Here" name="name" value="" rows="4"></textarea>
+            <input type="file" class="form-control" name="name" accept=".jpeg, .jpg" />
+        </div>
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="insert-question">Option 1:</label>
+                    <input type="text" class="form-control" placeholder="Option 1" name="name" value="" />
+                </div> 
+                <div class="form-group">
+                    <label for="insert-question">Option 3:</label>
+                    <input type="text" class="form-control" placeholder="Option 3" name="name" value="" />
+                </div>
+            </div>
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="insert-question">Option 2:</label>
+                    <input type="text" class="form-control" placeholder="Option 2" name="name" value="" />
+                </div>
+                <div class="form-group">
+                    <label for="insert-question">Option 4:</label>
+                    <input type="text" class="form-control" placeholder="Option 4" name="name" value="" />
+                </div>
+            </div>
+            
+           
+           
+        </div>
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="insert-question">Answer</label>
+                    <select class="form-control">
+                        <option value="1">Option 1</option>
+                        <option value="2">Option 2</option>
+                        <option value="3">Option 3</option>
+                        <option value="4">Option 4</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="insert-question">Mark</label>
+                    <input type="text" class="form-control" placeholder="Mark" name="name" value="" />
+                </div>
+            </div>
+            
+            
+            
         </div>
         <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
             <i class="fas fa-check"></i> Save
         </button>
     </div>
 
-    <!-- Edit Form -->
-    <div id="edit-form" class="form-container">
-        <button class="close-btn" onclick="hideForm('edit')">×</button>
-        <h3><i class="fas fa-edit"></i> Edit Module</h3>
-        <div class="form-row">
-            <div class="form-col">
-                <div class="form-group">
-                    <label for="edit-academic-year">Academic Year:</label>
-                    <select id="edit-academic-year" class="form-control" required>
-                        <option value="">-- Select Academic Year --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="edit-syllabus">Syllabus:</label>
-                    <select id="edit-syllabus" class="form-control" required>
-                        <option value="">-- Select Syllabus --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="edit-class">Class:</label>
-                    <select id="edit-class" class="form-control" required>
-                        <option value="">-- Select Class --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="edit-stream">Stream:</label>
-                    <select id="edit-stream" class="form-control" required>
-                        <option value="">-- Select Stream --</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-col">
-                <!--<div class="form-group">
-        <label for="edit-course">Course:</label>
-        <select id="edit-course" class="form-control" required>
-            <option value="">-- Select Course --</option>
-        </select>
-    </div>-->
-                <div class="form-group">
-                    <label for="edit-subject">Subject:</label>
-                    <select id="edit-subject" class="form-control" required>
-                        <option value="">-- Select Subject --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="edit-chapter">Chapter:</label>
-                    <select id="edit-chapter" class="form-control" required>
-                        <option value="">-- Select Chapter --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="edit-subchapter">Sub-chapter:</label>
-                    <select id="edit-subchapter" class="form-control" required>
-                        <option value="">-- Select Sub-chapter --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="edit-module">Module:</label>
-                    <select id="edit-module-select" class="form-control" required>
-                        <option value="">-- Select Module --</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-       
-        <div class="form-group">
-            <label for="edit-new-module">New Module Name:</label>
-            <input type="text" id="edit-new-module" class="form-control" placeholder="Enter new module name" required>
-        </div>
-        <button type="button" class="btn" onclick="submitForm('edit')">
-            <i class="fas fa-save"></i> Update
-        </button>
-    </div>
 
-    <!-- Delete Form -->
-    <div id="delete-form" class="form-container">
-        <button class="close-btn" onclick="hideForm('delete')">×</button>
-        <h3><i class="fas fa-trash-alt"></i> Delete Module</h3>
-        <div class="form-row">
-            <div class="form-col">
-                <div class="form-group">
-                    <label for="delete-academic-year">Academic Year:</label>
-                    <select id="delete-academic-year" class="form-control" required>
-                        <option value="">-- Select Academic Year --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="delete-syllabus">Syllabus:</label>
-                    <select id="delete-syllabus" class="form-control" required>
-                        <option value="">-- Select Syllabus --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="delete-class">Class:</label>
-                    <select id="delete-class" class="form-control" required>
-                        <option value="">-- Select Class --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="delete-stream">Stream:</label>
-                    <select id="delete-stream" class="form-control" required>
-                        <option value="">-- Select Stream --</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-col">
-                <!--<div class="form-group">
-        <label for="delete-course">Course:</label>
-        <select id="delete-course" class="form-control" required>
-            <option value="">-- Select Course --</option>
-        </select>
-    </div>-->
-                <div class="form-group">
-                    <label for="delete-subject">Subject:</label>
-                    <select id="delete-subject" class="form-control" required>
-                        <option value="">-- Select Subject --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="delete-chapter">Chapter:</label>
-                    <select id="delete-chapter" class="form-control" required>
-                        <option value="">-- Select Chapter --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="delete-subchapter">Sub-chapter:</label>
-                    <select id="delete-subchapter" class="form-control" required>
-                        <option value="">-- Select Sub-chapter --</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="delete-module">Module:</label>
-            <select id="delete-module" class="form-control" required>
-                <option value="">-- Select Module --</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>
-                <input type="checkbox" id="confirm-delete" required> I confirm I want to delete this module
-            </label>
-        </div>
-        <button type="button" class="btn btn-delete" onclick="submitForm('delete')" disabled>
-            <i class="fas fa-trash"></i> Delete
-        </button>
-    </div>
 </div>
 
 <!-- Notification -->
@@ -542,10 +420,7 @@
         // Show the selected form
         const form = document.getElementById(formType + '-form');
         form.style.display = 'block';
-        // Load data if needed
-        if (formType === 'edit' || formType === 'delete') {
-            formClear();
-        }
+
 
         // Scroll to form
         form.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -557,12 +432,8 @@
         document.getElementById('insert-form').style.display = 'block';
     }
 
-    // Delete confirmation toggle
-    document.getElementById('confirm-delete').addEventListener('change', function() {
-        document.querySelector('#delete-form .btn').disabled = !this.checked;
-    });
-
     
+
 
     // Submit form function
     async function submitForm(formType) {
@@ -581,11 +452,11 @@
                // const courseId = document.getElementById('insert-course').value;
                 const subjectId = document.getElementById('insert-subject').value;
                 const chapterId = document.getElementById('insert-chapter').value;
-                const subchapterId = document.getElementById('insert-subchapter').value;
-                moduleName = document.getElementById('insert-module').value.trim();
+              //  const subchapterId = document.getElementById('insert-subchapter').value;
+               // moduleName = document.getElementById('insert-module').value.trim();
 
                 if (!academicYearId || !syllabusId || !classId || !streamId ||
-                    !subjectId || !chapterId || !subchapterId || !moduleName) {
+                     !subjectId || !chapterId) {
                     showNotification('Please fill all fields', 'error');
                     return;
                 }
@@ -601,7 +472,7 @@
                             SyllabusID: syllabusId,
                             ClassID: classId,
                             StreamID: streamId,
-                           
+                            CourseID: courseId,
                             SubjectID: subjectId,
                             ChapterID: chapterId,
                             SubChapterID: subchapterId,
@@ -624,84 +495,7 @@
                 }
                 break;
 
-            case 'edit':
-                const moduleId = document.getElementById('edit-module-select').value;
-                moduleName = document.getElementById('edit-new-module').value.trim();
 
-                if (!moduleId || !moduleName) {
-                    showNotification('Please select a module and enter a new name', 'error');
-                    return;
-                }
-
-                try {
-                    const response = await fetch("/api/ManagementApi/UpdateModule", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            Id: moduleId,
-                            ModuleName: moduleName
-                        })
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Failed to update module');
-                    }
-
-                    const moduleSelect = document.getElementById("edit-module-select");
-                    const selectedModuleText = moduleSelect.options[moduleSelect.selectedIndex].text;
-                    message = `Module changed from "${selectedModuleText}" to "${moduleName}"`;
-                    showNotification(message, 'success');
-
-                    // Clear form
-                    document.getElementById('edit-module-select').value = '';
-                    document.getElementById('edit-new-module').value = '';
-                    hideForm('edit');
-                } catch (error) {
-                    showNotification('Failed to update module', 'error');
-                    console.error('Error updating module:', error);
-                }
-                break;
-
-            case 'delete':
-                const deleteModuleId = document.getElementById('delete-module').value;
-
-                if (!deleteModuleId) {
-                    showNotification('Please select a module to delete', 'error');
-                    return;
-                }
-
-                try {
-                    const response = await fetch("/api/ManagementApi/RemoveModule", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            Id: deleteModuleId
-                        })
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Failed to delete module');
-                    }
-
-                    const moduleSelect = document.getElementById("delete-module");
-                    const selectedModuleText = moduleSelect.options[moduleSelect.selectedIndex].text;
-                    message = `Module "${selectedModuleText}" deleted successfully!`;
-                    showNotification(message, 'success');
-
-                    // Clear form
-                    document.getElementById('delete-module').value = '';
-                    document.getElementById('confirm-delete').checked = false;
-                    document.querySelector('#delete-form .btn').disabled = true;
-                    hideForm('delete');
-                } catch (error) {
-                    showNotification('Failed to delete module', 'error');
-                    console.error('Error deleting module:', error);
-                }
-                break;
         }
     }
 
@@ -733,12 +527,12 @@
     }
 
     // Close notification when clicked
-    document.getElementById('notification').addEventListener('click', function() {
+    document.getElementById('notification').addEventListener('click', function () {
         this.classList.remove('show');
     });
 
     // Add cascading dropdown functionality
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         loadAcademicYears();
     });
 
@@ -748,7 +542,7 @@
             const response = await fetch('/api/ManagementApi/FetchAccademicYear');
             const data = await response.json();
 
-            const dropdownIds = ['insert-academic-year', 'edit-academic-year', 'delete-academic-year'];
+            const dropdownIds = ['insert-academic-year'];
 
             dropdownIds.forEach(id => {
                 const dropdown = document.getElementById(id);
@@ -947,124 +741,43 @@
     });
     function formClear() {
         document.getElementById('insert-academic-year').value = '';
-        document.getElementById('edit-academic-year').value = '';
-        document.getElementById('delete-academic-year').value = '';
-
-        document.getElementById('edit-syllabus').innerHTML = '<option value="">-- Select Syllabus --</option>';
         document.getElementById('insert-syllabus').innerHTML = '<option value="">-- Select Syllabus --</option>';
-        document.getElementById('delete-syllabus').innerHTML = '<option value="">-- Select Syllabus --</option>';
-
         document.getElementById('insert-class').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('edit-class').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('delete-class').innerHTML = '<option value="">-- Select class --</option>';
-
         document.getElementById('insert-stream').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('edit-stream').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('delete-stream').innerHTML = '<option value="">-- Select class --</option>';
-        /*
-        document.getElementById('edit-course').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('delete-course').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('insert-course').innerHTML = '<option value="">-- Select class --</option>';
-        */
-        document.getElementById('edit-subject').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('delete-subject').innerHTML = '<option value="">-- Select class --</option>';
+       // document.getElementById('insert-course').innerHTML = '<option value="">-- Select class --</option>';
         document.getElementById('insert-subject').innerHTML = '<option value="">-- Select class --</option>';
-
-        document.getElementById('edit-chapter').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('delete-chapter').innerHTML = '<option value="">-- Select class --</option>';
         document.getElementById('insert-chapter').innerHTML = '<option value="">-- Select class --</option>';
+       // document.getElementById('insert-subchapter').innerHTML = '<option value="">-- Select class --</option>';
 
-        document.getElementById('edit-subchapter').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('delete-subchapter').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('insert-subchapter').innerHTML = '<option value="">-- Select class --</option>';
-
-        document.getElementById('edit-module-select').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('delete-module').innerHTML = '<option value="">-- Select class --</option>';
-        
     }
     // Event listeners for accademic year dropdowns form
     document.getElementById('insert-academic-year').addEventListener('change', function () {
         loadSyllabusOptions(this.value, 'insert-syllabus');
     });
-
-    document.getElementById('edit-academic-year').addEventListener('change', function () {
-        loadSyllabusOptions(this.value, 'edit-syllabus');
-    });
-
-    document.getElementById('delete-academic-year').addEventListener('change', function () {
-        loadSyllabusOptions(this.value, 'delete-syllabus');
-    });
-
-    // Event listeners for accademic year dropdowns form
+        // Event listeners for accademic year dropdowns form
     document.getElementById('insert-syllabus').addEventListener('change', function () {
         loadClassOptions(this.value, 'insert-class');
     });
-
-    document.getElementById('edit-syllabus').addEventListener('change', function () {
-        loadClassOptions(this.value, 'edit-class');
+            // Event listeners for grade dropdowns form
+            document.getElementById('insert-class').addEventListener('change', function () {
+                loadStreamOptions(this.value, 'insert-stream');
+            });
+            document.getElementById('insert-stream').addEventListener('change', function () {
+                loadSubjectOptions(this.value, 'insert-subject');
+            });
+           /* document.getElementById('insert-course').addEventListener('change', function () {
+                loadSubjectOptions(this.value, 'insert-subject');
+            });*/
+            document.getElementById('insert-subject').addEventListener('change', function () {
+                loadChapterOptions(this.value, 'insert-chapter');
+            });/*
+            document.getElementById('insert-chapter').addEventListener('change', function () {
+                loadSubChapterOptions(this.value, 'insert-subchapter');
+            });
+    document.getElementById('insert-subchapter').addEventListener('change', function () {
+        loadSubChapterOptions(this.value, 'insert-module-select');
     });
 
-    document.getElementById('delete-syllabus').addEventListener('change', function () {
-        loadClassOptions(this.value, 'delete-class');
-    });
-
-    // Event listeners for grade dropdowns form
-    document.getElementById('insert-class').addEventListener('change', function () {
-        loadStreamOptions(this.value, 'insert-stream');
-    });
-
-    document.getElementById('edit-class').addEventListener('change', function () {
-        loadStreamOptions(this.value, 'edit-stream');
-    });
-
-    document.getElementById('delete-class').addEventListener('change', function () {
-        loadStreamOptions(this.value, 'delete-stream');
-    });
-
-    document.getElementById('insert-stream').addEventListener('change', function () {
-        loadSubjectOptions(this.value, 'insert-subject');
-    });
-
-    document.getElementById('edit-stream').addEventListener('change', function () {
-        loadSubjectOptions(this.value, 'edit-subject');
-    });
-
-    document.getElementById('delete-stream').addEventListener('change', function () {
-        loadSubjectOptions(this.value, 'delete-subject');
-    });
-    /*
-    document.getElementById('insert-course').addEventListener('change', function () {
-        loadSubjectOptions(this.value, 'insert-subject');
-    });
-    document.getElementById('edit-course').addEventListener('change', function () {
-        loadSubjectOptions(this.value, 'edit-subject');
-    });
-    document.getElementById('delete-course').addEventListener('change', function () {
-        loadSubjectOptions(this.value, 'delete-subject');
-    });
     */
-    document.getElementById('insert-subject').addEventListener('change', function () {
-        loadChapterOptions(this.value, 'insert-chapter');
-    });
-    document.getElementById('edit-subject').addEventListener('change', function () {
-        loadChapterOptions(this.value, 'edit-chapter');
-    });
-    document.getElementById('delete-subject').addEventListener('change', function () {
-        loadChapterOptions(this.value, 'delete-chapter');
-    });
-    document.getElementById('insert-chapter').addEventListener('change', function () {
-        loadSubChapterOptions(this.value, 'insert-subchapter');
-    });
-    document.getElementById('edit-chapter').addEventListener('change', function () {
-        loadSubChapterOptions(this.value, 'edit-subchapter');
-    });
-    document.getElementById('delete-chapter').addEventListener('change', function () {
-        loadSubChapterOptions(this.value, 'delete-subchapter');
-    });
-    document.getElementById('edit-subchapter').addEventListener('change', function () {
-        loadModuleOptions(this.value, 'edit-module-select');
-    });
-    document.getElementById('delete-subchapter').addEventListener('change', function () {
-        loadModuleOptions(this.value, 'delete-module');
-    });
+
 </script>

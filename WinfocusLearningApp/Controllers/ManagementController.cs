@@ -17,7 +17,7 @@ using WinfocusLearningApp.ViewModels;
 
 namespace WinfocusLearningApp.Controllers
 {
-    [CustomAuthorize(Roles = "Admin")]
+   // [CustomAuthorize(Roles = "Admin")]
     public class ManagementController : Controller
     {
 

@@ -13,5 +13,12 @@ namespace WinfocusLearningApp.Controllers
         {
             return View();
         }
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
+        public ActionResult QuestionAnswers() { 
+        return View();
+        }
     }
 }

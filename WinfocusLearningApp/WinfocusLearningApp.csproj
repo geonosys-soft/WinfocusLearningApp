@@ -226,6 +226,9 @@
     <Compile Include="DataEntity\TblPaymentMode.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataEntity\TblQuestionAnswer.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataEntity\TblRegistrationBatch.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
@@ -415,6 +418,8 @@
     <Content Include="Views\Exam\Index.cshtml" />
     <Content Include="Views\Management\DTPRegistration.cshtml" />
     <Content Include="Views\Management\DTPRegistrationList.cshtml" />
+    <Content Include="Views\DTP\QuestionAnswers.cshtml" />
+    <Content Include="Views\DTP\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -329,13 +329,13 @@
                 <!-- Options will be populated from database -->
             </select>
         </div>
-        <div class="form-group">
+        <!--<div class="form-group">
             <label for="course">Course:</label>
             <select id="course" class="form-control" required>
                 <option value="">-- Select Course --</option>
-                <!-- Options will be populated from database -->
+               
             </select>
-        </div>
+        </div>-->
         <div class="form-group">
             <label for="subjectName">Subject Name:</label>
             <input type="text" id="subjectName" class="form-control" placeholder="Enter subject name" required>
@@ -377,13 +377,13 @@
                 <!-- Options will be populated from database -->
             </select>
         </div>
-        <div class="form-group">
+        <!--<div class="form-group">
             <label for="edit-course">Course:</label>
             <select id="edit-course" class="form-control" required>
                 <option value="">-- Select Course --</option>
-                <!-- Options will be populated from database -->
+               
             </select>
-        </div>
+        </div>-->
         <div class="form-group">
             <label for="edit-subject">Subject:</label>
             <select id="edit-subject" class="form-control" required>
@@ -432,13 +432,13 @@
                 <!-- Options will be populated from database -->
             </select>
         </div>
-        <div class="form-group">
+        <!--<div class="form-group">
             <label for="delete-course">Course:</label>
             <select id="delete-course" class="form-control" required>
                 <option value="">-- Select Course --</option>
-                <!-- Options will be populated from database -->
+              
             </select>
-        </div>
+        </div>-->
         <div class="form-group">
             <label for="delete-subject">Subject:</label>
             <select id="delete-subject" class="form-control" required>
@@ -512,10 +512,10 @@
                 const syllabus = document.getElementById('syllabus').value;
                 const classId = document.getElementById('class').value;
                 const stream = document.getElementById('stream').value;
-                const course = document.getElementById('course').value;
+              //  const course = document.getElementById('course').value;
                 const subjectName = document.getElementById('subjectName').value.trim();
 
-                if (!academicYear || !syllabus || !classId || !stream || !course || !subjectName) {
+                if (!academicYear || !syllabus || !classId || !stream  || !subjectName) {
                     showNotification('Please fill all fields', 'error');
                     return;
                 }
@@ -531,7 +531,7 @@
                             SyllabusID: syllabus,
                             GradeID: classId,
                             StreamID: stream,
-                            CourseID: course,
+                            CourseID: 0,
                             Name: subjectName
                         })
                     });
@@ -556,11 +556,11 @@
                 const editSyllabus = document.getElementById('edit-syllabus').value;
                 const editClass = document.getElementById('edit-class').value;
                 const editStream = document.getElementById('edit-stream').value;
-                const editCourse = document.getElementById('edit-course').value;
+                //const editCourse = document.getElementById('edit-course').value;
                 const editSubject = document.getElementById('edit-subject').value;
                 const editSubjectName = document.getElementById('edit-subjectName').value.trim();
 
-                if (!editAcademicYear || !editSyllabus || !editClass || !editStream || !editCourse || !editSubject || !editSubjectName) {
+                if (!editAcademicYear || !editSyllabus || !editClass || !editStream  || !editSubject || !editSubjectName) {
                     showNotification('Please fill all fields', 'error');
                     return;
                 }
@@ -821,13 +821,13 @@
         document.getElementById('edit-stream').innerHTML = '<option value="">-- Select class --</option>';
         document.getElementById('delete-stream').innerHTML = '<option value="">-- Select class --</option>';
 
-        document.getElementById('edit-course').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('delete-course').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('course').innerHTML = '<option value="">-- Select class --</option>';
+       // document.getElementById('edit-course').innerHTML = '<option value="">-- Select class --</option>';
+      //  document.getElementById('delete-course').innerHTML = '<option value="">-- Select class --</option>';
+       // document.getElementById('course').innerHTML = '<option value="">-- Select class --</option>';
 
         document.getElementById('edit-subject').innerHTML = '<option value="">-- Select class --</option>';
         document.getElementById('delete-subject').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('subject').innerHTML = '<option value="">-- Select class --</option>';
+       // document.getElementById('subject').innerHTML = '<option value="">-- Select class --</option>';
 
     }
     // Event listeners for accademic year dropdowns form
@@ -860,7 +860,7 @@
     document.getElementById('class').addEventListener('change', function () {
         loadStreamOptions(this.value, 'stream');
     });
-
+    
     document.getElementById('edit-class').addEventListener('change', function () {
         loadStreamOptions(this.value, 'edit-stream');
     });
@@ -868,7 +868,7 @@
     document.getElementById('delete-class').addEventListener('change', function () {
         loadStreamOptions(this.value, 'delete-stream');
     });
-
+    /*
     document.getElementById('stream').addEventListener('change', function () {
         loadCourseOptions(this.value, 'course');
     });
@@ -886,5 +886,14 @@
     document.getElementById('delete-course').addEventListener('change', function () {
         loadSubjectOptions(this.value, 'delete-subject');
     });
+*/
+   
 
+    document.getElementById('edit-stream').addEventListener('change', function () {
+        loadSubjectOptions(this.value, 'edit-subject');
+    });
+
+    document.getElementById('delete-stream').addEventListener('change', function () {
+        loadSubjectOptions(this.value, 'delete-subject');
+    });
 </script>
