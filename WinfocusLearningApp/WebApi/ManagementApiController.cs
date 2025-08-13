@@ -673,7 +673,7 @@ namespace WinfocusLearningApp.WebApi
         {
             try
             {
-                var subjectList = winfocus_CS.TblSubjects.Where(x => x.IsDeleted == 0 && x.CourseID == Id).ToList();
+                var subjectList = winfocus_CS.TblSubjects.Where(x => x.IsDeleted == 0 && x.StreamID == Id).ToList();
                 return Ok(subjectList);
             }
             catch (Exception ex)

@@ -4,12 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using WinfocusLearningApp.Authentication;
 using WinfocusLearningApp.DataEntity;
 using WinfocusLearningApp.Models;
 
 namespace WinfocusLearningApp.Controllers
 {
-    [Authorize(Roles="Admin")]
+    [CustomAuthorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly Winfocus_CS dbEntities=new Winfocus_CS();
