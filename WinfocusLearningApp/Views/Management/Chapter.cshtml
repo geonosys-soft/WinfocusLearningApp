@@ -329,13 +329,13 @@
                 <!-- Options will be populated from database -->
             </select>
         </div>
-        <div class="form-group">
+        <!--<div class="form-group">
             <label for="course">Course:</label>
             <select id="course" class="form-control" required>
                 <option value="">-- Select Course --</option>
-                <!-- Options will be populated from database -->
+                
             </select>
-        </div>
+        </div>-->
         <div class="form-group">
             <label for="subject">Subject:</label>
             <select id="subject" class="form-control" required>
@@ -384,13 +384,13 @@
                 <!-- Options will be populated from database -->
             </select>
         </div>
-        <div class="form-group">
-            <label for="edit-course">Course:</label>
-            <select id="edit-course" class="form-control" required>
-                <option value="">-- Select Course --</option>
-                <!-- Options will be populated from database -->
-            </select>
-        </div>
+        <!--<div class="form-group">
+        <label for="edit-course">Course:</label>
+        <select id="edit-course" class="form-control" required>
+            <option value="">-- Select Course --</option>
+
+        </select>
+    </div>-->
         <div class="form-group">
             <label for="edit-subject">Subject:</label>
             <select id="edit-subject" class="form-control" required>
@@ -446,13 +446,13 @@
                 <!-- Options will be populated from database -->
             </select>
         </div>
-        <div class="form-group">
+        <!--<div class="form-group">
             <label for="delete-course">Course:</label>
             <select id="delete-course" class="form-control" required>
                 <option value="">-- Select Course --</option>
-                <!-- Options will be populated from database -->
+               
             </select>
-        </div>
+        </div>-->
         <div class="form-group">
             <label for="delete-subject">Subject:</label>
             <select id="delete-subject" class="form-control" required>
@@ -532,11 +532,11 @@
                     const syllabusId = document.getElementById('syllabus').value;
                     const classId = document.getElementById('class').value;
                     const streamId = document.getElementById('stream').value;
-                    const courseId = document.getElementById('course').value;
+                    //const courseId = document.getElementById('course').value;
                     const subjectId = document.getElementById('subject').value;
                     const chapterName = document.getElementById('chapterName').value.trim();
 
-                    if (!academicYearId || !syllabusId || !classId || !streamId || !courseId || !subjectId || !chapterName) {
+                    if (!academicYearId || !syllabusId || !classId || !streamId  || !subjectId || !chapterName) {
                         showNotification('Please fill all fields', 'error');
                         return;
                     }
@@ -546,7 +546,6 @@
                         SyllabusID: syllabusId,
                         GradeID: classId,
                         StreamID: streamId,
-                        CourseID: courseId,
                         SubjectID: subjectId,
                         ChapterName: chapterName
                     };
@@ -575,12 +574,12 @@
                     const editSyllabusId = document.getElementById('edit-syllabus').value;
                     const editClassId = document.getElementById('edit-class').value;
                     const editStreamId = document.getElementById('edit-stream').value;
-                    const editCourseId = document.getElementById('edit-course').value;
+                   // const editCourseId = document.getElementById('edit-course').value;
                     const editSubjectId = document.getElementById('edit-subject').value;
                     const chapterId = document.getElementById('edit-chapter').value;
                     const newChapterName = document.getElementById('edit-chapterName').value.trim();
 
-                    if (!editAcademicYearId || !editSyllabusId || !editClassId || !editStreamId || !editCourseId ||
+                    if (!editAcademicYearId || !editSyllabusId || !editClassId || !editStreamId || 
                         !editSubjectId || !chapterId || !newChapterName) {
                         showNotification('Please fill all fields', 'error');
                         return;
@@ -592,7 +591,7 @@
                         SyllabusId: editSyllabusId,
                         ClassId: editClassId,
                         StreamId: editStreamId,
-                        CourseId: editCourseId,
+                       
                         SubjectId: editSubjectId,
                         ChapterName: newChapterName
                     };
@@ -863,11 +862,11 @@
         document.getElementById('stream').innerHTML = '<option value="">-- Select class --</option>';
         document.getElementById('edit-stream').innerHTML = '<option value="">-- Select class --</option>';
         document.getElementById('delete-stream').innerHTML = '<option value="">-- Select class --</option>';
-
+/*
         document.getElementById('edit-course').innerHTML = '<option value="">-- Select class --</option>';
         document.getElementById('delete-course').innerHTML = '<option value="">-- Select class --</option>';
         document.getElementById('course').innerHTML = '<option value="">-- Select class --</option>';
-
+        */
         document.getElementById('edit-subject').innerHTML = '<option value="">-- Select class --</option>';
         document.getElementById('delete-subject').innerHTML = '<option value="">-- Select class --</option>';
         document.getElementById('subject').innerHTML = '<option value="">-- Select class --</option>';
@@ -916,17 +915,17 @@
     });
 
     document.getElementById('stream').addEventListener('change', function () {
-        loadCourseOptions(this.value, 'course');
+        loadSubjectOptions(this.value, 'subject');
     });
 
     document.getElementById('edit-stream').addEventListener('change', function () {
-        loadCourseOptions(this.value, 'edit-course');
+        loadSubjectOptions(this.value, 'edit-subject');
     });
 
     document.getElementById('delete-stream').addEventListener('change', function () {
-        loadCourseOptions(this.value, 'delete-course');
+        loadSubjectOptions(this.value, 'delete-subject');
     });
-    document.getElementById('course').addEventListener('change', function () {
+    /*document.getElementById('course').addEventListener('change', function () {
         loadSubjectOptions(this.value, 'subject');
     });
     document.getElementById('edit-course').addEventListener('change', function () {
@@ -934,7 +933,7 @@
     });
     document.getElementById('delete-course').addEventListener('change', function () {
         loadSubjectOptions(this.value, 'delete-subject');
-    });
+    });*/
     document.getElementById('edit-subject').addEventListener('change', function () {
         loadChapterOptions(this.value, 'edit-chapter');
     });

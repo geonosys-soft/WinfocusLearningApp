@@ -5,11 +5,13 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using WinfocusLearningApp.Authentication;
 using WinfocusLearningApp.DataEntity;
 using WinfocusLearningApp.ViewModels;
 
 namespace WinfocusLearningApp.Controllers
 {
+    [CustomAuthorize(Roles = "Admin")]
     public class Admin_StudentController : Controller
     {
         Winfocus_CS db = new Winfocus_CS();

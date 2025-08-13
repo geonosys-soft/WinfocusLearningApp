@@ -83,6 +83,30 @@
           <Property Name="DeletedBy" Type="int" />
           <Property Name="DeletedDt" Type="date" />
         </EntityType>
+        <EntityType Name="TblDTPRegistration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegID" Type="varchar" MaxLength="50" />
+          <Property Name="Fullname" Type="varchar" MaxLength="50" />
+          <Property Name="DOB" Type="varchar" MaxLength="50" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="50" />
+          <Property Name="EmailId" Type="varchar" MaxLength="50" />
+          <Property Name="Location" Type="varchar" MaxLength="50" />
+          <Property Name="Place" Type="varchar" MaxLength="50" />
+          <Property Name="Address" Type="varchar(max)" />
+          <Property Name="IsDeleted" Type="int" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDt" Type="date" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDt" Type="date" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDt" Type="date" />
+          <Property Name="ProfilePic" Type="image" />
+          <Property Name="AddressProof" Type="image" />
+          <Property Name="WhatsApp" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="TblFeeDetails">
           <Key>
             <PropertyRef Name="Id" />
@@ -197,6 +221,38 @@
           <Property Name="IsDeleted" Type="int" />
           <Property Name="CreatedDt" Type="date" />
           <Property Name="DeletedDt" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TblQuestionAnswers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Question" Type="varchar(max)" />
+          <Property Name="QImage" Type="image" />
+          <Property Name="Option1" Type="varchar(max)" />
+          <Property Name="Option2" Type="varchar(max)" />
+          <Property Name="Option3" Type="varchar(max)" />
+          <Property Name="Option4" Type="varchar(max)" />
+          <Property Name="Answer" Type="int" />
+          <Property Name="Mark" Type="int" />
+          <Property Name="SubjectID" Type="int" />
+          <Property Name="ChapterID" Type="int" />
+          <Property Name="QuestionType" Type="int" />
+          <Property Name="AccademicYearId" Type="int" />
+          <Property Name="SyllabusID" Type="int" />
+          <Property Name="ClassID" Type="int" />
+          <Property Name="StreamID" Type="int" />
+          <Property Name="Month" Type="int" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Week" Type="int" />
+          <Property Name="CompletionStatus" Type="int" />
+          <Property Name="Completiondate" Type="date" />
+          <Property Name="IsActive" Type="int" />
+          <Property Name="IsDeleted" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="CreatedDt" Type="date" />
+          <Property Name="DeletedDt" Type="date" />
         </EntityType>
         <EntityType Name="TblRegistrationBatch">
           <Key>
@@ -543,12 +599,14 @@
           <EntitySet Name="TblChapter" EntityType="Self.TblChapter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblCourse" EntityType="Self.TblCourse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblDicountCoupen" EntityType="Self.TblDicountCoupen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblDTPRegistration" EntityType="Self.TblDTPRegistration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblFeeDetails" EntityType="Self.TblFeeDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblGrade" EntityType="Self.TblGrade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblMaterial" EntityType="Self.TblMaterial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblModule" EntityType="Self.TblModule" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblNoteType" EntityType="Self.TblNoteType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblPaymentMode" EntityType="Self.TblPaymentMode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblQuestionAnswers" EntityType="Self.TblQuestionAnswers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblRegistrationBatch" EntityType="Self.TblRegistrationBatch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblRegistrationBatchTime" EntityType="Self.TblRegistrationBatchTime" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblRelationship" EntityType="Self.TblRelationship" Schema="dbo" store:Type="Tables" />
@@ -617,6 +675,8 @@
           <EntitySet Name="TblTargetYears" EntityType="Winfocus_DbModel.TblTargetYear" />
           <EntitySet Name="TblStudent_Parent_Basic" EntityType="Winfocus_DbModel.TblStudent_Parent_Basic" />
           <EntitySet Name="TblSTudentBasicDetails" EntityType="Winfocus_DbModel.TblSTudentBasicDetail" />
+          <EntitySet Name="TblDTPRegistrations" EntityType="Winfocus_DbModel.TblDTPRegistration" />
+          <EntitySet Name="TblQuestionAnswers" EntityType="Winfocus_DbModel.TblQuestionAnswer" />
         </EntityContainer>
         <EntityType Name="TblAccademicYear">
           <Key>
@@ -1115,6 +1175,62 @@
           <Property Name="ProcessStage" Type="Int32" />
           <Property Name="Profile" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="CLSArea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TblDTPRegistration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmailId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Place" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDt" Type="DateTime" Precision="0" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="0" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDt" Type="DateTime" Precision="0" />
+          <Property Name="ProfilePic" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="AddressProof" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="WhatsApp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TblQuestionAnswer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="QImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Option1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Option2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Option3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Option4" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Answer" Type="Int32" />
+          <Property Name="Mark" Type="Int32" />
+          <Property Name="SubjectID" Type="Int32" />
+          <Property Name="ChapterID" Type="Int32" />
+          <Property Name="QuestionType" Type="Int32" />
+          <Property Name="AccademicYearId" Type="Int32" />
+          <Property Name="SyllabusID" Type="Int32" />
+          <Property Name="ClassID" Type="Int32" />
+          <Property Name="StreamID" Type="Int32" />
+          <Property Name="Month" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Week" Type="Int32" />
+          <Property Name="CompletionStatus" Type="Int32" />
+          <Property Name="Completiondate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Int32" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="CreatedDt" Type="DateTime" Precision="0" />
+          <Property Name="DeletedDt" Type="DateTime" Precision="0" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1648,6 +1764,64 @@
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
                 <ScalarProperty Name="RegId" ColumnName="RegId" />
                 <ScalarProperty Name="SID" ColumnName="SID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblDTPRegistrations">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblDTPRegistration">
+              <MappingFragment StoreEntitySet="TblDTPRegistration">
+                <ScalarProperty Name="WhatsApp" ColumnName="WhatsApp" />
+                <ScalarProperty Name="AddressProof" ColumnName="AddressProof" />
+                <ScalarProperty Name="ProfilePic" ColumnName="ProfilePic" />
+                <ScalarProperty Name="ModifiedDt" ColumnName="ModifiedDt" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DeletedDt" ColumnName="DeletedDt" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Place" ColumnName="Place" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+                <ScalarProperty Name="RegID" ColumnName="RegID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblQuestionAnswers">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblQuestionAnswer">
+              <MappingFragment StoreEntitySet="TblQuestionAnswers">
+                <ScalarProperty Name="DeletedDt" ColumnName="DeletedDt" />
+                <ScalarProperty Name="CreatedDt" ColumnName="CreatedDt" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Completiondate" ColumnName="Completiondate" />
+                <ScalarProperty Name="CompletionStatus" ColumnName="CompletionStatus" />
+                <ScalarProperty Name="Week" ColumnName="Week" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="StreamID" ColumnName="StreamID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="SyllabusID" ColumnName="SyllabusID" />
+                <ScalarProperty Name="AccademicYearId" ColumnName="AccademicYearId" />
+                <ScalarProperty Name="QuestionType" ColumnName="QuestionType" />
+                <ScalarProperty Name="ChapterID" ColumnName="ChapterID" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="Mark" ColumnName="Mark" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+                <ScalarProperty Name="Option4" ColumnName="Option4" />
+                <ScalarProperty Name="Option3" ColumnName="Option3" />
+                <ScalarProperty Name="Option2" ColumnName="Option2" />
+                <ScalarProperty Name="Option1" ColumnName="Option1" />
+                <ScalarProperty Name="QImage" ColumnName="QImage" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

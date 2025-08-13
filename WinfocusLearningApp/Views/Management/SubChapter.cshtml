@@ -329,13 +329,13 @@
                 <!-- Options will be populated from database -->
             </select>
         </div>
-        <div class="form-group">
+        <!--<div class="form-group">
             <label for="course">Course:</label>
             <select id="course" class="form-control" required>
                 <option value="">-- Select Course --</option>
-                <!-- Options will be populated from database -->
+                
             </select>
-        </div>
+        </div>-->
         <div class="form-group">
             <label for="subject">Subject:</label>
             <select id="subject" class="form-control" required>
@@ -391,13 +391,13 @@
                 <!-- Options will be populated from database -->
             </select>
         </div>
-        <div class="form-group">
+        <!--<div class="form-group">
             <label for="editCourse">Course:</label>
             <select id="editCourse" class="form-control" required>
                 <option value="">-- Select Course --</option>
-                <!-- Options will be populated from database -->
+                
             </select>
-        </div>
+        </div>-->
         <div class="form-group">
             <label for="editSubject">Subject:</label>
             <select id="editSubject" class="form-control" required>
@@ -460,13 +460,13 @@
                 <!-- Options will be populated from database -->
             </select>
         </div>
-        <div class="form-group">
+        <!--<div class="form-group">
             <label for="deleteCourse">Course:</label>
             <select id="deleteCourse" class="form-control" required>
                 <option value="">-- Select Course --</option>
-                <!-- Options will be populated from database -->
+               
             </select>
-        </div>
+        </div>-->
         <div class="form-group">
             <label for="deleteSubject">Subject:</label>
             <select id="deleteSubject" class="form-control" required>
@@ -554,12 +554,12 @@
                     const syllabusId = document.getElementById('syllabus').value;
                     const classId = document.getElementById('class').value;
                     const streamId = document.getElementById('stream').value;
-                    const courseId = document.getElementById('course').value;
+                  //  const courseId = document.getElementById('course').value;
                     const subjectId = document.getElementById('subject').value;
                     const chapterId = document.getElementById('chapter').value;
                     subChapterName = document.getElementById('subChapter').value.trim();
 
-                    if (!academicYearId || !syllabusId || !classId || !streamId || !courseId || !subjectId || !chapterId || !subChapterName) {
+                    if (!academicYearId || !syllabusId || !classId || !streamId  || !subjectId || !chapterId || !subChapterName) {
                         showNotification('Please fill all fields', 'error');
                         return;
                     }
@@ -574,7 +574,6 @@
                             syllabusID: syllabusId,
                             GradeID: classId,
                             StreamID: streamId,
-                            CourseID: courseId,
                             SubjectID: subjectId,
                             ChapterID: chapterId,
                             SubChapterName: subChapterName
@@ -897,9 +896,9 @@
         document.getElementById('editStream').innerHTML = '<option value="">-- Select class --</option>';
         document.getElementById('deleteStream').innerHTML = '<option value="">-- Select class --</option>';
 
-        document.getElementById('editCourse').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('deleteCourse').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('course').innerHTML = '<option value="">-- Select class --</option>';
+       // document.getElementById('editCourse').innerHTML = '<option value="">-- Select class --</option>';
+     //   document.getElementById('deleteCourse').innerHTML = '<option value="">-- Select class --</option>';
+      //  document.getElementById('course').innerHTML = '<option value="">-- Select class --</option>';
 
         document.getElementById('editSubject').innerHTML = '<option value="">-- Select class --</option>';
         document.getElementById('deleteSubject').innerHTML = '<option value="">-- Select class --</option>';
@@ -953,17 +952,17 @@
     });
 
     document.getElementById('stream').addEventListener('change', function () {
-        loadCourseOptions(this.value, 'course');
+        loadSubjectOptions(this.value, 'subject');
     });
 
     document.getElementById('editStream').addEventListener('change', function () {
-        loadCourseOptions(this.value, 'editCourse');
+        loadSubjectOptions(this.value, 'editSubject');
     });
 
     document.getElementById('deleteStream').addEventListener('change', function () {
-        loadCourseOptions(this.value, 'deleteCourse');
+        loadSubjectOptions(this.value, 'deleteSubject');
     });
-    document.getElementById('course').addEventListener('change', function () {
+   /* document.getElementById('course').addEventListener('change', function () {
         loadSubjectOptions(this.value, 'subject');
     });
     document.getElementById('editCourse').addEventListener('change', function () {
@@ -971,7 +970,7 @@
     });
     document.getElementById('deleteCourse').addEventListener('change', function () {
         loadSubjectOptions(this.value, 'deleteSubject');
-    });
+    });*/
     document.getElementById('subject').addEventListener('change', function () {
         loadChapterOptions(this.value, 'chapter');
     });
