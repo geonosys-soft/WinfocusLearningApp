@@ -18,6 +18,7 @@ namespace WinfocusLearningApp.Controllers
             return View();
         }
 
+
         public ActionResult Dashboard()
         {
             return View();
@@ -75,6 +76,26 @@ namespace WinfocusLearningApp.Controllers
             else
             {
             }
+
+        public ActionResult QuestionList()
+        {
+            return View();
+        }
+        public ActionResult SQuestionList()
+        {
+            return View();
+        }
+        public ActionResult QAReport()
+        {
+            return View();
+        }
+        public ActionResult SQAReport()
+        {
+            return View();
+        }
+        public ActionResult Dashboard()
+        {
+
             return View();
         }
     }
