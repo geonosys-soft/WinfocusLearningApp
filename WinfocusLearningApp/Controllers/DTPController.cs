@@ -19,17 +19,12 @@ namespace WinfocusLearningApp.Controllers
         }
 
 
-        public ActionResult Dashboard()
-        {
-            return View();
-        }
-
         public ActionResult QuestionAnswers(int? Id)
         {
             TblQuestionAnswer answer = new TblQuestionAnswer();
             if (Id == null)
             {
-              
+
                 ViewBag.AccademicYearId = new SelectList(db.TblAccademicYears.Where(p => p.IsDeleted == 0), "Id", "AccademicYear");
                 ViewBag.SyllabusID = new SelectList(Enumerable.Empty<string>());
                 ViewBag.ClassID = new SelectList(Enumerable.Empty<string>());
@@ -42,13 +37,13 @@ namespace WinfocusLearningApp.Controllers
                         new { Id = 2, Name = "Teacher MCQ" },
                         new { Id = 3, Name = "Question Bank" }
                     }, "Id", "Name");
-                ViewBag.Week=new SelectList(new[] 
-                { 
+                ViewBag.Week = new SelectList(new[]
+                {
                     new { Id = 1, Name="Week 1" },
                     new { Id = 2, Name="Week 2" },
                     new { Id = 3, Name="Week 3" },
                     new { Id = 4, Name="Week 4" },
-                }, "Id","Name");
+                }, "Id", "Name");
                 ViewBag.Month = new SelectList(new[]
                 {
                     new { Id = 1, Name="January" },
@@ -64,7 +59,7 @@ namespace WinfocusLearningApp.Controllers
                     new { Id = 11,Name="November" },
                     new { Id = 12,Name="December" },
                 }, "Id", "Name");
-                
+
                 ViewBag.Answer = new SelectList(new[]
                 {
                     new { Id = 1, Name="Option 1" },
@@ -76,6 +71,9 @@ namespace WinfocusLearningApp.Controllers
             else
             {
             }
+            return View();
+        }
+       
 
         public ActionResult QuestionList()
         {
