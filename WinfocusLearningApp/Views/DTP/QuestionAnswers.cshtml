@@ -1,6 +1,7 @@
 ﻿@model WinfocusLearningApp.DataEntity.TblQuestionAnswer
 @{
     ViewBag.Title = "QuestionAnswers";
+    Layout = "~/Views/Shared/_LayoutDTP.cshtml";
 }
 
 
@@ -295,6 +296,7 @@
             <h3><i class="fas fa-plus-circle"></i> Add Questions</h3>
             <div class="form-row">
                 <div class="form-col">
+                    @Html.HiddenFor(Model => Model.ID)
                     <div class="form-group">
                         <label for="AccademicYearId">Academic Year:</label>
                         @Html.DropDownList("AccademicYearId", null, new { @class = "form-control", @required = true })
@@ -363,6 +365,10 @@
                 <label for="insert-question">Question:</label>
                 @Html.TextAreaFor(model => model.Question, new { @class = "form-control", @placeholder = "Enter Question Here", @rows = "4" })
                 <input type="file" class="form-control" name="fileupload" id="fileupload" accept=".jpeg, .jpg" />
+                @if (Model.QImage != null)
+                {
+                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.QImage)" style="width:100%;" alt="Question Image" />
+                }
             </div>
             <div class="form-row">
                 <div class="form-col">
@@ -408,6 +414,10 @@
 
 
             </div>
+
+            <button type="button" class="btn bg-danger" onclick="formClear()">
+                New Question
+            </button> 
             <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
                 <i class="fas fa-check"></i> Save
             </button>
@@ -450,7 +460,13 @@
         document.getElementById('insert-form').style.display = 'block';
     }
 
-    
+    document.getElementById("fileupload").addEventListener("change", function () {
+        const file = this.files[0];
+        if (file && file.size > 300 * 1024) { // 300 KB
+            alert("File size must be less than 300 KB.");
+            this.value = ""; // clear the file input
+        }
+    });
 
 
     // Submit form function
@@ -462,9 +478,10 @@
 
         switch (formType) {
             case 'insert':
-                
+
 
                 // Get all selected values
+                const id = document.getElementById('ID').value;
                 const academicYearId = document.getElementById('AccademicYearId').value;
                 const syllabusId = document.getElementById('SyllabusID').value;
                 const classId = document.getElementById('ClassID').value;
@@ -473,38 +490,85 @@
                 const chapterId = document.getElementById('ChapterID').value;
                 const question = document.getElementById("Question").value;
                 const op1 = document.getElementById("Option1").value;
+                const op2 = document.getElementById("Option2").value;
+                const op3 = document.getElementById("Option3").value;
+                const op4 = document.getElementById("Option4").value;
+                const answer = document.getElementById("Answer").value;
+                const mark = document.getElementById("Mark").value;
+                const month = document.getElementById("Month").value;
+                const week = document.getElementById("Week").value;
+                const questiontype = document.getElementById("QuestionType").value;
 
                 if (!academicYearId || !syllabusId || !classId || !streamId ||
-                     !subjectId || !chapterId) {
+                    !subjectId || !chapterId || !op1 || !op2 || !op3||!op4||!answer||!mark) {
                     showNotification('Please fill all fields', 'error');
                     return;
                 }
                 const formData = new FormData();
                 formData.append("jsonData", JSON.stringify({
-                    ACID: academicYearId,
+                    AccademicYearId: academicYearId,
                     SyllabusID: syllabusId,
                     ClassID: classId,
                     StreamID: streamId,
                     SubjectID: subjectId,
-                    ChapterID: chapterId
+                    ChapterID: chapterId,
+                    Question: question,
+                    Option1: op1,
+                    Option2: op2,
+                    Option3: op3,
+                    Option4: op4,
+                    Answer: answer,
+                    Mark: mark,
+                    Month: month,
+                    Week: week,
+                    QuestionType: questiontype,
+                    ID: id
                 }));
                 formData.append("file", document.getElementById("fileupload").files[0]);
 
                 try {
-                    const response = await fetch("/api/QA/AddQuestion", {
-                        method: "POST",
-                        body: formData
-                    });
+                    if (id == 0) {
+                        const response = await fetch("/api/QA/AddQuestion", {
+                            method: "POST",
+                            body: formData
+                        });
 
-                    if (!response.ok) {
-                        throw new Error('Failed to add module');
+                        if (!response.ok) {
+                            message = 'Error for adding Question';
+                            showNotification(message, 'error');
+                            throw new Error('Failed to add module');
+
+                        }
+                        else {
+                            message = `Question added successfully!`;
+                            showNotification(message, 'success');
+                        }
+                        formClear2();
+                    }
+                    else {
+                        const response = await fetch("/api/QA/UpdateQuestion", {
+                            method: "POST",
+                            body: formData
+                        });
+
+                        if (!response.ok) {
+                            message = 'Error for adding Question';
+                            showNotification(message, 'error');
+                            throw new Error('Failed to add module');
+
+                        }
+                        else {
+                            message = `Question updated successfully!`;
+                            showNotification(message, 'success');
+                        }
+                        formClear();
                     }
 
-                    message = `Module "${academicYearId}" added successfully!`;
-                    showNotification(message, 'success');
+
+
 
                     // Clear form
-                    document.getElementById('insert-module').value = '';
+
                 } catch (error) {
                     showNotification('Failed to add module', 'error');
                     console.error('Error adding module:', error);
@@ -549,7 +613,11 @@
 
     // Add cascading dropdown functionality
     document.addEventListener('DOMContentLoaded', function () {
-        loadAcademicYears();
+        // Trigger change immediately if there is already a selected Academic Year
+        if ($('#AccademicYearId').val()) {
+            $('#AccademicYearId').trigger('change');
+        }
+       // loadAcademicYears();
         const questionTypeSelect = document.getElementById("QuestionType");
         const teacherMcqSection = document.getElementById("teacherMcq");
 
@@ -760,20 +828,22 @@
     document.getElementById('notification').addEventListener('click', function () {
         this.classList.remove('show');
     });
-
-    // Load dropdown data when page loads
-    document.addEventListener('DOMContentLoaded', function () {
-        loadAcademicYears();
-    });
     function formClear() {
-        document.getElementById('AccademicYearId').value = '';
-        document.getElementById('SyllabusID').innerHTML = '<option value="">-- Select Syllabus --</option>';
-        document.getElementById('ClassID').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('StreamID').innerHTML = '<option value="">-- Select class --</option>';
-       // document.getElementById('insert-course').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('SubjectID').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('ChapterID').innerHTML = '<option value="">-- Select class --</option>';
-       // document.getElementById('insert-subchapter').innerHTML = '<option value="">-- Select class --</option>';
+
+        window.location.href = '@Url.Action("QuestionAnswers", "DTP")';
+
+    }
+
+    function formClear2() {
+
+        document.getElementById("Question").value='';
+        document.getElementById("Option1").value='';
+       document.getElementById("Option2").value='';
+        document.getElementById("Option3").value='';
+       document.getElementById("Option4").value='';
+       document.getElementById("Answer").value='';
+        document.getElementById("Mark").value = '';
+        document.getElementById("fileupload").value = '';
 
     }
     // Event listeners for accademic year dropdowns form
@@ -805,5 +875,6 @@
     });
 
     */
+
 
 </script>

@@ -290,6 +290,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DTPRegistrationModel.cs" />
     <Compile Include="ViewModels\FeeTermDiscountModel.cs" />
+    <Compile Include="ViewModels\QuestionAnswerViewModel.cs" />
     <Compile Include="ViewModels\RazorPayPaymentModel.cs" />
     <Compile Include="ViewModels\StudentPaymentModel.cs" />
     <Compile Include="ViewModels\StudentPaymentPreviwModel.cs" />
@@ -418,11 +419,9 @@
     <Content Include="Views\DTP\Index.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Exam\Index.cshtml" />
-
     <Content Include="Views\Management\DTPRegistration.cshtml" />
     <Content Include="Views\Management\DTPRegistrationList.cshtml" />
     <Content Include="Views\DTP\QuestionAnswers.cshtml" />
-
     <Content Include="Views\Shared\_LayoutExam.cshtml" />
     <Content Include="Views\Exam\Onlineexam.cshtml" />
     <Content Include="Views\Exam\Examinstruction.cshtml" />
@@ -431,7 +430,6 @@
     <Content Include="Views\DTP\SQuestionList.cshtml" />
     <Content Include="Views\DTP\QAReport.cshtml" />
     <Content Include="Views\DTP\SQAReport.cshtml" />
-
     <Content Include="Views\DTP\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
