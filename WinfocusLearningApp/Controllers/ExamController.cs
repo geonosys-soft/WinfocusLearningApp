@@ -9,7 +9,11 @@ namespace WinfocusLearningApp.Controllers
     public class ExamController : Controller
     {
         // GET: Exam
-        public ActionResult Index()
+        public ActionResult Onlineexam()
+        {
+            return View();
+        }
+        public ActionResult Examinstruction()
         {
             return View();
         }

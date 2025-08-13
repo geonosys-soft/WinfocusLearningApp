@@ -1,0 +1,595 @@
+﻿@{
+    ViewBag.Title = "Onlineexam";
+    Layout = "~/Views/Shared/_LayoutExam.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National Testing Agency - Exam</title>
+
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --light-gray-bg: #f0f2f5;
+            --white-bg: #ffffff;
+            --border-color: #dee2e6;
+            --text-color: #212529;
+            --timer-blue: #0d6efd;
+            --not-visited-bg: #f8f9fa;
+            --not-visited-text: #6c757d;
+            --not-answered-bg: #dc3545;
+            --answered-bg: #198754;
+            --marked-review-bg: #6f42c1;
+            --save-mark-review-bg: #fd7e14;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--light-gray-bg);
+            color: var(--text-color);
+            font-size: 16px;
+        }
+
+        .exam-wrapper {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .exam-header {
+            background-color: var(--white-bg);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 30px;
+        }
+
+        .header-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+            .header-logo-group .logo {
+                height: 60px;
+            }
+
+        /* -- HEADER STYLES START --- */
+        .header-center {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+            .header-center .ministry-text {
+                font-weight: bold;
+                font-size: 2.8em; 
+            }
+
+            .header-center div:not(.ministry-text) {
+                font-size: 1.2em; 
+            }
+        /* ---  HEADER STYLES END --- */
+
+        .home-button {
+            background-color: var(--white-bg);
+            border: 1px solid #ccc;
+            padding: 6px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .exam-container {
+            display: flex;
+            padding: 25px;
+            gap: 25px;
+        }
+
+        .question-section {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .sidebar {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .card {
+            background-color: var(--white-bg);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.05);
+        }
+
+        .candidate-info {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .candidate-avatar {
+            font-size: 5.5em;
+            color: #e0e0e0;
+        }
+
+        .candidate-details table td {
+            padding: 5px 0;
+            font-size: 1.1em;
+        }
+
+            .candidate-details table td:first-child {
+                font-weight: bold;
+                padding-right: 12px;
+            }
+
+        .timer {
+            background-color: var(--timer-blue);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            font-size: 1.1em;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .nav-arrow {
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.4em;
+            user-select: none;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+
+            .options-grid p {
+                margin: 0;
+            }
+
+        .answer-selection {
+            border-top: 1px solid var(--border-color);
+            padding-top: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+            .answer-selection div {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-size: 1.1em;
+            }
+
+            .answer-selection input {
+                margin-right: 8px;
+                width: 20px;
+                height: 20px;
+            }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-top: 25px;
+            margin-top: 25px;
+            border-top: 1px solid var(--border-color);
+        }
+
+            .action-buttons .main-actions {
+                display: flex;
+                flex-grow: 1;
+                gap: 12px;
+            }
+
+            .action-buttons button {
+                padding: 12px 20px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 15px;
+            }
+
+        .btn-save-next {
+            background-color: var(--answered-bg);
+            color: white;
+            border-color: var(--answered-bg);
+        }
+
+        .btn-clear {
+            background-color: var(--white-bg);
+            color: var(--text-color);
+        }
+
+        .btn-save-mark {
+            background-color: var(--save-mark-review-bg);
+            color: white;
+            border-color: var(--save-mark-review-bg);
+        }
+
+        .btn-mark-review {
+            background-color: var(--marked-review-bg);
+            color: white;
+            border-color: var(--marked-review-bg);
+        }
+
+        .btn-nav {
+            background-color: var(--white-bg);
+            color: var(--text-color);
+        }
+
+        .btn-submit {
+            background-color: #28a745;
+            color: white;
+            border-color: #28a745;
+            padding: 12px 35px;
+            margin-left: auto;
+            font-size: 16px;
+        }
+
+        .language-selector {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1.1em;
+        }
+
+        .palette-legend {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px 15px;
+            font-size: 1.1em;
+        }
+
+            .palette-legend li {
+                display: flex;
+                align-items: center;
+            }
+
+                .palette-legend li.full-width {
+                    grid-column: 1 / -1;
+                }
+
+        .legend-box {
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            position: relative;
+        }
+
+            .legend-box .text-skew {
+                display: inline-block;
+            }
+
+        .legend-not-visited {
+            background-color: var(--not-visited-bg);
+            border: 1px solid #ccc;
+            color: #000;
+            border-radius: 4px;
+        }
+
+        .legend-not-answered {
+            background-color: var(--not-answered-bg);
+        }
+
+            .legend-not-answered::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -18px;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                border-width: 18px 18px 18px 0;
+                border-color: transparent var(--not-answered-bg) transparent transparent;
+            }
+
+        .legend-answered {
+            background-color: var(--answered-bg);
+            transform: skew(-20deg);
+        }
+
+            .legend-answered .text-skew {
+                transform: skew(20deg);
+            }
+
+        .legend-marked {
+            background-color: var(--marked-review-bg);
+            border-radius: 50%;
+        }
+
+        .legend-answered-marked {
+            background-color: var(--marked-review-bg);
+            border-radius: 50%;
+        }
+
+            .legend-answered-marked::after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                right: -4px;
+                width: 16px;
+                height: 16px;
+                background-color: var(--answered-bg);
+                border: 2px solid white;
+                border-radius: 3px;
+            }
+
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .q-num {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .q-not-answered {
+            background-color: var(--not-answered-bg);
+            color: white;
+        }
+
+        .q-not-visited {
+            background-color: var(--not-visited-bg);
+            color: var(--not-visited-text);
+            border: 1px solid #ccc;
+        }
+
+        .sidebar-nav-arrows {
+            text-align: center;
+            user-select: none;
+        }
+
+            .sidebar-nav-arrows span {
+                display: inline-block;
+                margin: 0 12px;
+                cursor: pointer;
+                font-size: 1.7em;
+                color: #555;
+            }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--white-bg);
+            font-size: 1em;
+            border-top: 1px solid var(--border-color);
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="exam-wrapper">
+        <header class="exam-header">
+            <div class="header-top">
+                <div class="header-logo-group">
+                   
+                </div>
+                <div class="header-center">
+
+                    <div class="ministry-text">Winfocus Learning Center</div>
+                    <div>Kottayam, Kerala, India</div>
+                </div>
+                <div class="header-logo-group">
+                   
+                </div>
+            </div>
+        </header>
+
+        <main class="exam-container">
+            <section class="question-section">
+                <div class="card candidate-info">
+                    <div class="candidate-avatar">👤</div>
+                    <div class="candidate-details">
+                        <table>
+                            <tbody>
+                                <tr><td>Candidate Name</td><td>: [Your Name]</td></tr>
+                                <tr><td>Exam Name</td><td>: NEET</td></tr>
+                                <tr><td>Subject Name</td><td>: PHYSICS</td></tr>
+                                <tr>
+                                    <td>Remaining Time</td>
+                                    <td>: <span class="timer" id="timer-display">03:00:00</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card question-content">
+                    <div class="question-header">
+                        <span>Question 1:</span>
+                        <span class="nav-arrow">❯</span>
+                    </div>
+                    <div class="question-body">
+                        <p>The de-Broglie wavelength of a neutron in thermal equilibrium with heavy water at a temperature T (Kelvin) and mass m, is:</p>
+                        <div class="options-grid">
+                            <p>(A) $\frac{h}{\sqrt{3mkT}}$</p>
+                            <p>(B) $\frac{h}{\sqrt{mkT}}$</p>
+                            <p>(C) $\frac{2h}{\sqrt{3mkT}}$</p>
+                            <p>(D) $\frac{2h}{\sqrt{mkT}}$</p>
+                        </div>
+                    </div>
+
+                    <div class="answer-selection">
+                        <div><input type="radio" id="opt1" name="answer" value="1"><label for="opt1">1)</label></div>
+                        <div><input type="radio" id="opt2" name="answer" value="2"><label for="opt2">2)</label></div>
+                        <div><input type="radio" id="opt3" name="answer" value="3"><label for="opt3">3)</label></div>
+                        <div><input type="radio" id="opt4" name="answer" value="4"><label for="opt4">4)</label></div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-nav">&lt;&lt; BACK</button>
+                        <div class="main-actions">
+                            <button class="btn-save-next">SAVE &amp; NEXT</button>
+                            <button class="btn-clear">CLEAR</button>
+                            <button class="btn-save-mark">SAVE &amp; MARK FOR REVIEW</button>
+                            <button class="btn-mark-review">MARK FOR REVIEW &amp; NEXT</button>
+                        </div>
+                        <button class="btn-nav">NEXT &gt;&gt;</button>
+                        <button class="btn-submit">SUBMIT</button>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="sidebar">
+                <select class="language-selector" aria-label="Language">
+                    <option selected>English</option>
+                </select>
+                <div class="card palette-container">
+                    @*<div class="sidebar-nav-arrows" style="padding-bottom: 18px;"><span>❮</span><span>❯</span></div>*@
+
+                    <ul class="palette-legend">
+                        <li><span class="legend-box legend-not-visited">44</span> Not Visited</li>
+                        <li><span class="legend-box legend-not-answered">1</span> Not Answered</li>
+                        <li><span class="legend-box legend-answered"><span class="text-skew">0</span></span> Answered</li>
+                        <li><span class="legend-box legend-marked">0</span> Marked for Review</li>
+                        <li class="full-width">
+                            <span class="legend-box legend-answered-marked">
+                                <span class="text-skew">0</span>
+                            </span>
+                            <div>
+                                Answered &amp; Marked for Review
+                                <div style="font-size: 0.9em; color: #666;">(will be considered for evaluation)</div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="question-grid">
+                        <div class="q-num q-not-answered">01</div>
+                        <div class="q-num q-not-visited">02</div>
+                        <div class="q-num q-not-visited">03</div>
+                        <div class="q-num q-not-visited">04</div>
+                        <div class="q-num q-not-visited">05</div>
+                        <div class="q-num q-not-visited">06</div>
+                        <div class="q-num q-not-visited">07</div>
+                        <div class="q-num q-not-visited">08</div>
+                        <div class="q-num q-not-visited">09</div>
+                        <div class="q-num q-not-visited">10</div>
+                        <div class="q-num q-not-visited">11</div>
+                        <div class="q-num q-not-visited">12</div>
+                        <div class="q-num q-not-visited">13</div>
+                        <div class="q-num q-not-visited">14</div>
+                        <div class="q-num q-not-visited">15</div>
+                        <div class="q-num q-not-visited">16</div>
+                        <div class="q-num q-not-visited">17</div>
+                        <div class="q-num q-not-visited">18</div>
+                        <div class="q-num q-not-visited">19</div>
+                        <div class="q-num q-not-visited">20</div>
+                        <div class="q-num q-not-visited">21</div>
+                        <div class="q-num q-not-visited">22</div>
+                        <div class="q-num q-not-visited">23</div>
+                        <div class="q-num q-not-visited">24</div>
+                        <div class="q-num q-not-visited">25</div>
+                        <div class="q-num q-not-visited">26</div>
+                        <div class="q-num q-not-visited">27</div>
+                        <div class="q-num q-not-visited">28</div>
+                        <div class="q-num q-not-visited">29</div>
+                        <div class="q-num q-not-visited">30</div>
+                        <div class="q-num q-not-visited">31</div>
+                        <div class="q-num q-not-visited">32</div>
+                        <div class="q-num q-not-visited">33</div>
+                        <div class="q-num q-not-visited">34</div>
+                        <div class="q-num q-not-visited">35</div>
+                        <div class="q-num q-not-visited">36</div>
+                        <div class="q-num q-not-visited">37</div>
+                        <div class="q-num q-not-visited">38</div>
+                        <div class="q-num q-not-visited">39</div>
+                        <div class="q-num q-not-visited">40</div>
+                        <div class="q-num q-not-visited">41</div>
+                        <div class="q-num q-not-visited">42</div>
+                        <div class="q-num q-not-visited">43</div>
+                        <div class="q-num q-not-visited">44</div>
+                        <div class="q-num q-not-visited">45</div>
+                    </div>
+                    @*<div class="sidebar-nav-arrows" style="padding-top: 18px;"><span>⬆️</span><span>⬇️</span></div>*@
+                </div>
+            </aside>
+        </main>
+
+        <footer>
+            © All Rights Reserved - Winfocus Learning Center
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const timerDisplay = document.getElementById('timer-display');
+            let remainingTimeInSeconds = 3 * 60 * 60;
+
+            const countdownInterval = setInterval(() => {
+                if (remainingTimeInSeconds <= 0) {
+                    clearInterval(countdownInterval);
+                    timerDisplay.textContent = "Time's Up!";
+                    
+                    return;
+                }
+
+                remainingTimeInSeconds--;
+
+                const hours = Math.floor(remainingTimeInSeconds / 3600);
+                const minutes = Math.floor((remainingTimeInSeconds % 3600) / 60);
+                const seconds = remainingTimeInSeconds % 60;
+
+                const formattedHours = String(hours).padStart(2, '0');
+                const formattedMinutes = String(minutes).padStart(2, '0');
+                const formattedSeconds = String(seconds).padStart(2, '0');
+
+                timerDisplay.textContent = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title  Winfocus</title>
+    @Styles.Render("~/Content/Dtp.css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <i class='bx bxs-graduation icon' style="font-size: 50px; margin-left: 10px; margin-top: 20px;"></i>
+            <div class="logo_name" style="margin-top: 25px;">
+                <h2><b>Winfocus</b></h2>
+            </div>
+
+        </div>
+        <ul class="nav-links">
+            <li>
+                <a href="@Url.Action("Dashboard", "DTP")">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="link_name">Dashboard</span>
+                </a>
+            </li>
+
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class='bx bx-desktop'></i>
+                        <span class="link_name">Q & A</span>
+                    </a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Q & A</a></li>                    
+                    <li><a href="#">Create Q & A</a></li>
+                    <li><a href="@Url.Action("QuestionList", "DTP")">Q & A List</a></li>
+                    <li><a href="@Url.Action("QAReport", "DTP")">Report</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class='bx bxs-award'></i>
+                        <span class="link_name">Scholarship</span>
+                    </a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Scholarship Q&A</a></li>
+                    <li><a href="#">Create Q & A</a></li>
+                    <li><a href="@Url.Action("SQuestionList", "DTP")">Q & A List</a></li>
+                    <li><a href="@Url.Action("SQAReport", "DTP")">Report</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="iocn-link">
+                    <a href="#">
+                        <i class='bx bx-user-voice'></i>
+                        <span class="link_name">Profile</span>
+                    </a>
+                    <i class='bx bxs-chevron-down arrow'></i>
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Profile</a></li>
+                    <li><a href="#">Profile View</a></li>                    
+                </ul>
+            </li>
+
+
+            <li>
+                <div class="profile-details">
+                    <a href="@Url.Action("Login", "Account")">
+                        <i class='bx bx-log-out'></i>
+                        <span class="link_name">Logout</span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <section class="home-section">
+        <div class="home-content">
+            @RenderBody()
+        </div>
+    </section>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script>
+        let arrow = document.querySelectorAll(".arrow");
+        for (var i = 0; i < arrow.length; i++) {
+            arrow[i].addEventListener("click", (e) => {
+                let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
+                arrowParent.classList.toggle("showMenu");
+            });
+        }
+    </script>
+</body>
+</html>

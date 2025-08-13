@@ -1,0 +1,323 @@
+﻿@{
+    ViewBag.Title = "Examinstruction";
+    Layout = "~/Views/Shared/_LayoutExam.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winfocus :: Instructions</title>
+    <style>
+       
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            font-size: 20px;
+        }
+
+       
+        .page-header {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .page-header-title {
+            font-size: 42px;
+            font-weight: bold;
+            color: #003366;
+            margin: 0;
+        }
+
+        /* Container for "General Instructions" and Language Selector */
+        .instructions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #fff;
+            border-bottom: 1px solid #ccc;
+        }
+
+            .instructions-header h2 {
+/*                margin: 0;*/
+                font-size: 22px;
+                color: #0d47a1;
+                margin-left : 550px;
+            }
+
+        .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-right: 450px;
+        }
+
+            .language-selector select {
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 14px;
+            }
+
+        /* Wrapper for the main content area */
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        p.sub-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 25px;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        /* Instruction List Styles */
+        .instructions-list {
+            padding-left: 20px;
+            line-height: 1.8;
+            list-style-position: inside;
+        }
+
+            .instructions-list > li {
+                margin-bottom: 15px;
+            }
+
+            .instructions-list ol {
+                padding-left: 45px;
+                list-style-type: lower-alpha;
+            }
+
+            .instructions-list h3 {
+                margin-top: 25px;
+            }
+
+        b {
+            color: #D32F2F;
+        }
+
+      
+        .status-symbol {
+            display: inline-block;
+            width: 24px; 
+            height: 24px; 
+            margin-right: 10px;
+            vertical-align: middle;
+            border: 1px solid #888;
+        }
+
+        .not-visited {
+            background-color: #f8f8f8;
+        }
+
+        .not-answered {
+            background-color: #dc3545;
+        }
+
+        .answered {
+            background-color: #28a745;
+        }
+
+        .marked-review {
+            background-color: #6f42c1;
+            border-radius: 50%;
+        }
+
+        .answered-marked {
+            background-color: #6f42c1;
+            border-radius: 50%;
+            position: relative;
+        }
+
+            .answered-marked::after {
+                content: '✓';
+                color: #28a745;
+                font-weight: bold;
+                position: absolute;
+                font-size: 16px; 
+                bottom: -2px; 
+                right: 0px; 
+            }
+
+        
+        .nav-arrow {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            color: white;
+            background-color: #007bff;
+            border-radius: 50%;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+
+        
+        .declaration-section {
+            margin-top: 30px;
+            padding: 20px;
+            border-top: 1px solid #ddd;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .final-note {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .declaration-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 15px;
+            font-size: 15px;
+        }
+
+            .declaration-box input[type="checkbox"] {
+                margin-top: 5px;
+                flex-shrink: 0;
+                width: 18px;
+                height: 18px;
+                cursor: pointer;
+            }
+
+        .proceed-container {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+
+        .proceed-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, opacity 0.3s;
+        }
+
+            .proceed-btn:hover:not(:disabled) {
+                background-color: #218838;
+            }
+
+            .proceed-btn:disabled {
+                background-color: #a5d6a7;
+                cursor: not-allowed;
+                opacity: 0.6;
+            }
+
+       
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <h1 class="page-header-title">Winfocus Learning Center</h1>
+    </header>
+    <div class="instructions-header">
+        <h2>GENERAL INSTRUCTIONS</h2>
+        <div class="language-selector">
+            <label for="language">Choose Your Default Language</label>
+            <select name="language" id="language">
+                <option value="en" selected>English</option>
+            </select>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <p class="sub-title">Please read the instructions carefully</p>
+        <main>
+            <ol class="instructions-list">
+
+                <h3><u>General Instructions:</u></h3>
+                <li>Total duration of NEET - PHYSICS is 180 min.</li>
+                <li>The clock will be set at the server. The countdown timer in the top right corner of screen will display the remaining time available for you to complete the examination. When the timer reaches zero, the examination will end by itself. You will not be required to end or submit your examination.</li>
+                <li>
+                    The Question Palette displayed on the right side of screen will show the status of each question using one of the following symbols:
+                    <p style="margin-top:10px; margin-bottom: 5px;"><span class="status-symbol not-visited"></span> You have not visited the question yet.</p>
+                    <p style="margin-bottom: 5px;"><span class="status-symbol not-answered"></span> You have not answered the question.</p>
+                    <p style="margin-bottom: 5px;"><span class="status-symbol answered"></span> You have answered the question.</p>
+                    <p style="margin-bottom: 5px;"><span class="status-symbol marked-review"></span> You have NOT answered the question, but have marked the question for review.</p>
+                    <p style="margin-bottom: 5px;"><span class="status-symbol answered-marked"></span> The question(s) "Answered and Marked for Review" will be considered for evaluation.</p>
+                </li>
+                <li>You can click on the ">" arrow which appears to the left of question palette to collapse the question palette thereby maximizing the question window. To view the question palette again, you can click on "<" which appears on the right side of question window.</li>
+                <li>You can click on your "Profile" image on top right corner of your screen to change the language during the exam for entire question paper. On clicking of Profile image you will get a drop-down to change the question content to the desired language.</li>
+                <li>You can click on <span class="nav-arrow">^</span> to navigate to the bottom and <span class="nav-arrow">v</span> to navigate to top of the question are, without scrolling.</li>
+
+                <h3><u>Navigating to a Question:</u></h3>
+                <li>
+                    To answer a question, do the following:
+                    <ol>
+                        <li>Click on the question number in the Question Palette at the right of your screen to go to that numbered question directly. Note that using this option does NOT save your answer to the current question.</li>
+                        <li>Click on <b>Save & Next</b> to save your answer for the current question and then go to the next question.</li>
+                        <li>Click on <b>Mark for Review & Next</b> to save your answer for the current question, mark it for review, and then go to the next question.</li>
+                    </ol>
+                </li>
+
+                <h3><u>Answering a Question:</u></h3>
+                <li>
+                    Procedure for answering a multiple choice type question:
+                    <ol>
+                        <li>To select you answer, click on the button of one of the options.</li>
+                        <li>To deselect your chosen answer, click on the button of the chosen option again or click on the <b>Clear Response</b> button.</li>
+                        <li>To change your chosen answer, click on the button of another option.</li>
+                        <li>To save your answer, you MUST click on the <b>Save & Next</b> button.</li>
+                        <li>To mark the question for review, click on the <b>Mark for Review & Next</b> button.</li>
+                    </ol>
+                </li>
+                <li>To change your answer to a question that has already been answered, first select that question for answering and then follow the procedure for answering that type of question.</li>
+
+                <h3><u>Navigating through sections:</u></h3>
+                <li>Sections in this question paper are displayed on the top bar of the screen. Questions in a section can be viewed by click on the section name. The section you are currently viewing is highlighted.</li>
+                <li>After you click the <b>Save & Next</b> button on the last question for a section, you will automatically be taken to the first question of the next section.</li>
+                <li>You can shuffle between sections and questions anytime during the examination as per your convenience only during the time stipulated.</li>
+                <li>Candidate can view the corresponding section summary as part of the legend that appears in every section above the question palette.</li>
+            </ol>
+
+            <div class="declaration-section">
+                <p class="final-note">Please note all questions will appear in your default language. This language can be changed for a particular question later on.</p>
+                <div class="declaration-box">
+                    <input type="checkbox" id="declarationCheckbox" name="declaration">
+                    <label for="declarationCheckbox">I have read and understood the instructions. All computer hardware allotted to me are in proper working condition. I declare that I am not in possession of / not wearing / not carrying any prohibited gadget like mobile phone, bluetooth devices etc. /any prohibited material with me into the Examination Hall. I agree that in case of not adhering to the instructions, I shall be liable to be debarred from this Test and/or to disciplinary action, which may include ban from future Tests / Examinations</label>
+                </div>
+                <div class="proceed-container">
+                    <button id="proceedBtn" class="proceed-btn" disabled>PROCEED</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        © All Rights Reserved - Winfocus Learning Center
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const declarationCheckbox = document.getElementById('declarationCheckbox');
+            const proceedBtn = document.getElementById('proceedBtn');
+
+            declarationCheckbox.addEventListener('change', function () {
+                proceedBtn.disabled = !this.checked;
+            });
+        });
+    </script>
+
+</body>
+</html>

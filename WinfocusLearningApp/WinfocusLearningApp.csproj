@@ -310,6 +310,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Dtp.css" />
     <Content Include="DataEntity\EntityConnection.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EntityConnection.edmx</DependentUpon>
@@ -409,6 +410,15 @@
     <Content Include="Views\DTP\Index.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Exam\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutExam.cshtml" />
+    <Content Include="Views\Exam\Onlineexam.cshtml" />
+    <Content Include="Views\Exam\Examinstruction.cshtml" />
+    <Content Include="Views\Shared\_LayoutDTP.cshtml" />
+    <Content Include="Views\DTP\QuestionList.cshtml" />
+    <Content Include="Views\DTP\SQuestionList.cshtml" />
+    <Content Include="Views\DTP\QAReport.cshtml" />
+    <Content Include="Views\DTP\SQAReport.cshtml" />
+    <Content Include="Views\DTP\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
