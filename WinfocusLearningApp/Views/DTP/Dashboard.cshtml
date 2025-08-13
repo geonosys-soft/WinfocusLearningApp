@@ -1,0 +1,242 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutDTP.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --clr-blue: #007bff;
+            --clr-green: #28a745;
+            --clr-purple: #6f42c1;
+            --clr-light: #f8f9fa;
+            --clr-dark: #343a40;
+            --clr-gray: #6c757d;
+            --bg-light: #f0f2f5;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--clr-dark);
+            margin: 0;
+        }
+
+        
+        .welcome-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #4361ee, #0056b3);
+            color: white;
+            padding: 3rem 10%; 
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+        }
+
+            .welcome-banner .welcome-text h1 {
+                font-weight: 700;
+                margin: 0;
+                font-size: 2.5rem;
+            }
+
+            .welcome-banner .welcome-text p {
+                margin: 0.25rem 0 0;
+                opacity: 0.9;
+                font-size: 1.2rem;
+            }
+
+            .welcome-banner .banner-icon {
+                font-size: 8rem;
+                color: rgba(255, 255, 255, 0.1);
+                position: absolute;
+                right: 5%;
+                top: 50%;
+                transform: translateY(-50%) rotate(-15deg);
+                transition: transform 0.5s ease;
+            }
+
+            .welcome-banner:hover .banner-icon {
+                transform: translateY(-50%) rotate(0deg) scale(1.1);
+            }
+
+        
+        .dashboard-content-container {
+            padding: 2.5rem;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid transparent;
+        }
+
+            .stat-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            }
+
+        /* Color Accents */
+        .card-blue {
+            border-color: var(--clr-blue);
+        }
+
+        .card-green {
+            border-color: var(--clr-green);
+        }
+
+        .card-purple {
+            border-color: var(--clr-purple);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-blue .stat-icon {
+            background-color: rgba(0, 123, 255, 0.1);
+            color: var(--clr-blue);
+        }
+
+        .card-green .stat-icon {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--clr-green);
+        }
+
+        .card-purple .stat-icon {
+            background-color: rgba(111, 66, 193, 0.1);
+            color: var(--clr-purple);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--clr-dark);
+            line-height: 1.2;
+        }
+
+        .stat-title {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--clr-gray);
+            margin-top: 0.5rem;
+        }
+
+
+        @@media (max-width: 992px) {
+            .stats-container {
+                max-width: 100%;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .welcome-banner .welcome-text h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-content-container {
+                padding: 1.5rem;
+            }
+
+            .welcome-banner {
+                padding: 2rem;
+                text-align: center;
+                flex-direction: column;
+            }
+
+                .welcome-banner .banner-icon {
+                    display: none; 
+                }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="welcome-banner">
+        <div class="welcome-text">
+            <h1>Welcome Back, Name!</h1>
+            <p>Here is your data summary for 13 August 2025.</p>
+        </div>
+        <div class="banner-icon">
+            <i class="fa-solid fa-chart-line"></i>
+        </div>
+    </header>
+
+    <div class="dashboard-content-container">
+        <main class="stats-container">
+            <div class="stat-card card-blue">
+                <div class="stat-icon"><i class="fa-solid fa-clipboard-question"></i></div>
+                <div class="stat-value">0</div>
+                <div class="stat-title">Total QsAs</div>
+            </div>
+            <div class="stat-card card-blue">
+                <div class="stat-icon"><i class="fa-solid fa-calendar-days"></i></div>
+                <div class="stat-value">0</div>
+                <div class="stat-title">This Month QsAs</div>
+            </div>
+            <div class="stat-card card-blue">
+                <div class="stat-icon"><i class="fa-solid fa-calendar-day"></i></div>
+                <div class="stat-value">0</div>
+                <div class="stat-title">Today QsAs</div>
+            </div>
+
+
+
+
+            <div class="stat-card card-green">
+                <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="stat-value">0</div>
+                <div class="stat-title">Total Scholarship Qs</div>
+            </div>
+            <div class="stat-card card-green">
+                <div class="stat-icon"><i class="fa-solid fa-calendar-days"></i></div>
+                <div class="stat-value">0</div>
+                <div class="stat-title">This Month Scholarship Qs</div>
+            </div>
+            <div class="stat-card card-green">
+                <div class="stat-icon"><i class="fa-solid fa-calendar-day"></i></div>
+                <div class="stat-value">0</div>
+                <div class="stat-title">Today Scholarship Qs</div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

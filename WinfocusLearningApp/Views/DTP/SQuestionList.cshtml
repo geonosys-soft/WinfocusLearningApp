@@ -1,0 +1,459 @@
+﻿@{
+
+    ViewBag.Title = "QuestionList";
+    Layout = "~/Views/Shared/_LayoutDTP.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --primary-dark: #5a67d8;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --success-color: #48bb78;
+            --error-color: #f56565;
+            --warning-color: #ed8936;
+            --bg-gradient: linear-gradient(135deg, #4361ee 0%, #4361ee 100%);
+            --card-shadow: 0 20px 40px rgba(102, 126, 234, 0.1);
+            --hover-shadow: 0 25px 50px rgba(102, 126, 234, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f7faff;
+            min-height: 100vh;
+            padding: 20px 0;
+            position: relative;
+            overflow-x: hidden;
+            color: #1a202c;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .main-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: var(--bg-gradient);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .header h1 {
+                font-size: 2.5rem;
+                font-weight: 700;
+                margin-bottom: 10px;
+                position: relative;
+                z-index: 1;
+            }
+
+        .content-container {
+            padding: 40px;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #4361ee;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .filter-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+
+        .filter-select {
+            padding: 14px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: white;
+            color: #1a202c;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+            .filter-select:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+                outline: none;
+            }
+
+        .table-container {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+            .data-table th {
+                background: var(--bg-gradient);
+                color: white;
+                padding: 20px 15px;
+                font-weight: 600;
+                text-align: left;
+                font-size: 0.9rem;
+                white-space: nowrap;
+            }
+
+            .data-table td {
+                padding: 18px 15px;
+                border-bottom: 1px solid #f1f5f9;
+                font-weight: 500;
+                color: #2d3748;
+                vertical-align: middle;
+            }
+
+                .data-table td:last-child {
+                    white-space: nowrap;
+                }
+
+            .data-table tbody tr:hover {
+                background: rgba(102, 126, 234, 0.05);
+            }
+
+            .data-table tbody tr:last-child td {
+                border-bottom: none;
+            }
+
+        .action-btn {
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-right: 8px;
+        }
+
+            .action-btn i {
+                font-size: 0.9rem;
+            }
+
+        .btn-view {
+            background: var(--primary-color);
+            color: white;
+        }
+
+            .btn-view:hover {
+                background: var(--primary-dark);
+                transform: translateY(-2px);
+                box-shadow: var(--hover-shadow);
+            }
+
+        .btn-edit {
+            background: var(--warning-color);
+            color: white;
+        }
+
+            .btn-edit:hover {
+                background: #dd6b20; /* Darker warning */
+                transform: translateY(-2px);
+            }
+
+        .btn-delete {
+            background: var(--error-color);
+            color: white;
+        }
+
+            .btn-delete:hover {
+                background: #c53030; /* Darker error */
+                transform: translateY(-2px);
+            }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none; /* Initially hidden */
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+            animation: slideInUp 0.4s ease-out;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .modal-body .question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+
+        .modal-body .options-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+            .modal-body .options-list li {
+                background-color: #f7faff;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                padding: 12px 15px;
+                margin-bottom: 10px;
+                font-weight: 500;
+            }
+
+        .modal-footer {
+            margin-top: 30px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+        }
+
+        .btn-ok {
+            background: var(--success-color);
+            color: white;
+        }
+
+            .btn-ok:hover {
+                background: #38a169;
+            }
+
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @@keyframes slideInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-card">
+            <div class="header">
+                <h1>Scholarship Question Answer List</h1>
+            </div>
+
+            <div class="content-container">
+                <h2 class="page-title">Filter & Sort Questions</h2>
+
+                <!-- Filter Section -->
+                <div class="filter-section">
+                    <select class="filter-select">
+                        <option value="">Academic Year</option>
+
+                    </select>
+                    <select class="filter-select">
+                        <option value="">Syllabus</option>
+
+                    </select>
+                    <select class="filter-select">
+                        <option value="">Class</option>
+
+                    </select>
+                    <select class="filter-select">
+                        <option value="">Stream</option>
+
+                    </select>
+                    <select class="filter-select">
+                        <option value="">Subject</option>
+                        ption>
+                    </select>
+                    <select class="filter-select">
+                        <option value="">Chapter</option>
+
+                    </select>
+                    <select class="filter-select">
+                        <option value="">Question Type</option>
+
+                    </select>
+                </div>
+
+                <!-- Data Table -->
+                <div class="table-container">
+                    <table class="data-table" id="questionsTable">
+                        <thead>
+                            <tr>
+                                <th>SL.NO</th>
+                                <th>Question</th>
+                                <th style="text-align:right; padding-right:40px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-question="In which year did India gain independence?" data-options="1945|1947|1950|1952">
+                                <td>1</td>
+                                <td>In which year did India gain independence?</td>
+                                <td style="text-align:right;">
+                                    <button class="action-btn btn-view"><i class="fas fa-eye"></i> View</button>
+                                    <button class="action-btn btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                                    <button class="action-btn btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Details Modal -->
+    <div id="viewModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Question Details</h3>
+            </div>
+            <div class="modal-body">
+                <p id="modalQuestion" class="question"></p>
+                <ul id="modalOptions" class="options-list">
+                    <!-- Options will be populated by JavaScript -->
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button class="action-btn btn-edit modal-btn"><i class="fas fa-edit"></i> Edit</button>
+                <button id="modalOkBtn" class="action-btn btn-ok modal-btn"><i class="fas fa-check"></i> OK</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const viewModal = document.getElementById('viewModal');
+            const modalQuestion = document.getElementById('modalQuestion');
+            const modalOptions = document.getElementById('modalOptions');
+            const modalOkBtn = document.getElementById('modalOkBtn');
+
+            // Function to show the modal
+            function showModal(questionText, optionsArray) {
+                modalQuestion.textContent = questionText;
+
+                // Clear previous options
+                modalOptions.innerHTML = '';
+
+                // Populate new options
+                optionsArray.forEach((opt, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = `Option ${String.fromCharCode(65 + index)}: ${opt}`;
+                    modalOptions.appendChild(li);
+                });
+
+                viewModal.style.display = 'flex';
+            }
+
+            // Function to hide the modal
+            function hideModal() {
+                viewModal.style.display = 'none';
+            }
+
+            // Add event listeners to all view buttons
+            document.querySelectorAll('.btn-view').forEach(button => {
+                button.addEventListener('click', function () {
+                    const row = this.closest('tr');
+                    const questionText = row.dataset.question;
+                    const optionsString = row.dataset.options;
+                    const optionsArray = optionsString.split('|');
+
+                    showModal(questionText, optionsArray);
+                });
+            });
+
+
+            document.querySelectorAll('.btn-delete').forEach(button => {
+                button.addEventListener('click', () => {
+                    if (confirm('Are you sure you want to delete this question?')) {
+                        alert('Question deleted!');
+
+                    }
+                });
+            });
+
+
+            // Close modal when OK button is clicked
+            modalOkBtn.addEventListener('click', hideModal);
+
+            // Close modal when clicking on the overlay
+            viewModal.addEventListener('click', function (event) {
+                if (event.target === viewModal) {
+                    hideModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
