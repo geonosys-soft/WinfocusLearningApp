@@ -1,4 +1,4 @@
-﻿
+﻿@model WinfocusLearningApp.DataEntity.TblQuestionAnswer
 @{
     ViewBag.Title = "QuestionAnswers";
 }
@@ -291,110 +291,128 @@
 
     <!-- Insert Form (shown by default) -->
     <div id="insert-form" class="form-container">
-        <h3><i class="fas fa-plus-circle"></i> Add Questions</h3>
-        <div class="form-row">
-            <div class="form-col">
-                <div class="form-group">
-                    <label for="insert-academic-year">Academic Year:</label>
-                    <select id="insert-academic-year" class="form-control" required>
-                        <option value="">-- Select Academic Year --</option>
-                    </select>
-                </div>
+        <form enctype="multipart/form-data">
+            <h3><i class="fas fa-plus-circle"></i> Add Questions</h3>
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="AccademicYearId">Academic Year:</label>
+                        @Html.DropDownList("AccademicYearId", null, new { @class = "form-control", @required = true })
+                    </div>
 
-                <div class="form-group">
-                    <label for="insert-class">Class:</label>
-                    <select id="insert-class" class="form-control" required>
-                        <option value="">-- Select Class --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="insert-subject">Subject:</label>
-                    <select id="insert-subject" class="form-control" required>
-                        <option value="">-- Select Subject --</option>
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label for="ClassID">Class:</label>
+                        @Html.DropDownList("ClassID", null, "--- Class ---", new { @class = "form-control", @required = true })
 
-            </div>
-            <div class="form-col">
-                <div class="form-group">
-                    <label for="insert-syllabus">Syllabus:</label>
-                    <select id="insert-syllabus" class="form-control" required>
-                        <option value="">-- Select Syllabus --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="insert-stream">Stream:</label>
-                    <select id="insert-stream" class="form-control" required>
-                        <option value="">-- Select Stream --</option>
-                    </select>
-                </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="SubjectID">Subject:</label>
+                        @Html.DropDownList("SubjectID", null, "--- Subject ---", new { @class = "form-control", @required = true })
+                    </div>
 
-                <div class="form-group">
-                    <label for="insert-chapter">Chapter:</label>
-                    <select id="insert-chapter" class="form-control" required>
-                        <option value="">-- Select Chapter --</option>
-                    </select>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="SyllabusID">Syllabus:</label>
+                        @Html.DropDownList("SyllabusID", null, "--- Syllabus ---", new { @class = "form-control", @required = true })
+                    </div>
+                    <div class="form-group">
+                        <label for="StreamID">Stream:</label>
+                        @Html.DropDownList("StreamID", null, "--- Stream ---", new { @class = "form-control", @required = true })
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ChapterID">Chapter:</label>
+                        @Html.DropDownList("ChapterID", null, "--- Chapter ---", new { @class = "form-control", @required = true })
+
+                    </div>
+
                 </div>
 
             </div>
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="insert-qtype">Question Type</label>
+                        @Html.DropDownList("QuestionType", null, "--- Question Type ---", new { @class = "form-control", @required = true })
 
-        </div>
-        <div class="form-group">
-            <label for="insert-question">Question:</label>
-            <textarea class="form-control" placeholder="Enter Question Here" name="name" value="" rows="4"></textarea>
-            <input type="file" class="form-control" name="name" accept=".jpeg, .jpg" />
-        </div>
-        <div class="form-row">
-            <div class="form-col">
-                <div class="form-group">
-                    <label for="insert-question">Option 1:</label>
-                    <input type="text" class="form-control" placeholder="Option 1" name="name" value="" />
-                </div> 
-                <div class="form-group">
-                    <label for="insert-question">Option 3:</label>
-                    <input type="text" class="form-control" placeholder="Option 3" name="name" value="" />
+                    </div>
                 </div>
+
             </div>
-            <div class="form-col">
-                <div class="form-group">
-                    <label for="insert-question">Option 2:</label>
-                    <input type="text" class="form-control" placeholder="Option 2" name="name" value="" />
-                </div>
-                <div class="form-group">
-                    <label for="insert-question">Option 4:</label>
-                    <input type="text" class="form-control" placeholder="Option 4" name="name" value="" />
-                </div>
-            </div>
-            
-           
-           
-        </div>
-        <div class="form-row">
-            <div class="form-col">
-                <div class="form-group">
-                    <label for="insert-question">Answer</label>
-                    <select class="form-control">
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
-                        <option value="4">Option 4</option>
-                    </select>
+            <div class="form-row" id="teacherMcq">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="insert-week">Week</label>
+                        @Html.DropDownList("Week", null, "--- Question Type ---", new { @class = "form-control", @required = true })
+
+
+                    </div>
 
                 </div>
-            </div>
-            <div class="form-col">
-                <div class="form-group">
-                    <label for="insert-question">Mark</label>
-                    <input type="text" class="form-control" placeholder="Mark" name="name" value="" />
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="insert-month">Month</label>
+                        @Html.DropDownList("Month", null, "--- Question Type ---", new { @class = "form-control", @required = true })
+                    </div>
                 </div>
+
             </div>
-            
-            
-            
-        </div>
-        <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
-            <i class="fas fa-check"></i> Save
-        </button>
+            <div class="form-group">
+                <label for="insert-question">Question:</label>
+                @Html.TextAreaFor(model => model.Question, new { @class = "form-control", @placeholder = "Enter Question Here", @rows = "4" })
+                <input type="file" class="form-control" name="fileupload" id="fileupload" accept=".jpeg, .jpg" />
+            </div>
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="insert-question">Option 1:</label>
+                        @Html.TextBoxFor(model => model.Option1, new { @class = "form-control", @placeholder = "Option 1" })
+                    </div>
+                    <div class="form-group">
+                        <label for="insert-question">Option 3:</label>
+                        @Html.TextBoxFor(model => model.Option3, new { @class = "form-control", @placeholder = "Option 3" })
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="insert-question">Option 2:</label>
+                        @Html.TextBoxFor(model => model.Option2, new { @class = "form-control", @placeholder = "Option 2" })
+                    </div>
+                    <div class="form-group">
+                        <label for="insert-question">Option 4:</label>
+                        @Html.TextBoxFor(model => model.Option4, new { @class = "form-control", @placeholder = "Option 4" })
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="insert-question">Answer</label>
+                        @Html.DropDownList("Answer", null, "--- Question Type ---", new { @class = "form-control", @required = true })
+
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="insert-question">Mark</label>
+                        @Html.TextBoxFor(model => model.Mark, new { @class = "form-control", @placeholder = "Mark" })
+
+                    </div>
+                </div>
+
+
+
+            </div>
+            <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
+                <i class="fas fa-check"></i> Save
+            </button>
+        </form>
+        
     </div>
 
 
@@ -444,47 +462,45 @@
 
         switch (formType) {
             case 'insert':
+                
+
                 // Get all selected values
-                const academicYearId = document.getElementById('insert-academic-year').value;
-                const syllabusId = document.getElementById('insert-syllabus').value;
-                const classId = document.getElementById('insert-class').value;
-                const streamId = document.getElementById('insert-stream').value;
-               // const courseId = document.getElementById('insert-course').value;
-                const subjectId = document.getElementById('insert-subject').value;
-                const chapterId = document.getElementById('insert-chapter').value;
-              //  const subchapterId = document.getElementById('insert-subchapter').value;
-               // moduleName = document.getElementById('insert-module').value.trim();
+                const academicYearId = document.getElementById('AccademicYearId').value;
+                const syllabusId = document.getElementById('SyllabusID').value;
+                const classId = document.getElementById('ClassID').value;
+                const streamId = document.getElementById('StreamID').value;
+                const subjectId = document.getElementById('SubjectID').value;
+                const chapterId = document.getElementById('ChapterID').value;
+                const question = document.getElementById("Question").value;
+                const op1 = document.getElementById("Option1").value;
 
                 if (!academicYearId || !syllabusId || !classId || !streamId ||
                      !subjectId || !chapterId) {
                     showNotification('Please fill all fields', 'error');
                     return;
                 }
+                const formData = new FormData();
+                formData.append("jsonData", JSON.stringify({
+                    ACID: academicYearId,
+                    SyllabusID: syllabusId,
+                    ClassID: classId,
+                    StreamID: streamId,
+                    SubjectID: subjectId,
+                    ChapterID: chapterId
+                }));
+                formData.append("file", document.getElementById("fileupload").files[0]);
 
                 try {
-                    const response = await fetch("/api/ManagementApi/AddModule", {
+                    const response = await fetch("/api/QA/AddQuestion", {
                         method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            ACID: academicYearId,
-                            SyllabusID: syllabusId,
-                            ClassID: classId,
-                            StreamID: streamId,
-                            CourseID: courseId,
-                            SubjectID: subjectId,
-                            ChapterID: chapterId,
-                            SubChapterID: subchapterId,
-                            ModuleName: moduleName
-                        })
+                        body: formData
                     });
 
                     if (!response.ok) {
                         throw new Error('Failed to add module');
                     }
 
-                    message = `Module "${moduleName}" added successfully!`;
+                    message = `Module "${academicYearId}" added successfully!`;
                     showNotification(message, 'success');
 
                     // Clear form
@@ -534,6 +550,16 @@
     // Add cascading dropdown functionality
     document.addEventListener('DOMContentLoaded', function () {
         loadAcademicYears();
+        const questionTypeSelect = document.getElementById("QuestionType");
+        const teacherMcqSection = document.getElementById("teacherMcq");
+
+        // Hide initially
+        teacherMcqSection.style.display = 'none';
+
+        // Show/hide on change
+        questionTypeSelect.addEventListener("change", function () {
+            teacherMcqSection.style.display = (this.value === "2") ? "flex" : "none";
+        });
     });
 
     // Load academic years from database
@@ -542,7 +568,7 @@
             const response = await fetch('/api/ManagementApi/FetchAccademicYear');
             const data = await response.json();
 
-            const dropdownIds = ['insert-academic-year'];
+            const dropdownIds = ['AccademicYearId'];
 
             dropdownIds.forEach(id => {
                 const dropdown = document.getElementById(id);
@@ -740,38 +766,38 @@
         loadAcademicYears();
     });
     function formClear() {
-        document.getElementById('insert-academic-year').value = '';
-        document.getElementById('insert-syllabus').innerHTML = '<option value="">-- Select Syllabus --</option>';
-        document.getElementById('insert-class').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('insert-stream').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('AccademicYearId').value = '';
+        document.getElementById('SyllabusID').innerHTML = '<option value="">-- Select Syllabus --</option>';
+        document.getElementById('ClassID').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('StreamID').innerHTML = '<option value="">-- Select class --</option>';
        // document.getElementById('insert-course').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('insert-subject').innerHTML = '<option value="">-- Select class --</option>';
-        document.getElementById('insert-chapter').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('SubjectID').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('ChapterID').innerHTML = '<option value="">-- Select class --</option>';
        // document.getElementById('insert-subchapter').innerHTML = '<option value="">-- Select class --</option>';
 
     }
     // Event listeners for accademic year dropdowns form
-    document.getElementById('insert-academic-year').addEventListener('change', function () {
-        loadSyllabusOptions(this.value, 'insert-syllabus');
+    document.getElementById('AccademicYearId').addEventListener('change', function () {
+        loadSyllabusOptions(this.value, 'SyllabusID');
     });
         // Event listeners for accademic year dropdowns form
-    document.getElementById('insert-syllabus').addEventListener('change', function () {
-        loadClassOptions(this.value, 'insert-class');
+    document.getElementById('SyllabusID').addEventListener('change', function () {
+        loadClassOptions(this.value, 'ClassID');
     });
             // Event listeners for grade dropdowns form
-            document.getElementById('insert-class').addEventListener('change', function () {
-                loadStreamOptions(this.value, 'insert-stream');
+            document.getElementById('ClassID').addEventListener('change', function () {
+                loadStreamOptions(this.value, 'StreamID');
             });
-            document.getElementById('insert-stream').addEventListener('change', function () {
-                loadSubjectOptions(this.value, 'insert-subject');
+            document.getElementById('StreamID').addEventListener('change', function () {
+                loadSubjectOptions(this.value, 'SubjectID');
             });
            /* document.getElementById('insert-course').addEventListener('change', function () {
-                loadSubjectOptions(this.value, 'insert-subject');
+                loadSubjectOptions(this.value, 'SubjectID');
             });*/
-            document.getElementById('insert-subject').addEventListener('change', function () {
-                loadChapterOptions(this.value, 'insert-chapter');
+            document.getElementById('SubjectID').addEventListener('change', function () {
+                loadChapterOptions(this.value, 'ChapterID');
             });/*
-            document.getElementById('insert-chapter').addEventListener('change', function () {
+            document.getElementById('ChapterID').addEventListener('change', function () {
                 loadSubChapterOptions(this.value, 'insert-subchapter');
             });
     document.getElementById('insert-subchapter').addEventListener('change', function () {

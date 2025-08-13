@@ -299,6 +299,7 @@
     <Compile Include="ViewModels\TargetYearExamViewModel.cs" />
     <Compile Include="WebApi\FeeApiController.cs" />
     <Compile Include="WebApi\ManagementApiController.cs" />
+    <Compile Include="WebApi\QAController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
