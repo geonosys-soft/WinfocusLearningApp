@@ -1,8 +1,6 @@
-﻿@model WinfocusLearningApp.ViewModels.QuestionAnswerViewModel
+﻿@model WinfocusLearningApp.ViewModels.UserDetailsViewModel
 @{
-
-    ViewBag.Title = "QuestionList";
-    Layout = "~/Views/Shared/_LayoutDTP.cshtml";
+    ViewBag.Title = "DTP_List";
 }
 
 
@@ -12,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
@@ -196,7 +194,7 @@
         }
 
             .btn-edit:hover {
-                background: #dd6b20; 
+                background: #dd6b20;
                 transform: translateY(-2px);
             }
 
@@ -206,7 +204,7 @@
         }
 
             .btn-delete:hover {
-                background: #c53030; 
+                background: #c53030;
                 transform: translateY(-2px);
             }
 
@@ -218,7 +216,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.6);
-            display: none; 
+            display: none;
             align-items: center;
             justify-content: center;
             z-index: 1000;
@@ -315,17 +313,11 @@
 
             <div class="content-container">
                 <h2 class="page-title">Filter & Sort Questions</h2>
-                @using (Html.BeginForm("QuestionList", "DTP", FormMethod.Post, new { @id = "FormSearch" }))
+                @using (Html.BeginForm("DTPUsers", "Admin_DTP", FormMethod.Post, new { @id = "FormSearch" }))
                 {
                     <!-- Filter Section -->
                     <div class="filter-section">
-                        @Html.DropDownList("AccademicYearId", null, new { @class = "filter-select", @required = true })
-                        @Html.DropDownList("SyllabusID", null, "--- Syllabus ---", new { @class = "filter-select", @required = true })
-                        @Html.DropDownList("ClassID", null, "--- Class ---", new { @class = "filter-select", @required = true })
-                        @Html.DropDownList("StreamID", null, "--- Stream ---", new { @class = "filter-select", @required = true })
-                        @Html.DropDownList("SubjectID", null, "--- Subject ---", new { @class = "filter-select", @required = true })
-                        @Html.DropDownList("ChapterID", null, "--- Chapter ---", new { @class = "filter-select", @required = true })
-                        @Html.DropDownList("QuestionType", null, "--- Question Type ---", new { @class = "filter-select", @required = true })
+                        
                     </div>
                 }
 
@@ -336,37 +328,55 @@
                         <thead>
                             <tr>
                                 <th>SL.NO</th>
-                                <th>Question</th>
+                                <th>ID</th>
+                                <th>User</th>
+                                <th>Mobile</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>Status</th>
                                 <th style="text-align:right; padding-right:40px;">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if (Model.questionAnswerViewModels != null)
+                            @if (Model.UserDetails != null)
                             {
                                 int i = 0;
-                                foreach (var data in Model.questionAnswerViewModels)
+                                foreach (var data in Model.UserDetails)
                                 {
                                     i++;
-                                    <tr data-question="@data.Question" data-image="@(data.QImage != null ? $"data:image/png;base64,{Convert.ToBase64String(data.QImage)}"
-        : Url.Content("~/images/no-image.png"))" data-options="@data.Option1|@data.Option2|@data.Option3|@data.Option4">
+                                    <tr>
                                         <td>@i</td>
+                                        <td>@data.UniqueID</td>
+                                        <td>@data.FirstName @data.LastName</td>
+                                        <td>@data.MobileNo</td>
+                                        <td>@data.UserName</td>
+                                        <td>@data.Password</td>
                                         <td>
-                                            @data.Question <br />
-                                            @if (data.QImage != null)
-                                            {
-                                                string base64Image = Convert.ToBase64String(data.QImage);
-                                                string imageSrc = $"data:image/png;base64,{base64Image}";
-                                                <img src="@imageSrc" alt="Question Image" style="width:150px;height:150px;" />
-                                            }
+                                            <select class="form-control">
+                                                @if (data.IsActive == 0)
+                                                {
+                                                    <option value="1" >Active</option>
+                                                    <option value="0"selected>In-Active</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="1" selected>Active</option>
+                                                    <option value="0">In-Active</option>
+                                                }
+
+                                            </select>
                                         </td>
                                         <td style="text-align:right;">
-                                            <button class="action-btn btn-view"><i class="fas fa-eye"></i> View</button>
-                                            <a class="action-btn btn-edit" href="~/DTP/QuestionAnswers/@data.ID"><i class="fas fa-edit"></i> Edit</a>
-                                            <button class="action-btn btn-delete" onclick="openModal(@data.ID,'@i','@data.Question')"><i class="fas fa-trash"></i> Delete</button>
+                                            <a href="#" class="action-btn btn-view"><i class="fas fa-eye"></i> Questions</a>
+                                            <a class="action-btn btn-edit" href="~/DTP/QuestionAnswers/"><i class="fas fa-edit"></i> Edit</a>
+                                            <button class="action-btn btn-delete" onclick=""><i class="fas fa-trash"></i> Delete</button>
                                         </td>
                                     </tr>
                                 }
                             }
+
+
+
 
                         </tbody>
                     </table>
@@ -404,7 +414,7 @@
                 <p>Do you Want to delete <span id="deleteContent"></span></p>
             </div>
             <div class="modal-footer">
-                
+
                 @using (Html.BeginForm("DeleteQuestion", "DTP", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
@@ -415,7 +425,7 @@
             </div>
         </div>
     </div>
-   
+
     <script>
         function closeModal() {
             document.getElementById('deleteModal').style.display = 'none';
@@ -718,3 +728,4 @@
     </script>
 </body>
 </html>
+

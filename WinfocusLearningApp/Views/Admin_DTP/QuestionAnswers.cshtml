@@ -1,0 +1,880 @@
+﻿@model WinfocusLearningApp.DataEntity.TblQuestionAnswer
+@{
+    ViewBag.Title = "QuestionAnswers";
+    
+}
+
+
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --primary-hover: #3a56d4;
+        --secondary-color: #3f37c9;
+        --danger-color: #f72585;
+        --danger-hover: #e5177b;
+        --success-color: #4cc9f0;
+        --success-hover: #2fb5e0;
+        --text-color: #2b2d42;
+        --light-bg: #f8f9fa;
+    }
+
+    body {
+        background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text-color);
+        min-height: 100vh;
+    }
+
+    .top-bar {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 20px 0;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .top-bar::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4cc9f0, #f72585, #7209b7);
+        }
+
+        .top-bar h1 {
+            margin: 0;
+            padding: 0 30px;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .action-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+    }
+
+    .action-box {
+        background: white;
+        border-radius: 12px;
+        padding: 40px 30px;
+        width: 280px;
+        text-align: center;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        overflow: hidden;
+        border: none;
+    }
+
+        .action-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .action-box.insert {
+            border-top: 4px solid var(--success-color);
+        }
+
+        .action-box.edit {
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .action-box.delete {
+            border-top: 4px solid var(--danger-color);
+        }
+
+    .action-icon {
+        font-size: 56px;
+        margin-bottom: 20px;
+        transition: transform 0.3s;
+    }
+
+    .action-box:hover .action-icon {
+        transform: scale(1.1);
+    }
+
+    .action-title {
+        font-weight: 600;
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .action-desc {
+        color: #6c757d;
+        font-size: 16px;
+    }
+
+    .form-container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        animation: fadeIn 0.5s ease-out;
+        border-top: 4px solid var(--primary-color);
+    }
+
+    #insert-form {
+        display: block;
+    }
+
+    #edit-form, #delete-form {
+        display: none;
+    }
+
+    .form-container h3 {
+        margin-top: 0;
+        color: var(--primary-color);
+        font-size: 24px;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+        .form-container h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+    .btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+    .btn-submit {
+        background-color: var(--success-color);
+    }
+
+        .btn-submit:hover {
+            background-color: var(--success-hover);
+        }
+
+    .btn-delete {
+        background-color: var(--danger-color);
+    }
+
+        .btn-delete:hover {
+            background-color: var(--danger-hover);
+        }
+
+    .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #6c757d;
+        transition: color 0.3s;
+    }
+
+        .close-btn:hover {
+            color: var(--danger-color);
+        }
+
+    .floating-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        z-index: 1000;
+        transform: translateX(150%);
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+        .floating-notification.show {
+            transform: translateX(0);
+        }
+
+    .notification-icon {
+        margin-right: 10px;
+        font-size: 24px;
+    }
+
+    .notification-success {
+        border-left: 4px solid var(--success-color);
+    }
+
+    .notification-error {
+        border-left: 4px solid var(--danger-color);
+    }
+
+    .form-row {
+        display: flex;
+        gap: 20px;
+    }
+
+    .form-col {
+        flex: 1;
+    }
+</style>
+
+<div class="top-bar">
+    <h1></i> Question Management</h1>
+</div>
+
+<div class="container">
+    
+
+    <!-- Insert Form (shown by default) -->
+    <div id="insert-form" class="form-container">
+        <form enctype="multipart/form-data">
+            <h3><i class="fas fa-plus-circle"></i> Add Questions</h3>
+            <div class="form-row">
+                <div class="form-col">
+                    @Html.HiddenFor(Model => Model.ID)
+                    <div class="form-group">
+                        <label for="AccademicYearId">Academic Year:</label>
+                        @Html.DropDownList("AccademicYearId", null, new { @class = "form-control", @required = true })
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ClassID">Class:</label>
+                        @Html.DropDownList("ClassID", null, "--- Class ---", new { @class = "form-control", @required = true })
+
+                    </div>
+                    <div class="form-group">
+                        <label for="SubjectID">Subject:</label>
+                        @Html.DropDownList("SubjectID", null, "--- Subject ---", new { @class = "form-control", @required = true })
+                    </div>
+
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="SyllabusID">Syllabus:</label>
+                        @Html.DropDownList("SyllabusID", null, "--- Syllabus ---", new { @class = "form-control", @required = true })
+                    </div>
+                    <div class="form-group">
+                        <label for="StreamID">Stream:</label>
+                        @Html.DropDownList("StreamID", null, "--- Stream ---", new { @class = "form-control", @required = true })
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ChapterID">Chapter:</label>
+                        @Html.DropDownList("ChapterID", null, "--- Chapter ---", new { @class = "form-control", @required = true })
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="insert-qtype">Question Type</label>
+                        @Html.DropDownList("QuestionType", null, "--- Question Type ---", new { @class = "form-control", @required = true })
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-row" id="teacherMcq">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="insert-week">Week</label>
+                        @Html.DropDownList("Week", null, "--- Question Type ---", new { @class = "form-control", @required = true })
+
+
+                    </div>
+
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="insert-month">Month</label>
+                        @Html.DropDownList("Month", null, "--- Question Type ---", new { @class = "form-control", @required = true })
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <label for="insert-question">Question:</label>
+                @Html.TextAreaFor(model => model.Question, new { @class = "form-control", @placeholder = "Enter Question Here", @rows = "4" })
+                <input type="file" class="form-control" name="fileupload" id="fileupload" accept=".jpeg, .jpg" />
+                @if (Model.QImage != null)
+                {
+                    <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.QImage)" style="width:100%;" alt="Question Image" />
+                }
+            </div>
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="insert-question">Option 1:</label>
+                        @Html.TextBoxFor(model => model.Option1, new { @class = "form-control", @placeholder = "Option 1" })
+                    </div>
+                    <div class="form-group">
+                        <label for="insert-question">Option 3:</label>
+                        @Html.TextBoxFor(model => model.Option3, new { @class = "form-control", @placeholder = "Option 3" })
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="insert-question">Option 2:</label>
+                        @Html.TextBoxFor(model => model.Option2, new { @class = "form-control", @placeholder = "Option 2" })
+                    </div>
+                    <div class="form-group">
+                        <label for="insert-question">Option 4:</label>
+                        @Html.TextBoxFor(model => model.Option4, new { @class = "form-control", @placeholder = "Option 4" })
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="insert-question">Answer</label>
+                        @Html.DropDownList("Answer", null, "--- Question Type ---", new { @class = "form-control", @required = true })
+
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="insert-question">Mark</label>
+                        @Html.TextBoxFor(model => model.Mark, new { @class = "form-control", @placeholder = "Mark" })
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <button type="button" class="btn bg-danger" onclick="formClear()">
+                New Question
+            </button> 
+            <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
+                <i class="fas fa-check"></i> Save
+            </button>
+        </form>
+        
+    </div>
+
+
+</div>
+
+<!-- Notification -->
+<div id="notification" class="floating-notification">
+    <div class="notification-icon"></div>
+    <div class="notification-message"></div>
+</div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script>
+    // Show form function
+    function showForm(formType) {
+        // Hide all forms first
+        document.querySelectorAll('.form-container').forEach(form => {
+            form.style.display = 'none';
+        });
+
+        // Show the selected form
+        const form = document.getElementById(formType + '-form');
+        form.style.display = 'block';
+
+
+        // Scroll to form
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Hide form function
+    function hideForm(formType) {
+        document.getElementById(formType + '-form').style.display = 'none';
+        document.getElementById('insert-form').style.display = 'block';
+    }
+
+    document.getElementById("fileupload").addEventListener("change", function () {
+        const file = this.files[0];
+        if (file && file.size > 300 * 1024) { // 300 KB
+            alert("File size must be less than 300 KB.");
+            this.value = ""; // clear the file input
+        }
+    });
+
+
+    // Submit form function
+    async function submitForm(formType) {
+        let moduleName, message;
+        const notification = document.getElementById('notification');
+        const notificationIcon = notification.querySelector('.notification-icon');
+        const notificationMsg = notification.querySelector('.notification-message');
+
+        switch (formType) {
+            case 'insert':
+
+
+                // Get all selected values
+                const id = document.getElementById('ID').value;
+                const academicYearId = document.getElementById('AccademicYearId').value;
+                const syllabusId = document.getElementById('SyllabusID').value;
+                const classId = document.getElementById('ClassID').value;
+                const streamId = document.getElementById('StreamID').value;
+                const subjectId = document.getElementById('SubjectID').value;
+                const chapterId = document.getElementById('ChapterID').value;
+                const question = document.getElementById("Question").value;
+                const op1 = document.getElementById("Option1").value;
+                const op2 = document.getElementById("Option2").value;
+                const op3 = document.getElementById("Option3").value;
+                const op4 = document.getElementById("Option4").value;
+                const answer = document.getElementById("Answer").value;
+                const mark = document.getElementById("Mark").value;
+                const month = document.getElementById("Month").value;
+                const week = document.getElementById("Week").value;
+                const questiontype = document.getElementById("QuestionType").value;
+
+                if (!academicYearId || !syllabusId || !classId || !streamId ||
+                    !subjectId || !chapterId || !op1 || !op2 || !op3||!op4||!answer||!mark) {
+                    showNotification('Please fill all fields', 'error');
+                    return;
+                }
+                const formData = new FormData();
+                formData.append("jsonData", JSON.stringify({
+                    AccademicYearId: academicYearId,
+                    SyllabusID: syllabusId,
+                    ClassID: classId,
+                    StreamID: streamId,
+                    SubjectID: subjectId,
+                    ChapterID: chapterId,
+                    Question: question,
+                    Option1: op1,
+                    Option2: op2,
+                    Option3: op3,
+                    Option4: op4,
+                    Answer: answer,
+                    Mark: mark,
+                    Month: month,
+                    Week: week,
+                    QuestionType: questiontype,
+                    ID: id
+                }));
+                formData.append("file", document.getElementById("fileupload").files[0]);
+
+                try {
+                    if (id == 0) {
+                        const response = await fetch("/api/QA/AddQuestion", {
+                            method: "POST",
+                            body: formData
+                        });
+
+                        if (!response.ok) {
+                            message = 'Error for adding Question';
+                            showNotification(message, 'error');
+                            throw new Error('Failed to add module');
+
+                        }
+                        else {
+                            message = `Question added successfully!`;
+                            showNotification(message, 'success');
+                        }
+                        formClear2();
+                    }
+                    else {
+                        const response = await fetch("/api/QA/UpdateQuestion", {
+                            method: "POST",
+                            body: formData
+                        });
+
+                        if (!response.ok) {
+                            message = 'Error for adding Question';
+                            showNotification(message, 'error');
+                            throw new Error('Failed to add module');
+
+                        }
+                        else {
+                            message = `Question updated successfully!`;
+                            showNotification(message, 'success');
+                        }
+                        formClear();
+                    }
+
+
+
+
+                    // Clear form
+
+                } catch (error) {
+                    showNotification('Failed to add module', 'error');
+                    console.error('Error adding module:', error);
+                }
+                break;
+
+
+        }
+    }
+
+    // Show notification function
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        const notificationIcon = notification.querySelector('.notification-icon');
+        const notificationMsg = notification.querySelector('.notification-message');
+
+        // Clear previous classes
+        notification.className = 'floating-notification';
+        notification.classList.add('show', `notification-${type}`);
+
+        // Set icon and message
+        if (type === 'success') {
+            notificationIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            notificationIcon.style.color = '#4cc9f0';
+        } else {
+            notificationIcon.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+            notificationIcon.style.color = '#f72585';
+        }
+
+        notificationMsg.textContent = message;
+
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 5000);
+    }
+
+    // Close notification when clicked
+    document.getElementById('notification').addEventListener('click', function () {
+        this.classList.remove('show');
+    });
+
+    // Add cascading dropdown functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        // Trigger change immediately if there is already a selected Academic Year
+        if ($('#AccademicYearId').val()) {
+            $('#AccademicYearId').trigger('change');
+        }
+       // loadAcademicYears();
+        const questionTypeSelect = document.getElementById("QuestionType");
+        const teacherMcqSection = document.getElementById("teacherMcq");
+
+        // Hide initially
+        teacherMcqSection.style.display = 'none';
+
+        // Show/hide on change
+        questionTypeSelect.addEventListener("change", function () {
+            teacherMcqSection.style.display = (this.value === "2") ? "flex" : "none";
+        });
+    });
+
+    // Load academic years from database
+    async function loadAcademicYears() {
+        try {
+            const response = await fetch('/api/ManagementApi/FetchAccademicYear');
+            const data = await response.json();
+
+            const dropdownIds = ['AccademicYearId'];
+
+            dropdownIds.forEach(id => {
+                const dropdown = document.getElementById(id);
+                dropdown.innerHTML = '<option value="">-- Select Academic Year --</option>';
+
+                data.forEach(year => {
+                    const option = document.createElement('option');
+                    option.value = year.Id;
+                    option.textContent = year.AccademicYear;
+                    dropdown.appendChild(option);
+                });
+            });
+        } catch (error) {
+            showNotification('Failed to load academic years', 'error');
+            console.error('Error loading academic years:', error);
+        }
+    }
+
+    function loadSyllabusOptions(academicYearId, targetSelectId) {
+        if (!academicYearId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchSyllabus/${academicYearId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+
+    // Load class data when syllabus is selected
+    function loadClassOptions(SLBID, targetSelectId) {
+        if (!SLBID) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchGrade/${SLBID}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+
+    // Load Stream data when grade is selected
+    function loadStreamOptions(classId, targetSelectId) {
+        if (!classId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchStream/${classId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    // Load Stream data when grade is selected
+    function loadCourseOptions(streamId, targetSelectId) {
+        if (!streamId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchCourse//${streamId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    //LOAD SUBJECTS
+    function loadSubjectOptions(CourseId, targetSelectId) {
+        if (!CourseId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchSubject/${CourseId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    //LOAD Chapter
+    function loadChapterOptions(SubjectId, targetSelectId) {
+        if (!SubjectId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchChapter/${SubjectId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.ChapterName || syllabus.ChapterName.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    //LOAD Chapter
+    function loadSubChapterOptions(ChapterId, targetSelectId) {
+        if (!ChapterId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchSubChapter/${ChapterId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.SubChapterName || syllabus.SubChapterName.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    //LOAD Chapter
+    function loadModuleOptions(SubChapterId, targetSelectId) {
+        if (!SubChapterId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchModule/${SubChapterId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.ModuleName || syllabus.ModuleName.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    // Close notification when clicked
+    document.getElementById('notification').addEventListener('click', function () {
+        this.classList.remove('show');
+    });
+    function formClear() {
+
+        window.location.href = '@Url.Action("QuestionAnswers", "Admin_DTP")';
+
+    }
+
+    function formClear2() {
+
+        document.getElementById("Question").value='';
+        document.getElementById("Option1").value='';
+       document.getElementById("Option2").value='';
+        document.getElementById("Option3").value='';
+       document.getElementById("Option4").value='';
+       document.getElementById("Answer").value='';
+        document.getElementById("Mark").value = '';
+        document.getElementById("fileupload").value = '';
+
+    }
+    // Event listeners for accademic year dropdowns form
+    document.getElementById('AccademicYearId').addEventListener('change', function () {
+        loadSyllabusOptions(this.value, 'SyllabusID');
+    });
+        // Event listeners for accademic year dropdowns form
+    document.getElementById('SyllabusID').addEventListener('change', function () {
+        loadClassOptions(this.value, 'ClassID');
+    });
+            // Event listeners for grade dropdowns form
+            document.getElementById('ClassID').addEventListener('change', function () {
+                loadStreamOptions(this.value, 'StreamID');
+            });
+            document.getElementById('StreamID').addEventListener('change', function () {
+                loadSubjectOptions(this.value, 'SubjectID');
+            });
+           /* document.getElementById('insert-course').addEventListener('change', function () {
+                loadSubjectOptions(this.value, 'SubjectID');
+            });*/
+            document.getElementById('SubjectID').addEventListener('change', function () {
+                loadChapterOptions(this.value, 'ChapterID');
+            });/*
+            document.getElementById('ChapterID').addEventListener('change', function () {
+                loadSubChapterOptions(this.value, 'insert-subchapter');
+            });
+    document.getElementById('insert-subchapter').addEventListener('change', function () {
+        loadSubChapterOptions(this.value, 'insert-module-select');
+    });
+
+    */
+
+
+</script>

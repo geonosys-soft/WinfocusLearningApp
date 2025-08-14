@@ -166,6 +166,7 @@
     <Compile Include="Authentication\CustomMembershipUser.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\Admin_DTPController.cs" />
     <Compile Include="Controllers\Admin_StudentController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DTPController.cs" />
@@ -298,6 +299,7 @@
     <Compile Include="ViewModels\StudentRegistrationModel.cs" />
     <Compile Include="ViewModels\StudentReglistModel.cs" />
     <Compile Include="ViewModels\TargetYearExamViewModel.cs" />
+    <Compile Include="ViewModels\UserDetailsViewModel.cs" />
     <Compile Include="WebApi\FeeApiController.cs" />
     <Compile Include="WebApi\ManagementApiController.cs" />
     <Compile Include="WebApi\QAController.cs" />
@@ -431,6 +433,10 @@
     <Content Include="Views\DTP\QAReport.cshtml" />
     <Content Include="Views\DTP\SQAReport.cshtml" />
     <Content Include="Views\DTP\Dashboard.cshtml" />
+    <Content Include="Views\Admin_DTP\Index.cshtml" />
+    <Content Include="Views\Admin_DTP\DTP_List.cshtml" />
+    <Content Include="Views\Admin_DTP\QuestionList.cshtml" />
+    <Content Include="Views\Admin_DTP\QuestionAnswers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
