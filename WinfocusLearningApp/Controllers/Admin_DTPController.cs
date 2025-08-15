@@ -291,8 +291,9 @@ namespace WinfocusLearningApp.Controllers
                         StreamID = findQuestion.StreamID,
                         QuestionType = findQuestion.QuestionType,
                         SubjectID = findQuestion.SubjectID,
-                        ChapterID = findQuestion.ChapterID
-
+                        ChapterID = findQuestion.ChapterID,
+                        CreatedBy = findQuestion.CreatedBy
+                        
                     };
                     TempData["QA_Model"] = model;
                 }

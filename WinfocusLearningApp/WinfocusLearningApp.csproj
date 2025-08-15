@@ -167,6 +167,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\Admin_DTPController.cs" />
+    <Compile Include="Controllers\Admin_ExamController.cs" />
     <Compile Include="Controllers\Admin_StudentController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DTPController.cs" />
@@ -437,6 +438,7 @@
     <Content Include="Views\Admin_DTP\DTP_List.cshtml" />
     <Content Include="Views\Admin_DTP\QuestionList.cshtml" />
     <Content Include="Views\Admin_DTP\QuestionAnswers.cshtml" />
+    <Content Include="Views\Admin_Exam\Create_Exam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,744 @@
+﻿
+@{
+    ViewBag.Title = "Create_Exam";
+}
+
+
+
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --primary-hover: #3a56d4;
+        --secondary-color: #3f37c9;
+        --danger-color: #f72585;
+        --danger-hover: #e5177b;
+        --success-color: #4cc9f0;
+        --success-hover: #2fb5e0;
+        --text-color: #2b2d42;
+        --light-bg: #f8f9fa;
+    }
+
+    body {
+        background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text-color);
+        min-height: 100vh;
+    }
+
+    .top-bar {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 20px 0;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .top-bar::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4cc9f0, #f72585, #7209b7);
+        }
+
+        .top-bar h1 {
+            margin: 0;
+            padding: 0 30px;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .action-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+    }
+
+    .action-box {
+        background: white;
+        border-radius: 12px;
+        padding: 40px 30px;
+        width: 280px;
+        text-align: center;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        overflow: hidden;
+        border: none;
+    }
+
+        .action-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .action-box.insert {
+            border-top: 4px solid var(--success-color);
+        }
+
+        .action-box.edit {
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .action-box.delete {
+            border-top: 4px solid var(--danger-color);
+        }
+
+    .action-icon {
+        font-size: 56px;
+        margin-bottom: 20px;
+        transition: transform 0.3s;
+    }
+
+    .action-box:hover .action-icon {
+        transform: scale(1.1);
+    }
+
+    .action-title {
+        font-weight: 600;
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .action-desc {
+        color: #6c757d;
+        font-size: 16px;
+    }
+
+    .form-container {
+        max-width: 100%;
+        margin: 40px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        animation: fadeIn 0.5s ease-out;
+        border-top: 4px solid var(--primary-color);
+    }
+
+    #insert-form {
+        display: block;
+    }
+
+    #edit-form, #delete-form {
+        display: none;
+    }
+
+    .form-container h3 {
+        margin-top: 0;
+        color: var(--primary-color);
+        font-size: 24px;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+        .form-container h3::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+    .btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+    .btn-submit {
+        background-color: var(--success-color);
+    }
+
+        .btn-submit:hover {
+            background-color: var(--success-hover);
+        }
+
+    .btn-delete {
+        background-color: var(--danger-color);
+    }
+
+        .btn-delete:hover {
+            background-color: var(--danger-hover);
+        }
+
+    .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #6c757d;
+        transition: color 0.3s;
+    }
+
+        .close-btn:hover {
+            color: var(--danger-color);
+        }
+
+    .floating-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        display: flex;
+        align-items: center;
+        z-index: 1000;
+        transform: translateX(150%);
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+        .floating-notification.show {
+            transform: translateX(0);
+        }
+
+    .notification-icon {
+        margin-right: 10px;
+        font-size: 24px;
+    }
+
+    .notification-success {
+        border-left: 4px solid var(--success-color);
+    }
+
+    .notification-error {
+        border-left: 4px solid var(--danger-color);
+    }
+
+    .form-row {
+        display: flex;
+        gap: 20px;
+    }
+
+    .form-col {
+        flex: 1;
+    }
+</style>
+
+<div class="top-bar">
+    <h1><i class="fas fa-cubes"></i>Exam Generation</h1>
+</div>
+
+<div class="container">
+    
+
+    <!-- Insert Form (shown by default) -->
+    <div id="insert-form" class="form-container">
+        <h3><i class="fas fa-plus-circle"></i>Create Exam</h3>
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="insert-academic-year">Academic Year:</label>
+                    <select id="insert-academic-year" class="form-control" required>
+                        <option value="">-- Select Academic Year --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="insert-class">Class:</label>
+                    <select id="insert-class" class="form-control" required>
+                        <option value="">-- Select Class --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="insert-subject">Subject:</label>
+                    <select id="insert-subject" class="form-control" required>
+                        <option value="">-- Select Subject --</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="insert-syllabus">Syllabus:</label>
+                    <select id="insert-syllabus" class="form-control" required>
+                        <option value="">-- Select Syllabus --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="insert-stream">Stream:</label>
+                    <select id="insert-stream" class="form-control" required>
+                        <option value="">-- Select Stream --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="insert-chapter">Chapter:</label>
+                    <select id="insert-chapter" class="form-control" required>
+                        <option value="">-- Select Chapter --</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="">Academic Year:</label>
+                    <select id="" class="form-control" required>
+                        <option value="">-- Select Academic Year --</option>
+                    </select>
+                </div>
+                               
+            </div>
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="insert-syllabus">Syllabus:</label>
+                    <select id="insert-syllabus" class="form-control" required>
+                        <option value="">-- Select Syllabus --</option>
+                    </select>
+                </div>
+                
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
+            <i class="fas fa-check"></i> Save
+        </button>
+    </div>
+       
+</div>
+
+<!-- Notification -->
+<div id="notification" class="floating-notification">
+    <div class="notification-icon"></div>
+    <div class="notification-message"></div>
+</div>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script>
+    // Show form function
+    function showForm(formType) {
+        // Hide all forms first
+        document.querySelectorAll('.form-container').forEach(form => {
+            form.style.display = 'none';
+        });
+
+        // Show the selected form
+        const form = document.getElementById(formType + '-form');
+        form.style.display = 'block';
+        // Load data if needed
+        if (formType === 'edit' || formType === 'delete') {
+            formClear();
+        }
+
+        // Scroll to form
+        form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Hide form function
+    function hideForm(formType) {
+        document.getElementById(formType + '-form').style.display = 'none';
+        document.getElementById('insert-form').style.display = 'block';
+    }
+
+    
+
+
+
+    // Submit form function
+    async function submitForm(formType) {
+        let moduleName, message;
+        const notification = document.getElementById('notification');
+        const notificationIcon = notification.querySelector('.notification-icon');
+        const notificationMsg = notification.querySelector('.notification-message');
+
+        switch (formType) {
+            case 'insert':
+                // Get all selected values
+                const academicYearId = document.getElementById('insert-academic-year').value;
+                const syllabusId = document.getElementById('insert-syllabus').value;
+                const classId = document.getElementById('insert-class').value;
+                const streamId = document.getElementById('insert-stream').value;
+               // const courseId = document.getElementById('insert-course').value;
+                const subjectId = document.getElementById('insert-subject').value;
+                const chapterId = document.getElementById('insert-chapter').value;
+                
+               
+                if (!academicYearId || !syllabusId || !classId || !streamId ||
+                    !subjectId || !chapterId ) {
+                    showNotification('Please fill all fields', 'error');
+                    return;
+                }
+
+                try {
+                    const response = await fetch("/api/ManagementApi/AddModule", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            ACID: academicYearId,
+                            SyllabusID: syllabusId,
+                            ClassID: classId,
+                            StreamID: streamId,
+
+                            SubjectID: subjectId,
+                            ChapterID: chapterId
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to add module');
+                    }
+
+                    message = `Module "${moduleName}" added successfully!`;
+                    showNotification(message, 'success');
+
+                    // Clear form
+                  
+                } catch (error) {
+                    showNotification('Failed to add module', 'error');
+                    console.error('Error adding module:', error);
+                }
+                break;
+
+            
+        }
+    }
+
+    // Show notification function
+    function showNotification(message, type) {
+        const notification = document.getElementById('notification');
+        const notificationIcon = notification.querySelector('.notification-icon');
+        const notificationMsg = notification.querySelector('.notification-message');
+
+        // Clear previous classes
+        notification.className = 'floating-notification';
+        notification.classList.add('show', `notification-${type}`);
+
+        // Set icon and message
+        if (type === 'success') {
+            notificationIcon.innerHTML = '<i class="fas fa-check-circle"></i>';
+            notificationIcon.style.color = '#4cc9f0';
+        } else {
+            notificationIcon.innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+            notificationIcon.style.color = '#f72585';
+        }
+
+        notificationMsg.textContent = message;
+
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+            notification.classList.remove('show');
+        }, 5000);
+    }
+
+    // Close notification when clicked
+    document.getElementById('notification').addEventListener('click', function() {
+        this.classList.remove('show');
+    });
+
+    // Add cascading dropdown functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        loadAcademicYears();
+    });
+
+    // Load academic years from database
+    async function loadAcademicYears() {
+        try {
+            const response = await fetch('/api/ManagementApi/FetchAccademicYear');
+            const data = await response.json();
+
+            const dropdownIds = ['insert-academic-year'];
+
+            dropdownIds.forEach(id => {
+                const dropdown = document.getElementById(id);
+                dropdown.innerHTML = '<option value="">-- Select Academic Year --</option>';
+
+                data.forEach(year => {
+                    const option = document.createElement('option');
+                    option.value = year.Id;
+                    option.textContent = year.AccademicYear;
+                    dropdown.appendChild(option);
+                });
+            });
+        } catch (error) {
+            showNotification('Failed to load academic years', 'error');
+            console.error('Error loading academic years:', error);
+        }
+    }
+
+    function loadSyllabusOptions(academicYearId, targetSelectId) {
+        if (!academicYearId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchSyllabus/${academicYearId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+
+    // Load class data when syllabus is selected
+    function loadClassOptions(SLBID, targetSelectId) {
+        if (!SLBID) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchGrade/${SLBID}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Class --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+
+    // Load Stream data when grade is selected
+    function loadStreamOptions(classId, targetSelectId) {
+        if (!classId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchStream/${classId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Stream --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    // Load Stream data when grade is selected
+    function loadCourseOptions(streamId, targetSelectId) {
+        if (!streamId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchCourse//${streamId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Course --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    //LOAD SUBJECTS
+    function loadSubjectOptions(CourseId, targetSelectId) {
+        if (!CourseId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchSubject/${CourseId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Subject --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    //LOAD Chapter
+    function loadChapterOptions(SubjectId, targetSelectId) {
+        if (!SubjectId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchChapter/${SubjectId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Chapter --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.ChapterName || syllabus.ChapterName.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    //LOAD Chapter
+    function loadSubChapterOptions(ChapterId, targetSelectId) {
+        if (!ChapterId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchSubChapter/${ChapterId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Sub Chapter --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.SubChapterName || syllabus.SubChapterName.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    //LOAD Chapter
+    function loadModuleOptions(SubChapterId, targetSelectId) {
+        if (!SubChapterId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchModule/${SubChapterId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Module --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.ModuleName || syllabus.ModuleName.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+    // Close notification when clicked
+    document.getElementById('notification').addEventListener('click', function () {
+        this.classList.remove('show');
+    });
+
+    // Load dropdown data when page loads
+    document.addEventListener('DOMContentLoaded', function () {
+        loadAcademicYears();
+    });
+    function formClear() {
+        document.getElementById('insert-academic-year').value = '';
+       
+        document.getElementById('insert-syllabus').innerHTML = '<option value="">-- Select Syllabus --</option>';
+        document.getElementById('insert-class').innerHTML = '<option value="">-- Select class --</option>';
+        document.getElementById('insert-stream').innerHTML = '<option value="">-- Select Stream --</option>';
+        document.getElementById('insert-subject').innerHTML = '<option value="">-- Select Subject --</option>';
+        document.getElementById('insert-chapter').innerHTML = '<option value="">-- Select Chapter --</option>';
+
+    }
+    // Event listeners for accademic year dropdowns form
+    document.getElementById('insert-academic-year').addEventListener('change', function () {
+        loadSyllabusOptions(this.value, 'insert-syllabus');
+    });
+
+    // Event listeners for accademic year dropdowns form
+    document.getElementById('insert-syllabus').addEventListener('change', function () {
+        loadClassOptions(this.value, 'insert-class');
+    });
+
+    // Event listeners for grade dropdowns form
+    document.getElementById('insert-class').addEventListener('change', function () {
+        loadStreamOptions(this.value, 'insert-stream');
+    });
+
+    document.getElementById('insert-stream').addEventListener('change', function () {
+        loadSubjectOptions(this.value, 'insert-subject');
+    });
+
+    document.getElementById('insert-subject').addEventListener('change', function () {
+        loadChapterOptions(this.value, 'insert-chapter');
+    });
+    document.getElementById('insert-chapter').addEventListener('change', function () {
+        
+    });
+</script>

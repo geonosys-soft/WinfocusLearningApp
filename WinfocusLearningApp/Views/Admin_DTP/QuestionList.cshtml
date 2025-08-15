@@ -223,7 +223,7 @@
             z-index: 1000;
             animation: fadeIn 0.3s ease;
         }
-
+        
         .modal-content {
             background: white;
             padding: 30px;
@@ -324,7 +324,7 @@
                         @Html.DropDownList("StreamID", null, "--- Stream ---", new { @class = "filter-select", @required = true })
                         @Html.DropDownList("SubjectID", null, "--- Subject ---", new { @class = "filter-select", @required = true })
                         @Html.DropDownList("ChapterID", null, "--- Chapter ---", new { @class = "filter-select", @required = true })
-                        
+
                     </div>
                     <div class="filter-section">
 
@@ -398,28 +398,56 @@
             </div>
         </div>
     </div>
-    <!--Delete Model-->
-    <div id="deleteModal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Delete Question</h3>
-            </div>
-            <div class="modal-body">
-                <p>Do you Want to delete <span id="deleteContent"></span></p>
-            </div>
-            <div class="modal-footer">
-                
-                @using (Html.BeginForm("DeleteQuestion", "Admin_DTP", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    <input type="hidden" name="deleteId" id="deleteId" />
-                    <button type="button" class="btn btn-success" onclick="closeModal()">Cancel</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                }
+
+
+    <div class="modal" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Question</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you Want to delete <span id="deleteContent"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    @using (Html.BeginForm("DeleteQuestion", "Admin_DTP", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="deleteId" id="deleteId" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        
+                    }
+                    
+                </div>
             </div>
         </div>
     </div>
-   
+
+
+    <!--Delete Model
+     <div id="deleteModal" class="modal-overlay">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h3>Delete Question</h3>
+             </div>
+             <div class="modal-body">
+                 <p>Do you Want to delete <span id="deleteContent"></span></p>
+             </div>
+             <div class="modal-footer">
+
+                 @using (Html.BeginForm("DeleteQuestion", "Admin_DTP", FormMethod.Post))
+                 {
+                     @Html.AntiForgeryToken()
+                     <input type="hidden" name="deleteId" id="deleteId" />
+                     <button type="button" class="btn btn-success" onclick="closeModal()">Cancel</button>
+                     <button type="submit" class="btn btn-danger">Delete</button>
+                 }
+             </div>
+         </div>
+     </div>
+    -->
     <script>
         function closeModal() {
             document.getElementById('deleteModal').style.display = 'none';
@@ -433,13 +461,14 @@
         }
         function openModal(id, content, content2) {
             var myModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-            document.getElementById("deleteContent").innerText = content + ' . ' + content2;
-            document.getElementById("deleteId").value = id;
+             document.getElementById("deleteContent").innerText = content + ' . ' + content2;
+             document.getElementById("deleteId").value = id;
             myModal.show();
         }
 
         document.addEventListener('DOMContentLoaded', function () {
             const viewModal = document.getElementById('viewModal');
+            const deleteModal = document.getElementById('deleteModal');
             const modalQuestion = document.getElementById('modalQuestion');
             const modalOptions = document.getElementById('modalOptions');
             const modalOkBtn = document.getElementById('modalOkBtn');
@@ -464,6 +493,7 @@
             // Function to hide the modal
             function hideModal() {
                 viewModal.style.display = 'none';
+
             }
 
             // Add event listeners to all view buttons
