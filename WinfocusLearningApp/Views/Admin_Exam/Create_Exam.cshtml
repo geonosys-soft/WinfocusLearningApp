@@ -341,23 +341,100 @@
         <div class="form-row">
             <div class="form-col">
                 <div class="form-group">
-                    <label for="">Academic Year:</label>
+                    <label for="">Select Group</label>
                     <select id="" class="form-control" required>
-                        <option value="">-- Select Academic Year --</option>
+                        <option value="">-- Select Group --</option>
                     </select>
                 </div>
-                               
+                <div class="form-group">
+                    <label for="">Exam Name</label>
+                    <input type="text" name="" class="form-control" value="" />
+                </div>
+                <div class="form-group">
+                    <label for="">Exam End Date & time</label>
+                    <input type="date" name="" class="form-control" value="" />
+                </div>
+                <div class="form-group">
+                    <label for="">Select Question Type:</label>
+                    <select id="" class="form-control" required>
+                        <option value="">-- Select Question Type --</option>
+                    </select>
+                </div>
+
             </div>
             <div class="form-col">
                 <div class="form-group">
-                    <label for="insert-syllabus">Syllabus:</label>
-                    <select id="insert-syllabus" class="form-control" required>
+                    <label for="">Exam Type</label>
+                    <select id="" class="form-control" required>
                         <option value="">-- Select Syllabus --</option>
                     </select>
                 </div>
-                
+                <div class="form-group">
+                    <label for="">Exam Start Date & time</label>
+                    <input type="date" name="" class="form-control" value="" />
+                </div>
+                <div class="form-group">
+                    <label for="">Total Marks</label>
+                    <input type="number" name="" class="form-control" value="" />
+                </div>
+
+                <div class="form-group">
+                    <label class="d-block">Question Selection Method</label>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="QuestionSelection" id="manual" value="Manual">
+                        <label class="form-check-label" for="manual">Manual Selection</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="QuestionSelection" id="auto" value="Automatic">
+                        <label class="form-check-label" for="auto">Automatic Selection</label>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="form-row">
+            <div class="form-col">
+                <label class="d-block">Question Selection</label>
+            </div>
+            <div class="form-col">
+                <label class="d-block">Question Mark</label>
+            </div>
+        </div>
+        <div class="form-row">
+            <!-- Question + Options -->
+            <div class="form-col">
+                <div class="form-group ">
+                    <div class="form-check-inline">
+                        <input class="form-check-input" type="radio" name="option" id="optionC" value="C">
+                        <label class="d-block">Question: an image here</label>
+                    </div>
+                    
+
+                    <!-- Options -->
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="optionA">Option A</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="optionB">Option B</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="optionC">Option C</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label" for="optionD">Option D</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Marks -->
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="marks">100</label>
+                </div>
+            </div>
+        </div>
+
 
         <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
             <i class="fas fa-check"></i> Save

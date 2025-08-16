@@ -25,6 +25,23 @@
           <Property Name="ModifiedBy" Type="int" Nullable="false" />
           <Property Name="ModifiedTime" Type="date" Nullable="false" />
         </EntityType>
+        <EntityType Name="TblAttendExam">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExamId" Type="int" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="IsAttented" Type="int" Nullable="false" />
+          <Property Name="OptMark" Type="varchar" MaxLength="10" />
+          <Property Name="IsDeletedEr" Type="int" Nullable="false" />
+          <Property Name="CreatedDateAe" Type="datetime" Nullable="false" />
+          <Property Name="TQ" Type="int" Nullable="false" />
+          <Property Name="TA" Type="int" Nullable="false" />
+          <Property Name="CA" Type="int" Nullable="false" />
+          <Property Name="IA" Type="int" Nullable="false" />
+          <Property Name="ES" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="TblChapter">
           <Key>
             <PropertyRef Name="Id" />
@@ -107,6 +124,57 @@
           <Property Name="AddressProof" Type="image" />
           <Property Name="WhatsApp" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="TblExam">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar(max)" Nullable="false" />
+          <Property Name="FromDate" Type="datetime" Nullable="false" />
+          <Property Name="ToDate" Type="datetime" Nullable="false" />
+          <Property Name="ExamTime" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalMark" Type="int" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="AcademicYearID" Type="int" Nullable="false" />
+          <Property Name="SyllabusID" Type="int" Nullable="false" />
+          <Property Name="ClassID" Type="int" Nullable="false" />
+          <Property Name="StreamID" Type="int" Nullable="false" />
+          <Property Name="SubjectId" Type="int" Nullable="false" />
+          <Property Name="ChapterId" Type="int" />
+          <Property Name="QsAsFrom" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="int" Nullable="false" />
+          <Property Name="DeletedBy" Type="int" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" Nullable="false" />
+          <Property Name="ModifiedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="DeletedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="ExamType" Type="int" />
+        </EntityType>
+        <EntityType Name="TblExam_QnTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExamId" Type="int" Nullable="false" />
+          <Property Name="QnId" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblExamResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExamId" Type="int" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="QuestionId" Type="int" Nullable="false" />
+          <Property Name="SelectedAnswer" Type="int" Nullable="false" />
+          <Property Name="CorrectAnswer" Type="int" Nullable="false" />
+          <Property Name="NotVisited" Type="int" Nullable="false" />
+          <Property Name="MarkForReview" Type="int" Nullable="false" />
+          <Property Name="AnsMarkForReview" Type="int" Nullable="false" />
+          <Property Name="QsNo" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="TblFeeDetails">
           <Key>
             <PropertyRef Name="Id" />
@@ -149,6 +217,41 @@
           <Property Name="ModifiedBy" Type="int" Nullable="false" />
           <Property Name="ModifiedTime" Type="datetime" />
           <Property Name="Description" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="TblGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="AcademicYearID" Type="int" Nullable="false" />
+          <Property Name="SyllabusID" Type="int" Nullable="false" />
+          <Property Name="ClassID" Type="int" Nullable="false" />
+          <Property Name="StreamID" Type="int" Nullable="false" />
+          <Property Name="SubjectID" Type="int" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" Nullable="false" />
+          <Property Name="ModifiedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="DeletedBy" Type="int" Nullable="false" />
+          <Property Name="DeletedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblGroup_StudentTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblGroup_Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeacherId" Type="int" Nullable="false" />
+          <Property Name="GroupId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="TblMaterial">
           <Key>
@@ -529,6 +632,35 @@
           <Property Name="TaxPercentage" Type="float" />
           <Property Name="Tax" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="TblTeachers_Registration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeachRegId" Type="varchar" MaxLength="50" />
+          <Property Name="FirstName" Type="varchar(max)" />
+          <Property Name="LastName" Type="varchar(max)" />
+          <Property Name="WhatsApp" Type="varchar" MaxLength="50" />
+          <Property Name="PrimarySubject" Type="varchar(max)" />
+          <Property Name="SecondarySubject" Type="varchar(max)" />
+          <Property Name="Location" Type="varchar(max)" />
+          <Property Name="Street" Type="varchar(max)" />
+          <Property Name="Address" Type="varchar(max)" />
+          <Property Name="PO" Type="varchar(max)" />
+          <Property Name="District" Type="varchar(max)" />
+          <Property Name="State" Type="varchar(max)" />
+          <Property Name="IsActive" Type="int" />
+          <Property Name="IsDeleted" Type="int" />
+          <Property Name="DeletedDateTime" Type="datetime" />
+          <Property Name="MiddleName" Type="varchar(max)" />
+          <Property Name="StudentGrade" Type="varchar" MaxLength="100" />
+          <Property Name="Weekdays" Type="varchar" MaxLength="50" />
+          <Property Name="Weekends" Type="varchar" MaxLength="50" />
+          <Property Name="Time" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Country" Type="varchar" MaxLength="50" />
+          <Property Name="MobileNumber" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="UserRoles">
           <Key>
             <PropertyRef Name="UserId" />
@@ -596,12 +728,19 @@
         <EntityContainer Name="Winfocus_DbModelStoreContainer">
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblAccademicYear" EntityType="Self.TblAccademicYear" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblAttendExam" EntityType="Self.TblAttendExam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblChapter" EntityType="Self.TblChapter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblCourse" EntityType="Self.TblCourse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblDicountCoupen" EntityType="Self.TblDicountCoupen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblDTPRegistration" EntityType="Self.TblDTPRegistration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblExam" EntityType="Self.TblExam" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblExam_QnTable" EntityType="Self.TblExam_QnTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblExamResult" EntityType="Self.TblExamResult" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblFeeDetails" EntityType="Self.TblFeeDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblGrade" EntityType="Self.TblGrade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblGroup" EntityType="Self.TblGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblGroup_StudentTable" EntityType="Self.TblGroup_StudentTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblGroup_Teacher" EntityType="Self.TblGroup_Teacher" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblMaterial" EntityType="Self.TblMaterial" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblModule" EntityType="Self.TblModule" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblNoteType" EntityType="Self.TblNoteType" Schema="dbo" store:Type="Tables" />
@@ -623,6 +762,7 @@
           <EntitySet Name="TblTargetExam" EntityType="Self.TblTargetExam" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblTargetYear" EntityType="Self.TblTargetYear" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TblTax" EntityType="Self.TblTax" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TblTeachers_Registration" EntityType="Self.TblTeachers_Registration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_dbo_UserRoles_dbo_Roles_RoleId" Association="Self.FK_dbo_UserRoles_dbo_Roles_RoleId">
@@ -677,6 +817,14 @@
           <EntitySet Name="TblSTudentBasicDetails" EntityType="Winfocus_DbModel.TblSTudentBasicDetail" />
           <EntitySet Name="TblDTPRegistrations" EntityType="Winfocus_DbModel.TblDTPRegistration" />
           <EntitySet Name="TblQuestionAnswers" EntityType="Winfocus_DbModel.TblQuestionAnswer" />
+          <EntitySet Name="TblAttendExams" EntityType="Winfocus_DbModel.TblAttendExam" />
+          <EntitySet Name="TblExams" EntityType="Winfocus_DbModel.TblExam" />
+          <EntitySet Name="TblExam_QnTable" EntityType="Winfocus_DbModel.TblExam_QnTable" />
+          <EntitySet Name="TblExamResults" EntityType="Winfocus_DbModel.TblExamResult" />
+          <EntitySet Name="TblGroups" EntityType="Winfocus_DbModel.TblGroup" />
+          <EntitySet Name="TblGroup_StudentTable" EntityType="Winfocus_DbModel.TblGroup_StudentTable" />
+          <EntitySet Name="TblGroup_Teacher" EntityType="Winfocus_DbModel.TblGroup_Teacher" />
+          <EntitySet Name="TblTeachers_Registration" EntityType="Winfocus_DbModel.TblTeachers_Registration" />
         </EntityContainer>
         <EntityType Name="TblAccademicYear">
           <Key>
@@ -1231,6 +1379,138 @@
           <Property Name="DeletedBy" Type="Int32" />
           <Property Name="CreatedDt" Type="DateTime" Precision="0" />
           <Property Name="DeletedDt" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="TblAttendExam">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExamId" Type="Int32" Nullable="false" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="IsAttented" Type="Int32" Nullable="false" />
+          <Property Name="OptMark" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeletedEr" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDateAe" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TQ" Type="Int32" Nullable="false" />
+          <Property Name="TA" Type="Int32" Nullable="false" />
+          <Property Name="CA" Type="Int32" Nullable="false" />
+          <Property Name="IA" Type="Int32" Nullable="false" />
+          <Property Name="ES" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblExam">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FromDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ToDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExamTime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TotalMark" Type="Int32" Nullable="false" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="AcademicYearID" Type="Int32" Nullable="false" />
+          <Property Name="SyllabusID" Type="Int32" Nullable="false" />
+          <Property Name="ClassID" Type="Int32" Nullable="false" />
+          <Property Name="StreamID" Type="Int32" Nullable="false" />
+          <Property Name="SubjectId" Type="Int32" Nullable="false" />
+          <Property Name="ChapterId" Type="Int32" />
+          <Property Name="QsAsFrom" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
+          <Property Name="DeletedBy" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExamType" Type="Int32" />
+        </EntityType>
+        <EntityType Name="TblExam_QnTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExamId" Type="Int32" Nullable="false" />
+          <Property Name="QnId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TblExamResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExamId" Type="Int32" Nullable="false" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="QuestionId" Type="Int32" Nullable="false" />
+          <Property Name="SelectedAnswer" Type="Int32" Nullable="false" />
+          <Property Name="CorrectAnswer" Type="Int32" Nullable="false" />
+          <Property Name="NotVisited" Type="Int32" Nullable="false" />
+          <Property Name="MarkForReview" Type="Int32" Nullable="false" />
+          <Property Name="AnsMarkForReview" Type="Int32" Nullable="false" />
+          <Property Name="QsNo" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AcademicYearID" Type="Int32" Nullable="false" />
+          <Property Name="SyllabusID" Type="Int32" Nullable="false" />
+          <Property Name="ClassID" Type="Int32" Nullable="false" />
+          <Property Name="StreamID" Type="Int32" Nullable="false" />
+          <Property Name="SubjectID" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" Nullable="false" />
+          <Property Name="DeletedDateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblGroup_StudentTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblGroup_Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeacherId" Type="Int32" Nullable="false" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TblTeachers_Registration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeachRegId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="WhatsApp" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PrimarySubject" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SecondarySubject" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Location" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Street" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="District" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Int32" />
+          <Property Name="IsDeleted" Type="Int32" />
+          <Property Name="DeletedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="MiddleName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StudentGrade" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Weekdays" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Weekends" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Time" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1822,6 +2102,146 @@
                 <ScalarProperty Name="QImage" ColumnName="QImage" />
                 <ScalarProperty Name="Question" ColumnName="Question" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblAttendExams">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblAttendExam">
+              <MappingFragment StoreEntitySet="TblAttendExam">
+                <ScalarProperty Name="ES" ColumnName="ES" />
+                <ScalarProperty Name="IA" ColumnName="IA" />
+                <ScalarProperty Name="CA" ColumnName="CA" />
+                <ScalarProperty Name="TA" ColumnName="TA" />
+                <ScalarProperty Name="TQ" ColumnName="TQ" />
+                <ScalarProperty Name="CreatedDateAe" ColumnName="CreatedDateAe" />
+                <ScalarProperty Name="IsDeletedEr" ColumnName="IsDeletedEr" />
+                <ScalarProperty Name="OptMark" ColumnName="OptMark" />
+                <ScalarProperty Name="IsAttented" ColumnName="IsAttented" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblExams">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblExam">
+              <MappingFragment StoreEntitySet="TblExam">
+                <ScalarProperty Name="ExamType" ColumnName="ExamType" />
+                <ScalarProperty Name="DeletedDateTime" ColumnName="DeletedDateTime" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="QsAsFrom" ColumnName="QsAsFrom" />
+                <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
+                <ScalarProperty Name="SubjectId" ColumnName="SubjectId" />
+                <ScalarProperty Name="StreamID" ColumnName="StreamID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="SyllabusID" ColumnName="SyllabusID" />
+                <ScalarProperty Name="AcademicYearID" ColumnName="AcademicYearID" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="TotalMark" ColumnName="TotalMark" />
+                <ScalarProperty Name="ExamTime" ColumnName="ExamTime" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblExam_QnTable">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblExam_QnTable">
+              <MappingFragment StoreEntitySet="TblExam_QnTable">
+                <ScalarProperty Name="QnId" ColumnName="QnId" />
+                <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblExamResults">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblExamResult">
+              <MappingFragment StoreEntitySet="TblExamResult">
+                <ScalarProperty Name="QsNo" ColumnName="QsNo" />
+                <ScalarProperty Name="AnsMarkForReview" ColumnName="AnsMarkForReview" />
+                <ScalarProperty Name="MarkForReview" ColumnName="MarkForReview" />
+                <ScalarProperty Name="NotVisited" ColumnName="NotVisited" />
+                <ScalarProperty Name="CorrectAnswer" ColumnName="CorrectAnswer" />
+                <ScalarProperty Name="SelectedAnswer" ColumnName="SelectedAnswer" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="ExamId" ColumnName="ExamId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblGroups">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblGroup">
+              <MappingFragment StoreEntitySet="TblGroup">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="DeletedDateTime" ColumnName="DeletedDateTime" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="StreamID" ColumnName="StreamID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="SyllabusID" ColumnName="SyllabusID" />
+                <ScalarProperty Name="AcademicYearID" ColumnName="AcademicYearID" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblGroup_StudentTable">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblGroup_StudentTable">
+              <MappingFragment StoreEntitySet="TblGroup_StudentTable">
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblGroup_Teacher">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblGroup_Teacher">
+              <MappingFragment StoreEntitySet="TblGroup_Teacher">
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblTeachers_Registration">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblTeachers_Registration">
+              <MappingFragment StoreEntitySet="TblTeachers_Registration">
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Weekends" ColumnName="Weekends" />
+                <ScalarProperty Name="Weekdays" ColumnName="Weekdays" />
+                <ScalarProperty Name="StudentGrade" ColumnName="StudentGrade" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="DeletedDateTime" ColumnName="DeletedDateTime" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="PO" ColumnName="PO" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="SecondarySubject" ColumnName="SecondarySubject" />
+                <ScalarProperty Name="PrimarySubject" ColumnName="PrimarySubject" />
+                <ScalarProperty Name="WhatsApp" ColumnName="WhatsApp" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="TeachRegId" ColumnName="TeachRegId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
