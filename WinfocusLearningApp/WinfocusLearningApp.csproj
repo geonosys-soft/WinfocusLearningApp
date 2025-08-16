@@ -418,11 +418,9 @@
     <Content Include="Views\DTP\Index.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Exam\Index.cshtml" />
-
     <Content Include="Views\Management\DTPRegistration.cshtml" />
     <Content Include="Views\Management\DTPRegistrationList.cshtml" />
     <Content Include="Views\DTP\QuestionAnswers.cshtml" />
-
     <Content Include="Views\Shared\_LayoutExam.cshtml" />
     <Content Include="Views\Exam\Onlineexam.cshtml" />
     <Content Include="Views\Exam\Examinstruction.cshtml" />
@@ -431,8 +429,8 @@
     <Content Include="Views\DTP\SQuestionList.cshtml" />
     <Content Include="Views\DTP\QAReport.cshtml" />
     <Content Include="Views\DTP\SQAReport.cshtml" />
-
     <Content Include="Views\DTP\Dashboard.cshtml" />
+    <Content Include="Views\Management\StudentTeacherGroup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
