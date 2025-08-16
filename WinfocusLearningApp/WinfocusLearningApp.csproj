@@ -460,11 +460,15 @@
     <Content Include="Views\DTP\QAReport.cshtml" />
     <Content Include="Views\DTP\SQAReport.cshtml" />
     <Content Include="Views\DTP\Dashboard.cshtml" />
+
+    <Content Include="Views\Management\StudentTeacherGroup.cshtml" />
+
     <Content Include="Views\Admin_DTP\Index.cshtml" />
     <Content Include="Views\Admin_DTP\DTP_List.cshtml" />
     <Content Include="Views\Admin_DTP\QuestionList.cshtml" />
     <Content Include="Views\Admin_DTP\QuestionAnswers.cshtml" />
     <Content Include="Views\Admin_Exam\Create_Exam.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,609 @@
+﻿
+@{
+    ViewBag.Title = "StudentTeacherGroup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+    :root {
+        --primary-color: #4361ee;
+        --primary-hover: #3a56d4;
+        --secondary-color: #3f37c9;
+        --danger-color: #f72585;
+        --danger-hover: #e5177b;
+        --success-color: #4cc9f0;
+        --success-hover: #2fb5e0;
+        --text-color: #2b2d42;
+        --light-bg: #f8f9fa;
+        --grey-bg: #e9ecef;
+        --grey-border: #ced4da;
+    }
+
+    body {
+        background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--text-color);
+        min-height: 100vh;
+    }
+
+    .top-bar {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 20px 0;
+        margin-bottom: 40px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .top-bar::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #4cc9f0, #f72585, #7209b7);
+    }
+
+    .top-bar h1 {
+        margin: 0;
+        padding: 0 30px;
+        font-weight: 600;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .action-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+    }
+
+    .action-box {
+        background: white;
+        border-radius: 12px;
+        padding: 40px 30px;
+        width: 320px;
+        text-align: center;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        position: relative;
+        overflow: hidden;
+        border: none;
+    }
+
+    .action-box:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    }
+
+    .action-box.insert {
+        border-top: 4px solid var(--success-color);
+    }
+
+    .action-box.edit {
+        border-top: 4px solid var(--primary-color);
+    }
+
+    .action-icon {
+        font-size: 56px;
+        margin-bottom: 20px;
+        transition: transform 0.3s;
+    }
+
+    .action-box:hover .action-icon {
+        transform: scale(1.1);
+    }
+
+    .action-title {
+        font-weight: 600;
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .action-desc {
+        color: #6c757d;
+        font-size: 16px;
+    }
+
+    .form-container {
+        max-width: 900px;
+        margin: 40px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        animation: fadeIn 0.5s ease-out;
+        border-top: 4px solid var(--primary-color);
+        display: none; /* Hidden by default */
+    }
+
+    #insert-form {
+        display: block; /* Show insert form by default */
+    }
+
+
+    @@keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-container h3 {
+        margin-top: 0;
+        color: var(--primary-color);
+        font-size: 24px;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    .form-container h3::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--primary-color);
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .full-width {
+        grid-column: 1 / -1;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border-color 0.3s;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    }
+
+    .btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn:hover {
+        background-color: var(--primary-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .btn i {
+        margin-right: 8px;
+    }
+
+    .btn-submit {
+        background-color: var(--success-color);
+    }
+
+    .btn-submit:hover {
+        background-color: var(--success-hover);
+    }
+
+    .btn-danger {
+        background-color: var(--danger-color);
+    }
+    .btn-danger:hover {
+        background-color: var(--danger-hover);
+    }
+
+    /* Styles for multi-select students */
+    .selected-items-container {
+        margin-top: 15px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        min-height: 50px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .student-badge {
+        background-color: var(--grey-bg);
+        border: 1px solid var(--grey-border);
+        border-radius: 15px;
+        padding: 5px 12px;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        animation: popIn 0.2s ease-out;
+    }
+
+    @@keyframes popIn {
+        from { transform: scale(0.8); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    .remove-student-btn {
+        margin-left: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        color: var(--danger-color);
+        font-size: 18px;
+        line-height: 1;
+        transition: transform 0.2s;
+    }
+    .remove-student-btn:hover {
+        transform: scale(1.2);
+    }
+
+    /* Table Styles */
+    .results-table-container {
+        margin-top: 30px;
+        overflow-x: auto;
+        display: none; /* Hidden until search */
+    }
+
+    .results-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+    }
+
+    .results-table th, .results-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .results-table thead {
+        background-color: var(--light-bg);
+    }
+
+    .results-table th {
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .results-table tbody tr:hover {
+        background-color: #f1f3f5;
+    }
+
+    .student-list-cell ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .student-list-cell li {
+        padding: 2px 0;
+    }
+
+</style>
+
+<div class="top-bar">
+    <h1><i class="fas fa-users"></i> Teacher-Student Group Management</h1>
+</div>
+
+<div class="container">
+    <div class="action-container">
+        <div class="action-box insert" onclick="showForm('insert')">
+            <div class="action-icon">👥</div>
+            <div class="action-title">Add New Group</div>
+            <div class="action-desc">Create a new student group</div>
+        </div>
+
+        <div class="action-box edit" onclick="showForm('edit')">
+            <div class="action-icon">✏️</div>
+            <div class="action-title">Edit & View Groups</div>
+            <div class="action-desc">Modify or delete existing groups</div>
+        </div>
+    </div>
+
+    <!-- Insert Form -->
+    <div id="insert-form" class="form-container">
+        <h3><i class="fas fa-plus-circle"></i> Add New Group</h3>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="add-academic-year">Academic Year:</label>
+                <select id="add-academic-year" class="form-control">
+                    <option value="">-- Select Year --</option>
+                    <option value="2024-2025">2024-2025</option>
+                    <option value="2025-2026">2025-2026</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="add-syllabus">Syllabus:</label>
+                <select id="add-syllabus" class="form-control">
+                    <option value="">-- Select Syllabus --</option>
+                    <option value="CBSE">CBSE</option>
+                    <option value="State">State</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="add-class">Class:</label>
+                <select id="add-class" class="form-control">
+                    <option value="">-- Select Class --</option>
+                    <option value="10">10th</option>
+                    <option value="12">12th</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="add-stream">Stream:</label>
+                <select id="add-stream" class="form-control">
+                    <option value="">-- Select Stream --</option>
+                    <option value="Science">Science</option>
+                    <option value="Commerce">Commerce</option>
+                </select>
+            </div>
+            <div class="form-group full-width">
+                <label for="add-teacher">Teacher:</label>
+                <select id="add-teacher" class="form-control">
+                    <option value="">-- Select Teacher --</option>
+                    <option value="1">Mr. Smith</option>
+                    <option value="2">Mrs. Jones</option>
+                </select>
+            </div>
+            <div class="form-group full-width">
+                <label for="add-group-name">Group Name:</label>
+                <input type="text" id="add-group-name" class="form-control" placeholder="e.g. Morning Batch A">
+            </div>
+            <div class="form-group full-width">
+                <label for="student-select">Student:</label>
+                <select id="student-select" class="form-control">
+                    <option value="">-- Choose students to add --</option>
+                    <option value="101">Alice Johnson</option>
+                    <option value="102">Bob Williams</option>
+                    <option value="103">Charlie Brown</option>
+                    <option value="104">Diana Miller</option>
+                    <option value="105">Ethan Davis</option>
+                </select>
+                <div id="selected-students-container" class="selected-items-container">
+                    <!-- Selected student badges will be dynamically inserted here -->
+                </div>
+                <input type="hidden" id="selected-student-ids" name="selectedStudentIds">
+            </div>
+        </div>
+        <button type="button" class="btn btn-submit" onclick="submitAddForm()">
+            <i class="fas fa-save"></i> Save Group
+        </button>
+    </div>
+
+    <!-- Edit Form -->
+    <div id="edit-form" class="form-container">
+        <h3><i class="fas fa-search"></i> Find & Edit Group</h3>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="edit-academic-year">Academic Year:</label>
+                <select id="edit-academic-year" class="form-control">
+                    <option value="">-- Select Year --</option>
+                    <option value="2024-2025">2024-2025</option>
+                    <option value="2025-2026">2025-2026</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="edit-group-name">Group Name:</label>
+                <select id="edit-group-name" class="form-control">
+                    <option value="">-- Select Group --</option>
+                    
+                </select>
+            </div>
+        </div>
+        <button type="button" class="btn" onclick="searchGroups()">
+            <i class="fas fa-search"></i> Show Groups
+        </button>
+
+        <div class="results-table-container" id="results-container">
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Group Name</th>
+                        <th>Teacher</th>
+                        <th>Students</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="group-table-body">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- State Management for Student Selection ---
+    let selectedStudents = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const studentSelect = document.getElementById('student-select');
+        studentSelect.addEventListener('change', handleStudentSelection);
+    });
+
+    function handleStudentSelection(event) {
+        const selectedOption = event.target.options[event.target.selectedIndex];
+        const studentId = selectedOption.value;
+        const studentName = selectedOption.text;
+
+        if (!studentId) return; 
+
+        
+        if (!selectedStudents.some(student => student.id === studentId)) {
+            selectedStudents.push({ id: studentId, name: studentName });
+            renderSelectedStudents();
+        }
+
+        // Reset dropdown to the default option
+        event.target.value = '';
+    }
+
+    function removeStudent(studentIdToRemove) {
+        selectedStudents = selectedStudents.filter(student => student.id !== studentIdToRemove);
+        renderSelectedStudents();
+    }
+
+    function renderSelectedStudents() {
+        const container = document.getElementById('selected-students-container');
+        const hiddenInput = document.getElementById('selected-student-ids');
+
+        container.innerHTML = ''; 
+
+        selectedStudents.forEach(student => {
+            const badge = document.createElement('div');
+            badge.className = 'student-badge';
+            badge.innerHTML = `
+                ${student.name}
+                <span class="remove-student-btn" onclick="removeStudent('${student.id}')" title="Remove ${student.name}">&times;</span>
+            `;
+            container.appendChild(badge);
+        });
+
+        
+        hiddenInput.value = selectedStudents.map(student => student.id).join(',');
+    }
+
+
+    // --- Form Visibility Logic ---
+    function showForm(formType) {
+        document.getElementById('insert-form').style.display = 'none';
+        document.getElementById('edit-form').style.display = 'none';
+        document.getElementById(formType + '-form').style.display = 'block';
+    }
+
+    // --- Form Submission Logic ---
+    function submitAddForm() {
+        // Example of how to get all the data
+        const academicYear = document.getElementById('add-academic-year').value;
+        const syllabus = document.getElementById('add-syllabus').value;
+        const className = document.getElementById('add-class').value;
+        const stream = document.getElementById('add-stream').value;
+        const teacherId = document.getElementById('add-teacher').value;
+        const groupName = document.getElementById('add-group-name').value;
+        const studentIds = document.getElementById('selected-student-ids').value;
+
+        // Basic validation
+        if (!academicYear || !groupName || !teacherId || studentIds.length === 0) {
+            alert('Please fill in Academic Year, Group Name, Teacher, and select at least one student.');
+            return;
+        }
+
+        const formData = {
+            academicYear,
+            syllabus,
+            className,
+            stream,
+            teacherId,
+            groupName,
+            studentIds: studentIds.split(',')
+        };
+
+        console.log('Submitting New Group:', formData);
+        alert('Group saved successfully! (Check console for data)');
+        // Here you would typically make a fetch/AJAX call to your server API
+        // e.g., fetch('/api/Group/Create', { method: 'POST', body: JSON.stringify(formData), ... })
+    }
+
+    function searchGroups() {
+        const academicYear = document.getElementById('edit-academic-year').value;
+        if (!academicYear) {
+            alert('Please select an Academic Year to search.');
+            return;
+        }
+
+        console.log(`Searching for groups in ${academicYear}...`);
+
+        // --- MOCK DATA for demonstration ---
+        // In a real application, you would fetch this data from your server
+        const mockData = [
+            {
+                groupName: "Morning Batch A",
+                teacher: "Mr. Smith",
+                students: ["Alice Johnson", "Charlie Brown", "Ethan Davis", "Fiona Green", "George Hill", "Hannah Ives", "Ian Jenkins", "Jack King", "Laura Mills", "Nora Olsen", "Peter Quinn", "Rachel Scott", "Tom Underwood", "Vera White", "Zane Young"]
+            },
+            {
+                groupName: "Evening Batch",
+                teacher: "Mrs. Jones",
+                students: ["Bob Williams", "Diana Miller"]
+            },
+        ];
+
+        const tableBody = document.getElementById('group-table-body');
+        const resultsContainer = document.getElementById('results-container');
+        tableBody.innerHTML = ''; // Clear previous results
+
+        if (mockData.length > 0) {
+            mockData.forEach(group => {
+                const row = document.createElement('tr');
+
+                const studentList = group.students.map(name => `<li>${name}</li>`).join('');
+
+                row.innerHTML = `
+                    <td>${group.groupName}</td>
+                    <td>${group.teacher}</td>
+                    <td class="student-list-cell"><ul>${studentList}</ul></td>
+                    <td>
+                        <button class="btn" onclick="editGroup('${group.groupName}')" title="Edit"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-danger" onclick="deleteGroup('${group.groupName}')" title="Delete"><i class="fas fa-trash"></i></button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+            resultsContainer.style.display = 'block';
+        } else {
+            resultsContainer.style.display = 'none';
+            alert('No groups found for the selected criteria.');
+        }
+    }
+
+    function editGroup(groupName) {
+        alert(`Editing group: ${groupName}`);
+        // Logic to open a modal or navigate to an edit page for this group
+    }
+
+    function deleteGroup(groupName) {
+        if (confirm(`Are you sure you want to delete the group "${groupName}"?`)) {
+            alert(`Deleting group: ${groupName}`);
+            // Logic to call delete API and remove the row from the table
+        }
+    }
+
+</script>

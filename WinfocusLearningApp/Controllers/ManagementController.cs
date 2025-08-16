@@ -84,6 +84,7 @@ namespace WinfocusLearningApp.Controllers
         public ActionResult St_Registration() { return View(); }
         public ActionResult BDE_Registration() { return View(); }
         public ActionResult FeesDetails() { return View(); }
+        public ActionResult StudentTeacherGroup() { return View(); }
         public ActionResult TargetyearExam(int? id)
         {
             TargetYearExamViewModel model = new TargetYearExamViewModel();
