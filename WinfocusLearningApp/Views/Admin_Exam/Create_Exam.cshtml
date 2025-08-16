@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Create_Exam";
 }
 
@@ -288,9 +287,8 @@
 </div>
 
 <div class="container">
-    
 
-    <!-- Insert Form (shown by default) -->
+
     <div id="insert-form" class="form-container">
         <h3><i class="fas fa-plus-circle"></i>Create Exam</h3>
         <div class="form-row">
@@ -387,69 +385,51 @@
                     </div>
 
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="QuestionSelection" id="auto" value="Automatic">
+                        <input class="form-check-input" type="radio" name="QuestionSelection" id="auto" value="Automatic" checked>
                         <label class="form-check-label" for="auto">Automatic Selection</label>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-col">
-                <label class="d-block">Question Selection</label>
-            </div>
-            <div class="form-col">
-                <label class="d-block">Question Mark</label>
-            </div>
-        </div>
-        <div class="form-row">
-            <!-- Question + Options -->
-            <div class="form-col">
-                <div class="form-group ">
-                    <div class="form-check-inline">
-                        <input class="form-check-input" type="radio" name="option" id="optionC" value="C">
-                        <label class="d-block">Question: an image here</label>
-                    </div>
-                    
 
-                    <!-- Options -->
-                    <div class="form-check form-check-inline">
-                        <label class="form-check-label" for="optionA">Option A</label>
+        <div id="manual-selection-section" style="display: none;">
+            <div class="form-row">
+                <div class="form-col">
+                    <label class="d-block">Question Selection</label>
+                </div>
+                <div class="form-col">
+                    <label class="d-block">Question Mark</label>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="form-group ">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="option" id="optionC" value="C">
+                            <label class="d-block">Question: an image here</label>
+                        </div>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <label class="form-check-label" for="optionB">Option B</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <label class="form-check-label" for="optionC">Option C</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <label class="form-check-label" for="optionD">Option D</label>
+                </div>
+
+                <div class="form-col">
+                    <div class="form-group">
+                        <label for="marks">100</label>
                     </div>
                 </div>
             </div>
-
-            <!-- Marks -->
-            <div class="form-col">
-                <div class="form-group">
-                    <label for="marks">100</label>
-                </div>
-            </div>
         </div>
-
-
         <button type="button" class="btn btn-submit" onclick="submitForm('insert')">
             <i class="fas fa-check"></i> Save
         </button>
     </div>
-       
+
 </div>
 
-<!-- Notification -->
 <div id="notification" class="floating-notification">
     <div class="notification-icon"></div>
     <div class="notification-message"></div>
 </div>
 
-<!-- Font Awesome for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
@@ -478,9 +458,6 @@
         document.getElementById('insert-form').style.display = 'block';
     }
 
-    
-
-
 
     // Submit form function
     async function submitForm(formType) {
@@ -496,13 +473,13 @@
                 const syllabusId = document.getElementById('insert-syllabus').value;
                 const classId = document.getElementById('insert-class').value;
                 const streamId = document.getElementById('insert-stream').value;
-               // const courseId = document.getElementById('insert-course').value;
+                // const courseId = document.getElementById('insert-course').value;
                 const subjectId = document.getElementById('insert-subject').value;
                 const chapterId = document.getElementById('insert-chapter').value;
-                
-               
+
+
                 if (!academicYearId || !syllabusId || !classId || !streamId ||
-                    !subjectId || !chapterId ) {
+                    !subjectId || !chapterId) {
                     showNotification('Please fill all fields', 'error');
                     return;
                 }
@@ -532,14 +509,14 @@
                     showNotification(message, 'success');
 
                     // Clear form
-                  
+
                 } catch (error) {
                     showNotification('Failed to add module', 'error');
                     console.error('Error adding module:', error);
                 }
                 break;
 
-            
+
         }
     }
 
@@ -571,14 +548,10 @@
     }
 
     // Close notification when clicked
-    document.getElementById('notification').addEventListener('click', function() {
+    document.getElementById('notification').addEventListener('click', function () {
         this.classList.remove('show');
     });
 
-    // Add cascading dropdown functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        loadAcademicYears();
-    });
 
     // Load academic years from database
     async function loadAcademicYears() {
@@ -774,18 +747,10 @@
                 showNotification('Failed to load syllabus', 'error');
             });
     }
-    // Close notification when clicked
-    document.getElementById('notification').addEventListener('click', function () {
-        this.classList.remove('show');
-    });
 
-    // Load dropdown data when page loads
-    document.addEventListener('DOMContentLoaded', function () {
-        loadAcademicYears();
-    });
     function formClear() {
         document.getElementById('insert-academic-year').value = '';
-       
+
         document.getElementById('insert-syllabus').innerHTML = '<option value="">-- Select Syllabus --</option>';
         document.getElementById('insert-class').innerHTML = '<option value="">-- Select class --</option>';
         document.getElementById('insert-stream').innerHTML = '<option value="">-- Select Stream --</option>';
@@ -793,17 +758,42 @@
         document.getElementById('insert-chapter').innerHTML = '<option value="">-- Select Chapter --</option>';
 
     }
-    // Event listeners for accademic year dropdowns form
+
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        // Load initial dropdown data
+        loadAcademicYears();
+
+        // --- START:  logic for radio buttons ---
+        const manualRadio = document.getElementById('manual');
+        const autoRadio = document.getElementById('auto');
+        const manualSelectionSection = document.getElementById('manual-selection-section');
+
+        // Event listener for 'Manual' radio button
+        manualRadio.addEventListener('change', function () {
+            if (this.checked) {
+                manualSelectionSection.style.display = 'block'; 
+            }
+        });
+
+        // Event listener for 'Automatic' radio button
+        autoRadio.addEventListener('change', function () {
+            if (this.checked) {
+                manualSelectionSection.style.display = 'none';
+            }
+        });
+        // --- END:  logic for radio buttons ---
+    });
+
+    // Event listeners for cascading dropdowns
     document.getElementById('insert-academic-year').addEventListener('change', function () {
         loadSyllabusOptions(this.value, 'insert-syllabus');
     });
 
-    // Event listeners for accademic year dropdowns form
     document.getElementById('insert-syllabus').addEventListener('change', function () {
         loadClassOptions(this.value, 'insert-class');
     });
 
-    // Event listeners for grade dropdowns form
     document.getElementById('insert-class').addEventListener('change', function () {
         loadStreamOptions(this.value, 'insert-stream');
     });
@@ -815,7 +805,8 @@
     document.getElementById('insert-subject').addEventListener('change', function () {
         loadChapterOptions(this.value, 'insert-chapter');
     });
+
     document.getElementById('insert-chapter').addEventListener('change', function () {
-        
+
     });
 </script>
