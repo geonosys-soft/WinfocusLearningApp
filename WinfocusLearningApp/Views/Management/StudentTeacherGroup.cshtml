@@ -341,24 +341,39 @@
 
     <!-- Insert Form -->
     <div id="insert-form" class="form-container">
-        @using (Html.BeginForm("", "", FormMethod.Post))
+        
+        @using (Html.BeginForm("StudentTeacherGroup", "Management", FormMethod.Post))
         {
+            @Html.HiddenFor(Model=>Model.Id)
             <h3><i class="fas fa-plus-circle"></i> Add New Group</h3>
+            <div class="form-group">
+                @if (ViewBag.Success != null)
+                {
+                    <label class="text-success">@ViewBag.Success</label>
+                }
+                @if (ViewBag.Error != null)
+                {
+                    <label class="text-danger ">@ViewBag.Error</label>
+                }
+
+
+            </div>
             <div class="form-grid">
+                
                 <div class="form-group">
                     <label for="AcademicYearID">Academic Year:</label>
-                    @Html.DropDownList("AcademicYearID", null,"--Please choose--", new { @class = "form-control" })
-                    
+                    @Html.DropDownList("AcademicYearID", null, "--Please choose--", new { @class = "form-control" })
+
                 </div>
                 <div class="form-group">
                     <label for="add-syllabus">Syllabus:</label>
                     @Html.DropDownList("SyllabusID", null, "--Please choose--", new { @class = "form-control" })
-                    
+
                 </div>
                 <div class="form-group">
                     <label for="add-class">Class:</label>
                     @Html.DropDownList("ClassID", null, "--Please choose--", new { @class = "form-control" })
-                    
+
                 </div>
                 <div class="form-group">
                     <label for="add-stream">Stream:</label>
@@ -366,15 +381,15 @@
                 </div>
                 <div class="form-group full-width">
                     <label for="TeacherID">Teacher:</label>
-                    
+
                     @Html.DropDownList("TeacherID", null, "--Please choose--", new { @class = "form-control" })
-                    
+
                     <div id="selected-teacher-container" class="selected-items-container">
                         <!-- Selected student badges will be dynamically inserted here -->
                     </div>
-                    <input type="hidden" id="selected-teacher-ids" name="selectedTeacherIds">
+                    <input type="hidden" id="TeacherIdList" name="selectedTeacherIds">
                 </div>
-               
+
                 <div class="form-group full-width">
                     <label for="add-group-name">Group Name:</label>
                     <input type="text" id="add-group-name" class="form-control" placeholder="e.g. Morning Batch A">
@@ -382,14 +397,14 @@
                 <div class="form-group full-width">
                     <label for="StudentID">Student:</label>
                     @Html.DropDownList("StudentID", null, "--Please choose--", new { @class = "form-control" })
-                    
+
                     <div id="selected-students-container" class="selected-items-container">
                         <!-- Selected student badges will be dynamically inserted here -->
                     </div>
-                    <input type="hidden" id="selected-student-ids" name="selectedStudentIds">
+                    <input type="hidden" id="StudentIdList" name="selectedStudentIds">
                 </div>
             </div>
-            <button type="button" class="btn btn-submit" onclick="submitAddForm()">
+            <button type="submit" class="btn btn-submit" onclick="submitAddForm()">
                 <i class="fas fa-save"></i> Save Group
             </button>
         }
@@ -474,7 +489,7 @@
 
     function renderSelectedStudents() {
         const container = document.getElementById('selected-students-container');
-        const hiddenInput = document.getElementById('selected-student-ids');
+        const hiddenInput = document.getElementById('StudentIdList');
 
         container.innerHTML = ''; 
 
@@ -517,7 +532,7 @@
 
     function renderSelectedTeacher() {
         const container = document.getElementById('selected-teacher-container');
-        const hiddenInput = document.getElementById('selected-teacher-ids');
+        const hiddenInput = document.getElementById('TeacherIdList');
 
         container.innerHTML = '';
 
@@ -552,7 +567,7 @@
         const stream = document.getElementById('add-stream').value;
         const teacherId = document.getElementById('add-teacher').value;
         const groupName = document.getElementById('add-group-name').value;
-        const studentIds = document.getElementById('selected-student-ids').value;
+        const studentIds = document.getElementById('StudentIdList').value;
 
         // Basic validation
         if (!academicYear || !groupName || !teacherId || studentIds.length === 0) {

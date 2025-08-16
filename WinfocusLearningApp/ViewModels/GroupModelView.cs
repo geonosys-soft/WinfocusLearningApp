@@ -24,5 +24,8 @@ namespace WinfocusLearningApp.ViewModels
         public int IsDeleted { get; set; }
         public string TeacherIdList{ get; set;}
         public string StudentIdList { get; set; }
+
+        public string selectedStudentIds { get; set; }
+        public string selectedTeacherIds { get; set; }
     }
 }

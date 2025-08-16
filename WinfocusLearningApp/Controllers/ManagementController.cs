@@ -98,8 +98,29 @@ namespace WinfocusLearningApp.Controllers
             }
             else { 
             }
+            if (TempData["Success"]!=null)
+            {
+                ViewBag.Success = TempData["Success"];
+            }
+            if (TempData["Error"]!=null)
+            {
+                ViewBag.Error = TempData["Error"];
+            }
 
                 return View(); 
+        }
+        [HttpPost]
+        public async Task< ActionResult> StudentTeacherGroup(GroupModelView modelView)
+        {
+            GroupModelView model = new GroupModelView();
+
+            if (modelView.Id != 0)
+            {
+            }
+            else 
+            { 
+            }
+                return View();
         }
         public ActionResult TargetyearExam(int? id)
         {
