@@ -66,9 +66,9 @@ namespace WinfocusLearningApp.Controllers
                     {
                        return RedirectToAction("Dashboard","Management");
                     }
-                    else if(user.Roles.FirstOrDefault().RoleName.Equals("Student"))
+                    else if(user.Roles.FirstOrDefault().RoleName.Equals("DTP"))
                     {
-
+                        return RedirectToAction("Dashboard", "DTP");
                     }
                        
                 }

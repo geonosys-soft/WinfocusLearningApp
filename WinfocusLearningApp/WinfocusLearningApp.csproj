@@ -166,6 +166,8 @@
     <Compile Include="Authentication\CustomMembershipUser.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\Admin_DTPController.cs" />
+    <Compile Include="Controllers\Admin_ExamController.cs" />
     <Compile Include="Controllers\Admin_StudentController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DTPController.cs" />
@@ -196,6 +198,9 @@
     <Compile Include="DataEntity\TblAccademicYear.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataEntity\TblAttendExam.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataEntity\TblChapter.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
@@ -208,10 +213,28 @@
     <Compile Include="DataEntity\TblDTPRegistration.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataEntity\TblExam.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataEntity\TblExamResult.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataEntity\TblExam_QnTable.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataEntity\TblFeeDetail.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
     <Compile Include="DataEntity\TblGrade.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataEntity\TblGroup.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataEntity\TblGroup_StudentTable.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataEntity\TblGroup_Teacher.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
     <Compile Include="DataEntity\TblMaterial.cs">
@@ -277,6 +300,9 @@
     <Compile Include="DataEntity\TblTax.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
+    <Compile Include="DataEntity\TblTeachers_Registration.cs">
+      <DependentUpon>EntityConnection.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataEntity\User.cs">
       <DependentUpon>EntityConnection.tt</DependentUpon>
     </Compile>
@@ -289,7 +315,10 @@
     <Compile Include="Models\MaterialModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DTPRegistrationModel.cs" />
+    <Compile Include="ViewModels\ExamGenerateViewModel.cs" />
+    <Compile Include="ViewModels\ExamQuestionSelectionModel.cs" />
     <Compile Include="ViewModels\FeeTermDiscountModel.cs" />
+    <Compile Include="ViewModels\QuestionAnswerViewModel.cs" />
     <Compile Include="ViewModels\RazorPayPaymentModel.cs" />
     <Compile Include="ViewModels\StudentPaymentModel.cs" />
     <Compile Include="ViewModels\StudentPaymentPreviwModel.cs" />
@@ -297,6 +326,7 @@
     <Compile Include="ViewModels\StudentRegistrationModel.cs" />
     <Compile Include="ViewModels\StudentReglistModel.cs" />
     <Compile Include="ViewModels\TargetYearExamViewModel.cs" />
+    <Compile Include="ViewModels\UserDetailsViewModel.cs" />
     <Compile Include="WebApi\FeeApiController.cs" />
     <Compile Include="WebApi\ManagementApiController.cs" />
     <Compile Include="WebApi\QAController.cs" />
@@ -430,7 +460,15 @@
     <Content Include="Views\DTP\QAReport.cshtml" />
     <Content Include="Views\DTP\SQAReport.cshtml" />
     <Content Include="Views\DTP\Dashboard.cshtml" />
+
     <Content Include="Views\Management\StudentTeacherGroup.cshtml" />
+
+    <Content Include="Views\Admin_DTP\Index.cshtml" />
+    <Content Include="Views\Admin_DTP\DTP_List.cshtml" />
+    <Content Include="Views\Admin_DTP\QuestionList.cshtml" />
+    <Content Include="Views\Admin_DTP\QuestionAnswers.cshtml" />
+    <Content Include="Views\Admin_Exam\Create_Exam.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

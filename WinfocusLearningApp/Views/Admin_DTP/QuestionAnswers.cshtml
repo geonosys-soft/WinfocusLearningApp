@@ -1,7 +1,7 @@
 ﻿@model WinfocusLearningApp.DataEntity.TblQuestionAnswer
 @{
     ViewBag.Title = "QuestionAnswers";
-    Layout = "~/Views/Shared/_LayoutDTP.cshtml";
+    
 }
 
 
@@ -830,7 +830,7 @@
     });
     function formClear() {
 
-        window.location.href = '@Url.Action("QuestionAnswers", "DTP")';
+        window.location.href = '@Url.Action("QuestionAnswers", "Admin_DTP")';
 
     }
 
