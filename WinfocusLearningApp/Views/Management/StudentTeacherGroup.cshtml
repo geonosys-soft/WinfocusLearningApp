@@ -1,4 +1,4 @@
-﻿
+﻿@model WinfocusLearningApp.ViewModels.GroupModelView
 @{
     ViewBag.Title = "StudentTeacherGroup";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -341,71 +341,59 @@
 
     <!-- Insert Form -->
     <div id="insert-form" class="form-container">
-        <h3><i class="fas fa-plus-circle"></i> Add New Group</h3>
-        <div class="form-grid">
-            <div class="form-group">
-                <label for="add-academic-year">Academic Year:</label>
-                <select id="add-academic-year" class="form-control">
-                    <option value="">-- Select Year --</option>
-                    <option value="2024-2025">2024-2025</option>
-                    <option value="2025-2026">2025-2026</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="add-syllabus">Syllabus:</label>
-                <select id="add-syllabus" class="form-control">
-                    <option value="">-- Select Syllabus --</option>
-                    <option value="CBSE">CBSE</option>
-                    <option value="State">State</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="add-class">Class:</label>
-                <select id="add-class" class="form-control">
-                    <option value="">-- Select Class --</option>
-                    <option value="10">10th</option>
-                    <option value="12">12th</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="add-stream">Stream:</label>
-                <select id="add-stream" class="form-control">
-                    <option value="">-- Select Stream --</option>
-                    <option value="Science">Science</option>
-                    <option value="Commerce">Commerce</option>
-                </select>
-            </div>
-            <div class="form-group full-width">
-                <label for="add-teacher">Teacher:</label>
-                <select id="add-teacher" class="form-control">
-                    <option value="">-- Select Teacher --</option>
-                    <option value="1">Mr. Smith</option>
-                    <option value="2">Mrs. Jones</option>
-                </select>
-            </div>
-            <div class="form-group full-width">
-                <label for="add-group-name">Group Name:</label>
-                <input type="text" id="add-group-name" class="form-control" placeholder="e.g. Morning Batch A">
-            </div>
-            <div class="form-group full-width">
-                <label for="student-select">Student:</label>
-                <select id="student-select" class="form-control">
-                    <option value="">-- Choose students to add --</option>
-                    <option value="101">Alice Johnson</option>
-                    <option value="102">Bob Williams</option>
-                    <option value="103">Charlie Brown</option>
-                    <option value="104">Diana Miller</option>
-                    <option value="105">Ethan Davis</option>
-                </select>
-                <div id="selected-students-container" class="selected-items-container">
-                    <!-- Selected student badges will be dynamically inserted here -->
+        @using (Html.BeginForm("", "", FormMethod.Post))
+        {
+            <h3><i class="fas fa-plus-circle"></i> Add New Group</h3>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="AcademicYearID">Academic Year:</label>
+                    @Html.DropDownList("AcademicYearID", null,"--Please choose--", new { @class = "form-control" })
+                    
                 </div>
-                <input type="hidden" id="selected-student-ids" name="selectedStudentIds">
+                <div class="form-group">
+                    <label for="add-syllabus">Syllabus:</label>
+                    @Html.DropDownList("SyllabusID", null, "--Please choose--", new { @class = "form-control" })
+                    
+                </div>
+                <div class="form-group">
+                    <label for="add-class">Class:</label>
+                    @Html.DropDownList("ClassID", null, "--Please choose--", new { @class = "form-control" })
+                    
+                </div>
+                <div class="form-group">
+                    <label for="add-stream">Stream:</label>
+                    @Html.DropDownList("StreamID", null, "--Please choose--", new { @class = "form-control" })
+                </div>
+                <div class="form-group full-width">
+                    <label for="TeacherID">Teacher:</label>
+                    
+                    @Html.DropDownList("TeacherID", null, "--Please choose--", new { @class = "form-control" })
+                    
+                    <div id="selected-teacher-container" class="selected-items-container">
+                        <!-- Selected student badges will be dynamically inserted here -->
+                    </div>
+                    <input type="hidden" id="selected-teacher-ids" name="selectedTeacherIds">
+                </div>
+               
+                <div class="form-group full-width">
+                    <label for="add-group-name">Group Name:</label>
+                    <input type="text" id="add-group-name" class="form-control" placeholder="e.g. Morning Batch A">
+                </div>
+                <div class="form-group full-width">
+                    <label for="StudentID">Student:</label>
+                    @Html.DropDownList("StudentID", null, "--Please choose--", new { @class = "form-control" })
+                    
+                    <div id="selected-students-container" class="selected-items-container">
+                        <!-- Selected student badges will be dynamically inserted here -->
+                    </div>
+                    <input type="hidden" id="selected-student-ids" name="selectedStudentIds">
+                </div>
             </div>
-        </div>
-        <button type="button" class="btn btn-submit" onclick="submitAddForm()">
-            <i class="fas fa-save"></i> Save Group
-        </button>
+            <button type="button" class="btn btn-submit" onclick="submitAddForm()">
+                <i class="fas fa-save"></i> Save Group
+            </button>
+        }
+
     </div>
 
     <!-- Edit Form -->
@@ -453,10 +441,13 @@
 <script>
     // --- State Management for Student Selection ---
     let selectedStudents = [];
-
+    let selectedTeacher = [];
     document.addEventListener('DOMContentLoaded', () => {
-        const studentSelect = document.getElementById('student-select');
+        const studentSelect = document.getElementById('StudentID');
         studentSelect.addEventListener('change', handleStudentSelection);
+        const teacherSelect = document.getElementById('TeacherID');
+        teacherSelect.addEventListener('change', handleTeacherSelection);
+        loadAcademicYears();
     });
 
     function handleStudentSelection(event) {
@@ -501,6 +492,49 @@
         hiddenInput.value = selectedStudents.map(student => student.id).join(',');
     }
 
+    //Teacher selection
+    function handleTeacherSelection(event) {
+        const selectedOption = event.target.options[event.target.selectedIndex];
+        const teacherId = selectedOption.value;
+        const teacherName = selectedOption.text;
+
+        if (!teacherId) return;
+
+
+        if (!selectedTeacher.some(teacher => teacher.id === teacher)) {
+            selectedTeacher.push({ id: teacherId, name: teacherName });
+            renderSelectedTeacher();
+        }
+
+        // Reset dropdown to the default option
+        event.target.value = '';
+    }
+
+    function removeTeacher(teacherIdToRemove) {
+        selectedTeacher = selectedTeacher.filter(teacher => teacher.id !== teacherIdToRemove);
+        renderSelectedTeacher();
+    }
+
+    function renderSelectedTeacher() {
+        const container = document.getElementById('selected-teacher-container');
+        const hiddenInput = document.getElementById('selected-teacher-ids');
+
+        container.innerHTML = '';
+
+        selectedTeacher.forEach(teacher => {
+            const badge = document.createElement('div');
+            badge.className = 'student-badge';
+            badge.innerHTML = `
+            ${teacher.name}
+            <span class="remove-teacher-btn" onclick="removeTeacher('${teacher.id}')" title="Remove ${teacher.name}">&times;</span>
+        `;
+            container.appendChild(badge);
+        });
+
+
+        hiddenInput.value = selectedTeacher.map(teacher => teacher.id).join(',');
+    }
+    //---------------
 
     // --- Form Visibility Logic ---
     function showForm(formType) {
@@ -512,7 +546,7 @@
     // --- Form Submission Logic ---
     function submitAddForm() {
         // Example of how to get all the data
-        const academicYear = document.getElementById('add-academic-year').value;
+        const academicYear = document.getElementById('AcademicYearID').value;
         const syllabus = document.getElementById('add-syllabus').value;
         const className = document.getElementById('add-class').value;
         const stream = document.getElementById('add-stream').value;
@@ -605,5 +639,153 @@
             // Logic to call delete API and remove the row from the table
         }
     }
+
+
+    // Load academic years from database
+    async function loadAcademicYears() {
+        try {
+            const response = await fetch('/api/ManagementApi/FetchAccademicYear');
+            const data = await response.json();
+
+            const dropdownIds = ['AcademicYearID'];
+
+            dropdownIds.forEach(id => {
+                const dropdown = document.getElementById(id);
+                dropdown.innerHTML = '<option value="">-- Select Academic Year --</option>';
+
+                data.forEach(year => {
+                    const option = document.createElement('option');
+                    option.value = year.Id;
+                    option.textContent = year.AccademicYear;
+                    dropdown.appendChild(option);
+                });
+            });
+        } catch (error) {
+            showNotification('Failed to load academic years', 'error');
+            console.error('Error loading academic years:', error);
+        }
+    }
+    function loadSyllabusOptions(academicYearId, targetSelectId) {
+        if (!academicYearId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchSyllabus/${academicYearId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Syllabus --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading syllabus:', error);
+                showNotification('Failed to load syllabus', 'error');
+            });
+    }
+
+    // Load class data when syllabus is selected
+    function loadClassOptions(SLBID, targetSelectId) {
+        if (!SLBID) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchGrade/${SLBID}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Class --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading Class:', error);
+                showNotification('Failed to load Class', 'error');
+            });
+    }
+
+    // Load Stream data when grade is selected
+    function loadStreamOptions(classId, targetSelectId) {
+        if (!classId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchStream/${classId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Stream --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Name || syllabus.Name.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading Stream:', error);
+                showNotification('Failed to load Stream', 'error');
+            });
+    }
+    
+    //LOAD SUBJECTS
+    function loadStudentsOptions(StreamId, targetSelectId) {
+        if (!StreamId) return;
+        //showNotification('Failed to load academic years'+academicYearId, 'error');
+        fetch(`/api/ManagementApi/FetchStudentList/${StreamId}`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById(targetSelectId);
+                select.innerHTML = '<option value="">-- Select Student --</option>';
+                data.forEach(syllabus => {
+                    const option = document.createElement('option');
+                    option.value = syllabus.Id;
+                    option.textContent = syllabus.Fullname || syllabus.Fullname.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading Student:', error);
+                showNotification('Failed to load Student', 'error');
+            });
+    }
+    //LOAD Teacher
+    function loadTacherOptions() {
+        fetch(`/api/ManagementApi/FetchTeacherList`)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById('TeacherID');
+                select.innerHTML = '<option value="">-- Select Teachers --</option>';
+                data.forEach(teacher => {
+                    const option = document.createElement('option');
+                    option.value = teacher.Id;
+                    option.textContent = teacher.FullName || teacher.FullName.substring(0, 50) + '...';
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading teachers:', error);
+                showNotification('Failed to load teachers', 'error');
+            });
+    }
+    // Event listeners for accademic year dropdowns form
+    document.getElementById('AcademicYearID').addEventListener('change', function () {
+        loadSyllabusOptions(this.value, 'SyllabusID');
+    });
+    // Event listeners for accademic year dropdowns form
+    document.getElementById('SyllabusID').addEventListener('change', function () {
+        loadClassOptions(this.value, 'ClassID');
+    });
+    // Event listeners for grade dropdowns form
+    document.getElementById('ClassID').addEventListener('change', function () {
+        loadStreamOptions(this.value, 'StreamID');
+    });
+    document.getElementById('StreamID').addEventListener('change', function () {
+        loadTacherOptions();
+        loadStudentsOptions(this.value, 'StudentID');
+    });
+    
 
 </script>

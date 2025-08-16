@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Org.BouncyCastle.Utilities.IO;
 using Razorpay.Api;
 using System;
 using System.Collections.Generic;
@@ -84,7 +85,22 @@ namespace WinfocusLearningApp.Controllers
         public ActionResult St_Registration() { return View(); }
         public ActionResult BDE_Registration() { return View(); }
         public ActionResult FeesDetails() { return View(); }
-        public ActionResult StudentTeacherGroup() { return View(); }
+        public ActionResult StudentTeacherGroup(int? Id) {
+            GroupModelView model = new GroupModelView();
+            if (Id == null)
+            {
+                ViewBag.AcademicYearID = new SelectList(Enumerable.Empty<SelectListItem>());
+                ViewBag.SyllabusID = new SelectList(Enumerable.Empty<SelectListItem>());
+                ViewBag.ClassID = new SelectList(Enumerable.Empty<SelectListItem>());
+                ViewBag.StreamID = new SelectList(Enumerable.Empty<SelectListItem>());
+                ViewBag.TeacherID= new SelectList(Enumerable.Empty<SelectListItem>());
+                ViewBag.StudentID = new SelectList(Enumerable.Empty<SelectListItem>());
+            }
+            else { 
+            }
+
+                return View(); 
+        }
         public ActionResult TargetyearExam(int? id)
         {
             TargetYearExamViewModel model = new TargetYearExamViewModel();

@@ -1465,5 +1465,45 @@ namespace WinfocusLearningApp.WebApi
                 return InternalServerError(ex);
             }
         }
+
+        [Route("api/ManagementApi/FetchStudentList/{Id}")]
+        [HttpGet]
+        public IHttpActionResult FetchStudentList(int Id) 
+        {
+            try
+            {
+                var Students = (from u in winfocus_CS.Users
+                                join st in winfocus_CS.TblSTudentBasicDetails on u.UniqueID equals st.RegId
+                                where u.IsActive==1 && st.StreamID==Id && u.IsDeleted==0
+                                select new
+                                {
+                                   Id=u.Id,
+                                   Fullname=u.UniqueID+" - "+u.FirstName+" "+u.LastName
+                                }).ToList();
+                return Ok(Students);
+            }
+            catch (Exception ex) { 
+            return InternalServerError(ex);
+            }
+        }
+        [Route("api/ManagementApi/FetchTeacherList")]
+        [HttpGet]
+        public IHttpActionResult FetchTeacher()
+        {
+            try
+            {
+                var teachers = winfocus_CS.Users.Where(x => x.RoleId == 2 && x.IsActive==1).Select(x => new
+                {
+                    x.Id,
+                    FullName = x.UniqueID + " - " + x.FirstName + " " + x.LastName
+                }).ToList();
+                return Ok(teachers);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
     }
 }
