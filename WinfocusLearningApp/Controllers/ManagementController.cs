@@ -116,11 +116,84 @@ namespace WinfocusLearningApp.Controllers
 
             if (modelView.Id != 0)
             {
+
             }
             else 
-            { 
+            {
+                try
+                {
+                    var groupExists = dbEntities.TblGroups.Any(x =>
+                        x.GroupName == model.GroupName &&
+                        x.AcademicYearID == model.AcademicYearID &&
+                        x.SyllabusID == model.SyllabusID &&
+                        x.ClassID == model.ClassID);
+
+                    if (groupExists)
+                    {
+                        TempData["Error"] = "Group already exists";
+                        return View();
+                    }
+
+                    TblGroup tblGroup = new TblGroup
+                    {
+                        AcademicYearID = model.AcademicYearID,
+                        ClassID = model.ClassID,
+                        StreamID = model.StreamID,
+                        CreatedBy = 1, // Replace with actual user ID if available
+                        CreatedDateTime = DateTime.Now,
+                        GroupName = model.GroupName,
+                        IsDeleted = 0,
+                        SyllabusID = model.SyllabusID,
+                    };
+
+                    dbEntities.TblGroups.Add(tblGroup);
+                    dbEntities.SaveChanges(); // Save first to generate Group ID
+
+                    int groupId = tblGroup.Id;
+
+                    // Add Teachers
+                    var teacherIds = model.TeacherIdList?.Split('|') ?? Array.Empty<string>();
+                    var teacherList = teacherIds
+                        .Where(id => int.TryParse(id, out _))
+                        .Select(id => new TblGroup_Teacher
+                        {
+                            GroupId = groupId,
+                            TeacherId = Convert.ToInt32(id)
+                        })
+                        .ToList();
+
+                    dbEntities.TblGroup_Teacher.AddRange(teacherList);
+
+                    // Add Students
+                    var studentIds = model.StudentIdList?.Split('|') ?? Array.Empty<string>();
+                    var studentList = studentIds
+                        .Where(id => int.TryParse(id, out _))
+                        .Select(id => new TblGroup_StudentTable
+                        {
+                            GroupId = groupId,
+                            StudentId = Convert.ToInt32(id)
+                        })
+                        .ToList();
+
+                    dbEntities.TblGroup_StudentTable.AddRange(studentList);
+
+                    if (dbEntities.SaveChanges() > 0)
+                    {
+                        TempData["Success"] = "Group Created Successfully";
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Group creation failed during associations.";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log error (if logging system is in place)
+                    TempData["Error"] = "An error occurred while creating the group: " + ex.Message;
+                }
+
             }
-                return View();
+            return View();
         }
         public ActionResult TargetyearExam(int? id)
         {
