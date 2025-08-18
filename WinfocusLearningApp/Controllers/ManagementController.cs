@@ -98,10 +98,10 @@ namespace WinfocusLearningApp.Controllers
             }
             else {
                 var findGroup = dbEntities.TblGroups.Find(Id);
-                ViewBag.AcademicYearID = new SelectList(dbEntities.TblAccademicYears.Where(x=>x.IsDeleted==0),"ID","AccademicYear",findGroup.AcademicYearID);
-                ViewBag.SyllabusID = new SelectList(Enumerable.Empty<SelectListItem>());
-                ViewBag.ClassID = new SelectList(Enumerable.Empty<SelectListItem>());
-                ViewBag.StreamID = new SelectList(Enumerable.Empty<SelectListItem>());
+                ViewBag.AcademicYearID = new SelectList(dbEntities.TblAccademicYears.Where(x=>x.IsDeleted==0), "Id", "AccademicYear",findGroup.AcademicYearID);
+                ViewBag.SyllabusID = new SelectList(dbEntities.TblSyllabus.Where(x=>x.IsDeleted==0), "Id", "Name",findGroup.SyllabusID);
+                ViewBag.ClassID = new SelectList(dbEntities.TblGrades.Where(x=>x.IsDeleted==0), "Id", "Name",findGroup.ClassID);
+                ViewBag.StreamID = new SelectList(dbEntities.TblStreams.Where(x=>x.IsDeleted==0), "Id", "Name",findGroup.StreamID);
                 ViewBag.TeacherID = new SelectList(Enumerable.Empty<SelectListItem>());
                 ViewBag.StudentID = new SelectList(Enumerable.Empty<SelectListItem>());
             }
@@ -202,6 +202,39 @@ namespace WinfocusLearningApp.Controllers
             }
             return RedirectToAction("StudentTeacherGroup");
         }
+       
+        
+        public ActionResult DeleteGroup(int groupId)
+        {
+            try
+            {
+                var findgroup = dbEntities.TblGroups.Find(groupId);
+                if(findgroup == null)
+                {
+                    TempData["Error"] = "Unable to find group";
+                    return RedirectToAction("StudentTeacherGroup");
+                }
+                findgroup.IsDeleted = 1;
+                findgroup.DeletedBy = 1;
+                findgroup.DeletedDateTime = DateTime.Now;
+                dbEntities.Entry(findgroup).State = System.Data.Entity.EntityState.Modified;
+                if(dbEntities.SaveChanges()>0)
+                {
+                    TempData["Success"] = "Group Deleted";
+                }
+                else
+                {
+                    TempData["Error"] = "Unable to delete Group";
+                }
+                    return RedirectToAction("StudentTeacherGroup");
+            }
+            catch(Exception ex)
+            {
+                TempData["Error"] = ex.ToString();
+                return RedirectToAction("StudentTeacherGroup");
+            }
+        }
+        
         public ActionResult TargetyearExam(int? id)
         {
             TargetYearExamViewModel model = new TargetYearExamViewModel();
