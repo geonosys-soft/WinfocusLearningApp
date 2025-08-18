@@ -96,7 +96,14 @@ namespace WinfocusLearningApp.Controllers
                 ViewBag.TeacherID= new SelectList(Enumerable.Empty<SelectListItem>());
                 ViewBag.StudentID = new SelectList(Enumerable.Empty<SelectListItem>());
             }
-            else { 
+            else {
+                var findGroup = dbEntities.TblGroups.Find(Id);
+                ViewBag.AcademicYearID = new SelectList(dbEntities.TblAccademicYears.Where(x=>x.IsDeleted==0),"ID","AccademicYear",findGroup.AcademicYearID);
+                ViewBag.SyllabusID = new SelectList(Enumerable.Empty<SelectListItem>());
+                ViewBag.ClassID = new SelectList(Enumerable.Empty<SelectListItem>());
+                ViewBag.StreamID = new SelectList(Enumerable.Empty<SelectListItem>());
+                ViewBag.TeacherID = new SelectList(Enumerable.Empty<SelectListItem>());
+                ViewBag.StudentID = new SelectList(Enumerable.Empty<SelectListItem>());
             }
             if (TempData["Success"]!=null)
             {
@@ -116,34 +123,34 @@ namespace WinfocusLearningApp.Controllers
 
             if (modelView.Id != 0)
             {
-
+               // var findGroup = dbEntities.TblGroups.Find(ID);
             }
             else 
             {
                 try
                 {
                     var groupExists = dbEntities.TblGroups.Any(x =>
-                        x.GroupName == model.GroupName &&
-                        x.AcademicYearID == model.AcademicYearID &&
-                        x.SyllabusID == model.SyllabusID &&
-                        x.ClassID == model.ClassID);
+                        x.GroupName == modelView.GroupName &&
+                        x.AcademicYearID == modelView.AcademicYearID &&
+                        x.SyllabusID == modelView.SyllabusID &&
+                        x.ClassID == modelView.ClassID);
 
                     if (groupExists)
                     {
                         TempData["Error"] = "Group already exists";
-                        return View();
+                        return RedirectToAction("StudentTeacherGroup");
                     }
 
                     TblGroup tblGroup = new TblGroup
                     {
-                        AcademicYearID = model.AcademicYearID,
-                        ClassID = model.ClassID,
-                        StreamID = model.StreamID,
+                        AcademicYearID = modelView.AcademicYearID,
+                        ClassID = modelView.ClassID,
+                        StreamID = modelView.StreamID,
                         CreatedBy = 1, // Replace with actual user ID if available
                         CreatedDateTime = DateTime.Now,
-                        GroupName = model.GroupName,
+                        GroupName = modelView.GroupName,
                         IsDeleted = 0,
-                        SyllabusID = model.SyllabusID,
+                        SyllabusID = modelView.SyllabusID
                     };
 
                     dbEntities.TblGroups.Add(tblGroup);
@@ -152,7 +159,7 @@ namespace WinfocusLearningApp.Controllers
                     int groupId = tblGroup.Id;
 
                     // Add Teachers
-                    var teacherIds = model.TeacherIdList?.Split('|') ?? Array.Empty<string>();
+                    var teacherIds = modelView.selectedTeacherIds?.Split(',') ?? Array.Empty<string>();
                     var teacherList = teacherIds
                         .Where(id => int.TryParse(id, out _))
                         .Select(id => new TblGroup_Teacher
@@ -165,7 +172,7 @@ namespace WinfocusLearningApp.Controllers
                     dbEntities.TblGroup_Teacher.AddRange(teacherList);
 
                     // Add Students
-                    var studentIds = model.StudentIdList?.Split('|') ?? Array.Empty<string>();
+                    var studentIds = modelView.selectedStudentIds?.Split(',') ?? Array.Empty<string>();
                     var studentList = studentIds
                         .Where(id => int.TryParse(id, out _))
                         .Select(id => new TblGroup_StudentTable
@@ -193,7 +200,7 @@ namespace WinfocusLearningApp.Controllers
                 }
 
             }
-            return View();
+            return RedirectToAction("StudentTeacherGroup");
         }
         public ActionResult TargetyearExam(int? id)
         {

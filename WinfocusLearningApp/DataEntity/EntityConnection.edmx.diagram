@@ -40,10 +40,10 @@
         <EntityTypeShape EntityType="Winfocus_DbModel.TblExam" Width="1.5" PointX="3.75" PointY="19.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblExam_QnTable" Width="1.5" PointX="14.75" PointY="0.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblExamResult" Width="1.5" PointX="0.75" PointY="14.75" />
-        <EntityTypeShape EntityType="Winfocus_DbModel.TblGroup" Width="1.5" PointX="19.75" PointY="5.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblGroup_StudentTable" Width="1.5" PointX="19.75" PointY="10.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblGroup_Teacher" Width="1.5" PointX="19.75" PointY="13.75" />
         <EntityTypeShape EntityType="Winfocus_DbModel.TblTeachers_Registration" Width="1.5" PointX="13.75" PointY="19.75" />
+        <EntityTypeShape EntityType="Winfocus_DbModel.TblGroup" Width="1.5" PointX="19.375" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

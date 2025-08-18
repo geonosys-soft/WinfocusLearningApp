@@ -223,19 +223,19 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="GroupName" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="AcademicYearID" Type="int" Nullable="false" />
-          <Property Name="SyllabusID" Type="int" Nullable="false" />
-          <Property Name="ClassID" Type="int" Nullable="false" />
-          <Property Name="StreamID" Type="int" Nullable="false" />
+          <Property Name="GroupName" Type="varchar" MaxLength="100" />
+          <Property Name="AcademicYearID" Type="int" />
+          <Property Name="SyllabusID" Type="int" />
+          <Property Name="ClassID" Type="int" />
+          <Property Name="StreamID" Type="int" />
           <Property Name="SubjectID" Type="int" />
-          <Property Name="CreatedBy" Type="int" Nullable="false" />
-          <Property Name="CreatedDateTime" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="int" Nullable="false" />
-          <Property Name="ModifiedDateTime" Type="datetime" Nullable="false" />
-          <Property Name="DeletedBy" Type="int" Nullable="false" />
-          <Property Name="DeletedDateTime" Type="datetime" Nullable="false" />
-          <Property Name="IsDeleted" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDateTime" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDateTime" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDateTime" Type="datetime" />
+          <Property Name="IsDeleted" Type="int" />
         </EntityType>
         <EntityType Name="TblGroup_StudentTable">
           <Key>
@@ -821,10 +821,10 @@
           <EntitySet Name="TblExams" EntityType="Winfocus_DbModel.TblExam" />
           <EntitySet Name="TblExam_QnTable" EntityType="Winfocus_DbModel.TblExam_QnTable" />
           <EntitySet Name="TblExamResults" EntityType="Winfocus_DbModel.TblExamResult" />
-          <EntitySet Name="TblGroups" EntityType="Winfocus_DbModel.TblGroup" />
           <EntitySet Name="TblGroup_StudentTable" EntityType="Winfocus_DbModel.TblGroup_StudentTable" />
           <EntitySet Name="TblGroup_Teacher" EntityType="Winfocus_DbModel.TblGroup_Teacher" />
           <EntitySet Name="TblTeachers_Registration" EntityType="Winfocus_DbModel.TblTeachers_Registration" />
+          <EntitySet Name="TblGroups" EntityType="Winfocus_DbModel.TblGroup" />
         </EntityContainer>
         <EntityType Name="TblAccademicYear">
           <Key>
@@ -1448,25 +1448,6 @@
           <Property Name="AnsMarkForReview" Type="Int32" Nullable="false" />
           <Property Name="QsNo" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="TblGroup">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GroupName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="AcademicYearID" Type="Int32" Nullable="false" />
-          <Property Name="SyllabusID" Type="Int32" Nullable="false" />
-          <Property Name="ClassID" Type="Int32" Nullable="false" />
-          <Property Name="StreamID" Type="Int32" Nullable="false" />
-          <Property Name="SubjectID" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="CreatedDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
-          <Property Name="ModifiedDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DeletedBy" Type="Int32" Nullable="false" />
-          <Property Name="DeletedDateTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsDeleted" Type="Int32" Nullable="false" />
-        </EntityType>
         <EntityType Name="TblGroup_StudentTable">
           <Key>
             <PropertyRef Name="Id" />
@@ -1511,6 +1492,25 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TblGroup">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AcademicYearID" Type="Int32" />
+          <Property Name="SyllabusID" Type="Int32" />
+          <Property Name="ClassID" Type="Int32" />
+          <Property Name="StreamID" Type="Int32" />
+          <Property Name="SubjectID" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDateTime" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2177,26 +2177,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TblGroups">
-            <EntityTypeMapping TypeName="Winfocus_DbModel.TblGroup">
-              <MappingFragment StoreEntitySet="TblGroup">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="DeletedDateTime" ColumnName="DeletedDateTime" />
-                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
-                <ScalarProperty Name="StreamID" ColumnName="StreamID" />
-                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
-                <ScalarProperty Name="SyllabusID" ColumnName="SyllabusID" />
-                <ScalarProperty Name="AcademicYearID" ColumnName="AcademicYearID" />
-                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TblGroup_StudentTable">
             <EntityTypeMapping TypeName="Winfocus_DbModel.TblGroup_StudentTable">
               <MappingFragment StoreEntitySet="TblGroup_StudentTable">
@@ -2241,6 +2221,26 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="TeachRegId" ColumnName="TeachRegId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TblGroups">
+            <EntityTypeMapping TypeName="Winfocus_DbModel.TblGroup">
+              <MappingFragment StoreEntitySet="TblGroup">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="DeletedDateTime" ColumnName="DeletedDateTime" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="ModifiedDateTime" ColumnName="ModifiedDateTime" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDateTime" ColumnName="CreatedDateTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="StreamID" ColumnName="StreamID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="SyllabusID" ColumnName="SyllabusID" />
+                <ScalarProperty Name="AcademicYearID" ColumnName="AcademicYearID" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

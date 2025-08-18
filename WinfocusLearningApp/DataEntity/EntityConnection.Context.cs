@@ -61,10 +61,10 @@ namespace WinfocusLearningApp.DataEntity
         public virtual DbSet<TblExam> TblExams { get; set; }
         public virtual DbSet<TblExam_QnTable> TblExam_QnTable { get; set; }
         public virtual DbSet<TblExamResult> TblExamResults { get; set; }
-        public virtual DbSet<TblGroup> TblGroups { get; set; }
         public virtual DbSet<TblGroup_StudentTable> TblGroup_StudentTable { get; set; }
         public virtual DbSet<TblGroup_Teacher> TblGroup_Teacher { get; set; }
         public virtual DbSet<TblTeachers_Registration> TblTeachers_Registration { get; set; }
+        public virtual DbSet<TblGroup> TblGroups { get; set; }
     
         public virtual int SPinsertRole(Nullable<int> roleId, Nullable<int> userId)
         {

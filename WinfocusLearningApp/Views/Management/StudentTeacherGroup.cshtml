@@ -392,7 +392,8 @@
 
                 <div class="form-group full-width">
                     <label for="add-group-name">Group Name:</label>
-                    <input type="text" id="add-group-name" class="form-control" placeholder="e.g. Morning Batch A">
+                    @Html.TextBoxFor(model=>model.GroupName,"Group Name", new {@class="form-control", @placeholder="e.g. Morning Batch A"})
+                    
                 </div>
                 <div class="form-group full-width">
                     <label for="StudentID">Student:</label>
@@ -419,15 +420,24 @@
                 <label for="edit-academic-year">Academic Year:</label>
                 <select id="edit-academic-year" class="form-control">
                     <option value="">-- Select Year --</option>
-                    <option value="2024-2025">2024-2025</option>
-                    <option value="2025-2026">2025-2026</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="edit-group-name">Group Name:</label>
-                <select id="edit-group-name" class="form-control">
-                    <option value="">-- Select Group --</option>
-                    
+                <label for="edit-syllabus">Syllabus:</label>
+                <select id="edit-syllabus" class="form-control">
+                    <option value="">-- Select Syllabus --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="edit-class">Class:</label>
+                <select id="edit-class" class="form-control">
+                    <option value="">-- Select class --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="edit-stream">Stream:</label>
+                <select id="edit-stream" class="form-control">
+                    <option value="">-- Select stream --</option>
                 </select>
             </div>
         </div>
@@ -470,9 +480,9 @@
         const studentId = selectedOption.value;
         const studentName = selectedOption.text;
 
-        if (!studentId) return; 
+        if (!studentId) return;
 
-        
+
         if (!selectedStudents.some(student => student.id === studentId)) {
             selectedStudents.push({ id: studentId, name: studentName });
             renderSelectedStudents();
@@ -491,7 +501,7 @@
         const container = document.getElementById('selected-students-container');
         const hiddenInput = document.getElementById('StudentIdList');
 
-        container.innerHTML = ''; 
+        container.innerHTML = '';
 
         selectedStudents.forEach(student => {
             const badge = document.createElement('div');
@@ -503,7 +513,7 @@
             container.appendChild(badge);
         });
 
-        
+
         hiddenInput.value = selectedStudents.map(student => student.id).join(',');
     }
 
@@ -593,16 +603,49 @@
 
     function searchGroups() {
         const academicYear = document.getElementById('edit-academic-year').value;
-        if (!academicYear) {
-            alert('Please select an Academic Year to search.');
+        const syllabus = document.getElementById('edit-syllabus').value;
+        const classes = document.getElementById('edit-class').value;
+        const stream = document.getElementById('edit-stream').value;
+        console.log(stream);
+        const url = "/api/ManagementApi/FetchGroup"; // Replace with your actual endpoint
+        if (!stream) {
             return;
         }
 
+
         console.log(`Searching for groups in ${academicYear}...`);
+
+        // Prepare data object
+        const data = {
+            AcademicYearID: academicYear,
+            SyllabusID: syllabus,
+            ClassID: classes,
+            StreamID: stream
+        };
+
+        // Send POST request
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"  // sending JSON
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok " + response.statusText);
+                }
+                const mockData = response.json();
+                console.log(mockData)
+                return response.json(); // parse JSON result
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
 
         // --- MOCK DATA for demonstration ---
         // In a real application, you would fetch this data from your server
-        const mockData = [
+      /*  const mockData = [
             {
                 groupName: "Morning Batch A",
                 teacher: "Mr. Smith",
@@ -613,13 +656,14 @@
                 teacher: "Mrs. Jones",
                 students: ["Bob Williams", "Diana Miller"]
             },
-        ];
-
+        ];*/
+        
         const tableBody = document.getElementById('group-table-body');
         const resultsContainer = document.getElementById('results-container');
         tableBody.innerHTML = ''; // Clear previous results
 
-        if (mockData.length > 0) {
+        if (mockData.length > 0)
+        {
             mockData.forEach(group => {
                 const row = document.createElement('tr');
 
@@ -662,7 +706,7 @@
             const response = await fetch('/api/ManagementApi/FetchAccademicYear');
             const data = await response.json();
 
-            const dropdownIds = ['AcademicYearID'];
+            const dropdownIds = ['AcademicYearID', 'edit-academic-year'];
 
             dropdownIds.forEach(id => {
                 const dropdown = document.getElementById(id);
@@ -744,7 +788,7 @@
                 showNotification('Failed to load Stream', 'error');
             });
     }
-    
+
     //LOAD SUBJECTS
     function loadStudentsOptions(StreamId, targetSelectId) {
         if (!StreamId) return;
@@ -789,18 +833,29 @@
     document.getElementById('AcademicYearID').addEventListener('change', function () {
         loadSyllabusOptions(this.value, 'SyllabusID');
     });
+
+    document.getElementById('edit-academic-year').addEventListener('change', function () {
+        loadSyllabusOptions(this.value, 'edit-syllabus');
+    });
+
     // Event listeners for accademic year dropdowns form
     document.getElementById('SyllabusID').addEventListener('change', function () {
         loadClassOptions(this.value, 'ClassID');
+    });
+    document.getElementById('edit-syllabus').addEventListener('change', function () {
+        loadClassOptions(this.value, 'edit-class');
     });
     // Event listeners for grade dropdowns form
     document.getElementById('ClassID').addEventListener('change', function () {
         loadStreamOptions(this.value, 'StreamID');
     });
+    document.getElementById('edit-class').addEventListener('change', function () {
+        loadStreamOptions(this.value, 'edit-stream');
+    });
     document.getElementById('StreamID').addEventListener('change', function () {
         loadTacherOptions();
         loadStudentsOptions(this.value, 'StudentID');
     });
-    
+
 
 </script>

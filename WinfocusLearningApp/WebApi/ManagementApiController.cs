@@ -6,8 +6,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Xml;
 using WinfocusLearningApp.Authentication;
 using WinfocusLearningApp.DataEntity;
+using WinfocusLearningApp.ViewModels;
 
 namespace WinfocusLearningApp.WebApi
 {
@@ -1498,6 +1500,88 @@ namespace WinfocusLearningApp.WebApi
                     FullName = x.UniqueID + " - " + x.FirstName + " " + x.LastName
                 }).ToList();
                 return Ok(teachers);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/ManagementApi/FetchGroup")]
+        [ResponseType(typeof(TblGroup))]
+        public IHttpActionResult FetchGroup(TblGroup jsonData)
+        {
+            try
+            {
+                if (jsonData == null)
+                {
+                    return BadRequest("Invalid data format.");
+                }
+                // Teacher group
+                var teacherGroup = (from t in winfocus_CS.Users
+                                    join tg in winfocus_CS.TblGroup_Teacher on t.Id equals tg.TeacherId
+                                    join g in winfocus_CS.TblGroups on tg.GroupId equals g.Id
+                                    where g.StreamID == jsonData.StreamID && t.RoleId == 2
+                                    select new
+                                    {
+                                        t.Id,
+                                        t.FirstName,
+                                        t.LastName,
+                                        t.UniqueID
+                                    })
+                                    .ToList() // materialize query in memory
+                                    .Select(x => new UserDropdownListModel
+                                    {
+                                        Id = x.Id,
+                                        Fullname = x.FirstName + " " + x.LastName,
+                                        UniqueID = x.UniqueID
+                                    }).ToList();
+
+
+                // Student group
+                var studentGroup = (from s in winfocus_CS.Users
+                                    join sg in winfocus_CS.TblGroup_StudentTable on s.Id equals sg.StudentId
+                                    join g in winfocus_CS.TblGroups on sg.GroupId equals g.Id
+                                    where g.StreamID == jsonData.StreamID && s.RoleId == 3
+                                    select new
+                                    {
+                                        s.Id,
+                                        s.FirstName,
+                                        s.LastName,
+                                        s.UniqueID
+                                    })
+                                    .ToList()
+                                    .Select(x => new UserDropdownListModel
+                                    {
+                                        Id = x.Id,
+                                        Fullname = x.FirstName + " " + x.LastName,
+                                        UniqueID = x.UniqueID
+                                    }).ToList();
+
+
+                // --- Groups ---
+                var groups = (from s in winfocus_CS.TblGroups
+                              where s.AcademicYearID == jsonData.AcademicYearID
+                                 && s.SyllabusID == jsonData.SyllabusID
+                                 && s.ClassID == jsonData.ClassID
+                                 && s.StreamID == jsonData.StreamID
+                              select new
+                              {
+                                  s.Id,
+                                  s.GroupName
+                              }).ToList();
+
+                // --- Build final GroupList in memory ---
+                var groupList = groups.Select(g => new GroupListModel
+                {
+                    Id = g.Id,
+                    GroupName = g.GroupName,
+                    TeacherList = teacherGroup.ToList(),   // 🔹 filter by GroupId if needed
+                    StudentList = studentGroup.ToList()
+                }).ToList();
+
+
+                return Ok(groupList);
             }
             catch (Exception ex)
             {

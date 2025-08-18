@@ -16,17 +16,17 @@ namespace WinfocusLearningApp.DataEntity
     {
         public int Id { get; set; }
         public string GroupName { get; set; }
-        public int AcademicYearID { get; set; }
-        public int SyllabusID { get; set; }
-        public int ClassID { get; set; }
-        public int StreamID { get; set; }
+        public Nullable<int> AcademicYearID { get; set; }
+        public Nullable<int> SyllabusID { get; set; }
+        public Nullable<int> ClassID { get; set; }
+        public Nullable<int> StreamID { get; set; }
         public Nullable<int> SubjectID { get; set; }
-        public int CreatedBy { get; set; }
-        public System.DateTime CreatedDateTime { get; set; }
-        public int ModifiedBy { get; set; }
-        public System.DateTime ModifiedDateTime { get; set; }
-        public int DeletedBy { get; set; }
-        public System.DateTime DeletedDateTime { get; set; }
-        public int IsDeleted { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDateTime { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDateTime { get; set; }
+        public Nullable<int> DeletedBy { get; set; }
+        public Nullable<System.DateTime> DeletedDateTime { get; set; }
+        public Nullable<int> IsDeleted { get; set; }
     }
 }
