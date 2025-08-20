@@ -27,6 +27,8 @@ namespace WinfocusLearningApp.ViewModels
 
         public string selectedStudentIds { get; set; }
         public string selectedTeacherIds { get; set; }
+        public List<UserDropdownListModel> teacherNames { get; set; }
+        public List<UserDropdownListModel> studentNames { get; set; }
 
     }
     public class GroupListModel

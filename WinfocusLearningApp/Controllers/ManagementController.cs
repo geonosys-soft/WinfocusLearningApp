@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -89,8 +90,18 @@ namespace WinfocusLearningApp.Controllers
             GroupModelView model = new GroupModelView();
             if (Id == null)
             {
-                ViewBag.AcademicYearID = new SelectList(Enumerable.Empty<SelectListItem>());
-                ViewBag.SyllabusID = new SelectList(Enumerable.Empty<SelectListItem>());
+                var acyr = dbEntities.TblAccademicYears.Where(x => x.IsDeleted == 0);
+                
+                ViewBag.AcademicYearID = new SelectList(acyr, "Id", "AccademicYear");
+                if(acyr.Count()==1)
+                {
+                    ViewBag.SyllabusID = new SelectList(dbEntities.TblSyllabus.Where(x => x.IsDeleted == 0), "Id", "Name");
+                }
+                else
+                {
+                    ViewBag.SyllabusID = new SelectList(Enumerable.Empty<SelectListItem>());
+                }
+                    
                 ViewBag.ClassID = new SelectList(Enumerable.Empty<SelectListItem>());
                 ViewBag.StreamID = new SelectList(Enumerable.Empty<SelectListItem>());
                 ViewBag.TeacherID= new SelectList(Enumerable.Empty<SelectListItem>());
@@ -102,8 +113,41 @@ namespace WinfocusLearningApp.Controllers
                 ViewBag.SyllabusID = new SelectList(dbEntities.TblSyllabus.Where(x=>x.IsDeleted==0), "Id", "Name",findGroup.SyllabusID);
                 ViewBag.ClassID = new SelectList(dbEntities.TblGrades.Where(x=>x.IsDeleted==0), "Id", "Name",findGroup.ClassID);
                 ViewBag.StreamID = new SelectList(dbEntities.TblStreams.Where(x=>x.IsDeleted==0), "Id", "Name",findGroup.StreamID);
-                ViewBag.TeacherID = new SelectList(Enumerable.Empty<SelectListItem>());
-                ViewBag.StudentID = new SelectList(Enumerable.Empty<SelectListItem>());
+                var teachers = dbEntities.Users.Where(x => x.RoleId == 2 && x.IsActive == 1).Select(x => new
+                {
+                    x.Id,
+                    FullName = x.UniqueID + " - " + x.FirstName + " " + x.LastName
+                }).ToList();
+                ViewBag.TeacherID = new SelectList(teachers,"Id", "FullName");
+                var Students = (from u in dbEntities.Users
+                                join st in dbEntities.TblSTudentBasicDetails on u.UniqueID equals st.RegId
+                                where u.IsActive == 1 && st.StreamID == Id && u.IsDeleted == 0
+                                select new
+                                {
+                                    Id = u.Id,
+                                    Fullname = u.UniqueID + " - " + u.FirstName + " " + u.LastName
+                                }).ToList();
+                var students = dbEntities.Users.Where(x => x.RoleId == 3 && x.IsActive == 1).Select(x => new
+                {
+                    x.Id,
+                    FullName = x.UniqueID + " - " + x.FirstName + " " + x.LastName
+                }).ToList();
+                ViewBag.StudentID = new SelectList(teachers, "Id", "FullName");
+                var teacherIds = dbEntities.TblGroup_Teacher.Where(x => x.GroupId == findGroup.Id).Select(x => x.TeacherId).ToList();
+                model.selectedTeacherIds = string.Join(",", teacherIds);
+                var studentIds=dbEntities.TblGroup_StudentTable.Where(x=>x.GroupId == findGroup.Id).Select(x => x.StudentId).ToList();
+                model.selectedStudentIds = string.Join(",", studentIds);
+                List<UserDropdownListModel> listStud = new List<UserDropdownListModel>();
+                foreach(var student in students)
+                {
+                    UserDropdownListModel ls = new UserDropdownListModel()
+                    {
+                        Id=student.Id,
+                        Fullname=student.FullName
+                    };
+                    listStud.Add(ls);
+                }
+                model.studentNames = listStud;
             }
             if (TempData["Success"]!=null)
             {
@@ -114,7 +158,7 @@ namespace WinfocusLearningApp.Controllers
                 ViewBag.Error = TempData["Error"];
             }
 
-                return View(); 
+                return View(model); 
         }
         [HttpPost]
         public async Task< ActionResult> StudentTeacherGroup(GroupModelView modelView)

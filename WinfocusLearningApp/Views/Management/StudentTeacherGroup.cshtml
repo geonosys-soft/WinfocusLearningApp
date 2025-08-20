@@ -384,10 +384,24 @@
 
                     @Html.DropDownList("TeacherID", null, "--Please choose--", new { @class = "form-control" })
 
-                    <div id="selected-teacher-container" class="selected-items-container">
-                        <!-- Selected student badges will be dynamically inserted here -->
-                    </div>
-                    <input type="hidden" id="TeacherIdList" name="selectedTeacherIds">
+                <div id="selected-teacher-container" class="selected-items-container">
+                    @if (!string.IsNullOrEmpty(Model.selectedTeacherIds))
+                    {
+                        var splitdata = Model.selectedTeacherIds.Split(',');
+                        foreach (var data in splitdata)
+                        {
+                            <div class="student-badge">
+                                TT-202508-14783 - Sree Kuhanathan
+                                <span class="remove-teacher-btn" onclick="removeTeacher('19')" title="Remove TT-202508-14783 - Sree Kuhanathan">×</span>
+                            </div>
+                        }
+
+                    }
+
+                    <!-- Selected student badges will be dynamically inserted here -->
+                </div>
+                    @Html.HiddenFor(model => model.selectedTeacherIds)
+                    <!--<input type="hidden" id="selectedTeacherIds" name="selectedTeacherIds">-->
                 </div>
 
                 <div class="form-group full-width">
@@ -399,10 +413,30 @@
                     <label for="StudentID">Student:</label>
                     @Html.DropDownList("StudentID", null, "--Please choose--", new { @class = "form-control" })
 
-                    <div id="selected-students-container" class="selected-items-container">
-                        <!-- Selected student badges will be dynamically inserted here -->
-                    </div>
-                    <input type="hidden" id="StudentIdList" name="selectedStudentIds">
+                <div id="selected-students-container" class="selected-items-container">
+                    @if (!string.IsNullOrEmpty(Model.selectedStudentIds))
+                                {
+                                    var splitdata = Model.selectedStudentIds.Split(',');
+                                    var studentList = Model.studentNames; // get the same list used in DropDown
+
+                                    foreach (var studentId in splitdata)
+                                    {
+                                        var student = studentList.Where(x=>x.Id==Convert.ToInt32( studentId)).FirstOrDefault();
+                                        if (student != null)
+                                        {
+                                <div class="student-badge">
+                                    @student.Fullname
+                                    <span class="remove-student-btn"
+                                          onclick="removeStudent('@student.Id')"
+                                          title="Remove @student.Fullname">×</span>
+                                </div>
+                            }
+                    }
+                    }
+
+                    <!-- Selected student badges will be dynamically inserted here -->
+                </div>
+                    <input type="hidden" id="selectedStudentIds" name="selectedStudentIds">
                 </div>
             </div>
             <button type="submit" class="btn btn-submit" onclick="submitAddForm()">
@@ -467,12 +501,13 @@
     // --- State Management for Student Selection ---
     let selectedStudents = [];
     let selectedTeacher = [];
+  
     document.addEventListener('DOMContentLoaded', () => {
         const studentSelect = document.getElementById('StudentID');
         studentSelect.addEventListener('change', handleStudentSelection);
         const teacherSelect = document.getElementById('TeacherID');
         teacherSelect.addEventListener('change', handleTeacherSelection);
-        loadAcademicYears();
+        //loadAcademicYears();
     });
 
     function handleStudentSelection(event) {
@@ -499,7 +534,7 @@
 
     function renderSelectedStudents() {
         const container = document.getElementById('selected-students-container');
-        const hiddenInput = document.getElementById('StudentIdList');
+        const hiddenInput = document.getElementById('selectedStudentIds');
 
         container.innerHTML = '';
 
@@ -542,7 +577,7 @@
 
     function renderSelectedTeacher() {
         const container = document.getElementById('selected-teacher-container');
-        const hiddenInput = document.getElementById('TeacherIdList');
+        const hiddenInput = document.getElementById('selectedTeacherIds');
 
         container.innerHTML = '';
 
@@ -577,7 +612,7 @@
         const stream = document.getElementById('add-stream').value;
         const teacherId = document.getElementById('add-teacher').value;
         const groupName = document.getElementById('add-group-name').value;
-        const studentIds = document.getElementById('StudentIdList').value;
+        const studentIds = document.getElementById('selectedStudentIds').value;
 
         // Basic validation
         if (!academicYear || !groupName || !teacherId || studentIds.length === 0) {
@@ -657,7 +692,7 @@
                 students: ["Bob Williams", "Diana Miller"]
             },
         ];*/
-        
+
         const tableBody = document.getElementById('group-table-body');
         const resultsContainer = document.getElementById('results-container');
         tableBody.innerHTML = ''; // Clear previous results
